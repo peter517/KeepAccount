@@ -27,7 +27,7 @@ public class KeepAccountActivity extends Activity {
 
 	ListView accountListView;
 	ImageButton ibAddAccount;
-	ImageButton ibAddAccount1;
+	ImageButton ibAddAccount3;
 	String[] titles = { "title1", "title2", "title3", "title4", "title5",
 			"title6", "title7", "title8", "title9", "title10", "title11",
 			"title12" };
