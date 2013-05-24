@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout     
+         android:layout_width="fill_parent"     
+         xmlns:android="http://schemas.android.com/apk/res/android"     
+         android:layout_height="wrap_content"     
+         android:paddingBottom="4dip"     
+         android:paddingLeft="12dip">    
+         <ImageView     
+               android:layout_width="wrap_content"     
+               android:id="@+id/imCategory" android:layout_height="fill_parent">     
+         </ImageView>    
+         <TextView     
+               android:layout_height="wrap_content"     
+               android:layout_width="fill_parent"     
+               android:id="@+id/tvCost" android:layout_toRightOf="@+id/imCategory" android:textSize="20dip">    
+         </TextView>    
+         <TextView     
+               android:layout_height="wrap_content"     
+               android:layout_width="fill_parent"     
+               android:id="@+id/tvDate" android:layout_toRightOf="@+id/imCategory" android:layout_below="@+id/tvCost">    
+         </TextView>    
+</RelativeLayout> 
