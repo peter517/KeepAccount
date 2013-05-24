@@ -28,15 +28,16 @@ public class KeepAccountActivity extends Activity {
 	ListView accountListView;
 	ImageButton ibAddAccount;
 	String[] titles = { "title1", "title2", "title3", "title4", "title5",
-			"title6", "title7", "title8", "title9", "title10", "title11", };
+			"title6", "title7", "title8", "title9", "title10", "title11",
+			"title12" };
 	String[] texts = { "标题1", "标题2", "标题3", "标题4", "标题1", "标题2", "标题3", "标题4",
-			"标题1", "标题2", "标题3" };
+			"标题1", "标题2", "标题3", "标题4" };
 	int[] resIds = { R.drawable.ic_launcher, R.drawable.ic_launcher,
 			R.drawable.ic_launcher, R.drawable.ic_launcher,
 			R.drawable.ic_launcher, R.drawable.ic_launcher,
 			R.drawable.ic_launcher, R.drawable.ic_launcher,
 			R.drawable.ic_launcher, R.drawable.ic_launcher,
-			R.drawable.ic_launcher };
+			R.drawable.ic_launcher, R.drawable.ic_launcher };
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
