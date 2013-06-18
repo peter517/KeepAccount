@@ -11,10 +11,10 @@
 			android:id="@+id/TextView01" 
 			android:layout_width="wrap_content" 
 			android:layout_height="wrap_content" 
-			android:text="@string/cost" 
+			android:text="@string/account" 
 			android:textSize="16px"></TextView>
 		<EditText 
-			android:id="@+id/EditText01" 
+			android:id="@+id/etAccount" 
 			android:layout_height="wrap_content" 
 			android:layout_width="fill_parent"/>
 	</TableRow>
@@ -29,7 +29,7 @@
 			android:textSize="16px" 
 			android:text="@string/category"></TextView>
 		<EditText 
-			android:id="@+id/EditText02" 
+			android:id="@+id/etCategory" 
 			android:layout_height="wrap_content" 
 			android:layout_width="fill_parent"></EditText>
 	</TableRow>
@@ -44,7 +44,7 @@
 			android:textSize="16px" 
 			android:text="@string/date"></TextView>
 		<EditText 
-			android:id="@+id/EditText03" 
+			android:id="@+id/etDate" 
 			android:layout_height="wrap_content" 
 			android:layout_width="fill_parent"></EditText>
 	</TableRow>
@@ -57,27 +57,27 @@
 			android:layout_width="wrap_content" 
 			android:layout_height="wrap_content" 
 			android:textSize="16px" 
-			android:text="@string/comment"></TextView>
+			android:text="@string/comment"/>
 		<EditText 
-			android:id="@+id/EditText04" 
+			android:id="@+id/etComment" 
 			android:layout_height="wrap_content" 
-			android:layout_width="fill_parent"></EditText>
+			android:layout_width="fill_parent"/>
 	</TableRow>
 	<TableRow 
 		android:id="@+id/TableRow07" 
 		android:layout_width="fill_parent" 
 		android:layout_height="wrap_content">
 		<Button 
-			android:id="@+id/Button01" 
+			android:id="@+id/btSave" 
 			android:layout_height="wrap_content" 
 			android:text="@string/ok" 
 			android:textSize="16px" 
-			android:layout_width="wrap_content"></Button>
+			android:layout_width="wrap_content"/>
 		<Button 
-			android:id="@+id/Button02" 
+			android:id="@+id/btCancel" 
 			android:layout_height="wrap_content" 
 			android:text="@string/cancel" 
 			android:textSize="16px" 
-			android:layout_width="wrap_content"></Button>
+			android:layout_width="wrap_content"/>
 	</TableRow>
 </LinearLayout>

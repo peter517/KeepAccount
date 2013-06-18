@@ -2,7 +2,7 @@
 ## Eclipse
 #################
 
-*pptx
+gen/
 *.pydevproject
 .project
 .metadata
