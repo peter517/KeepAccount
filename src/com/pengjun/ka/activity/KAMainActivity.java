@@ -29,7 +29,6 @@ public class KAMainActivity extends Activity {
 
 	ListView arListView;
 	ImageButton ibAddAccount;
-	ImageButton ibAddAccount1;
 	String[] titles = { "title1", "title2", "title3", "title4", "title5",
 			"title6", "title7", "title8", "title9", "title10", "title11",
 			"title12" };
