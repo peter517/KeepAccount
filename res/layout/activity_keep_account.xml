@@ -7,24 +7,32 @@
     <RelativeLayout
         android:id="@+id/llToolBar"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:layout_alignParentTop="true"
-        android:background="@color/burlywood"
+        android:background="@drawable/preview_gradual"
         android:orientation="horizontal" >
 
         <ImageButton
             android:id="@+id/ibAddAccount"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="50dp"
+            android:layout_height="fill_parent"
             android:layout_alignParentLeft="true"
             android:background="@android:color/transparent"
-            android:src="@drawable/add" />
-
+            android:src="@drawable/write_msg_icon" />
+        
+        <TextView 
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/recentAccounts"
+            />
+<!--  
         <Spinner
             android:id="@+id/spCategory"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" 
             android:layout_alignParentRight="true"/>
+            -->
     </RelativeLayout>
 
     <RelativeLayout
@@ -47,9 +55,9 @@
     <RelativeLayout
         android:id="@+id/llTab"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:layout_alignParentBottom="true"
-        android:background="@color/burlywood"
+        android:background="@drawable/preview_gradual"
         android:orientation="horizontal">
 
         <ImageButton

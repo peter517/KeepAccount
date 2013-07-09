@@ -12,7 +12,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
@@ -29,6 +28,8 @@ public class KAMainActivity extends Activity {
 
 	ListView arListView;
 	ImageButton ibAddAccount;
+	private AccountListAdapter aa;
+
 	String[] titles = { "title1", "title2", "title3", "title4", "title5",
 			"title6", "title7", "title8", "title9", "title10", "title11",
 			"title12" };
@@ -45,8 +46,8 @@ public class KAMainActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-				WindowManager.LayoutParams.FLAG_FULLSCREEN);
+		// getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+		// WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		setContentView(R.layout.activity_keep_account);
 
 		// add new count
@@ -58,13 +59,19 @@ public class KAMainActivity extends Activity {
 				intent.setClass(KAMainActivity.this, AddAccountActivity.class);
 				startActivity(intent);
 				overridePendingTransition(R.anim.left_in, R.anim.left_out);
+				// List<AccountRecord> accountList = AccountRecordService
+				// .queryAll();
+				// aa = new AccountListAdapter(accountList);
+				// arListView.setAdapter(aa);
+				// aa.notifyDataSetChanged();
 			}
 		});
 
 		// fill listview
-		List<AccountRecord> accountList = AccountRecordService.queryAll();
 		arListView = (ListView) this.findViewById(R.id.lvCostRecord);
-		arListView.setAdapter(new AccountListAdapter(accountList));
+		List<AccountRecord> accountList = AccountRecordService.queryAll();
+		aa = new AccountListAdapter(accountList);
+		arListView.setAdapter(aa);
 		arListView.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
