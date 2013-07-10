@@ -6,10 +6,12 @@ import com.j256.ormlite.table.DatabaseTable;
 @DatabaseTable
 public class AccountRecord {
 
+	public static final String COL_ID = "id";
 	public static final String COL_AMOUNT = "amount";
 	public static final String COL_CATEGORY = "category";
 	public static final String COL_DATE = "date";
 	public static final String COL_COMMENT = "comment";
+	public static final String COL_UPDATETIME = "updateTime";
 
 	@DatabaseField(generatedId = true, columnName = "_id")
 	int id;
@@ -25,6 +27,17 @@ public class AccountRecord {
 
 	@DatabaseField
 	String comment;
+
+	@DatabaseField
+	String updateTime;
+
+	public String getUpdateTime() {
+		return updateTime;
+	}
+
+	public void setUpdateTime(String updateTime) {
+		this.updateTime = updateTime;
+	}
 
 	public int getId() {
 		return id;

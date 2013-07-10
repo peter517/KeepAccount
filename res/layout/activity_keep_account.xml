@@ -9,7 +9,7 @@
         android:layout_width="fill_parent"
         android:layout_height="50dp"
         android:layout_alignParentTop="true"
-        android:background="@drawable/preview_gradual"
+        android:background="@drawable/top_bar"
         android:orientation="horizontal" >
 
         <ImageButton
@@ -18,7 +18,7 @@
             android:layout_height="fill_parent"
             android:layout_alignParentLeft="true"
             android:background="@android:color/transparent"
-            android:src="@drawable/write_msg_icon" />
+            android:src="@drawable/newguide_light" />
         
         <TextView 
             android:layout_width="wrap_content"
@@ -43,6 +43,11 @@
         android:layout_above="@+id/llTab"
         android:orientation="horizontal" >
 
+        <ProgressBar android:id="@+id/pbLoad"
+      	android:layout_width="wrap_content" 
+      	android:layout_height="wrap_content"    
+      	android:layout_centerInParent="true"/>
+
         <ListView
             android:id="@+id/lvCostRecord"
             android:layout_width="wrap_content"
@@ -57,32 +62,42 @@
         android:layout_width="fill_parent"
         android:layout_height="50dp"
         android:layout_alignParentBottom="true"
-        android:background="@drawable/preview_gradual"
+        android:background="@drawable/bottom_bar"
         android:orientation="horizontal">
 
         <ImageButton
             android:id="@+id/ibDetails"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
+            android:layout_height="fill_parent"
             android:background="@android:color/transparent"
-            android:src="@drawable/add" />
+            android:layout_alignParentLeft="true"
+            android:src="@drawable/home" />
 
         <ImageButton
             android:id="@+id/ibStatistics"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
+            android:layout_height="fill_parent"
+            android:layout_toRightOf="@+id/ibDetails"
+            android:layout_marginLeft="50dp"
             android:background="@android:color/transparent"
-            android:src="@drawable/add" />
+            android:src="@drawable/search" />
+        
+        <ImageButton
+            android:id="@+id/ibChart"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_toRightOf="@+id/ibStatistics"
+            android:layout_marginLeft="50dp"
+            android:background="@android:color/transparent"
+            android:src="@drawable/chart" />
 
         <ImageButton
             android:id="@+id/ibSettings"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="fill_parent"
             android:layout_alignParentRight="true"
             android:background="@android:color/transparent"
-            android:src="@drawable/add" />
+            android:src="@drawable/settings" />
     </RelativeLayout>
 
 </RelativeLayout>

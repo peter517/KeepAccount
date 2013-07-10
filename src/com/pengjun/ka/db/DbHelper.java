@@ -10,10 +10,11 @@ import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 import com.pengjun.ka.db.model.AccountRecord;
+import com.pengjun.ka.tools.MyDebug;
 
 public class DbHelper extends OrmLiteSqliteOpenHelper {
 
-	public static final String DBNAME = "pengjun.db";
+	public static final String DBNAME = "pengjun2.db";
 	public static final int DBVERSION = 0x01;
 
 	@SuppressWarnings("rawtypes")
@@ -38,6 +39,8 @@ public class DbHelper extends OrmLiteSqliteOpenHelper {
 	@Override
 	public void onCreate(SQLiteDatabase database,
 			ConnectionSource connectionSource) {
+
+		MyDebug.printFromPJ("db onCreate");
 		try {
 			for (int i = 0; i < DATACLASSES.length; i++) {
 				TableUtils.createTableIfNotExists(connectionSource,
