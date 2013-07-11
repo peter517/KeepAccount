@@ -33,6 +33,25 @@ public class AccountRecordService {
 		}
 	}
 
+	public static void update(AccountRecord ar) {
+		try {
+			dao.update(ar);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public static boolean ifExist(AccountRecord ar) {
+		try {
+			if (((List<AccountRecord>) dao.queryForId(ar.getId())).size() == 0) {
+				return false;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return true;
+	}
+
 	public static void delete(AccountRecord ar) {
 		try {
 			dao.delete(ar);

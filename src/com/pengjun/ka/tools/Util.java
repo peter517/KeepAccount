@@ -3,8 +3,16 @@ package com.pengjun.ka.tools;
 import java.util.Calendar;
 
 import android.content.Context;
+import android.widget.DatePicker;
+
+import com.pengjun.ka.db.model.AccountRecord;
 
 public class Util {
+
+	public static final String TIME_FORMT = "%d-%02d-%02d-%02d-%02d-%02d";
+	public static final String DATE_FORMT = "%d-%02d-%02d";
+	public static final String TIME_SEPARATOR = "-";
+
 	public static String getCurTimeStr() {
 
 		final Calendar mCalendar = Calendar.getInstance();
@@ -17,9 +25,20 @@ public class Util {
 		int minute = mCalendar.get(Calendar.MINUTE);
 		int second = mCalendar.get(Calendar.SECOND);
 
-		String curTimeStr = String.format("%d-%02d-%02d-%02d-%02d-%02d", year,
-				mouth + 1, day, hour, minute, second);
+		String curTimeStr = String.format(TIME_FORMT, year, mouth + 1, day,
+				hour, minute, second);
+
 		return curTimeStr;
+	}
+
+	public static String[] String2DateArr(AccountRecord ar) {
+		String[] date = ar.getDate().split(TIME_SEPARATOR);
+		return date;
+	}
+
+	public static String DatePicker2FormatStr(DatePicker dp) {
+		return String.format(DATE_FORMT, dp.getYear(), dp.getMonth() + 1,
+				dp.getDayOfMonth());
 	}
 
 	public static void printCurDir(Context context) {

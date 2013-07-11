@@ -27,12 +27,6 @@ public final class KAApplication extends Application {
 
 		androidConnectionSource = DbHelper.getAndroidConnectionSource(this);
 
-		/*
-		 * Intent service = new Intent(
-		 * "com.aliyun.baseservice.cmns_client.client.CmnsService");
-		 * this.getApplicationContext().bindService(service,
-		 * mCmnsClientServiceConnection, Context.BIND_AUTO_CREATE);
-		 */
 	}
 
 	@Override

@@ -13,27 +13,24 @@ import android.widget.Spinner;
 import com.pengjun.ka.db.model.AccountRecord;
 import com.pengjun.ka.db.service.AccountRecordService;
 import com.pengjun.ka.tools.Constants;
-import com.pengjun.ka.tools.MyDebug;
 import com.pengjun.ka.tools.Util;
 import com.pengjun.keepaccounts.R;
 
 public class AddAccountActivity extends Activity {
 
 	private EditText etAccount = null;
-
 	private Spinner spCategory = null;
-
 	private DatePicker dpDate = null;
 	private EditText etComment = null;
 
 	private ImageButton btSave = null;
 	private ImageButton btCancel = null;
 
+	private AccountRecord ar;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
-		MyDebug.printFromPJ("onCreate");
 
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		// getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
@@ -49,7 +46,6 @@ public class AddAccountActivity extends Activity {
 		spCategory.setAdapter(adapter);
 
 		dpDate = (DatePicker) findViewById(R.id.dpDate);
-
 		etComment = (EditText) findViewById(R.id.etComment);
 
 		btSave = (ImageButton) findViewById(R.id.btSave);
@@ -59,16 +55,15 @@ public class AddAccountActivity extends Activity {
 			public void onClick(View v) {
 				if (!etAccount.getText().toString().equals("")) {
 
-					AccountRecord ar = new AccountRecord();
-					ar.setAmount(Float.valueOf(etAccount.getText().toString()));
-					ar.setCategory(spCategory.getSelectedItem().toString());
-					ar.setDate(String.format("%d-%02d-%02d", dpDate.getYear(),
-							dpDate.getMonth() + 1, dpDate.getDayOfMonth()));
-					ar.setComment(etComment.getText().toString());
-
-					ar.setUpdateTime(Util.getCurTimeStr());
-
-					AccountRecordService.insert(ar);
+					// add or update
+					if (ar == null) {
+						ar = new AccountRecord();
+						getArFromView(ar);
+						AccountRecordService.insert(ar);
+					} else {
+						getArFromView(ar);
+						AccountRecordService.update(ar);
+					}
 					finish();
 				}
 			}
@@ -82,5 +77,30 @@ public class AddAccountActivity extends Activity {
 				finish();
 			}
 		});
+
+		ar = (AccountRecord) getIntent().getSerializableExtra(
+				KAMainActivity.AR_BEAN);
+		if (ar != null) {
+			putArToView(ar);
+		}
+	}
+
+	private void putArToView(AccountRecord ar) {
+		etAccount.setText(String.valueOf((ar.getAmount())));
+		spCategory
+				.setSelection(Constants.getPosByCategroyStr(ar.getCategory()));
+		etComment.setText(String.valueOf((ar.getComment())));
+
+		String[] date = Util.String2DateArr(ar);
+		dpDate.updateDate(Integer.valueOf(date[0]),
+				Integer.valueOf(date[1]) - 1, Integer.valueOf(date[2]));
+	}
+
+	private void getArFromView(AccountRecord ar) {
+		ar.setAmount(Float.valueOf(etAccount.getText().toString()));
+		ar.setCategory(spCategory.getSelectedItem().toString());
+		ar.setDate(Util.DatePicker2FormatStr(dpDate));
+		ar.setComment(etComment.getText().toString());
+		ar.setUpdateTime(Util.getCurTimeStr());
 	}
 }

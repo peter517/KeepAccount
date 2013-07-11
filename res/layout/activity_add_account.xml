@@ -13,12 +13,12 @@
         android:orientation="horizontal" >
 
         <ImageButton
-            android:id="@+id/btSave"
+            android:id="@+id/btCancel"
             android:layout_width="50dp"
             android:layout_height="fill_parent"
             android:layout_alignParentLeft="true"
             android:background="@android:color/transparent"
-            android:src="@drawable/save_account" />
+            android:src="@drawable/go_back" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -27,13 +27,12 @@
             android:text="@string/newAccount" />
 
         <ImageButton
-            android:id="@+id/btCancel"
+            android:id="@+id/btSave"
             android:layout_width="50dp"
             android:layout_height="fill_parent"
             android:layout_alignParentRight="true"
             android:background="@android:color/transparent"
-            android:src="@drawable/delete_account" />
-
+            android:src="@drawable/save_account" />
     </RelativeLayout>
 
     <TableRow
@@ -69,7 +68,7 @@
             android:layout_height="wrap_content" />
     </TableRow>
 
-     <TableRow
+    <TableRow
         android:layout_width="fill_parent"
         android:layout_height="wrap_content" >
 
@@ -83,7 +82,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content" />
     </TableRow>
-    
+
     <TableRow
         android:layout_width="fill_parent"
         android:layout_height="wrap_content" >

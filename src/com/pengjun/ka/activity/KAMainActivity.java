@@ -1,10 +1,13 @@
 package com.pengjun.ka.activity;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
@@ -44,20 +47,11 @@ public class KAMainActivity extends Activity {
 	private AccountListAdapter arAdapter;
 	private List<AccountRecord> arList = new ArrayList<AccountRecord>();
 
-	String[] titles = { "title1", "title2", "title3", "title4", "title5",
-			"title6", "title7", "title8", "title9", "title10", "title11",
-			"title12" };
-	String[] texts = { "标题1", "标题2", "标题3", "标题4", "标题1", "标题2", "标题3", "标题4",
-			"标题1", "标题2", "标题3", "标题4" };
-	int[] resIds = { R.drawable.ic_launcher, R.drawable.ic_launcher,
-			R.drawable.ic_launcher, R.drawable.ic_launcher,
-			R.drawable.ic_launcher, R.drawable.ic_launcher,
-			R.drawable.ic_launcher, R.drawable.ic_launcher,
-			R.drawable.ic_launcher, R.drawable.ic_launcher,
-			R.drawable.ic_launcher, R.drawable.ic_launcher };
+	public static String AR_BEAN = "ar_bean";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		// getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
@@ -69,6 +63,7 @@ public class KAMainActivity extends Activity {
 		ibAddAccount.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				// add new account record
 				Intent intent = new Intent();
 				intent.setClass(KAMainActivity.this, AddAccountActivity.class);
 				startActivity(intent);
@@ -89,16 +84,51 @@ public class KAMainActivity extends Activity {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 
+				// view account record
+				Intent intent = new Intent();
+				intent.setClass(KAMainActivity.this, AddAccountActivity.class);
+
+				AccountRecord ar = arList.get(position);
+				Bundle bundle = new Bundle();
+				bundle.putSerializable(AR_BEAN, (Serializable) ar);
+				intent.putExtras(bundle);
+				startActivity(intent);
+				overridePendingTransition(R.anim.left_in, R.anim.left_out);
+
 			}
 		});
 		arListView.setOnItemLongClickListener(new OnItemLongClickListener() {
+
+			private int curPos;
 
 			@Override
 			public boolean onItemLongClick(AdapterView<?> parent, View view,
 					int position, long id) {
 
-				// AccountRecord ar = arList.get(position);
-				// AccountRecordService.delete(ar);
+				// delete account record
+				curPos = position;
+				AlertDialog.Builder builder = new AlertDialog.Builder(
+						KAMainActivity.this);
+				builder.setIcon(R.drawable.delete);
+				builder.setTitle("删除记账");
+				builder.setMessage("确定要删除该次记账？");
+				builder.setPositiveButton("删除",
+						new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog,
+									int whichButton) {
+								AccountRecord ar = arList.get(curPos);
+								AccountRecordService.delete(ar);
+								updateArListView();
+							}
+						});
+				builder.setNegativeButton("取消",
+						new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog,
+									int whichButton) {
+
+							}
+						});
+				builder.show();
 				return false;
 			}
 		});
@@ -158,9 +188,22 @@ public class KAMainActivity extends Activity {
 	@Override
 	protected void onResume() {
 		// fill listview
-		showProgress();
-		new LoadAccountTask().execute();
+		updateArListView();
 		super.onResume();
+	}
+
+	// the same as backing home operation
+	@Override
+	public void onBackPressed() {
+		// Intent homeIntent = new Intent(Intent.ACTION_MAIN);
+		// homeIntent.addCategory(Intent.CATEGORY_HOME);
+		// startActivity(homeIntent);
+		finish();
+	}
+
+	private void updateArListView() {
+		showProgress();
+		new LoadArTask().execute();
 	}
 
 	private void showProgress() {
@@ -173,7 +216,7 @@ public class KAMainActivity extends Activity {
 		arListView.setVisibility(View.VISIBLE);
 	}
 
-	class LoadAccountTask extends AsyncTask<AccountRecord, Void, Integer> {
+	class LoadArTask extends AsyncTask<AccountRecord, Void, Integer> {
 
 		@Override
 		protected Integer doInBackground(AccountRecord... params) {

@@ -1,10 +1,14 @@
 package com.pengjun.ka.db.model;
 
+import java.io.Serializable;
+
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
 @DatabaseTable
-public class AccountRecord {
+public class AccountRecord implements Serializable {
+
+	private static final long serialVersionUID = -4580617869739349892L;
 
 	public static final String COL_ID = "id";
 	public static final String COL_AMOUNT = "amount";
