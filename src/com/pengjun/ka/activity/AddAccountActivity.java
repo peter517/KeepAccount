@@ -12,6 +12,7 @@ import android.widget.Spinner;
 
 import com.pengjun.ka.db.model.AccountRecord;
 import com.pengjun.ka.db.service.AccountRecordService;
+import com.pengjun.ka.fragment.ArFragment;
 import com.pengjun.ka.tools.Constants;
 import com.pengjun.ka.tools.Util;
 import com.pengjun.keepaccounts.R;
@@ -35,7 +36,7 @@ public class AddAccountActivity extends Activity {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		// getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 		// WindowManager.LayoutParams.FLAG_FULLSCREEN);
-		setContentView(R.layout.activity_add_account);
+		setContentView(R.layout.add_account);
 
 		etAccount = (EditText) findViewById(R.id.etAccount);
 
@@ -79,7 +80,7 @@ public class AddAccountActivity extends Activity {
 		});
 
 		ar = (AccountRecord) getIntent().getSerializableExtra(
-				KAMainActivity.AR_BEAN);
+				ArFragment.AR_BEAN);
 		if (ar != null) {
 			putArToView(ar);
 		}

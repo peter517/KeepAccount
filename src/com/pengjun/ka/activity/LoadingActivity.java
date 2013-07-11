@@ -26,7 +26,7 @@ public class LoadingActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		handler.sendEmptyMessageDelayed(GO_MAIN, COVER_EXIST_TIME);
-		setContentView(R.layout.loading);
+		setContentView(R.layout.enter_cover);
 
 	}
 

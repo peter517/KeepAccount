@@ -72,4 +72,24 @@ public class AccountRecordService {
 		return null;
 	}
 
+	public static void deleteAll(List<AccountRecord> arList) {
+		try {
+			dao.delete(arList);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public static List<AccountRecord> queryLimitRows(int offset, int limtRows) {
+		try {
+			QueryBuilder<AccountRecord, Integer> queryBuilder = dao
+					.queryBuilder();
+			queryBuilder.offset(offset).limit(limtRows);
+			queryBuilder.orderBy(AccountRecord.COL_UPDATETIME, false);
+			return dao.query(queryBuilder.prepare());
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 }

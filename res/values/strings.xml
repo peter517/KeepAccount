@@ -3,8 +3,12 @@
     <string name="app_name">KeepAccounts</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
-     <string name="recentAccounts">最近账目</string>
-     <string name="newAccount">新增账目</string>
+    
+    <string name="recentArs">最近账目</string>
+    <string name="newAr">新增账目</string>
+    <string name="backUp">备份数据</string>
+    <string name="loadMore">加载更多数据</string>
+    
     <string name="ok">保存</string>
     <string name="cancel">取消</string>
     <string name="account">金额</string>

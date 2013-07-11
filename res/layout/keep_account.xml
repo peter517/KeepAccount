@@ -19,42 +19,26 @@
             android:layout_alignParentLeft="true"
             android:background="@android:color/transparent"
             android:src="@drawable/newguide_light" />
-        
-        <TextView 
+
+        <TextView
+            android:id="@+id/tvTopTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="@string/recentAccounts"
-            />
-<!--  
-        <Spinner
-            android:id="@+id/spCategory"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" 
-            android:layout_alignParentRight="true"/>
-            -->
+            android:text="@string/recentArs" />
     </RelativeLayout>
 
     <RelativeLayout
         android:id="@+id/llCostRecord"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/llToolBar"
         android:layout_above="@+id/llTab"
-        android:orientation="horizontal" >
+        android:layout_below="@+id/llToolBar">
 
-        <ProgressBar android:id="@+id/pbLoad"
-      	android:layout_width="wrap_content" 
-      	android:layout_height="wrap_content"    
-      	android:layout_centerInParent="true"/>
-
-        <ListView
-            android:id="@+id/lvCostRecord"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:scrollingCache="false"
-            android:layout_gravity="top" >
-        </ListView>
+        <FrameLayout
+            android:id="@+id/mainConent"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -63,31 +47,31 @@
         android:layout_height="50dp"
         android:layout_alignParentBottom="true"
         android:background="@drawable/bottom_bar"
-        android:orientation="horizontal">
+        android:orientation="horizontal" >
 
         <ImageButton
             android:id="@+id/ibDetails"
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
-            android:background="@android:color/transparent"
             android:layout_alignParentLeft="true"
+            android:background="@android:color/transparent"
             android:src="@drawable/home" />
 
         <ImageButton
             android:id="@+id/ibStatistics"
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
-            android:layout_toRightOf="@+id/ibDetails"
             android:layout_marginLeft="50dp"
+            android:layout_toRightOf="@+id/ibDetails"
             android:background="@android:color/transparent"
             android:src="@drawable/search" />
-        
+
         <ImageButton
             android:id="@+id/ibChart"
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
-            android:layout_toRightOf="@+id/ibStatistics"
             android:layout_marginLeft="50dp"
+            android:layout_toRightOf="@+id/ibStatistics"
             android:background="@android:color/transparent"
             android:src="@drawable/chart" />
 

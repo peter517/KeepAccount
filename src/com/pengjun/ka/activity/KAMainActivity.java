@@ -1,53 +1,30 @@
 package com.pengjun.ka.activity;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-
-import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.view.LayoutInflater;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.ViewGroup;
 import android.view.Window;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.AdapterView.OnItemLongClickListener;
-import android.widget.BaseAdapter;
 import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.pengjun.ka.db.model.AccountRecord;
-import com.pengjun.ka.db.service.AccountRecordService;
-import com.pengjun.ka.tools.Constants;
+import com.pengjun.ka.fragment.ArFragment;
+import com.pengjun.ka.fragment.BackupFragment;
 import com.pengjun.keepaccounts.R;
 
-public class KAMainActivity extends Activity {
+public class KAMainActivity extends FragmentActivity {
 
-	ListView arListView;
 	ImageButton ibAddAccount;
-	ProgressBar pbLoad;
 
 	ImageButton ibDetails;
 	ImageButton ibStatistics;
 	ImageButton ibChart;
 	ImageButton ibSettings;
 
-	private AccountListAdapter arAdapter;
-	private List<AccountRecord> arList = new ArrayList<AccountRecord>();
-
-	public static String AR_BEAN = "ar_bean";
+	TextView tvTopTitle;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -56,9 +33,23 @@ public class KAMainActivity extends Activity {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		// getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 		// WindowManager.LayoutParams.FLAG_FULLSCREEN);
-		setContentView(R.layout.activity_keep_account);
+		setContentView(R.layout.keep_account);
 
 		// top bar
+		createTopBar();
+
+		// main content
+		FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+		ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+		ft.replace(R.id.mainConent, ArFragment.newInstance());
+		ft.commit();
+
+		// bottom bar
+		createBottomBar();
+
+	}
+
+	private void createTopBar() {
 		ibAddAccount = (ImageButton) findViewById(R.id.ibAddAccount);
 		ibAddAccount.setOnClickListener(new OnClickListener() {
 			@Override
@@ -71,69 +62,11 @@ public class KAMainActivity extends Activity {
 
 			}
 		});
+		tvTopTitle = (TextView) findViewById(R.id.tvTopTitle);
+	}
 
-		// main content
-		pbLoad = (ProgressBar) this.findViewById(R.id.pbLoad);
-		arListView = (ListView) this.findViewById(R.id.lvCostRecord);
-		arAdapter = new AccountListAdapter();
-		arListView.setAdapter(arAdapter);
+	private void createBottomBar() {
 
-		arListView.setOnItemClickListener(new OnItemClickListener() {
-
-			@Override
-			public void onItemClick(AdapterView<?> parent, View view,
-					int position, long id) {
-
-				// view account record
-				Intent intent = new Intent();
-				intent.setClass(KAMainActivity.this, AddAccountActivity.class);
-
-				AccountRecord ar = arList.get(position);
-				Bundle bundle = new Bundle();
-				bundle.putSerializable(AR_BEAN, (Serializable) ar);
-				intent.putExtras(bundle);
-				startActivity(intent);
-				overridePendingTransition(R.anim.left_in, R.anim.left_out);
-
-			}
-		});
-		arListView.setOnItemLongClickListener(new OnItemLongClickListener() {
-
-			private int curPos;
-
-			@Override
-			public boolean onItemLongClick(AdapterView<?> parent, View view,
-					int position, long id) {
-
-				// delete account record
-				curPos = position;
-				AlertDialog.Builder builder = new AlertDialog.Builder(
-						KAMainActivity.this);
-				builder.setIcon(R.drawable.delete);
-				builder.setTitle("删除记账");
-				builder.setMessage("确定要删除该次记账？");
-				builder.setPositiveButton("删除",
-						new DialogInterface.OnClickListener() {
-							public void onClick(DialogInterface dialog,
-									int whichButton) {
-								AccountRecord ar = arList.get(curPos);
-								AccountRecordService.delete(ar);
-								updateArListView();
-							}
-						});
-				builder.setNegativeButton("取消",
-						new DialogInterface.OnClickListener() {
-							public void onClick(DialogInterface dialog,
-									int whichButton) {
-
-							}
-						});
-				builder.show();
-				return false;
-			}
-		});
-
-		// bottom bar
 		ibDetails = (ImageButton) findViewById(R.id.ibDetails);
 		ibDetails.setBackgroundColor(Color.GRAY);
 		ibDetails.setOnClickListener(new OnClickListener() {
@@ -144,6 +77,15 @@ public class KAMainActivity extends Activity {
 				ibStatistics.setBackgroundColor(Color.TRANSPARENT);
 				ibChart.setBackgroundColor(Color.TRANSPARENT);
 				ibSettings.setBackgroundColor(Color.TRANSPARENT);
+
+				FragmentTransaction ft = getSupportFragmentManager()
+						.beginTransaction();
+				ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+				ft.replace(R.id.mainConent, ArFragment.newInstance());
+				ft.commit();
+
+				ibAddAccount.setVisibility(View.VISIBLE);
+				tvTopTitle.setText(R.string.recentArs);
 			}
 		});
 
@@ -168,6 +110,16 @@ public class KAMainActivity extends Activity {
 				ibDetails.setBackgroundColor(Color.TRANSPARENT);
 				ibStatistics.setBackgroundColor(Color.TRANSPARENT);
 				ibSettings.setBackgroundColor(Color.TRANSPARENT);
+
+				FragmentTransaction ft = getSupportFragmentManager()
+						.beginTransaction();
+				ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+				ft.replace(R.id.mainConent, BackupFragment.newInstance());
+				ft.commit();
+
+				ibAddAccount.setVisibility(View.GONE);
+				tvTopTitle.setText(R.string.backUp);
+
 			}
 		});
 
@@ -182,14 +134,6 @@ public class KAMainActivity extends Activity {
 				ibStatistics.setBackgroundColor(Color.TRANSPARENT);
 			}
 		});
-
-	}
-
-	@Override
-	protected void onResume() {
-		// fill listview
-		updateArListView();
-		super.onResume();
 	}
 
 	// the same as backing home operation
@@ -199,108 +143,6 @@ public class KAMainActivity extends Activity {
 		// homeIntent.addCategory(Intent.CATEGORY_HOME);
 		// startActivity(homeIntent);
 		finish();
-	}
-
-	private void updateArListView() {
-		showProgress();
-		new LoadArTask().execute();
-	}
-
-	private void showProgress() {
-		pbLoad.setVisibility(View.VISIBLE);
-		arListView.setVisibility(View.GONE);
-	}
-
-	private void hideProgress() {
-		pbLoad.setVisibility(View.GONE);
-		arListView.setVisibility(View.VISIBLE);
-	}
-
-	class LoadArTask extends AsyncTask<AccountRecord, Void, Integer> {
-
-		@Override
-		protected Integer doInBackground(AccountRecord... params) {
-			arList = AccountRecordService.queryAll();
-			if (arList == null) {
-				arList = new ArrayList<AccountRecord>();
-			}
-			return null;
-		}
-
-		@Override
-		protected void onPostExecute(Integer result) {
-			arAdapter.notifyDataSetChanged();
-			hideProgress();
-			super.onPostExecute(result);
-		}
-	}
-
-	public class AccountListAdapter extends BaseAdapter {
-		LayoutInflater inflater = (LayoutInflater) KAMainActivity.this
-				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
-		public int getCount() {
-			return arList.size();
-		}
-
-		public Object getItem(int position) {
-			return arList.get(position);
-		}
-
-		public long getItemId(int position) {
-			return position;
-		}
-
-		public View getView(int position, View convertView, ViewGroup parent) {
-
-			AccountHolder holder = new AccountHolder();
-			if (convertView == null) {
-
-				convertView = inflater.inflate(R.layout.account_item, null);
-
-				holder.account = (TextView) convertView
-						.findViewById(R.id.tvCost);
-				holder.category = (ImageView) convertView
-						.findViewById(R.id.imCategory);
-				holder.date = (TextView) convertView.findViewById(R.id.tvDate);
-
-				convertView.setTag(holder);
-			} else {
-				holder = (AccountHolder) convertView.getTag();
-
-			}
-
-			// fill content
-			AccountRecord ar = arList.get(position);
-			holder.account.setText(String.valueOf(ar.getAmount()));
-			holder.category.setImageDrawable(getCategoryImg(ar.getCategory()));
-			holder.date.setText(ar.getDate());
-
-			return convertView;
-		}
-
-		private Drawable getCategoryImg(String type) {
-
-			if (type.equals(Constants.TYPE_EAT)) {
-				return getResources().getDrawable(R.drawable.eat);
-			} else if (type.equals(Constants.TYPE_DRESS)) {
-				return getResources().getDrawable(R.drawable.dress);
-			} else if (type.equals(Constants.TYPE_CAR)) {
-				return getResources().getDrawable(R.drawable.car);
-			} else if (type.equals(Constants.TYPE_PLAY)) {
-				return getResources().getDrawable(R.drawable.play);
-			} else if (type.equals(Constants.TYPE_OTHER)) {
-				return getResources().getDrawable(R.drawable.other);
-			}
-
-			return null;
-		}
-
-		private class AccountHolder {
-			public TextView account;
-			public ImageView category;
-			public TextView date;
-		}
 	}
 
 }
