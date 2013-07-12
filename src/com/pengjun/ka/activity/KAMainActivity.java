@@ -1,7 +1,6 @@
 package com.pengjun.ka.activity;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
@@ -18,9 +17,10 @@ import com.pengjun.keepaccounts.R;
 public class KAMainActivity extends FragmentActivity {
 
 	ImageButton ibAddAccount;
+	ImageButton ibSetListViewToTop;
 
-	ImageButton ibDetails;
-	ImageButton ibStatistics;
+	ImageButton ibHome;
+	ImageButton ibSearch;
 	ImageButton ibChart;
 	ImageButton ibSettings;
 
@@ -50,6 +50,7 @@ public class KAMainActivity extends FragmentActivity {
 	}
 
 	private void createTopBar() {
+
 		ibAddAccount = (ImageButton) findViewById(R.id.ibAddAccount);
 		ibAddAccount.setOnClickListener(new OnClickListener() {
 			@Override
@@ -59,24 +60,33 @@ public class KAMainActivity extends FragmentActivity {
 				intent.setClass(KAMainActivity.this, AddAccountActivity.class);
 				startActivity(intent);
 				overridePendingTransition(R.anim.left_in, R.anim.left_out);
+				ArFragment.newInstance().setListViewToTop();
 
 			}
 		});
+
 		tvTopTitle = (TextView) findViewById(R.id.tvTopTitle);
+
+		ibSetListViewToTop = (ImageButton) findViewById(R.id.ibSetListViewToTop);
+		ibSetListViewToTop.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				ArFragment.newInstance().setListViewToTop();
+			}
+		});
 	}
 
 	private void createBottomBar() {
 
-		ibDetails = (ImageButton) findViewById(R.id.ibDetails);
-		ibDetails.setBackgroundColor(Color.GRAY);
-		ibDetails.setOnClickListener(new OnClickListener() {
+		ibHome = (ImageButton) findViewById(R.id.ibHome);
+		ibHome.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				ibDetails.setBackgroundColor(Color.GRAY);
+				ibHome.setImageResource(R.drawable.home);
 
-				ibStatistics.setBackgroundColor(Color.TRANSPARENT);
-				ibChart.setBackgroundColor(Color.TRANSPARENT);
-				ibSettings.setBackgroundColor(Color.TRANSPARENT);
+				ibSearch.setImageResource(R.drawable.search_black);
+				ibChart.setImageResource(R.drawable.chart_black);
+				ibSettings.setImageResource(R.drawable.settings_black);
 
 				FragmentTransaction ft = getSupportFragmentManager()
 						.beginTransaction();
@@ -85,19 +95,21 @@ public class KAMainActivity extends FragmentActivity {
 				ft.commit();
 
 				ibAddAccount.setVisibility(View.VISIBLE);
+				ibSetListViewToTop.setVisibility(View.VISIBLE);
 				tvTopTitle.setText(R.string.recentArs);
 			}
 		});
 
-		ibStatistics = (ImageButton) findViewById(R.id.ibStatistics);
-		ibStatistics.setOnClickListener(new OnClickListener() {
+		ibSearch = (ImageButton) findViewById(R.id.ibSearch);
+		ibSearch.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				ibStatistics.setBackgroundColor(Color.GRAY);
 
-				ibDetails.setBackgroundColor(Color.TRANSPARENT);
-				ibChart.setBackgroundColor(Color.TRANSPARENT);
-				ibSettings.setBackgroundColor(Color.TRANSPARENT);
+				ibSearch.setImageResource(R.drawable.search);
+
+				ibHome.setImageResource(R.drawable.home_black);
+				ibChart.setImageResource(R.drawable.chart_black);
+				ibSettings.setImageResource(R.drawable.settings_black);
 			}
 		});
 
@@ -105,11 +117,12 @@ public class KAMainActivity extends FragmentActivity {
 		ibChart.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				ibChart.setBackgroundColor(Color.GRAY);
 
-				ibDetails.setBackgroundColor(Color.TRANSPARENT);
-				ibStatistics.setBackgroundColor(Color.TRANSPARENT);
-				ibSettings.setBackgroundColor(Color.TRANSPARENT);
+				ibChart.setImageResource(R.drawable.chart);
+
+				ibHome.setImageResource(R.drawable.home_black);
+				ibSearch.setImageResource(R.drawable.search_black);
+				ibSettings.setImageResource(R.drawable.settings_black);
 
 				FragmentTransaction ft = getSupportFragmentManager()
 						.beginTransaction();
@@ -118,6 +131,7 @@ public class KAMainActivity extends FragmentActivity {
 				ft.commit();
 
 				ibAddAccount.setVisibility(View.GONE);
+				ibSetListViewToTop.setVisibility(View.GONE);
 				tvTopTitle.setText(R.string.backUp);
 
 			}
@@ -127,11 +141,12 @@ public class KAMainActivity extends FragmentActivity {
 		ibSettings.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				ibSettings.setBackgroundColor(Color.GRAY);
 
-				ibDetails.setBackgroundColor(Color.TRANSPARENT);
-				ibChart.setBackgroundColor(Color.TRANSPARENT);
-				ibStatistics.setBackgroundColor(Color.TRANSPARENT);
+				ibSettings.setImageResource(R.drawable.settings);
+
+				ibHome.setImageResource(R.drawable.home_black);
+				ibSearch.setImageResource(R.drawable.search_black);
+				ibChart.setImageResource(R.drawable.chart_black);
 			}
 		});
 	}
@@ -143,6 +158,13 @@ public class KAMainActivity extends FragmentActivity {
 		// homeIntent.addCategory(Intent.CATEGORY_HOME);
 		// startActivity(homeIntent);
 		finish();
+	}
+
+	@Override
+	protected void onDestroy() {
+
+		ArFragment.newInstance().recycle();
+		super.onDestroy();
 	}
 
 }

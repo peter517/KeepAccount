@@ -7,20 +7,21 @@
     <RelativeLayout
         android:id="@+id/llToolBar"
         android:layout_width="fill_parent"
-        android:layout_height="50dp"
+        android:layout_height="48dp"
         android:layout_alignParentTop="true"
         android:background="@drawable/top_bar"
         android:orientation="horizontal" >
 
         <ImageButton
             android:id="@+id/btCancel"
-            android:layout_width="50dp"
+            android:layout_width="48dp"
             android:layout_height="fill_parent"
             android:layout_alignParentLeft="true"
-            android:background="@android:color/transparent"
+            android:background="@drawable/button_selector_xml"
             android:src="@drawable/go_back" />
 
         <TextView
+            style="@style/TitleStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
@@ -28,51 +29,66 @@
 
         <ImageButton
             android:id="@+id/btSave"
-            android:layout_width="50dp"
+            android:layout_width="48dp"
             android:layout_height="fill_parent"
             android:layout_alignParentRight="true"
-            android:background="@android:color/transparent"
+            android:background="@drawable/button_selector_xml"
             android:src="@drawable/save_account" />
     </RelativeLayout>
 
     <TableRow
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal" >
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/account" >
-        </TextView>
-
-        <EditText
-            android:id="@+id/etAccount"
+        <TableRow
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:numeric="decimal" />
+            android:layout_height="48dp"
+            android:layout_weight="1" >
+
+            <TextView
+                style="@style/ArItemStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/account" >
+            </TextView>
+
+            <EditText
+                android:id="@+id/etAccount"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/text_selector_xml"
+                android:numeric="decimal" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="fill_parent"
+            android:layout_height="48dp"
+            android:layout_weight="1" >
+
+            <TextView
+                style="@style/ArItemStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/category" >
+            </TextView>
+
+            <Spinner
+                android:id="@+id/spCategory"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/text_selector_xml" />
+        </TableRow>
     </TableRow>
 
     <TableRow
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp" >
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/category" >
-        </TextView>
-
-        <Spinner
-            android:id="@+id/spCategory"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content" />
-    </TableRow>
-
-    <TableRow
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content" >
-
-        <TextView
+            style="@style/ArItemStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/comment" />
@@ -80,14 +96,17 @@
         <EditText
             android:id="@+id/etComment"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:background="@drawable/text_selector_xml" />
     </TableRow>
 
     <TableRow
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content" 
+        android:layout_marginTop="10dp">
 
         <TextView
+            style="@style/ArItemStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/date" >
@@ -97,6 +116,7 @@
             android:id="@+id/dpDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@drawable/text_selector_xml"
             android:endYear="2100"
             android:startYear="1900" >
         </DatePicker>

@@ -8,7 +8,6 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -24,8 +23,8 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.pengjun.ka.activity.AddAccountActivity;
 import com.pengjun.ka.db.model.AccountRecord;
@@ -37,20 +36,19 @@ import com.pengjun.keepaccounts.R;
 public class ArFragment extends Fragment {
 
 	private ListView lvAr;
-	private ProgressBar pbLoad;
+	// private ProgressBar pbLoad;
 	private Button btLoadMore;
-
 	private View loadMoreView;
 
 	private int offset = 0;
-	private int selectPos = 0;
-
-	private final int LIMIT_ROW_TOTAL = 50;
+	private final int LIMIT_ROW_TOTAL = 30;
 
 	public static String AR_BEAN = "ar_bean";
 
 	private AccountListAdapter arAdapter;
 	private List<AccountRecord> arList = new ArrayList<AccountRecord>();
+
+	private static ArFragment instance = null;
 
 	private static final int MSG_LISTVIEW_TO_TOP = 0x01;
 	Handler handler = new Handler() {
@@ -60,11 +58,7 @@ public class ArFragment extends Fragment {
 			switch (msg.what) {
 			case MSG_LISTVIEW_TO_TOP:
 				// if add the new AR, set ListView to the top
-				if (selectPos == 0) {
-					lvAr.setSelectionFromTop(0, 0);
-				} else {
-					selectPos = 0;
-				}
+				lvAr.setSelectionFromTop(0, 0);
 				break;
 			default:
 				MyDebug.printFromPJ("undefined msg:" + msg.what);
@@ -79,7 +73,6 @@ public class ArFragment extends Fragment {
 
 	@Override
 	public void onResume() {
-
 		// fill listview
 		updateArListView(false);
 		super.onResume();
@@ -89,20 +82,25 @@ public class ArFragment extends Fragment {
 	public void onDestroy() {
 
 		MyDebug.printFromPJ("onDestroy");
-		// strange thing: reEnter app after close the app, arList and offset
-		// still exist
-		offset = 0;
-		arList.clear();
 		super.onDestroy();
 	}
 
-	public static ArFragment instance = null;
+	public void recycle() {
+		// strange thing: reEnter app after close the app, instance still exist
+		instance = null;
+	}
+
+	public void setListViewToTop() {
+		// no handler could be failed to update UI, delaytime 200 is optional
+		handler.sendEmptyMessageDelayed(MSG_LISTVIEW_TO_TOP, 200);
+	}
 
 	public static ArFragment newInstance() {
+
 		if (instance == null) {
 			instance = new ArFragment();
-			return instance;
 		}
+
 		return instance;
 	}
 
@@ -113,7 +111,7 @@ public class ArFragment extends Fragment {
 
 		View view = inflater.inflate(R.layout.ar_listview, null);
 
-		pbLoad = (ProgressBar) view.findViewById(R.id.pbLoad);
+		// pbLoad = (ProgressBar) view.findViewById(R.id.pbLoad);
 
 		loadMoreView = inflater.inflate(R.layout.laod_button, null);
 		btLoadMore = (Button) loadMoreView.findViewById(R.id.btLoadMore);
@@ -138,11 +136,10 @@ public class ArFragment extends Fragment {
 					int position, long id) {
 
 				// view account record
-				selectPos = position;
 				Intent intent = new Intent();
 				intent.setClass(getActivity(), AddAccountActivity.class);
 
-				AccountRecord ar = arList.get(selectPos);
+				AccountRecord ar = arList.get(position);
 				Bundle bundle = new Bundle();
 				bundle.putSerializable(AR_BEAN, (Serializable) ar);
 				intent.putExtras(bundle);
@@ -153,6 +150,8 @@ public class ArFragment extends Fragment {
 			}
 		});
 		lvAr.setOnItemLongClickListener(new OnItemLongClickListener() {
+
+			private int selectPos = 0;
 
 			@Override
 			public boolean onItemLongClick(AdapterView<?> parent, View view,
@@ -195,19 +194,19 @@ public class ArFragment extends Fragment {
 	}
 
 	private void showProgress() {
-		pbLoad.setVisibility(View.VISIBLE);
+		// pbLoad.setVisibility(View.VISIBLE);
 		lvAr.setVisibility(View.GONE);
 	}
 
 	private void hideProgress() {
-		pbLoad.setVisibility(View.GONE);
+		// pbLoad.setVisibility(View.GONE);
 		lvAr.setVisibility(View.VISIBLE);
 	}
 
-	class LoadArTask extends AsyncTask<Boolean, Void, Boolean> {
+	class LoadArTask extends AsyncTask<Boolean, Void, List<AccountRecord>> {
 
 		@Override
-		protected Boolean doInBackground(Boolean... params) {
+		protected List<AccountRecord> doInBackground(Boolean... params) {
 
 			Boolean isLoadMore = params[0];
 			List<AccountRecord> tempArList = null;
@@ -217,7 +216,6 @@ public class ArFragment extends Fragment {
 						LIMIT_ROW_TOTAL);
 				if (tempArList != null) {
 					arList.addAll(tempArList);
-					selectPos = arList.size() - 1;
 				}
 			} else {
 				tempArList = AccountRecordService.queryLimitRows(0,
@@ -227,11 +225,11 @@ public class ArFragment extends Fragment {
 				}
 			}
 
-			return isLoadMore;
+			return tempArList;
 		}
 
 		@Override
-		protected void onPostExecute(Boolean isLoadMore) {
+		protected void onPostExecute(List<AccountRecord> tempArList) {
 
 			hideProgress();
 
@@ -242,11 +240,14 @@ public class ArFragment extends Fragment {
 				btLoadMore.setVisibility(View.VISIBLE);
 			}
 
+			if (tempArList == null || tempArList.size() == 0) {
+				Toast.makeText(ArFragment.this.getActivity(), "没有更多新数据", 2000)
+						.show();
+			}
+
 			arAdapter.notifyDataSetChanged();
 
-			// no handler could be failed to update UI, delaytime 20 is optional
-			handler.sendEmptyMessageDelayed(MSG_LISTVIEW_TO_TOP, 20);
-			super.onPostExecute(isLoadMore);
+			super.onPostExecute(tempArList);
 		}
 	}
 
@@ -288,27 +289,27 @@ public class ArFragment extends Fragment {
 			// fill content
 			AccountRecord ar = arList.get(position);
 			holder.account.setText(String.valueOf(ar.getAmount()));
-			holder.category.setImageDrawable(getCategoryImg(ar.getCategory()));
+			holder.category.setImageResource(getCategoryImg(ar.getCategory()));
 			holder.date.setText(ar.getDate());
 
 			return convertView;
 		}
 
-		private Drawable getCategoryImg(String type) {
+		private int getCategoryImg(String type) {
 
 			if (type.equals(Constants.TYPE_EAT)) {
-				return getResources().getDrawable(R.drawable.eat);
+				return R.drawable.eat;
 			} else if (type.equals(Constants.TYPE_DRESS)) {
-				return getResources().getDrawable(R.drawable.dress);
+				return R.drawable.dress;
 			} else if (type.equals(Constants.TYPE_CAR)) {
-				return getResources().getDrawable(R.drawable.car);
+				return R.drawable.car;
 			} else if (type.equals(Constants.TYPE_PLAY)) {
-				return getResources().getDrawable(R.drawable.play);
+				return R.drawable.play;
 			} else if (type.equals(Constants.TYPE_OTHER)) {
-				return getResources().getDrawable(R.drawable.other);
+				return R.drawable.other;
 			}
 
-			return null;
+			return -1;
 		}
 
 		private class AccountHolder {

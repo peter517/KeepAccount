@@ -11,11 +11,12 @@
         android:name="com.pengjun.ka.activity.KAApplication"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/KATheme" >
         <activity
-            android:name="com.pengjun.ka.activity.KAMainActivity">
-        </activity>
-        <activity android:name="com.pengjun.ka.activity.AddAccountActivity" />
+            android:name="com.pengjun.ka.activity.KAMainActivity"/>
+        <activity 
+            android:name="com.pengjun.ka.activity.AddAccountActivity"/>
+         <!-- android:windowSoftInputMode="stateVisible|adjustPan" -->
          <activity
             android:name="com.pengjun.ka.activity.LoadingActivity"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen"

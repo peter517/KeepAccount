@@ -36,7 +36,7 @@ public class AddAccountActivity extends Activity {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		// getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 		// WindowManager.LayoutParams.FLAG_FULLSCREEN);
-		setContentView(R.layout.add_account);
+		setContentView(R.layout.add_ar);
 
 		etAccount = (EditText) findViewById(R.id.etAccount);
 

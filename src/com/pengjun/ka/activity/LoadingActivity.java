@@ -10,7 +10,7 @@ import com.pengjun.keepaccounts.R;
 public class LoadingActivity extends Activity {
 
 	private static final int GO_MAIN = 0;
-	private static final int COVER_EXIST_TIME = 1500;
+	private static final int COVER_EXIST_TIME = 2000;
 
 	Handler handler = new Handler() {
 		@Override
