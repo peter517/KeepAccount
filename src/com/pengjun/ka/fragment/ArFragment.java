@@ -74,6 +74,7 @@ public class ArFragment extends Fragment {
 	@Override
 	public void onResume() {
 		// fill listview
+		// TODO update when need
 		updateArListView(false);
 		super.onResume();
 	}
@@ -96,11 +97,9 @@ public class ArFragment extends Fragment {
 	}
 
 	public static ArFragment newInstance() {
-
 		if (instance == null) {
 			instance = new ArFragment();
 		}
-
 		return instance;
 	}
 
@@ -108,7 +107,6 @@ public class ArFragment extends Fragment {
 			Bundle savedInstanceState) {
 
 		// AccountRecordService.deleteAll(AccountRecordService.queryAll());
-
 		View view = inflater.inflate(R.layout.ar_listview, null);
 
 		// pbLoad = (ProgressBar) view.findViewById(R.id.pbLoad);
@@ -241,7 +239,7 @@ public class ArFragment extends Fragment {
 			}
 
 			if (tempArList == null || tempArList.size() == 0) {
-				Toast.makeText(ArFragment.this.getActivity(), "没有更多新数据", 2000)
+				Toast.makeText(ArFragment.this.getActivity(), "没有新数据", 1000)
 						.show();
 			}
 
@@ -283,7 +281,6 @@ public class ArFragment extends Fragment {
 				convertView.setTag(holder);
 			} else {
 				holder = (AccountHolder) convertView.getTag();
-
 			}
 
 			// fill content

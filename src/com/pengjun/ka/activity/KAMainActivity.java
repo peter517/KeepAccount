@@ -3,7 +3,6 @@ package com.pengjun.ka.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
@@ -12,6 +11,7 @@ import android.widget.TextView;
 
 import com.pengjun.ka.fragment.ArFragment;
 import com.pengjun.ka.fragment.BackupFragment;
+import com.pengjun.ka.fragment.FragmentDirector;
 import com.pengjun.keepaccounts.R;
 
 public class KAMainActivity extends FragmentActivity {
@@ -35,14 +35,13 @@ public class KAMainActivity extends FragmentActivity {
 		// WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		setContentView(R.layout.keep_account);
 
+		// Toast.makeText(this, "123", 5000).show();
 		// top bar
 		createTopBar();
 
 		// main content
-		FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-		ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-		ft.replace(R.id.mainConent, ArFragment.newInstance());
-		ft.commit();
+		FragmentDirector.replaceFragment(this, R.id.mainConent,
+				ArFragment.newInstance());
 
 		// bottom bar
 		createBottomBar();
@@ -61,7 +60,6 @@ public class KAMainActivity extends FragmentActivity {
 				startActivity(intent);
 				overridePendingTransition(R.anim.left_in, R.anim.left_out);
 				ArFragment.newInstance().setListViewToTop();
-
 			}
 		});
 
@@ -79,74 +77,64 @@ public class KAMainActivity extends FragmentActivity {
 	private void createBottomBar() {
 
 		ibHome = (ImageButton) findViewById(R.id.ibHome);
-		ibHome.setOnClickListener(new OnClickListener() {
+		ibHome.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+
 			@Override
-			public void onClick(View v) {
-				ibHome.setImageResource(R.drawable.home);
+			public void onFocusChange(View v, boolean hasFocus) {
+				if (hasFocus) {
+					FragmentDirector.replaceFragment(KAMainActivity.this,
+							R.id.mainConent, ArFragment.newInstance());
 
-				ibSearch.setImageResource(R.drawable.search_black);
-				ibChart.setImageResource(R.drawable.chart_black);
-				ibSettings.setImageResource(R.drawable.settings_black);
-
-				FragmentTransaction ft = getSupportFragmentManager()
-						.beginTransaction();
-				ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-				ft.replace(R.id.mainConent, ArFragment.newInstance());
-				ft.commit();
-
-				ibAddAccount.setVisibility(View.VISIBLE);
-				ibSetListViewToTop.setVisibility(View.VISIBLE);
-				tvTopTitle.setText(R.string.recentArs);
+					ibAddAccount.setVisibility(View.VISIBLE);
+					ibSetListViewToTop.setVisibility(View.VISIBLE);
+					tvTopTitle.setText(R.string.recentArs);
+				}
 			}
 		});
 
 		ibSearch = (ImageButton) findViewById(R.id.ibSearch);
-		ibSearch.setOnClickListener(new OnClickListener() {
+		ibSearch.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+
 			@Override
-			public void onClick(View v) {
+			public void onFocusChange(View v, boolean hasFocus) {
+				if (hasFocus) {
 
-				ibSearch.setImageResource(R.drawable.search);
-
-				ibHome.setImageResource(R.drawable.home_black);
-				ibChart.setImageResource(R.drawable.chart_black);
-				ibSettings.setImageResource(R.drawable.settings_black);
+				}
 			}
 		});
 
 		ibChart = (ImageButton) findViewById(R.id.ibChart);
+		ibChart.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+
+			@Override
+			public void onFocusChange(View v, boolean hasFocus) {
+				if (hasFocus) {
+					FragmentDirector.replaceFragment(KAMainActivity.this,
+							R.id.mainConent, BackupFragment.newInstance());
+
+					ibAddAccount.setVisibility(View.GONE);
+					ibSetListViewToTop.setVisibility(View.GONE);
+					tvTopTitle.setText(R.string.backUp);
+				}
+
+			}
+		});
+
 		ibChart.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-
-				ibChart.setImageResource(R.drawable.chart);
-
-				ibHome.setImageResource(R.drawable.home_black);
-				ibSearch.setImageResource(R.drawable.search_black);
-				ibSettings.setImageResource(R.drawable.settings_black);
-
-				FragmentTransaction ft = getSupportFragmentManager()
-						.beginTransaction();
-				ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-				ft.replace(R.id.mainConent, BackupFragment.newInstance());
-				ft.commit();
-
-				ibAddAccount.setVisibility(View.GONE);
-				ibSetListViewToTop.setVisibility(View.GONE);
-				tvTopTitle.setText(R.string.backUp);
 
 			}
 		});
 
 		ibSettings = (ImageButton) findViewById(R.id.ibSettings);
-		ibSettings.setOnClickListener(new OnClickListener() {
+		ibSettings.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+
 			@Override
-			public void onClick(View v) {
+			public void onFocusChange(View v, boolean hasFocus) {
+				if (hasFocus) {
 
-				ibSettings.setImageResource(R.drawable.settings);
-
-				ibHome.setImageResource(R.drawable.home_black);
-				ibSearch.setImageResource(R.drawable.search_black);
-				ibChart.setImageResource(R.drawable.chart_black);
+				}
 			}
 		});
 	}

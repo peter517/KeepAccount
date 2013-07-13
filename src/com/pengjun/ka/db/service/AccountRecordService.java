@@ -27,7 +27,8 @@ public class AccountRecordService {
 
 	public static void insert(AccountRecord ar) {
 		try {
-			dao.create(ar);
+//			for (int i = 0; i <20; i++)
+				dao.create(ar);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

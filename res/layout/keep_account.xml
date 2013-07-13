@@ -22,12 +22,12 @@
 
         <TextView
             android:id="@+id/tvTopTitle"
+            style="@style/TitleStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            style="@style/TitleStyle"
             android:layout_centerInParent="true"
             android:text="@string/recentArs" />
-        
+
         <ImageButton
             android:id="@+id/ibSetListViewToTop"
             android:layout_width="48dp"
@@ -35,7 +35,6 @@
             android:layout_alignParentRight="true"
             android:background="@drawable/button_selector_xml"
             android:src="@drawable/to_top" />
-        
     </RelativeLayout>
 
     <RelativeLayout
@@ -43,7 +42,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/llTab"
-        android:layout_below="@+id/llToolBar">
+        android:layout_below="@+id/llToolBar" >
 
         <FrameLayout
             android:id="@+id/mainConent"
@@ -51,7 +50,7 @@
             android:layout_height="fill_parent" />
     </RelativeLayout>
 
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/llTab"
         android:layout_width="fill_parent"
         android:layout_height="48dp"
@@ -63,35 +62,53 @@
             android:id="@+id/ibHome"
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
-            android:layout_alignParentLeft="true"
+            android:layout_gravity="left"
             android:background="@android:color/transparent"
-            android:src="@drawable/home" />
+            android:layout_weight="1"
+            android:focusableInTouchMode="true"
+            android:src="@drawable/home_selector_xml"/>
 
-        <ImageButton
-            android:id="@+id/ibSearch"
+        <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
-            android:layout_marginLeft="45dp"
-            android:layout_toRightOf="@+id/ibHome"
-            android:background="@android:color/transparent"
-            android:src="@drawable/search_black" />
+            android:layout_weight="1"
+            android:orientation="horizontal" >
 
-        <ImageButton
-            android:id="@+id/ibChart"
+            <ImageButton
+                android:id="@+id/ibSearch"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:background="@android:color/transparent"
+                android:layout_centerInParent="true"
+                android:focusableInTouchMode="true"
+                android:src="@drawable/search_selector_xml" />
+        </RelativeLayout>
+
+        <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
-            android:layout_marginLeft="45dp"
-            android:layout_toRightOf="@+id/ibSearch"
-            android:background="@android:color/transparent"
-            android:src="@drawable/chart_black" />
+            android:layout_weight="1"
+            android:orientation="horizontal" >
+
+            <ImageButton
+                android:id="@+id/ibChart"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:background="@android:color/transparent"
+                android:layout_centerInParent="true"
+                android:focusableInTouchMode="true"
+                android:src="@drawable/chart_selector_xml" />
+        </RelativeLayout>
 
         <ImageButton
             android:id="@+id/ibSettings"
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
-            android:layout_alignParentRight="true"
+            android:layout_gravity="right"
+            android:focusableInTouchMode="true"
             android:background="@android:color/transparent"
-            android:src="@drawable/settings_black" />
-    </RelativeLayout>
+            android:layout_weight="1"
+            android:src="@drawable/settings_selector_xml" />
+    </LinearLayout>
 
 </RelativeLayout>
