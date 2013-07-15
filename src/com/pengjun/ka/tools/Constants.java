@@ -19,4 +19,6 @@ public class Constants {
 		}
 		return -1;
 	}
+
+	public static int TOAST_EXSIT_TIME = 2000;
 }

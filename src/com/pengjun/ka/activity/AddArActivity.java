@@ -17,7 +17,7 @@ import com.pengjun.ka.tools.Constants;
 import com.pengjun.ka.tools.Util;
 import com.pengjun.keepaccounts.R;
 
-public class AddAccountActivity extends Activity {
+public class AddArActivity extends Activity {
 
 	private EditText etAccount = null;
 	private Spinner spCategory = null;
@@ -65,6 +65,8 @@ public class AddAccountActivity extends Activity {
 						getArFromView(ar);
 						AccountRecordService.update(ar);
 					}
+
+					setResult(RESULT_OK, null);
 					finish();
 				}
 			}
@@ -75,7 +77,9 @@ public class AddAccountActivity extends Activity {
 		btCancel.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				setResult(RESULT_CANCELED, null);
 				finish();
+
 			}
 		});
 

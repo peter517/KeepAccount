@@ -26,6 +26,8 @@ public class KAMainActivity extends FragmentActivity {
 
 	TextView tvTopTitle;
 
+	public static int ADD_AR = 01;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 
@@ -56,10 +58,10 @@ public class KAMainActivity extends FragmentActivity {
 			public void onClick(View v) {
 				// add new account record
 				Intent intent = new Intent();
-				intent.setClass(KAMainActivity.this, AddAccountActivity.class);
-				startActivity(intent);
+				intent.setClass(KAMainActivity.this, AddArActivity.class);
+				startActivityForResult(intent, ADD_AR);
 				overridePendingTransition(R.anim.left_in, R.anim.left_out);
-				ArFragment.newInstance().setListViewToTop();
+
 			}
 		});
 
@@ -137,6 +139,16 @@ public class KAMainActivity extends FragmentActivity {
 				}
 			}
 		});
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if (requestCode == ADD_AR) {
+			if (resultCode == RESULT_OK) {
+				ArFragment.newInstance().updateArListView(true);
+			}
+		}
+		super.onActivityResult(requestCode, resultCode, data);
 	}
 
 	// the same as backing home operation

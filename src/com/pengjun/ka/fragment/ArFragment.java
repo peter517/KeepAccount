@@ -23,10 +23,12 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.pengjun.ka.activity.AddAccountActivity;
+import com.pengjun.ka.activity.AddArActivity;
+import com.pengjun.ka.activity.KAMainActivity;
 import com.pengjun.ka.db.model.AccountRecord;
 import com.pengjun.ka.db.service.AccountRecordService;
 import com.pengjun.ka.tools.Constants;
@@ -36,7 +38,7 @@ import com.pengjun.keepaccounts.R;
 public class ArFragment extends Fragment {
 
 	private ListView lvAr;
-	// private ProgressBar pbLoad;
+	private ProgressBar pbLoad;
 	private Button btLoadMore;
 	private View loadMoreView;
 
@@ -73,16 +75,11 @@ public class ArFragment extends Fragment {
 
 	@Override
 	public void onResume() {
-		// fill listview
-		// TODO update when need
-		updateArListView(false);
 		super.onResume();
 	}
 
 	@Override
 	public void onDestroy() {
-
-		MyDebug.printFromPJ("onDestroy");
 		super.onDestroy();
 	}
 
@@ -92,8 +89,9 @@ public class ArFragment extends Fragment {
 	}
 
 	public void setListViewToTop() {
-		// no handler could be failed to update UI, delaytime 200 is optional
-		handler.sendEmptyMessageDelayed(MSG_LISTVIEW_TO_TOP, 200);
+		// no handler could be failed to update UI, especially when data changes
+		// delay time is optional
+		handler.sendEmptyMessageDelayed(MSG_LISTVIEW_TO_TOP, 0);
 	}
 
 	public static ArFragment newInstance() {
@@ -109,7 +107,7 @@ public class ArFragment extends Fragment {
 		// AccountRecordService.deleteAll(AccountRecordService.queryAll());
 		View view = inflater.inflate(R.layout.ar_listview, null);
 
-		// pbLoad = (ProgressBar) view.findViewById(R.id.pbLoad);
+		pbLoad = (ProgressBar) view.findViewById(R.id.pbLoad);
 
 		loadMoreView = inflater.inflate(R.layout.laod_button, null);
 		btLoadMore = (Button) loadMoreView.findViewById(R.id.btLoadMore);
@@ -118,7 +116,7 @@ public class ArFragment extends Fragment {
 			public void onClick(View v) {
 				btLoadMore.setVisibility(View.GONE);
 				offset = arList.size();
-				updateArListView(true);
+				loadMoreArListView();
 			}
 		});
 
@@ -135,13 +133,14 @@ public class ArFragment extends Fragment {
 
 				// view account record
 				Intent intent = new Intent();
-				intent.setClass(getActivity(), AddAccountActivity.class);
+				intent.setClass(getActivity(), AddArActivity.class);
 
 				AccountRecord ar = arList.get(position);
 				Bundle bundle = new Bundle();
 				bundle.putSerializable(AR_BEAN, (Serializable) ar);
 				intent.putExtras(bundle);
-				startActivity(intent);
+				getActivity().startActivityForResult(intent,
+						KAMainActivity.ADD_AR);
 				getActivity().overridePendingTransition(R.anim.left_in,
 						R.anim.left_out);
 
@@ -183,44 +182,81 @@ public class ArFragment extends Fragment {
 			}
 		});
 
+		updateArListView(false);
 		return view;
 	}
 
-	private void updateArListView(Boolean isLoadMore) {
+	// fill listview
+	public void updateArListView(Boolean isSetListViewToTop) {
 		showProgress();
-		new LoadArTask().execute(isLoadMore);
+		new LoadArTask().execute(isSetListViewToTop);
+	}
+
+	public void loadMoreArListView() {
+		showProgress();
+		new LoadMoreArTask().execute();
 	}
 
 	private void showProgress() {
-		// pbLoad.setVisibility(View.VISIBLE);
+		pbLoad.setVisibility(View.VISIBLE);
 		lvAr.setVisibility(View.GONE);
 	}
 
 	private void hideProgress() {
-		// pbLoad.setVisibility(View.GONE);
+		pbLoad.setVisibility(View.GONE);
 		lvAr.setVisibility(View.VISIBLE);
 	}
 
 	class LoadArTask extends AsyncTask<Boolean, Void, List<AccountRecord>> {
 
+		private boolean isSetListViewToTop = false;
+
 		@Override
 		protected List<AccountRecord> doInBackground(Boolean... params) {
 
-			Boolean isLoadMore = params[0];
+			isSetListViewToTop = params[0];
 			List<AccountRecord> tempArList = null;
 
-			if (isLoadMore) {
-				tempArList = AccountRecordService.queryLimitRows(offset,
-						LIMIT_ROW_TOTAL);
-				if (tempArList != null) {
-					arList.addAll(tempArList);
-				}
-			} else {
-				tempArList = AccountRecordService.queryLimitRows(0,
-						Math.max(LIMIT_ROW_TOTAL, arList.size()));
-				if (tempArList != null) {
-					arList = tempArList;
-				}
+			tempArList = AccountRecordService.queryLimitRows(0,
+					Math.max(LIMIT_ROW_TOTAL, arList.size()));
+			if (tempArList != null) {
+				arList = tempArList;
+			}
+
+			return tempArList;
+		}
+
+		@Override
+		protected void onPostExecute(List<AccountRecord> tempArList) {
+
+			hideProgress();
+
+			if (tempArList == null || tempArList.size() == 0) {
+				Toast.makeText(ArFragment.this.getActivity(), "没有数据，请记账",
+						Constants.TOAST_EXSIT_TIME).show();
+			}
+
+			if (isSetListViewToTop) {
+				ArFragment.this.setListViewToTop();
+			}
+
+			arAdapter.notifyDataSetChanged();
+
+			super.onPostExecute(tempArList);
+		}
+	}
+
+	class LoadMoreArTask extends AsyncTask<Void, Void, List<AccountRecord>> {
+
+		@Override
+		protected List<AccountRecord> doInBackground(Void... params) {
+
+			List<AccountRecord> tempArList = null;
+
+			tempArList = AccountRecordService.queryLimitRows(offset,
+					LIMIT_ROW_TOTAL);
+			if (tempArList != null) {
+				arList.addAll(tempArList);
 			}
 
 			return tempArList;
@@ -239,12 +275,11 @@ public class ArFragment extends Fragment {
 			}
 
 			if (tempArList == null || tempArList.size() == 0) {
-				Toast.makeText(ArFragment.this.getActivity(), "没有新数据", 1000)
-						.show();
+				Toast.makeText(ArFragment.this.getActivity(), "没有新数据",
+						Constants.TOAST_EXSIT_TIME).show();
 			}
 
 			arAdapter.notifyDataSetChanged();
-
 			super.onPostExecute(tempArList);
 		}
 	}
