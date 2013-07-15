@@ -83,17 +83,6 @@ public class ArFragment extends Fragment {
 		super.onDestroy();
 	}
 
-	public void recycle() {
-		// strange thing: reEnter app after close the app, instance still exist
-		instance = null;
-	}
-
-	public void setListViewToTop() {
-		// no handler could be failed to update UI, especially when data changes
-		// delay time is optional
-		handler.sendEmptyMessageDelayed(MSG_LISTVIEW_TO_TOP, 0);
-	}
-
 	public static ArFragment newInstance() {
 		if (instance == null) {
 			instance = new ArFragment();
@@ -186,6 +175,17 @@ public class ArFragment extends Fragment {
 		return view;
 	}
 
+	public void recycle() {
+		// strange thing: reEnter app after close the app, instance still exist
+		instance = null;
+	}
+
+	public void setListViewToTop() {
+		// no handler could be failed to update UI, especially when data changes
+		// delay time is optional
+		handler.sendEmptyMessageDelayed(MSG_LISTVIEW_TO_TOP, 100);
+	}
+
 	// fill listview
 	public void updateArListView(Boolean isSetListViewToTop) {
 		showProgress();
@@ -236,10 +236,16 @@ public class ArFragment extends Fragment {
 						Constants.TOAST_EXSIT_TIME).show();
 			}
 
+			// rows too little to display load btLoadMore
+			if (arList.size() < LIMIT_ROW_TOTAL) {
+				btLoadMore.setVisibility(View.GONE);
+			} else {
+				btLoadMore.setVisibility(View.VISIBLE);
+			}
+
 			if (isSetListViewToTop) {
 				ArFragment.this.setListViewToTop();
 			}
-
 			arAdapter.notifyDataSetChanged();
 
 			super.onPostExecute(tempArList);
@@ -266,13 +272,6 @@ public class ArFragment extends Fragment {
 		protected void onPostExecute(List<AccountRecord> tempArList) {
 
 			hideProgress();
-
-			// rows too little to display load btLoadMore
-			if (arList.size() < LIMIT_ROW_TOTAL) {
-				btLoadMore.setVisibility(View.GONE);
-			} else {
-				btLoadMore.setVisibility(View.VISIBLE);
-			}
 
 			if (tempArList == null || tempArList.size() == 0) {
 				Toast.makeText(ArFragment.this.getActivity(), "没有新数据",
