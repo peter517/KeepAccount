@@ -10,14 +10,16 @@ import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 import com.pengjun.ka.db.model.AccountRecord;
+import com.pengjun.ka.db.model.ArType;
 
 public class DbHelper extends OrmLiteSqliteOpenHelper {
 
-	public static final String DBNAME = "pengjun2.db";
+	public static final String DBNAME = "pengjun3.db";
 	public static final int DBVERSION = 0x01;
 
 	@SuppressWarnings("rawtypes")
-	public static final Class[] DATACLASSES = { AccountRecord.class };
+	public static final Class[] DATACLASSES = { AccountRecord.class,
+			ArType.class };
 
 	public DbHelper(Context context) {
 		super(context, DBNAME, null, DBVERSION);

@@ -17,8 +17,8 @@
             android:layout_width="48dp"
             android:layout_height="fill_parent"
             android:layout_alignParentLeft="true"
-            android:background="@drawable/button_selector_xml"
-            android:src="@drawable/add_ar" />
+            android:background="@drawable/menu_btn_selector_xml"
+            android:src="@drawable/menu_btn_add_ar" />
 
         <TextView
             android:id="@+id/tvTopTitle"
@@ -33,7 +33,7 @@
             android:layout_width="48dp"
             android:layout_height="fill_parent"
             android:layout_alignParentRight="true"
-            android:background="@drawable/button_selector_xml"
+            android:background="@drawable/menu_btn_selector_xml"
             android:src="@drawable/to_top" />
     </RelativeLayout>
 

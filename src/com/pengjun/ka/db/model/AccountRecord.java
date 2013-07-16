@@ -12,10 +12,10 @@ public class AccountRecord implements Serializable {
 
 	public static final String COL_ID = "id";
 	public static final String COL_AMOUNT = "amount";
-	public static final String COL_CATEGORY = "category";
+	public static final String COL_TYPE = "type";
 	public static final String COL_DATE = "date";
 	public static final String COL_COMMENT = "comment";
-	public static final String COL_UPDATETIME = "updateTime";
+	public static final String COL_UPDATETIME = "update_time";
 
 	@DatabaseField(generatedId = true, columnName = "_id")
 	int id;
@@ -24,7 +24,7 @@ public class AccountRecord implements Serializable {
 	float amount;
 
 	@DatabaseField(canBeNull = false)
-	String category;
+	String type;
 
 	@DatabaseField
 	String date;
@@ -59,12 +59,12 @@ public class AccountRecord implements Serializable {
 		this.amount = amount;
 	}
 
-	public String getCategory() {
-		return category;
+	public String getType() {
+		return type;
 	}
 
-	public void setCategory(String category) {
-		this.category = category;
+	public void setType(String type) {
+		this.type = type;
 	}
 
 	public String getDate() {

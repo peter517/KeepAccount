@@ -147,7 +147,7 @@ public class ArFragment extends Fragment {
 				selectPos = position;
 				AlertDialog.Builder builder = new AlertDialog.Builder(
 						getActivity());
-				builder.setIcon(R.drawable.delete);
+				builder.setIcon(R.drawable.mark_delete);
 				builder.setTitle("删除记账");
 				builder.setMessage("确定要删除该次记账？");
 				builder.setPositiveButton("删除",
@@ -166,7 +166,20 @@ public class ArFragment extends Fragment {
 
 							}
 						});
-				builder.show();
+				AlertDialog dialog = builder.create();
+				dialog.show();
+
+				Button btPositive = dialog
+						.getButton(DialogInterface.BUTTON_POSITIVE);
+				if (btPositive != null) {
+					btPositive.setBackgroundResource(R.drawable.btn_alert);
+				}
+				Button btNegative = dialog
+						.getButton(DialogInterface.BUTTON_NEGATIVE);
+				if (btNegative != null) {
+					btNegative.setBackgroundResource(R.drawable.btn_normal);
+				}
+
 				return false;
 			}
 		});
@@ -243,10 +256,10 @@ public class ArFragment extends Fragment {
 				btLoadMore.setVisibility(View.VISIBLE);
 			}
 
+			arAdapter.notifyDataSetChanged();
 			if (isSetListViewToTop) {
 				ArFragment.this.setListViewToTop();
 			}
-			arAdapter.notifyDataSetChanged();
 
 			super.onPostExecute(tempArList);
 		}
@@ -308,7 +321,7 @@ public class ArFragment extends Fragment {
 
 				holder.account = (TextView) convertView
 						.findViewById(R.id.tvCost);
-				holder.category = (ImageView) convertView
+				holder.type = (ImageView) convertView
 						.findViewById(R.id.imCategory);
 				holder.date = (TextView) convertView.findViewById(R.id.tvDate);
 
@@ -320,7 +333,7 @@ public class ArFragment extends Fragment {
 			// fill content
 			AccountRecord ar = arList.get(position);
 			holder.account.setText(String.valueOf(ar.getAmount()));
-			holder.category.setImageResource(getCategoryImg(ar.getCategory()));
+			holder.type.setImageResource(getCategoryImg(ar.getType()));
 			holder.date.setText(ar.getDate());
 
 			return convertView;
@@ -329,15 +342,15 @@ public class ArFragment extends Fragment {
 		private int getCategoryImg(String type) {
 
 			if (type.equals(Constants.TYPE_EAT)) {
-				return R.drawable.eat;
+				return R.drawable.type_eat;
 			} else if (type.equals(Constants.TYPE_DRESS)) {
-				return R.drawable.dress;
+				return R.drawable.type_dress;
 			} else if (type.equals(Constants.TYPE_CAR)) {
-				return R.drawable.car;
+				return R.drawable.type_car;
 			} else if (type.equals(Constants.TYPE_PLAY)) {
-				return R.drawable.play;
+				return R.drawable.type_play;
 			} else if (type.equals(Constants.TYPE_OTHER)) {
-				return R.drawable.other;
+				return R.drawable.type_other;
 			}
 
 			return -1;
@@ -345,7 +358,7 @@ public class ArFragment extends Fragment {
 
 		private class AccountHolder {
 			public TextView account;
-			public ImageView category;
+			public ImageView type;
 			public TextView date;
 		}
 	}

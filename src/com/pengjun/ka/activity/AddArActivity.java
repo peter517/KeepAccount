@@ -20,7 +20,7 @@ import com.pengjun.keepaccounts.R;
 public class AddArActivity extends Activity {
 
 	private EditText etAccount = null;
-	private Spinner spCategory = null;
+	private Spinner spType = null;
 	private DatePicker dpDate = null;
 	private EditText etComment = null;
 
@@ -40,11 +40,11 @@ public class AddArActivity extends Activity {
 
 		etAccount = (EditText) findViewById(R.id.etAccount);
 
-		spCategory = (Spinner) findViewById(R.id.spCategory);
+		spType = (Spinner) findViewById(R.id.spType);
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-				android.R.layout.simple_spinner_item, Constants.CATEGORY_ARR);
+				android.R.layout.simple_spinner_item, Constants.TYPE_ARR);
 		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-		spCategory.setAdapter(adapter);
+		spType.setAdapter(adapter);
 
 		dpDate = (DatePicker) findViewById(R.id.dpDate);
 		etComment = (EditText) findViewById(R.id.etComment);
@@ -92,8 +92,7 @@ public class AddArActivity extends Activity {
 
 	private void putArToView(AccountRecord ar) {
 		etAccount.setText(String.valueOf((ar.getAmount())));
-		spCategory
-				.setSelection(Constants.getPosByCategroyStr(ar.getCategory()));
+		spType.setSelection(Constants.getPosByCategroyStr(ar.getType()));
 		etComment.setText(String.valueOf((ar.getComment())));
 
 		String[] date = Util.String2DateArr(ar);
@@ -103,7 +102,7 @@ public class AddArActivity extends Activity {
 
 	private void getArFromView(AccountRecord ar) {
 		ar.setAmount(Float.valueOf(etAccount.getText().toString()));
-		ar.setCategory(spCategory.getSelectedItem().toString());
+		ar.setType(spType.getSelectedItem().toString());
 		ar.setDate(Util.DatePicker2FormatStr(dpDate));
 		ar.setComment(etComment.getText().toString());
 		ar.setUpdateTime(Util.getCurTimeStr());
