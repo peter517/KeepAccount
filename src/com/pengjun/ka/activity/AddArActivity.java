@@ -9,6 +9,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.pengjun.ka.db.model.AccountRecord;
 import com.pengjun.ka.db.service.AccountRecordService;
@@ -42,7 +43,7 @@ public class AddArActivity extends Activity {
 
 		spType = (Spinner) findViewById(R.id.spType);
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-				android.R.layout.simple_spinner_item, Constants.TYPE_ARR);
+				android.R.layout.simple_spinner_item, Constants.TYPE_STR_ARR);
 		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		spType.setAdapter(adapter);
 
@@ -68,6 +69,8 @@ public class AddArActivity extends Activity {
 
 					setResult(RESULT_OK, null);
 					finish();
+				} else {
+					Toast.makeText(AddArActivity.this, "请输入金额", 3000).show();
 				}
 			}
 
@@ -91,7 +94,7 @@ public class AddArActivity extends Activity {
 	}
 
 	private void putArToView(AccountRecord ar) {
-		etAccount.setText(String.valueOf((ar.getAmount())));
+		etAccount.setText(String.valueOf((ar.getAcount())));
 		spType.setSelection(Constants.getPosByCategroyStr(ar.getType()));
 		etComment.setText(String.valueOf((ar.getComment())));
 
@@ -101,7 +104,7 @@ public class AddArActivity extends Activity {
 	}
 
 	private void getArFromView(AccountRecord ar) {
-		ar.setAmount(Float.valueOf(etAccount.getText().toString()));
+		ar.setAcount(Float.valueOf(etAccount.getText().toString()));
 		ar.setType(spType.getSelectedItem().toString());
 		ar.setDate(Util.DatePicker2FormatStr(dpDate));
 		ar.setComment(etComment.getText().toString());

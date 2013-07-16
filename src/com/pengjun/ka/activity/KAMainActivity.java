@@ -9,9 +9,11 @@ import android.view.Window;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.pengjun.ka.db.service.ArTypeService;
 import com.pengjun.ka.fragment.ArFragment;
 import com.pengjun.ka.fragment.BackupFragment;
 import com.pengjun.ka.fragment.FragmentDirector;
+import com.pengjun.ka.tools.Constants;
 import com.pengjun.keepaccounts.R;
 
 public class KAMainActivity extends FragmentActivity {
@@ -47,6 +49,16 @@ public class KAMainActivity extends FragmentActivity {
 
 		// bottom bar
 		createBottomBar();
+
+		// if first start of the app
+		if (getSharedPreferences(Constants.INTALL_TAG, 0).getString(
+				Constants.FIRST_START_APP, "").equals("")) {
+			getSharedPreferences(Constants.FIRST_START_APP, 0)
+					.edit()
+					.putString(Constants.FIRST_START_APP,
+							Constants.FIRST_START_APP).commit();
+			ArTypeService.initTable();
+		}
 
 	}
 
@@ -139,6 +151,7 @@ public class KAMainActivity extends FragmentActivity {
 				}
 			}
 		});
+
 	}
 
 	@Override

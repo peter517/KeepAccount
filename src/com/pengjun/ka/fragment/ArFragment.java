@@ -244,16 +244,17 @@ public class ArFragment extends Fragment {
 
 			hideProgress();
 
-			if (tempArList == null || tempArList.size() == 0) {
-				Toast.makeText(ArFragment.this.getActivity(), "没有数据，请记账",
-						Constants.TOAST_EXSIT_TIME).show();
-			}
-
 			// rows too little to display load btLoadMore
 			if (arList.size() < LIMIT_ROW_TOTAL) {
 				btLoadMore.setVisibility(View.GONE);
 			} else {
 				btLoadMore.setVisibility(View.VISIBLE);
+			}
+
+			if (tempArList == null || tempArList.size() == 0) {
+				Toast.makeText(ArFragment.this.getActivity(), "没有数据，请记账",
+						Constants.TOAST_EXSIT_TIME).show();
+				return;
 			}
 
 			arAdapter.notifyDataSetChanged();
@@ -321,9 +322,11 @@ public class ArFragment extends Fragment {
 
 				holder.account = (TextView) convertView
 						.findViewById(R.id.tvCost);
-				holder.type = (ImageView) convertView
-						.findViewById(R.id.imCategory);
+				holder.ivType = (ImageView) convertView
+						.findViewById(R.id.ivType);
 				holder.date = (TextView) convertView.findViewById(R.id.tvDate);
+				holder.tvType = (TextView) convertView
+						.findViewById(R.id.tvType);
 
 				convertView.setTag(holder);
 			} else {
@@ -332,33 +335,35 @@ public class ArFragment extends Fragment {
 
 			// fill content
 			AccountRecord ar = arList.get(position);
-			holder.account.setText(String.valueOf(ar.getAmount()));
-			holder.type.setImageResource(getCategoryImg(ar.getType()));
+			holder.account.setText(String.valueOf(ar.getAcount()));
+			holder.ivType.setImageResource(ar.getImgResId());
+			holder.tvType.setText(ar.getType());
 			holder.date.setText(ar.getDate());
 
 			return convertView;
 		}
 
-		private int getCategoryImg(String type) {
-
-			if (type.equals(Constants.TYPE_EAT)) {
-				return R.drawable.type_eat;
-			} else if (type.equals(Constants.TYPE_DRESS)) {
-				return R.drawable.type_dress;
-			} else if (type.equals(Constants.TYPE_CAR)) {
-				return R.drawable.type_car;
-			} else if (type.equals(Constants.TYPE_PLAY)) {
-				return R.drawable.type_play;
-			} else if (type.equals(Constants.TYPE_OTHER)) {
-				return R.drawable.type_other;
-			}
-
-			return -1;
-		}
+		// private int getCategoryImg(String type) {
+		//
+		// if (type.equals(Constants.TYPE_EAT)) {
+		// return R.drawable.type_eat;
+		// } else if (type.equals(Constants.TYPE_DRESS)) {
+		// return R.drawable.type_dress;
+		// } else if (type.equals(Constants.TYPE_CAR)) {
+		// return R.drawable.type_car;
+		// } else if (type.equals(Constants.TYPE_PLAY)) {
+		// return R.drawable.type_play;
+		// } else if (type.equals(Constants.TYPE_OTHER)) {
+		// return R.drawable.type_other;
+		// }
+		//
+		// return -1;
+		// }
 
 		private class AccountHolder {
 			public TextView account;
-			public ImageView type;
+			public ImageView ivType;
+			public TextView tvType;
 			public TextView date;
 		}
 	}

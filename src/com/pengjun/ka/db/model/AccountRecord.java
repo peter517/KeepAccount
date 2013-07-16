@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
+import com.pengjun.ka.db.service.ArTypeService;
 
 @DatabaseTable
 public class AccountRecord implements Serializable {
@@ -11,29 +12,37 @@ public class AccountRecord implements Serializable {
 	private static final long serialVersionUID = -4580617869739349892L;
 
 	public static final String COL_ID = "id";
-	public static final String COL_AMOUNT = "amount";
+	public static final String COL_ACOUNT = "acount";
 	public static final String COL_TYPE = "type";
 	public static final String COL_DATE = "date";
 	public static final String COL_COMMENT = "comment";
-	public static final String COL_UPDATETIME = "update_time";
+	public static final String COL_UPDATETIME = "updateTime";
 
 	@DatabaseField(generatedId = true, columnName = "_id")
 	int id;
 
 	@DatabaseField(canBeNull = false)
-	float amount;
+	float acount;
 
 	@DatabaseField(canBeNull = false)
-	String type;
+	int typeId;
 
-	@DatabaseField
+	@DatabaseField(canBeNull = false)
 	String date;
 
 	@DatabaseField
 	String comment;
 
-	@DatabaseField
+	@DatabaseField(canBeNull = false)
 	String updateTime;
+
+	public int getTypeId() {
+		return typeId;
+	}
+
+	public void setTypeId(int typeId) {
+		this.typeId = typeId;
+	}
 
 	public String getUpdateTime() {
 		return updateTime;
@@ -51,20 +60,24 @@ public class AccountRecord implements Serializable {
 		this.id = id;
 	}
 
-	public float getAmount() {
-		return amount;
+	public float getAcount() {
+		return acount;
 	}
 
-	public void setAmount(float amount) {
-		this.amount = amount;
+	public void setAcount(float acount) {
+		this.acount = acount;
 	}
 
 	public String getType() {
-		return type;
+		return ArTypeService.getArTpyeById(typeId);
 	}
 
-	public void setType(String type) {
-		this.type = type;
+	public void setType(String arTpye) {
+		typeId = ArTypeService.getIdByArTpye(arTpye);
+	}
+
+	public int getImgResId() {
+		return ArTypeService.getImgResIdById(typeId);
 	}
 
 	public String getDate() {

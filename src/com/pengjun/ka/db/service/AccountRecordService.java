@@ -9,6 +9,7 @@ import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.stmt.QueryBuilder;
 import com.pengjun.ka.activity.KAApplication;
 import com.pengjun.ka.db.model.AccountRecord;
+import com.pengjun.ka.tools.Constants;
 
 public class AccountRecordService {
 
@@ -70,7 +71,7 @@ public class AccountRecordService {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return null;
+		return Constants.DB_SEARCH_LIST_NOT_FOUND;
 	}
 
 	public static void deleteAll(List<AccountRecord> arList) {
@@ -87,10 +88,11 @@ public class AccountRecordService {
 					.queryBuilder();
 			queryBuilder.offset(offset).limit(limtRows);
 			queryBuilder.orderBy(AccountRecord.COL_UPDATETIME, false);
-			return dao.query(queryBuilder.prepare());
+			List<AccountRecord> tmp = dao.query(queryBuilder.prepare());
+			return tmp;
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return null;
+		return Constants.DB_SEARCH_LIST_NOT_FOUND;
 	}
 }

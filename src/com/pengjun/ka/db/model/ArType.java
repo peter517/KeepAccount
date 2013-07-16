@@ -5,17 +5,28 @@ import com.j256.ormlite.field.DatabaseField;
 public class ArType {
 
 	public static final String COL_ID = "id";
-	public static final String COL_TYPE_NAME = "type_name";
-	public static final String COL_UPDATETIME = "update_time";
+	public static final String COL_TYPE_NAME = "typeName";
+	public static final String COL_UPDATETIME = "updateTime";
 
 	@DatabaseField(generatedId = true, columnName = "_id")
 	int id;
 
 	@DatabaseField(canBeNull = false)
-	float typeName;
+	String typeName;
 
-	@DatabaseField
+	@DatabaseField(canBeNull = false)
+	int imgResId;
+
+	@DatabaseField(canBeNull = false)
 	String updateTime;
+
+	public int getImgResId() {
+		return imgResId;
+	}
+
+	public void setImgResId(int imgResId) {
+		this.imgResId = imgResId;
+	}
 
 	public String getUpdateTime() {
 		return updateTime;
@@ -33,11 +44,11 @@ public class ArType {
 		this.id = id;
 	}
 
-	public float getTypeName() {
+	public String getTypeName() {
 		return typeName;
 	}
 
-	public void setTypeName(float typeName) {
+	public void setTypeName(String typeName) {
 		this.typeName = typeName;
 	}
 
