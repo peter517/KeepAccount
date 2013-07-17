@@ -28,7 +28,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.pengjun.ka.activity.AddArActivity;
-import com.pengjun.ka.activity.KAMainActivity;
 import com.pengjun.ka.db.model.AccountRecord;
 import com.pengjun.ka.db.service.AccountRecordService;
 import com.pengjun.ka.tools.Constants;
@@ -128,8 +127,7 @@ public class ArFragment extends Fragment {
 				Bundle bundle = new Bundle();
 				bundle.putSerializable(AR_BEAN, (Serializable) ar);
 				intent.putExtras(bundle);
-				getActivity().startActivityForResult(intent,
-						KAMainActivity.ADD_AR);
+				getActivity().startActivityForResult(intent, Constants.ADD_AR);
 				getActivity().overridePendingTransition(R.anim.left_in,
 						R.anim.left_out);
 
@@ -169,6 +167,7 @@ public class ArFragment extends Fragment {
 				AlertDialog dialog = builder.create();
 				dialog.show();
 
+				// modified dialog button
 				Button btPositive = dialog
 						.getButton(DialogInterface.BUTTON_POSITIVE);
 				if (btPositive != null) {
@@ -185,6 +184,8 @@ public class ArFragment extends Fragment {
 		});
 
 		updateArListView(false);
+
+		MyDebug.printFromPJ("oncreate");
 		return view;
 	}
 
@@ -200,9 +201,9 @@ public class ArFragment extends Fragment {
 	}
 
 	// fill listview
-	public void updateArListView(Boolean isSetListViewToTop) {
+	public void updateArListView(Boolean isListViewDataChange) {
 		showProgress();
-		new LoadArTask().execute(isSetListViewToTop);
+		new LoadArTask().execute(isListViewDataChange);
 	}
 
 	public void loadMoreArListView() {
@@ -222,12 +223,12 @@ public class ArFragment extends Fragment {
 
 	class LoadArTask extends AsyncTask<Boolean, Void, List<AccountRecord>> {
 
-		private boolean isSetListViewToTop = false;
+		private boolean isListViewDataChange = false;
 
 		@Override
 		protected List<AccountRecord> doInBackground(Boolean... params) {
 
-			isSetListViewToTop = params[0];
+			isListViewDataChange = params[0];
 			List<AccountRecord> tempArList = null;
 
 			tempArList = AccountRecordService.queryLimitRows(0,
@@ -258,7 +259,7 @@ public class ArFragment extends Fragment {
 			}
 
 			arAdapter.notifyDataSetChanged();
-			if (isSetListViewToTop) {
+			if (isListViewDataChange) {
 				ArFragment.this.setListViewToTop();
 			}
 
@@ -342,23 +343,6 @@ public class ArFragment extends Fragment {
 
 			return convertView;
 		}
-
-		// private int getCategoryImg(String type) {
-		//
-		// if (type.equals(Constants.TYPE_EAT)) {
-		// return R.drawable.type_eat;
-		// } else if (type.equals(Constants.TYPE_DRESS)) {
-		// return R.drawable.type_dress;
-		// } else if (type.equals(Constants.TYPE_CAR)) {
-		// return R.drawable.type_car;
-		// } else if (type.equals(Constants.TYPE_PLAY)) {
-		// return R.drawable.type_play;
-		// } else if (type.equals(Constants.TYPE_OTHER)) {
-		// return R.drawable.type_other;
-		// }
-		//
-		// return -1;
-		// }
 
 		private class AccountHolder {
 			public TextView account;

@@ -14,7 +14,7 @@ import com.pengjun.ka.db.model.ArType;
 
 public class DbHelper extends OrmLiteSqliteOpenHelper {
 
-	public static final String DBNAME = "pengjun12.db";
+	public static final String DBNAME = "pengjun.db";
 	public static final int DBVERSION = 0x01;
 
 	@SuppressWarnings("rawtypes")

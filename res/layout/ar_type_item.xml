@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:paddingBottom="4dip"
+    android:paddingLeft="12dip" >
+
+    <ImageView
+        android:id="@+id/ivType"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent" >
+    </ImageView>
+
+    <TextView
+        android:id="@+id/tvRecordSum"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/ivType"
+        android:textSize="20dip" >
+    </TextView>
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvRecordSum"
+        android:layout_toRightOf="@+id/ivType" >
+
+        <TextView
+            android:id="@+id/tvType"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true" >
+        </TextView>
+
+        <TextView
+            android:id="@+id/tvUpdateTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true" >
+        </TextView>
+    </RelativeLayout>
+
+</RelativeLayout>

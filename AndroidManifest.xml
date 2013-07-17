@@ -16,6 +16,8 @@
             android:name="com.pengjun.ka.activity.KAMainActivity"/>
         <activity 
             android:name="com.pengjun.ka.activity.AddArActivity"/>
+         <activity 
+            android:name="com.pengjun.ka.activity.ManageArTypeActivity"/>
          <!-- android:windowSoftInputMode="stateVisible|adjustPan" -->
          <activity
             android:name="com.pengjun.ka.activity.LoadingActivity"

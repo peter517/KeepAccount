@@ -1,0 +1,56 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/KeepAccounts.LinearLayout"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:id="@+id/llToolBar"
+        android:layout_width="fill_parent"
+        android:layout_height="48dp"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/top_bar"
+        android:orientation="horizontal" >
+
+        <ImageButton
+            android:id="@+id/ibAddTpye"
+            android:layout_width="48dp"
+            android:layout_height="fill_parent"
+            android:layout_alignParentLeft="true"
+            android:background="@drawable/menu_btn_selector_xml"
+            android:src="@drawable/menu_btn_add_ar_type" />
+
+        <TextView
+            android:id="@+id/tvTopTitle"
+            style="@style/TitleStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/manageType" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/llToolBar" >
+
+        <ListView
+        android:id="@+id/lvArType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top"
+        android:scrollingCache="false" >
+    </ListView>
+    
+     <ProgressBar
+        android:id="@+id/pbLoad"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/lvArType"
+        android:layout_centerInParent="true" 
+        android:visibility="gone"/>
+     
+    </RelativeLayout>
+
+</RelativeLayout>

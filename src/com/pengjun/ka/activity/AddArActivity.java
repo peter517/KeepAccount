@@ -1,10 +1,12 @@
 package com.pengjun.ka.activity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -13,6 +15,7 @@ import android.widget.Toast;
 
 import com.pengjun.ka.db.model.AccountRecord;
 import com.pengjun.ka.db.service.AccountRecordService;
+import com.pengjun.ka.db.service.ArTypeService;
 import com.pengjun.ka.fragment.ArFragment;
 import com.pengjun.ka.tools.Constants;
 import com.pengjun.ka.tools.Util;
@@ -24,6 +27,7 @@ public class AddArActivity extends Activity {
 	private Spinner spType = null;
 	private DatePicker dpDate = null;
 	private EditText etComment = null;
+	private Button btManageType = null;
 
 	private ImageButton btSave = null;
 	private ImageButton btCancel = null;
@@ -43,9 +47,21 @@ public class AddArActivity extends Activity {
 
 		spType = (Spinner) findViewById(R.id.spType);
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-				android.R.layout.simple_spinner_item, Constants.TYPE_STR_ARR);
+				android.R.layout.simple_spinner_item,
+				ArTypeService.queryAllArTypeName());
 		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		spType.setAdapter(adapter);
+
+		btManageType = (Button) findViewById(R.id.btManageType);
+		btManageType.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent();
+				intent.setClass(AddArActivity.this, ManageArTypeActivity.class);
+				startActivityForResult(intent, Constants.ADD_AR_TYPE);
+				overridePendingTransition(R.anim.left_in, R.anim.left_out);
+			}
+		});
 
 		dpDate = (DatePicker) findViewById(R.id.dpDate);
 		etComment = (EditText) findViewById(R.id.etComment);

@@ -1,6 +1,7 @@
 package com.pengjun.ka.db.service;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.j256.ormlite.android.AndroidConnectionSource;
@@ -46,6 +47,22 @@ public class ArTypeService {
 	public static List<ArType> queryAll() {
 		try {
 			return dao.queryForAll();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return Constants.DB_SEARCH_LIST_NOT_FOUND;
+	}
+
+	public static List<String> queryAllArTypeName() {
+		try {
+			List<ArType> arTypeList = dao.queryForAll();
+			List<String> typeNameList = new ArrayList<String>();
+
+			for (ArType arType : arTypeList) {
+				typeNameList.add(arType.getTypeName());
+			}
+
+			return typeNameList;
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

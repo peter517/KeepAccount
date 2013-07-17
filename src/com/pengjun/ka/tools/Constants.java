@@ -35,7 +35,12 @@ public class Constants {
 	public static float DB_SEARCH_FLOAT_NOT_FOUND = -1.0f;
 	public static List DB_SEARCH_LIST_NOT_FOUND = null;
 
-	// first start check
-	public static String INTALL_TAG = "intall_tag";
-	public static String FIRST_START_APP = "frist_start_app";
+	// use SharedPreferences to check first install
+	public static String SP_TAG_INSTALL = "intall_tag";
+	public static String SP_KEY_FIRST_START_APP = "frist_start_app";
+	public static String SP_VALUE_FIRST_START_APP = "frist_start_app";
+
+	// activity call-back tag
+	public static final int ADD_AR = 01;
+	public static final int ADD_AR_TYPE = 02;
 }

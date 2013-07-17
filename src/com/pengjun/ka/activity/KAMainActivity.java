@@ -1,6 +1,7 @@
 package com.pengjun.ka.activity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
@@ -28,8 +29,6 @@ public class KAMainActivity extends FragmentActivity {
 
 	TextView tvTopTitle;
 
-	public static int ADD_AR = 01;
-
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 
@@ -50,13 +49,15 @@ public class KAMainActivity extends FragmentActivity {
 		// bottom bar
 		createBottomBar();
 
+		SharedPreferences firstInstall = getSharedPreferences(
+				Constants.SP_TAG_INSTALL, 0);
 		// if first start of the app
-		if (getSharedPreferences(Constants.INTALL_TAG, 0).getString(
-				Constants.FIRST_START_APP, "").equals("")) {
-			getSharedPreferences(Constants.FIRST_START_APP, 0)
+		if (firstInstall.getString(Constants.SP_KEY_FIRST_START_APP, "")
+				.equals("")) {
+			firstInstall
 					.edit()
-					.putString(Constants.FIRST_START_APP,
-							Constants.FIRST_START_APP).commit();
+					.putString(Constants.SP_KEY_FIRST_START_APP,
+							Constants.SP_VALUE_FIRST_START_APP).commit();
 			ArTypeService.initTable();
 		}
 
@@ -71,7 +72,7 @@ public class KAMainActivity extends FragmentActivity {
 				// add new account record
 				Intent intent = new Intent();
 				intent.setClass(KAMainActivity.this, AddArActivity.class);
-				startActivityForResult(intent, ADD_AR);
+				startActivityForResult(intent, Constants.ADD_AR);
 				overridePendingTransition(R.anim.left_in, R.anim.left_out);
 
 			}
@@ -156,7 +157,7 @@ public class KAMainActivity extends FragmentActivity {
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		if (requestCode == ADD_AR) {
+		if (requestCode == Constants.ADD_AR) {
 			if (resultCode == RESULT_OK) {
 				ArFragment.newInstance().updateArListView(true);
 			}

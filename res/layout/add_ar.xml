@@ -33,7 +33,7 @@
             android:layout_height="fill_parent"
             android:layout_alignParentRight="true"
             android:background="@drawable/menu_btn_selector_xml"
-            android:src="@drawable/menu_btn_save_account" />
+            android:src="@drawable/menu_btn_save_ar" />
     </RelativeLayout>
 
     <TableRow
