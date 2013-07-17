@@ -72,7 +72,7 @@ public class KAMainActivity extends FragmentActivity {
 				// add new account record
 				Intent intent = new Intent();
 				intent.setClass(KAMainActivity.this, AddArActivity.class);
-				startActivityForResult(intent, Constants.ADD_AR);
+				startActivityForResult(intent, Constants.CB_ADD_AR);
 				overridePendingTransition(R.anim.left_in, R.anim.left_out);
 
 			}
@@ -135,13 +135,6 @@ public class KAMainActivity extends FragmentActivity {
 			}
 		});
 
-		ibChart.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-
-			}
-		});
-
 		ibSettings = (ImageButton) findViewById(R.id.ibSettings);
 		ibSettings.setOnFocusChangeListener(new View.OnFocusChangeListener() {
 
@@ -157,7 +150,7 @@ public class KAMainActivity extends FragmentActivity {
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		if (requestCode == Constants.ADD_AR) {
+		if (requestCode == Constants.CB_ADD_AR) {
 			if (resultCode == RESULT_OK) {
 				ArFragment.newInstance().updateArListView(true);
 			}

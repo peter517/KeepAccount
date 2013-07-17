@@ -1,17 +1,22 @@
 package com.pengjun.ka.activity;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.BaseAdapter;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -21,16 +26,34 @@ import android.widget.Toast;
 import com.pengjun.ka.db.model.ArType;
 import com.pengjun.ka.db.service.ArTypeService;
 import com.pengjun.ka.tools.Constants;
+import com.pengjun.ka.tools.MyDebug;
 import com.pengjun.keepaccounts.R;
 
 public class ManageArTypeActivity extends Activity {
 
 	private ListView lvArType;
 	private ProgressBar pbLoad;
+	private ImageButton ibAddTpye;
 
 	private ArTypeAdapter arAdapter;
 
 	private List<ArType> arTypeList = new ArrayList<ArType>();
+
+	private static final int MSG_LISTVIEW_TO_TOP = 0x01;
+	Handler handler = new Handler() {
+		@Override
+		public void handleMessage(Message msg) {
+
+			switch (msg.what) {
+			case MSG_LISTVIEW_TO_TOP:
+				// if add the new AR, set ListView to the top
+				lvArType.setSelectionFromTop(0, 0);
+				break;
+			default:
+				MyDebug.printFromPJ("undefined msg:" + msg.what);
+			}
+		}
+	};
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +61,23 @@ public class ManageArTypeActivity extends Activity {
 
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.manage_type);
+
+		ibAddTpye = (ImageButton) findViewById(R.id.ibAddTpye);
+		ibAddTpye.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+
+				Intent intent = new Intent();
+				intent.setClass(ManageArTypeActivity.this,
+						AddArTypeActivity.class);
+				Bundle bundle = new Bundle();
+				bundle.putSerializable(Constants.INTENT_AR_TYPE_BEAN,
+						(Serializable) arTypeList);
+				intent.putExtras(bundle);
+				startActivityForResult(intent, Constants.CB_ADD_AR_TYPE);
+				overridePendingTransition(R.anim.left_in, R.anim.left_out);
+			}
+		});
 
 		lvArType = (ListView) findViewById(R.id.lvArType);
 		arAdapter = new ArTypeAdapter();
@@ -53,11 +93,11 @@ public class ManageArTypeActivity extends Activity {
 	// instance = null;
 	// }
 	//
-	// public void setListViewToTop() {
-	// // no handler could be failed to update UI, especially when data changes
-	// // delay time is optional
-	// handler.sendEmptyMessageDelayed(MSG_LISTVIEW_TO_TOP, 100);
-	// }
+	public void setListViewToTop() {
+		// no handler could be failed to update UI, especially when data changes
+		// delay time is optional
+		handler.sendEmptyMessageDelayed(MSG_LISTVIEW_TO_TOP, 100);
+	}
 
 	// fill listview
 	public void updateArTypeLv(Boolean isListViewDataChange) {
@@ -106,7 +146,7 @@ public class ManageArTypeActivity extends Activity {
 
 			arAdapter.notifyDataSetChanged();
 			if (isListViewDataChange) {
-				// ManageArTypeActivity.this.setListViewToTop();
+				ManageArTypeActivity.this.setListViewToTop();
 			}
 
 			super.onPostExecute(tempArList);
@@ -133,7 +173,8 @@ public class ManageArTypeActivity extends Activity {
 			AccountHolder holder = new AccountHolder();
 			if (convertView == null) {
 
-				convertView = inflater.inflate(R.layout.ar_type_item, null);
+				convertView = inflater.inflate(R.layout.ar_type_listview_item,
+						null);
 
 				holder.recordSum = (TextView) convertView
 						.findViewById(R.id.tvRecordSum);

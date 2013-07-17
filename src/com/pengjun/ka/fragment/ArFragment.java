@@ -44,8 +44,6 @@ public class ArFragment extends Fragment {
 	private int offset = 0;
 	private final int LIMIT_ROW_TOTAL = 30;
 
-	public static String AR_BEAN = "ar_bean";
-
 	private AccountListAdapter arAdapter;
 	private List<AccountRecord> arList = new ArrayList<AccountRecord>();
 
@@ -125,9 +123,11 @@ public class ArFragment extends Fragment {
 
 				AccountRecord ar = arList.get(position);
 				Bundle bundle = new Bundle();
-				bundle.putSerializable(AR_BEAN, (Serializable) ar);
+				bundle.putSerializable(Constants.INTENT_AR_BEAN,
+						(Serializable) ar);
 				intent.putExtras(bundle);
-				getActivity().startActivityForResult(intent, Constants.ADD_AR);
+				getActivity().startActivityForResult(intent,
+						Constants.CB_ADD_AR);
 				getActivity().overridePendingTransition(R.anim.left_in,
 						R.anim.left_out);
 
@@ -185,7 +185,6 @@ public class ArFragment extends Fragment {
 
 		updateArListView(false);
 
-		MyDebug.printFromPJ("oncreate");
 		return view;
 	}
 
@@ -319,7 +318,7 @@ public class ArFragment extends Fragment {
 			AccountHolder holder = new AccountHolder();
 			if (convertView == null) {
 
-				convertView = inflater.inflate(R.layout.ar_item, null);
+				convertView = inflater.inflate(R.layout.ar_listview_item, null);
 
 				holder.account = (TextView) convertView
 						.findViewById(R.id.tvCost);

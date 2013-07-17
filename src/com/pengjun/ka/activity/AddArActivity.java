@@ -16,7 +16,6 @@ import android.widget.Toast;
 import com.pengjun.ka.db.model.AccountRecord;
 import com.pengjun.ka.db.service.AccountRecordService;
 import com.pengjun.ka.db.service.ArTypeService;
-import com.pengjun.ka.fragment.ArFragment;
 import com.pengjun.ka.tools.Constants;
 import com.pengjun.ka.tools.Util;
 import com.pengjun.keepaccounts.R;
@@ -52,13 +51,19 @@ public class AddArActivity extends Activity {
 		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		spType.setAdapter(adapter);
 
+		ar = (AccountRecord) getIntent()
+				.getSerializableExtra(Constants.INTENT_AR_BEAN);
+		if (ar != null) {
+			putArToView(ar);
+		}
+
 		btManageType = (Button) findViewById(R.id.btManageType);
 		btManageType.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				Intent intent = new Intent();
 				intent.setClass(AddArActivity.this, ManageArTypeActivity.class);
-				startActivityForResult(intent, Constants.ADD_AR_TYPE);
+				startActivityForResult(intent, Constants.CB_ADD_AR_TYPE);
 				overridePendingTransition(R.anim.left_in, R.anim.left_out);
 			}
 		});
@@ -98,15 +103,9 @@ public class AddArActivity extends Activity {
 			public void onClick(View v) {
 				setResult(RESULT_CANCELED, null);
 				finish();
-
 			}
 		});
 
-		ar = (AccountRecord) getIntent().getSerializableExtra(
-				ArFragment.AR_BEAN);
-		if (ar != null) {
-			putArToView(ar);
-		}
 	}
 
 	private void putArToView(AccountRecord ar) {

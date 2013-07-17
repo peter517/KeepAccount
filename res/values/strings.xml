@@ -9,7 +9,11 @@
     
     <string name="ok">保存</string>
     <string name="cancel">取消</string>
-    <string name="manageType">管理分类</string>
+    
+    <string name="manageType">管理账目分类</string>
+    <string name="newArTpye">新增账目分类</string>
+    <string name="chooseTypeImg">请选择相应的图标</string>
+    <string name="arTypeName">分类名称</string>
     
     <string name="account">金额</string>
     <string name="type">种类</string>

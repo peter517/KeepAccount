@@ -18,7 +18,9 @@
             android:name="com.pengjun.ka.activity.AddArActivity"/>
          <activity 
             android:name="com.pengjun.ka.activity.ManageArTypeActivity"/>
-         <!-- android:windowSoftInputMode="stateVisible|adjustPan" -->
+          <activity 
+            android:name="com.pengjun.ka.activity.AddArTypeActivity"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden"/>
          <activity
             android:name="com.pengjun.ka.activity.LoadingActivity"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
@@ -29,6 +31,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+         <!-- android:windowSoftInputMode="stateVisible|adjustPan" -->
     </application>
 
 </manifest>

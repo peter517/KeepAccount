@@ -5,10 +5,8 @@
     android:orientation="vertical" >
 
     <RelativeLayout
-        android:id="@+id/llToolBar"
         android:layout_width="fill_parent"
         android:layout_height="48dp"
-        android:layout_alignParentTop="true"
         android:background="@drawable/top_bar"
         android:orientation="horizontal" >
 
@@ -87,7 +85,7 @@
             android:layout_weight="1" >
             <Button  
                 android:id="@+id/btManageType"
-                android:layout_width="100dp"
+                android:layout_width="120dp"
                 android:layout_height="fill_parent"
                 android:background="@drawable/btn_selector_xml"
                 android:text="@string/manageType"

@@ -1,8 +1,12 @@
 package com.pengjun.ka.db.model;
 
+import java.io.Serializable;
+
 import com.j256.ormlite.field.DatabaseField;
 
-public class ArType {
+public class ArType implements Serializable {
+
+	private static final long serialVersionUID = -4580617869739349891L;
 
 	public static final String COL_ID = "id";
 	public static final String COL_TYPE_NAME = "typeName";

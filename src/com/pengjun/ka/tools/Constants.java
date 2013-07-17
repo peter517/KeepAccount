@@ -41,6 +41,10 @@ public class Constants {
 	public static String SP_VALUE_FIRST_START_APP = "frist_start_app";
 
 	// activity call-back tag
-	public static final int ADD_AR = 01;
-	public static final int ADD_AR_TYPE = 02;
+	public static final int CB_ADD_AR = 01;
+	public static final int CB_ADD_AR_TYPE = 02;
+
+	// activity intent translate data tag
+	public static final String INTENT_AR_BEAN = "ar_bean";
+	public static final String INTENT_AR_TYPE_BEAN = "ar_type_bean";
 }
