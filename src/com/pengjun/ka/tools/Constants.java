@@ -17,16 +17,6 @@ public class Constants {
 	public static final String TYPE_CAR = "行";
 	public static final String TYPE_OTHER = "其他";
 
-	public static int getPosByCategroyStr(String str) {
-
-		for (int i = 0; i < TYPE_STR_ARR.length; i++) {
-			if (str.equals(TYPE_STR_ARR[i])) {
-				return i;
-			}
-		}
-		return 0;
-	}
-
 	public static int TOAST_EXSIT_TIME = 2000;
 
 	// DB search error

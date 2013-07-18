@@ -16,6 +16,7 @@
             android:id="@+id/ibAddAccount"
             android:layout_width="48dp"
             android:layout_height="fill_parent"
+           
             android:layout_alignParentLeft="true"
             android:background="@drawable/menu_btn_selector_xml"
             android:src="@drawable/menu_btn_add_ar" />

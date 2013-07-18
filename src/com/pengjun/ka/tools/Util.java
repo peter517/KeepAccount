@@ -1,6 +1,7 @@
 package com.pengjun.ka.tools;
 
 import java.util.Calendar;
+import java.util.List;
 
 import android.content.Context;
 import android.widget.DatePicker;
@@ -47,6 +48,16 @@ public class Util {
 		MyDebug.printFromPJ("cont.getDatabasePath = "
 				+ cont.getDatabasePath("temp"));
 		MyDebug.printFromPJ("cont.getFilesDir() = " + cont.getFilesDir());
+	}
+
+	public static int getPosFromList(List<String> strList, String str) {
+
+		for (int i = 0; i < strList.size(); i++) {
+			if (str.equals(strList.get(i))) {
+				return i;
+			}
+		}
+		return 0;
 	}
 
 }

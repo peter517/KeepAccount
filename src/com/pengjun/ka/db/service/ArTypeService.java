@@ -114,4 +114,12 @@ public class ArTypeService {
 		}
 		return Constants.DB_SEARCH_INT_NOT_FOUND;
 	}
+
+	public static void insert(ArType arType) {
+		try {
+			dao.create(arType);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 }

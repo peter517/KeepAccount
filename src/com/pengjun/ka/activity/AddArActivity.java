@@ -51,8 +51,8 @@ public class AddArActivity extends Activity {
 		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		spType.setAdapter(adapter);
 
-		ar = (AccountRecord) getIntent()
-				.getSerializableExtra(Constants.INTENT_AR_BEAN);
+		ar = (AccountRecord) getIntent().getSerializableExtra(
+				Constants.INTENT_AR_BEAN);
 		if (ar != null) {
 			putArToView(ar);
 		}
@@ -108,9 +108,19 @@ public class AddArActivity extends Activity {
 
 	}
 
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if (requestCode == Constants.CB_ADD_AR_TYPE) {
+			if (resultCode == RESULT_OK) {
+			}
+		}
+		super.onActivityResult(requestCode, resultCode, data);
+	}
+
 	private void putArToView(AccountRecord ar) {
 		etAccount.setText(String.valueOf((ar.getAcount())));
-		spType.setSelection(Constants.getPosByCategroyStr(ar.getType()));
+		spType.setSelection(Util.getPosFromList(
+				ArTypeService.queryAllArTypeName(), ar.getType()));
 		etComment.setText(String.valueOf((ar.getComment())));
 
 		String[] date = Util.String2DateArr(ar);

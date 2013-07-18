@@ -115,6 +115,16 @@ public class ManageArTypeActivity extends Activity {
 		lvArType.setVisibility(View.VISIBLE);
 	}
 
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if (requestCode == Constants.CB_ADD_AR_TYPE) {
+			if (resultCode == RESULT_OK) {
+				updateArTypeLv(true);
+			}
+		}
+		super.onActivityResult(requestCode, resultCode, data);
+	}
+
 	class LoadArTypeTask extends AsyncTask<Boolean, Void, List<ArType>> {
 
 		private boolean isListViewDataChange = false;
