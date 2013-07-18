@@ -153,6 +153,8 @@ public class KAMainActivity extends FragmentActivity {
 		if (requestCode == Constants.CB_ADD_AR) {
 			if (resultCode == RESULT_OK) {
 				ArFragment.newInstance().updateArListView(true);
+			} else {
+				ArFragment.newInstance().updateArListView(false);
 			}
 		}
 		super.onActivityResult(requestCode, resultCode, data);

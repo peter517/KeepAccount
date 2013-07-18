@@ -1,5 +1,8 @@
 package com.pengjun.ka.activity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -33,6 +36,10 @@ public class AddArActivity extends Activity {
 
 	private AccountRecord ar;
 
+	List<String> arTypeNameList = new ArrayList<String>();
+
+	ArrayAdapter<String> arTypeNameAdapter;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -42,14 +49,12 @@ public class AddArActivity extends Activity {
 		// WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		setContentView(R.layout.add_ar);
 
+		arTypeNameList = ArTypeService.queryAllArTypeName();
+
 		etAccount = (EditText) findViewById(R.id.etAccount);
 
 		spType = (Spinner) findViewById(R.id.spType);
-		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-				android.R.layout.simple_spinner_item,
-				ArTypeService.queryAllArTypeName());
-		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-		spType.setAdapter(adapter);
+		updataSpTypeAdapter();
 
 		ar = (AccountRecord) getIntent().getSerializableExtra(
 				Constants.INTENT_AR_BEAN);
@@ -63,7 +68,8 @@ public class AddArActivity extends Activity {
 			public void onClick(View v) {
 				Intent intent = new Intent();
 				intent.setClass(AddArActivity.this, ManageArTypeActivity.class);
-				startActivityForResult(intent, Constants.CB_ADD_AR_TYPE);
+				startActivityForResult(intent,
+						Constants.CB_ADD_AR_TYPE_NAME_LIST);
 				overridePendingTransition(R.anim.left_in, R.anim.left_out);
 			}
 		});
@@ -101,7 +107,6 @@ public class AddArActivity extends Activity {
 		btCancel.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				setResult(RESULT_CANCELED, null);
 				finish();
 			}
 		});
@@ -110,17 +115,30 @@ public class AddArActivity extends Activity {
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		if (requestCode == Constants.CB_ADD_AR_TYPE) {
+		if (requestCode == Constants.CB_ADD_AR_TYPE_NAME_LIST) {
 			if (resultCode == RESULT_OK) {
+				ArrayList<String> arTypeNameList = data.getExtras()
+						.getStringArrayList(
+								Constants.INTENT_AR_TYPE_NAME_LIST_BEAN);
+				this.arTypeNameList = arTypeNameList;
+				updataSpTypeAdapter();
+				arTypeNameAdapter.notifyDataSetChanged();
 			}
 		}
 		super.onActivityResult(requestCode, resultCode, data);
 	}
 
+	private void updataSpTypeAdapter() {
+		arTypeNameAdapter = new ArrayAdapter<String>(this,
+				android.R.layout.simple_spinner_item, arTypeNameList);
+		arTypeNameAdapter
+				.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		spType.setAdapter(arTypeNameAdapter);
+	}
+
 	private void putArToView(AccountRecord ar) {
 		etAccount.setText(String.valueOf((ar.getAcount())));
-		spType.setSelection(Util.getPosFromList(
-				ArTypeService.queryAllArTypeName(), ar.getType()));
+		spType.setSelection(Util.getPosFromList(arTypeNameList, ar.getType()));
 		etComment.setText(String.valueOf((ar.getComment())));
 
 		String[] date = Util.String2DateArr(ar);

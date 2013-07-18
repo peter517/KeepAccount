@@ -122,4 +122,38 @@ public class ArTypeService {
 			e.printStackTrace();
 		}
 	}
+
+	public static boolean isTypeNameExsit(String typeName) {
+		List<ArType> arTypeList = queryArTypeByTypeName(typeName);
+		if (arTypeList == null && arTypeList.size() == 0) {
+			return false;
+		}
+		return true;
+	}
+
+	public static List<ArType> queryArTypeByTypeName(String typeName) {
+		try {
+			return dao.queryForEq(ArType.COL_TYPE_NAME, typeName);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	public static void update(ArType arType) {
+		try {
+			dao.update(arType);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public static void delete(ArType arType) {
+		try {
+			dao.delete(arType);
+			AccountRecordService.deleteByTypeId(arType.getId());
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 }

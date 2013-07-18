@@ -13,7 +13,7 @@ public class AccountRecord implements Serializable {
 
 	public static final String COL_ID = "id";
 	public static final String COL_ACOUNT = "acount";
-	public static final String COL_TYPE = "type";
+	public static final String COL_TYPE_ID = "typeId";
 	public static final String COL_DATE = "date";
 	public static final String COL_COMMENT = "comment";
 	public static final String COL_UPDATETIME = "updateTime";

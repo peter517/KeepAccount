@@ -6,6 +6,7 @@ import java.util.List;
 import com.j256.ormlite.android.AndroidConnectionSource;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
+import com.j256.ormlite.stmt.DeleteBuilder;
 import com.j256.ormlite.stmt.QueryBuilder;
 import com.pengjun.ka.activity.KAApplication;
 import com.pengjun.ka.db.model.AccountRecord;
@@ -82,10 +83,21 @@ public class AccountRecordService {
 		}
 	}
 
+	public static void deleteByTypeId(Integer typeId) {
+		try {
+			DeleteBuilder db = dao.deleteBuilder();
+			db.where().eq(AccountRecord.COL_TYPE_ID, typeId);
+			dao.delete(db.prepare());
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
 	public static List<AccountRecord> queryLimitRows(int offset, int limtRows) {
 		try {
 			QueryBuilder<AccountRecord, Integer> queryBuilder = dao
 					.queryBuilder();
+
 			queryBuilder.offset(offset).limit(limtRows);
 			queryBuilder.orderBy(AccountRecord.COL_UPDATETIME, false);
 			List<AccountRecord> tmp = dao.query(queryBuilder.prepare());

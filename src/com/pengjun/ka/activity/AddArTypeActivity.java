@@ -21,6 +21,7 @@ import android.widget.Toast;
 
 import com.pengjun.ka.db.model.ArType;
 import com.pengjun.ka.db.service.ArTypeService;
+import com.pengjun.ka.tools.Constants;
 import com.pengjun.ka.tools.Util;
 import com.pengjun.ka.view.FocusedChangeImageView;
 import com.pengjun.keepaccounts.R;
@@ -86,12 +87,24 @@ public class AddArTypeActivity extends Activity {
 					return;
 				}
 
+				if (ArTypeService
+						.isTypeNameExsit(etArType.getText().toString())) {
+					Toast.makeText(AddArTypeActivity.this, "类名称已存在，请重新输入", 2000)
+							.show();
+					return;
+				}
+
 				if (arType == null) {
 					arType = new ArType();
 					arType.setTypeName(etArType.getText().toString());
 					arType.setImgResId(imgResIdList.get(selectPos));
 					arType.setUpdateTime(Util.getCurTimeStr());
 					ArTypeService.insert(arType);
+				} else {
+					arType.setTypeName(etArType.getText().toString());
+					arType.setImgResId(imgResIdList.get(selectPos));
+					arType.setUpdateTime(Util.getCurTimeStr());
+					ArTypeService.update(arType);
 				}
 
 				setResult(RESULT_OK, null);
@@ -125,6 +138,12 @@ public class AddArTypeActivity extends Activity {
 				selectedView.requestFocusFromTouch();
 			}
 		});
+
+		arType = (ArType) getIntent().getSerializableExtra(
+				Constants.INTENT_AR_TYPE_BEAN);
+		if (arType != null) {
+			etArType.setText(arType.getTypeName());
+		}
 
 	}
 

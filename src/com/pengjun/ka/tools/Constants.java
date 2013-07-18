@@ -11,11 +11,6 @@ public class Constants {
 	public static final int[] TYPE_IMAGE_RES_ID_ARR = { R.drawable.type_eat,
 			R.drawable.type_play, R.drawable.type_dress, R.drawable.type_car,
 			R.drawable.type_other };
-	public static final String TYPE_EAT = "吃";
-	public static final String TYPE_PLAY = "玩";
-	public static final String TYPE_DRESS = "衣";
-	public static final String TYPE_CAR = "行";
-	public static final String TYPE_OTHER = "其他";
 
 	public static int TOAST_EXSIT_TIME = 2000;
 
@@ -33,8 +28,10 @@ public class Constants {
 	// activity call-back tag
 	public static final int CB_ADD_AR = 01;
 	public static final int CB_ADD_AR_TYPE = 02;
+	public static final int CB_ADD_AR_TYPE_NAME_LIST = 03;
 
 	// activity intent translate data tag
 	public static final String INTENT_AR_BEAN = "ar_bean";
 	public static final String INTENT_AR_TYPE_BEAN = "ar_type_bean";
+	public static final String INTENT_AR_TYPE_NAME_LIST_BEAN = "ar_type_name_list_bean";
 }

@@ -5,7 +5,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -15,7 +17,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -36,7 +42,6 @@ public class ManageArTypeActivity extends Activity {
 	private ImageButton ibAddTpye;
 
 	private ArTypeAdapter arAdapter;
-
 	private List<ArType> arTypeList = new ArrayList<ArType>();
 
 	private static final int MSG_LISTVIEW_TO_TOP = 0x01;
@@ -46,7 +51,7 @@ public class ManageArTypeActivity extends Activity {
 
 			switch (msg.what) {
 			case MSG_LISTVIEW_TO_TOP:
-				// if add the new AR, set ListView to the top
+				// if add the new ArType, set ListView to the top
 				lvArType.setSelectionFromTop(0, 0);
 				break;
 			default:
@@ -70,10 +75,6 @@ public class ManageArTypeActivity extends Activity {
 				Intent intent = new Intent();
 				intent.setClass(ManageArTypeActivity.this,
 						AddArTypeActivity.class);
-				Bundle bundle = new Bundle();
-				bundle.putSerializable(Constants.INTENT_AR_TYPE_BEAN,
-						(Serializable) arTypeList);
-				intent.putExtras(bundle);
 				startActivityForResult(intent, Constants.CB_ADD_AR_TYPE);
 				overridePendingTransition(R.anim.left_in, R.anim.left_out);
 			}
@@ -83,16 +84,102 @@ public class ManageArTypeActivity extends Activity {
 		arAdapter = new ArTypeAdapter();
 		lvArType.setAdapter(arAdapter);
 
+		lvArType.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+
+				// view account record
+				Intent intent = new Intent();
+				intent.setClass(ManageArTypeActivity.this,
+						AddArTypeActivity.class);
+
+				ArType arType = arTypeList.get(position);
+				Bundle bundle = new Bundle();
+				bundle.putSerializable(Constants.INTENT_AR_TYPE_BEAN,
+						(Serializable) arType);
+				intent.putExtras(bundle);
+				startActivityForResult(intent, Constants.CB_ADD_AR_TYPE);
+				overridePendingTransition(R.anim.left_in, R.anim.left_out);
+
+			}
+		});
+
+		lvArType.setOnItemLongClickListener(new OnItemLongClickListener() {
+
+			private int selectPos = 0;
+
+			@Override
+			public boolean onItemLongClick(AdapterView<?> parent, View view,
+					int position, long id) {
+
+				// delete account record
+				selectPos = position;
+				AlertDialog.Builder builder = new AlertDialog.Builder(
+						ManageArTypeActivity.this);
+				builder.setIcon(R.drawable.mark_delete);
+				builder.setTitle("删除记账");
+				builder.setMessage("确定要删除该分类？");
+				builder.setPositiveButton("删除",
+						new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog,
+									int whichButton) {
+								ArType ar = arTypeList.get(selectPos);
+								ArTypeService.delete(ar);
+								updateArTypeLv(false);
+							}
+						});
+				builder.setNegativeButton("取消",
+						new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog,
+									int whichButton) {
+
+							}
+						});
+				AlertDialog dialog = builder.create();
+				dialog.show();
+
+				// modified dialog button
+				Button btPositive = dialog
+						.getButton(DialogInterface.BUTTON_POSITIVE);
+				if (btPositive != null) {
+					btPositive.setBackgroundResource(R.drawable.btn_alert);
+				}
+				Button btNegative = dialog
+						.getButton(DialogInterface.BUTTON_NEGATIVE);
+				if (btNegative != null) {
+					btNegative.setBackgroundResource(R.drawable.btn_normal);
+				}
+
+				return false;
+			}
+		});
+
 		pbLoad = (ProgressBar) findViewById(R.id.pbLoad);
 
 		updateArTypeLv(false);
 	}
 
-	// public void recycle() {
-	// // strange thing: reEnter app after close the app, instance still exist
-	// instance = null;
-	// }
-	//
+	@Override
+	public void onBackPressed() {
+
+		ArrayList<String> arTypeNameList = new ArrayList<String>();
+		for (ArType arType : arTypeList) {
+			arTypeNameList.add(arType.getTypeName());
+		}
+
+		Intent intent = new Intent();
+		Bundle bundle = new Bundle();
+		bundle.putStringArrayList(Constants.INTENT_AR_TYPE_NAME_LIST_BEAN,
+				arTypeNameList);
+		intent.putExtras(bundle);
+
+		setResult(RESULT_OK, intent);
+
+		finish();
+	}
+
 	public void setListViewToTop() {
 		// no handler could be failed to update UI, especially when data changes
 		// delay time is optional
@@ -200,7 +287,6 @@ public class ManageArTypeActivity extends Activity {
 				holder = (AccountHolder) convertView.getTag();
 			}
 
-			// fill content
 			ArType arType = arTypeList.get(position);
 			holder.recordSum.setText(String.valueOf(arType.getId()));
 			holder.ivType.setImageResource(arType.getImgResId());
