@@ -17,29 +17,27 @@ import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageButton;
-import android.widget.Toast;
+import android.widget.ImageView;
 
 import com.pengjun.ka.db.model.ArType;
 import com.pengjun.ka.db.service.ArTypeService;
 import com.pengjun.ka.tools.Constants;
 import com.pengjun.ka.tools.Util;
-import com.pengjun.ka.view.FocusedChangeImageView;
 import com.pengjun.keepaccounts.R;
 
 public class AddArTypeActivity extends Activity {
 
-	private GridView gvTypeImg;
-	private EditText etArType;
+	private GridView gvArTypeImg;
+	private EditText etArTypeName;
 
 	private ImageButton btSave;
 	private ImageButton btCancel;
 
-	private int GV_UNSELECTED = -1;
+	private final int GV_UNSELECTED = -1;
 	private int selectPos = GV_UNSELECTED;
+
 	private ArrayList<Integer> imgResIdList = new ArrayList<Integer>();
-
 	private ArTypeImgAdapter arTypeImgAdapter;
-
 	private ArType arType;
 
 	@Override
@@ -49,11 +47,8 @@ public class AddArTypeActivity extends Activity {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.add_ar_type);
 
-		// arTypeList = (List<ArType>) getIntent().getSerializableExtra(
-		// Constants.INTENT_AR_TYPE_BEAN);
-
-		etArType = (EditText) findViewById(R.id.etArType);
-		etArType.setOnFocusChangeListener(new OnFocusChangeListener() {
+		etArTypeName = (EditText) findViewById(R.id.etArTypeName);
+		etArTypeName.setOnFocusChangeListener(new OnFocusChangeListener() {
 
 			@Override
 			public void onFocusChange(View v, boolean hasFocus) {
@@ -70,38 +65,39 @@ public class AddArTypeActivity extends Activity {
 			public void onClick(View v) {
 
 				// error info
-				if (etArType.getText().toString().equals("")
+				if (etArTypeName.getText().toString().equals("")
 						&& selectPos == GV_UNSELECTED) {
-					Toast.makeText(AddArTypeActivity.this, "请输入新建类名称和选择图片",
-							2000).show();
+					Util.createAlertDialog(AddArTypeActivity.this,
+							"请输入新建类名称和选择图片").show();
 					return;
 				}
-				if (etArType.getText().toString().equals("")) {
-					Toast.makeText(AddArTypeActivity.this, "请输入新建类名称", 2000)
+				if (etArTypeName.getText().toString().equals("")) {
+					Util.createAlertDialog(AddArTypeActivity.this, "请输入新建类名称")
 							.show();
 					return;
 				}
 				if (selectPos == GV_UNSELECTED) {
-					Toast.makeText(AddArTypeActivity.this, "请选择图片", 2000)
+					Util.createAlertDialog(AddArTypeActivity.this, "请选择图片")
 							.show();
 					return;
 				}
 
-				if (ArTypeService
-						.isTypeNameExsit(etArType.getText().toString())) {
-					Toast.makeText(AddArTypeActivity.this, "类名称已存在，请重新输入", 2000)
-							.show();
+				if (ArTypeService.isTypeNameExsit(etArTypeName.getText()
+						.toString())) {
+					Util.createAlertDialog(AddArTypeActivity.this,
+							"类名称已存在，请重新输入").show();
 					return;
 				}
 
 				if (arType == null) {
 					arType = new ArType();
-					arType.setTypeName(etArType.getText().toString());
+					arType.setTypeName(etArTypeName.getText().toString());
 					arType.setImgResId(imgResIdList.get(selectPos));
+					arType.setCreateDate(Util.getCurDateStr());
 					arType.setUpdateTime(Util.getCurTimeStr());
 					ArTypeService.insert(arType);
 				} else {
-					arType.setTypeName(etArType.getText().toString());
+					arType.setTypeName(etArTypeName.getText().toString());
 					arType.setImgResId(imgResIdList.get(selectPos));
 					arType.setUpdateTime(Util.getCurTimeStr());
 					ArTypeService.update(arType);
@@ -123,10 +119,10 @@ public class AddArTypeActivity extends Activity {
 			}
 		});
 
-		gvTypeImg = (GridView) findViewById(R.id.gvTypeImg);
+		gvArTypeImg = (GridView) findViewById(R.id.gvTypeImg);
 		arTypeImgAdapter = new ArTypeImgAdapter();
-		gvTypeImg.setAdapter(arTypeImgAdapter);
-		gvTypeImg.setOnItemClickListener(new OnItemClickListener() {
+		gvArTypeImg.setAdapter(arTypeImgAdapter);
+		gvArTypeImg.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
 			public void onItemClick(AdapterView<?> parent, View selectedView,
@@ -134,7 +130,7 @@ public class AddArTypeActivity extends Activity {
 
 				selectPos = position;
 
-				gvTypeImg.requestFocusFromTouch();
+				gvArTypeImg.requestFocusFromTouch();
 				selectedView.requestFocusFromTouch();
 			}
 		});
@@ -142,7 +138,7 @@ public class AddArTypeActivity extends Activity {
 		arType = (ArType) getIntent().getSerializableExtra(
 				Constants.INTENT_AR_TYPE_BEAN);
 		if (arType != null) {
-			etArType.setText(arType.getTypeName());
+			etArTypeName.setText(arType.getTypeName());
 		}
 
 	}
@@ -155,7 +151,8 @@ public class AddArTypeActivity extends Activity {
 
 			Field[] fields = R.drawable.class.getDeclaredFields();
 			for (Field field : fields) {
-				if (field.getName().startsWith("type")) {
+				// get all image from res which name start with type
+				if (field.getName().startsWith(Constants.RES_IMAGE_PREFIX)) {
 					int index = 0;
 					try {
 						index = field.getInt(R.drawable.class);
@@ -192,7 +189,7 @@ public class AddArTypeActivity extends Activity {
 
 				convertView = inflater.inflate(R.layout.ar_type_gridview_item,
 						null);
-				holder.ivArType = (FocusedChangeImageView) convertView
+				holder.ivArType = (ImageView) convertView
 						.findViewById(R.id.ivArType);
 
 				convertView.setTag(holder);
@@ -200,7 +197,6 @@ public class AddArTypeActivity extends Activity {
 				holder = (ArTypeHolder) convertView.getTag();
 			}
 
-			// fill content
 			holder.ivArType.setImageResource(imgResIdList.get(position));
 
 			return convertView;
@@ -208,7 +204,7 @@ public class AddArTypeActivity extends Activity {
 		}
 
 		private class ArTypeHolder {
-			public FocusedChangeImageView ivArType;
+			public ImageView ivArType;
 		}
 
 	};

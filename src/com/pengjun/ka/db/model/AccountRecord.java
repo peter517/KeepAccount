@@ -12,23 +12,23 @@ public class AccountRecord implements Serializable {
 	private static final long serialVersionUID = -4580617869739349892L;
 
 	public static final String COL_ID = "id";
-	public static final String COL_ACOUNT = "acount";
+	public static final String COL_ACOUNT = "account";
 	public static final String COL_TYPE_ID = "typeId";
-	public static final String COL_DATE = "date";
+	public static final String COL_CREATE_DATE = "createDate";
 	public static final String COL_COMMENT = "comment";
-	public static final String COL_UPDATETIME = "updateTime";
+	public static final String COL_UPDATE_TIME = "updateTime";
 
 	@DatabaseField(generatedId = true, columnName = "_id")
 	int id;
 
 	@DatabaseField(canBeNull = false)
-	float acount;
+	float account;
 
 	@DatabaseField(canBeNull = false)
 	int typeId;
 
 	@DatabaseField(canBeNull = false)
-	String date;
+	String createDate;
 
 	@DatabaseField
 	String comment;
@@ -60,12 +60,12 @@ public class AccountRecord implements Serializable {
 		this.id = id;
 	}
 
-	public float getAcount() {
-		return acount;
+	public float getAccount() {
+		return account;
 	}
 
-	public void setAcount(float acount) {
-		this.acount = acount;
+	public void setAccount(float acount) {
+		this.account = acount;
 	}
 
 	public String getType() {
@@ -80,12 +80,12 @@ public class AccountRecord implements Serializable {
 		return ArTypeService.getImgResIdById(typeId);
 	}
 
-	public String getDate() {
-		return date;
+	public String getCreateDate() {
+		return createDate;
 	}
 
-	public void setDate(String date) {
-		this.date = date;
+	public void setCreateDate(String createDate) {
+		this.createDate = createDate;
 	}
 
 	public String getComment() {

@@ -51,6 +51,7 @@ public class KAMainActivity extends FragmentActivity {
 
 		SharedPreferences firstInstall = getSharedPreferences(
 				Constants.SP_TAG_INSTALL, 0);
+
 		// if first start of the app
 		if (firstInstall.getString(Constants.SP_KEY_FIRST_START_APP, "")
 				.equals("")) {

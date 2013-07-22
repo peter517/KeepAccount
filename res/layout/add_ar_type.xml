@@ -6,20 +6,20 @@
 
     <RelativeLayout
         android:layout_width="fill_parent"
-        android:layout_height="48dp"
+        android:layout_height="@dimen/bar_heigth"
         android:background="@drawable/top_bar"
         android:orientation="horizontal" >
 
         <ImageButton
             android:id="@+id/btCancel"
-            android:layout_width="48dp"
+            android:layout_width="@dimen/bar_img_width"
             android:layout_height="fill_parent"
             android:layout_alignParentLeft="true"
             android:background="@drawable/menu_btn_selector_xml"
             android:src="@drawable/menu_btn_go_back" />
 
         <TextView
-            style="@style/TitleStyle"
+            style="@style/TopTitleTextStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
@@ -27,7 +27,7 @@
 
         <ImageButton
             android:id="@+id/btSave"
-            android:layout_width="48dp"
+            android:layout_width="@dimen/bar_img_width"
             android:layout_height="fill_parent"
             android:layout_alignParentRight="true"
             android:background="@drawable/menu_btn_selector_xml"
@@ -36,19 +36,19 @@
 
     <TableRow
         android:layout_width="fill_parent"
-        android:layout_height="48dp"
+        android:layout_height="@dimen/text_heigth"
         android:layout_marginTop="10dp"
         >
 
         <TextView
-            style="@style/ArItemStyle"
+            style="@style/ArTextStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/arTypeName" >
         </TextView>
 
         <EditText
-            android:id="@+id/etArType"
+            android:id="@+id/etArTypeName" 
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/text_selector_xml" />
@@ -56,17 +56,16 @@
 
     <TableRow
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/text_heigth"
         android:layout_marginTop="10dp"
         android:orientation="horizontal" >
 
         <TextView
-            android:id="@+id/etTypeName"
-            style="@style/ArItemStyle"
+            style="@style/ArTextStyle"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:background="@color/skyblue"
-            android:text="@string/chooseTypeImg" />
+            android:text="@string/chooseArTypeImg" />
     </TableRow>
 
     <TableRow

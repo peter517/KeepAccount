@@ -67,7 +67,7 @@ public class AccountRecordService {
 		try {
 			QueryBuilder<AccountRecord, Integer> queryBuilder = dao
 					.queryBuilder();
-			queryBuilder.orderBy(AccountRecord.COL_UPDATETIME, false);
+			queryBuilder.orderBy(AccountRecord.COL_UPDATE_TIME, false);
 			return queryBuilder.query();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -93,13 +93,22 @@ public class AccountRecordService {
 		}
 	}
 
+	public static int queryArSumByTypeId(int id) {
+		try {
+			return dao.queryForEq(AccountRecord.COL_TYPE_ID, id).size();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return Constants.DB_SEARCH_INT_NOT_FOUND;
+	}
+
 	public static List<AccountRecord> queryLimitRows(int offset, int limtRows) {
 		try {
 			QueryBuilder<AccountRecord, Integer> queryBuilder = dao
 					.queryBuilder();
 
 			queryBuilder.offset(offset).limit(limtRows);
-			queryBuilder.orderBy(AccountRecord.COL_UPDATETIME, false);
+			queryBuilder.orderBy(AccountRecord.COL_UPDATE_TIME, false);
 			List<AccountRecord> tmp = dao.query(queryBuilder.prepare());
 			return tmp;
 		} catch (SQLException e) {

@@ -7,14 +7,14 @@
     <RelativeLayout
         android:id="@+id/llToolBar"
         android:layout_width="fill_parent"
-        android:layout_height="48dp"
+        android:layout_height="@dimen/bar_heigth"
         android:layout_alignParentTop="true"
         android:background="@drawable/top_bar"
         android:orientation="horizontal" >
 
         <ImageButton
             android:id="@+id/ibAddTpye"
-            android:layout_width="48dp"
+            android:layout_width="@dimen/bar_img_width"
             android:layout_height="fill_parent"
             android:layout_alignParentLeft="true"
             android:background="@drawable/menu_btn_selector_xml"
@@ -22,7 +22,7 @@
 
         <TextView
             android:id="@+id/tvTopTitle"
-            style="@style/TitleStyle"
+            style="@style/TopTitleTextStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"

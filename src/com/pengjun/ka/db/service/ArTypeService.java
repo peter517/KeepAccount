@@ -7,7 +7,9 @@ import java.util.List;
 import com.j256.ormlite.android.AndroidConnectionSource;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
+import com.j256.ormlite.stmt.QueryBuilder;
 import com.pengjun.ka.activity.KAApplication;
+import com.pengjun.ka.db.model.AccountRecord;
 import com.pengjun.ka.db.model.ArType;
 import com.pengjun.ka.tools.Constants;
 import com.pengjun.ka.tools.Util;
@@ -34,6 +36,7 @@ public class ArTypeService {
 			ArType arType = new ArType();
 			arType.setTypeName(Constants.TYPE_STR_ARR[i]);
 			arType.setUpdateTime(Util.getCurTimeStr());
+			arType.setCreateDate(Util.getCurDateStr());
 			arType.setImgResId(Constants.TYPE_IMAGE_RES_ID_ARR[i]);
 			try {
 				dao.create(arType);
@@ -46,7 +49,9 @@ public class ArTypeService {
 
 	public static List<ArType> queryAll() {
 		try {
-			return dao.queryForAll();
+			QueryBuilder<ArType, Integer> queryBuilder = dao.queryBuilder();
+			queryBuilder.orderBy(AccountRecord.COL_UPDATE_TIME, false);
+			return queryBuilder.query();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -125,7 +130,7 @@ public class ArTypeService {
 
 	public static boolean isTypeNameExsit(String typeName) {
 		List<ArType> arTypeList = queryArTypeByTypeName(typeName);
-		if (arTypeList == null && arTypeList.size() == 0) {
+		if (arTypeList == null || arTypeList.size() == 0) {
 			return false;
 		}
 		return true;
@@ -156,4 +161,5 @@ public class ArTypeService {
 			e.printStackTrace();
 		}
 	}
+
 }

@@ -14,7 +14,6 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import com.pengjun.ka.db.model.AccountRecord;
 import com.pengjun.ka.db.service.AccountRecordService;
@@ -26,10 +25,10 @@ import com.pengjun.keepaccounts.R;
 public class AddArActivity extends Activity {
 
 	private EditText etAccount = null;
-	private Spinner spType = null;
-	private DatePicker dpDate = null;
+	private Spinner spArTypeName = null;
+	private DatePicker dpCreateDate = null;
 	private EditText etComment = null;
-	private Button btManageType = null;
+	private Button btManageArType = null;
 
 	private ImageButton btSave = null;
 	private ImageButton btCancel = null;
@@ -37,7 +36,6 @@ public class AddArActivity extends Activity {
 	private AccountRecord ar;
 
 	List<String> arTypeNameList = new ArrayList<String>();
-
 	ArrayAdapter<String> arTypeNameAdapter;
 
 	@Override
@@ -53,8 +51,11 @@ public class AddArActivity extends Activity {
 
 		etAccount = (EditText) findViewById(R.id.etAccount);
 
-		spType = (Spinner) findViewById(R.id.spType);
+		spArTypeName = (Spinner) findViewById(R.id.spArTypeName);
 		updataSpTypeAdapter();
+
+		dpCreateDate = (DatePicker) findViewById(R.id.dpCreateDate);
+		etComment = (EditText) findViewById(R.id.etComment);
 
 		ar = (AccountRecord) getIntent().getSerializableExtra(
 				Constants.INTENT_AR_BEAN);
@@ -62,8 +63,8 @@ public class AddArActivity extends Activity {
 			putArToView(ar);
 		}
 
-		btManageType = (Button) findViewById(R.id.btManageType);
-		btManageType.setOnClickListener(new View.OnClickListener() {
+		btManageArType = (Button) findViewById(R.id.btManageArType);
+		btManageArType.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				Intent intent = new Intent();
@@ -73,9 +74,6 @@ public class AddArActivity extends Activity {
 				overridePendingTransition(R.anim.left_in, R.anim.left_out);
 			}
 		});
-
-		dpDate = (DatePicker) findViewById(R.id.dpDate);
-		etComment = (EditText) findViewById(R.id.etComment);
 
 		btSave = (ImageButton) findViewById(R.id.btSave);
 		btSave.setOnClickListener(new View.OnClickListener() {
@@ -97,7 +95,7 @@ public class AddArActivity extends Activity {
 					setResult(RESULT_OK, null);
 					finish();
 				} else {
-					Toast.makeText(AddArActivity.this, "请输入金额", 3000).show();
+					Util.createAlertDialog(AddArActivity.this, "请输入金额").show();
 				}
 			}
 
@@ -133,23 +131,24 @@ public class AddArActivity extends Activity {
 				android.R.layout.simple_spinner_item, arTypeNameList);
 		arTypeNameAdapter
 				.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-		spType.setAdapter(arTypeNameAdapter);
+		spArTypeName.setAdapter(arTypeNameAdapter);
 	}
 
 	private void putArToView(AccountRecord ar) {
-		etAccount.setText(String.valueOf((ar.getAcount())));
-		spType.setSelection(Util.getPosFromList(arTypeNameList, ar.getType()));
+		etAccount.setText(String.valueOf((ar.getAccount())));
+		spArTypeName.setSelection(Util.getPosFromList(arTypeNameList,
+				ar.getType()));
 		etComment.setText(String.valueOf((ar.getComment())));
 
 		String[] date = Util.String2DateArr(ar);
-		dpDate.updateDate(Integer.valueOf(date[0]),
+		dpCreateDate.updateDate(Integer.valueOf(date[0]),
 				Integer.valueOf(date[1]) - 1, Integer.valueOf(date[2]));
 	}
 
 	private void getArFromView(AccountRecord ar) {
-		ar.setAcount(Float.valueOf(etAccount.getText().toString()));
-		ar.setType(spType.getSelectedItem().toString());
-		ar.setDate(Util.DatePicker2FormatStr(dpDate));
+		ar.setAccount(Float.valueOf(etAccount.getText().toString()));
+		ar.setType(spArTypeName.getSelectedItem().toString());
+		ar.setCreateDate(Util.DatePicker2FormatStr(dpCreateDate));
 		ar.setComment(etComment.getText().toString());
 		ar.setUpdateTime(Util.getCurTimeStr());
 	}

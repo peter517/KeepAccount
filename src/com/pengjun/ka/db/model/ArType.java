@@ -3,6 +3,7 @@ package com.pengjun.ka.db.model;
 import java.io.Serializable;
 
 import com.j256.ormlite.field.DatabaseField;
+import com.pengjun.ka.db.service.AccountRecordService;
 
 public class ArType implements Serializable {
 
@@ -10,7 +11,8 @@ public class ArType implements Serializable {
 
 	public static final String COL_ID = "id";
 	public static final String COL_TYPE_NAME = "typeName";
-	public static final String COL_UPDATETIME = "updateTime";
+	public static final String COL_UPDATE_TIME = "updateTime";
+	public static final String COL_CREATE_DATE = "createDate";
 
 	@DatabaseField(generatedId = true, columnName = "_id")
 	int id;
@@ -22,7 +24,18 @@ public class ArType implements Serializable {
 	int imgResId;
 
 	@DatabaseField(canBeNull = false)
+	String createDate;
+
+	@DatabaseField(canBeNull = false)
 	String updateTime;
+
+	public String getCreateDate() {
+		return createDate;
+	}
+
+	public void setCreateDate(String createDate) {
+		this.createDate = createDate;
+	}
 
 	public int getImgResId() {
 		return imgResId;
@@ -54,6 +67,10 @@ public class ArType implements Serializable {
 
 	public void setTypeName(String typeName) {
 		this.typeName = typeName;
+	}
+
+	public int getArSum(int typeId) {
+		return AccountRecordService.queryArSumByTypeId(typeId);
 	}
 
 }

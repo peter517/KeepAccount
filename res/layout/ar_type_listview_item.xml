@@ -12,7 +12,7 @@
     </ImageView>
 
     <TextView
-        android:id="@+id/tvRecordSum"
+        android:id="@+id/tvType"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_toRightOf="@+id/ivType"
@@ -22,18 +22,18 @@
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tvRecordSum"
+        android:layout_below="@+id/tvType"
         android:layout_toRightOf="@+id/ivType" >
 
         <TextView
-            android:id="@+id/tvType"
+             android:id="@+id/tvArSum"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true" >
         </TextView>
 
         <TextView
-            android:id="@+id/tvUpdateTime"
+            android:id="@+id/tvCreateTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true" >

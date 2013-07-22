@@ -7,14 +7,14 @@
     <RelativeLayout
         android:id="@+id/llToolBar"
         android:layout_width="fill_parent"
-        android:layout_height="48dp"
+        android:layout_height="@dimen/bar_heigth"
         android:layout_alignParentTop="true"
         android:background="@drawable/top_bar"
         android:orientation="horizontal" >
 
         <ImageButton
             android:id="@+id/ibAddAccount"
-            android:layout_width="48dp"
+            android:layout_width="@dimen/bar_img_width"
             android:layout_height="fill_parent"
            
             android:layout_alignParentLeft="true"
@@ -23,7 +23,7 @@
 
         <TextView
             android:id="@+id/tvTopTitle"
-            style="@style/TitleStyle"
+            style="@style/TopTitleTextStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
@@ -31,7 +31,7 @@
 
         <ImageButton
             android:id="@+id/ibSetListViewToTop"
-            android:layout_width="48dp"
+            android:layout_width="@dimen/bar_img_width"
             android:layout_height="fill_parent"
             android:layout_alignParentRight="true"
             android:background="@drawable/menu_btn_selector_xml"
@@ -54,7 +54,7 @@
     <LinearLayout
         android:id="@+id/llTab"
         android:layout_width="fill_parent"
-        android:layout_height="48dp"
+        android:layout_height="@dimen/bar_heigth"
         android:layout_alignParentBottom="true"
         android:background="@drawable/bottom_bar"
         android:orientation="horizontal" >

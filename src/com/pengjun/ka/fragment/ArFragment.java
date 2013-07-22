@@ -1,6 +1,5 @@
 package com.pengjun.ka.fragment;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -123,8 +122,7 @@ public class ArFragment extends Fragment {
 
 				AccountRecord ar = arList.get(position);
 				Bundle bundle = new Bundle();
-				bundle.putSerializable(Constants.INTENT_AR_BEAN,
-						(Serializable) ar);
+				bundle.putSerializable(Constants.INTENT_AR_BEAN, ar);
 				intent.putExtras(bundle);
 				getActivity().startActivityForResult(intent,
 						Constants.CB_ADD_AR);
@@ -335,10 +333,10 @@ public class ArFragment extends Fragment {
 
 			// fill content
 			AccountRecord ar = arList.get(position);
-			holder.account.setText(String.valueOf(ar.getAcount()));
+			holder.account.setText(String.valueOf(ar.getAccount()));
 			holder.ivType.setImageResource(ar.getImgResId());
 			holder.tvType.setText(ar.getType());
-			holder.date.setText(ar.getDate());
+			holder.date.setText(ar.getCreateDate());
 
 			return convertView;
 		}

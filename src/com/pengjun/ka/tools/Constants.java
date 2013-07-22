@@ -6,13 +6,13 @@ import com.pengjun.keepaccounts.R;
 
 public class Constants {
 
+	public static int TOAST_EXSIT_TIME = 2000;
+
 	// Ar Type
-	public static final String[] TYPE_STR_ARR = { "吃", "玩", "衣", "行", "其他" };
+	public static final String[] TYPE_STR_ARR = { "吃饭", "娱乐", "衣服", "交通", "其他" };
 	public static final int[] TYPE_IMAGE_RES_ID_ARR = { R.drawable.type_eat,
 			R.drawable.type_play, R.drawable.type_dress, R.drawable.type_car,
 			R.drawable.type_other };
-
-	public static int TOAST_EXSIT_TIME = 2000;
 
 	// DB search error
 	public static int DB_SEARCH_INT_NOT_FOUND = -1;
@@ -34,4 +34,7 @@ public class Constants {
 	public static final String INTENT_AR_BEAN = "ar_bean";
 	public static final String INTENT_AR_TYPE_BEAN = "ar_type_bean";
 	public static final String INTENT_AR_TYPE_NAME_LIST_BEAN = "ar_type_name_list_bean";
+
+	// res
+	public static final String RES_IMAGE_PREFIX = "type";
 }

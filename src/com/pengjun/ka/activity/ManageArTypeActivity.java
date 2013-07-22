@@ -1,6 +1,5 @@
 package com.pengjun.ka.activity;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,15 +32,16 @@ import com.pengjun.ka.db.model.ArType;
 import com.pengjun.ka.db.service.ArTypeService;
 import com.pengjun.ka.tools.Constants;
 import com.pengjun.ka.tools.MyDebug;
+import com.pengjun.ka.tools.Util;
 import com.pengjun.keepaccounts.R;
 
 public class ManageArTypeActivity extends Activity {
 
 	private ListView lvArType;
 	private ProgressBar pbLoad;
-	private ImageButton ibAddTpye;
+	private ImageButton ibAddArTpye;
 
-	private ArTypeAdapter arAdapter;
+	private ArTypeAdapter arTypeAdapter;
 	private List<ArType> arTypeList = new ArrayList<ArType>();
 
 	private static final int MSG_LISTVIEW_TO_TOP = 0x01;
@@ -67,8 +67,8 @@ public class ManageArTypeActivity extends Activity {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.manage_type);
 
-		ibAddTpye = (ImageButton) findViewById(R.id.ibAddTpye);
-		ibAddTpye.setOnClickListener(new View.OnClickListener() {
+		ibAddArTpye = (ImageButton) findViewById(R.id.ibAddTpye);
+		ibAddArTpye.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 
@@ -81,8 +81,8 @@ public class ManageArTypeActivity extends Activity {
 		});
 
 		lvArType = (ListView) findViewById(R.id.lvArType);
-		arAdapter = new ArTypeAdapter();
-		lvArType.setAdapter(arAdapter);
+		arTypeAdapter = new ArTypeAdapter();
+		lvArType.setAdapter(arTypeAdapter);
 
 		lvArType.setOnItemClickListener(new OnItemClickListener() {
 
@@ -97,8 +97,7 @@ public class ManageArTypeActivity extends Activity {
 
 				ArType arType = arTypeList.get(position);
 				Bundle bundle = new Bundle();
-				bundle.putSerializable(Constants.INTENT_AR_TYPE_BEAN,
-						(Serializable) arType);
+				bundle.putSerializable(Constants.INTENT_AR_TYPE_BEAN, arType);
 				intent.putExtras(bundle);
 				startActivityForResult(intent, Constants.CB_ADD_AR_TYPE);
 				overridePendingTransition(R.anim.left_in, R.anim.left_out);
@@ -114,6 +113,11 @@ public class ManageArTypeActivity extends Activity {
 			public boolean onItemLongClick(AdapterView<?> parent, View view,
 					int position, long id) {
 
+				if (arTypeList.size() == 1) {
+					Util.createAlertDialog(ManageArTypeActivity.this,
+							"至少要有一个分类").show();
+					return false;
+				}
 				// delete account record
 				selectPos = position;
 				AlertDialog.Builder builder = new AlertDialog.Builder(
@@ -241,7 +245,7 @@ public class ManageArTypeActivity extends Activity {
 				return;
 			}
 
-			arAdapter.notifyDataSetChanged();
+			arTypeAdapter.notifyDataSetChanged();
 			if (isListViewDataChange) {
 				ManageArTypeActivity.this.setListViewToTop();
 			}
@@ -273,12 +277,12 @@ public class ManageArTypeActivity extends Activity {
 				convertView = inflater.inflate(R.layout.ar_type_listview_item,
 						null);
 
-				holder.recordSum = (TextView) convertView
-						.findViewById(R.id.tvRecordSum);
+				holder.arSum = (TextView) convertView
+						.findViewById(R.id.tvArSum);
 				holder.ivType = (ImageView) convertView
 						.findViewById(R.id.ivType);
-				holder.updateTime = (TextView) convertView
-						.findViewById(R.id.tvUpdateTime);
+				holder.createDate = (TextView) convertView
+						.findViewById(R.id.tvCreateTime);
 				holder.tvType = (TextView) convertView
 						.findViewById(R.id.tvType);
 
@@ -288,19 +292,20 @@ public class ManageArTypeActivity extends Activity {
 			}
 
 			ArType arType = arTypeList.get(position);
-			holder.recordSum.setText(String.valueOf(arType.getId()));
+			holder.arSum.setText("记账数："
+					+ String.valueOf(arType.getArSum(arType.getId())));
 			holder.ivType.setImageResource(arType.getImgResId());
 			holder.tvType.setText(arType.getTypeName());
-			holder.updateTime.setText(arType.getUpdateTime());
+			holder.createDate.setText(arType.getCreateDate());
 
 			return convertView;
 		}
 
 		private class AccountHolder {
-			public TextView recordSum;
+			public TextView arSum;
 			public ImageView ivType;
 			public TextView tvType;
-			public TextView updateTime;
+			public TextView createDate;
 		}
 	}
 }

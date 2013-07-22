@@ -6,20 +6,20 @@
 
     <RelativeLayout
         android:layout_width="fill_parent"
-        android:layout_height="48dp"
+        android:layout_height="@dimen/bar_heigth"
         android:background="@drawable/top_bar"
         android:orientation="horizontal" >
 
         <ImageButton
             android:id="@+id/btCancel"
-            android:layout_width="48dp"
+            android:layout_width="@dimen/bar_img_width"
             android:layout_height="fill_parent"
             android:layout_alignParentLeft="true"
             android:background="@drawable/menu_btn_selector_xml"
             android:src="@drawable/menu_btn_go_back" />
 
         <TextView
-            style="@style/TitleStyle"
+            style="@style/TopTitleTextStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
@@ -27,7 +27,7 @@
 
         <ImageButton
             android:id="@+id/btSave"
-            android:layout_width="48dp"
+            android:layout_width="@dimen/bar_img_width"
             android:layout_height="fill_parent"
             android:layout_alignParentRight="true"
             android:background="@drawable/menu_btn_selector_xml"
@@ -36,11 +36,11 @@
 
     <TableRow
         android:layout_width="fill_parent"
-        android:layout_height="48dp"
+        android:layout_height="@dimen/text_heigth"
         android:layout_marginTop="10dp" >
 
         <TextView
-            style="@style/ArItemStyle"
+            style="@style/ArTextStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/account" >
@@ -62,18 +62,18 @@
 
         <TableRow
             android:layout_width="fill_parent"
-            android:layout_height="48dp"
+            android:layout_height="@dimen/text_heigth"
             android:layout_weight="1" >
 
             <TextView
-                style="@style/ArItemStyle"
+                style="@style/ArTextStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/type" >
             </TextView>
 
             <Spinner
-                android:id="@+id/spType"
+                android:id="@+id/spArTypeName"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/text_selector_xml" />
@@ -81,10 +81,10 @@
 
         <TableRow
             android:layout_width="fill_parent"
-            android:layout_height="48dp"
+            android:layout_height="@dimen/text_heigth"
             android:layout_weight="1" >
             <Button  
-                android:id="@+id/btManageType"
+                android:id="@+id/btManageArType"
                 android:layout_width="120dp"
                 android:layout_height="fill_parent"
                 android:background="@drawable/btn_selector_xml"
@@ -95,11 +95,11 @@
 
     <TableRow
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/text_heigth"
         android:layout_marginTop="10dp" >
 
         <TextView
-            style="@style/ArItemStyle"
+            style="@style/ArTextStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/comment" />
@@ -117,14 +117,14 @@
         android:layout_marginTop="10dp" >
 
         <TextView
-            style="@style/ArItemStyle"
+            style="@style/ArTextStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/date" >
         </TextView>
 
         <DatePicker
-            android:id="@+id/dpDate"
+            android:id="@+id/dpCreateDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/text_selector_xml"
