@@ -45,7 +45,7 @@
         android:layout_above="@+id/llTab"
         android:layout_below="@+id/llToolBar" >
 
-        <FrameLayout
+        <RelativeLayout
             android:id="@+id/mainConent"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent" />

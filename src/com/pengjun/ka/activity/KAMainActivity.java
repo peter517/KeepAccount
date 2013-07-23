@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.pengjun.ka.db.service.ArTypeService;
 import com.pengjun.ka.fragment.ArFragment;
+import com.pengjun.ka.fragment.ArSearchFragment;
 import com.pengjun.ka.fragment.BackupFragment;
 import com.pengjun.ka.fragment.FragmentDirector;
 import com.pengjun.ka.tools.Constants;
@@ -114,7 +115,12 @@ public class KAMainActivity extends FragmentActivity {
 			@Override
 			public void onFocusChange(View v, boolean hasFocus) {
 				if (hasFocus) {
+					FragmentDirector.replaceFragment(KAMainActivity.this,
+							R.id.mainConent, ArSearchFragment.newInstance());
 
+					ibAddAccount.setVisibility(View.GONE);
+					ibSetListViewToTop.setVisibility(View.GONE);
+					tvTopTitle.setText(R.string.searchAr);
 				}
 			}
 		});

@@ -10,6 +10,7 @@
     <string name="newAr">新增账目</string>
     <string name="backUp">备份数据</string>
     <string name="loadMore">加载更多数据</string>
+
     
     <!-- AR Type -->
     <string name="manageType">管理账目分类</string>
@@ -22,5 +23,12 @@
     <string name="type">种类</string>
     <string name="date">日期</string>
     <string name="comment">备注</string>
+    
+     <!-- AR Search-->
+         <string name="searchAr">查询账目</string>
+    <string name="startDate">选择开始日期</string>
+    <string name="endDate">选择结束日期</string>
+    <string name="accountRange">金额范围</string>
+    <string name="startSearchAr">查询账目</string>
 
 </resources>
