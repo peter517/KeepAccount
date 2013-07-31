@@ -65,12 +65,6 @@ public class AddArTypeActivity extends Activity {
 			public void onClick(View v) {
 
 				// error info
-				if (etArTypeName.getText().toString().equals("")
-						&& selectPos == GV_UNSELECTED) {
-					Util.createAlertDialog(AddArTypeActivity.this,
-							"请输入新建类名称和选择图片").show();
-					return;
-				}
 				if (etArTypeName.getText().toString().equals("")) {
 					Util.createAlertDialog(AddArTypeActivity.this, "请输入新建类名称")
 							.show();

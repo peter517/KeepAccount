@@ -69,9 +69,19 @@ public class ArSearchFragment extends Fragment {
 		View view = inflater.inflate(R.layout.ar_search, null);
 
 		etStartAccount = (EditText) view.findViewById(R.id.etStartAccount);
-		etStartAccount.setText("0.0");
 		etEndAccount = (EditText) view.findViewById(R.id.etEndAccount);
-		etEndAccount.setText("0.0");
+
+		List<String> arTypeNameList = new ArrayList<String>();
+		arTypeNameList.add(ALL_AR_TYPE);
+		arTypeNameList.addAll(ArTypeService.queryAllArTypeName());
+
+		spArTypeName = (Spinner) view.findViewById(R.id.spArTypeName);
+		ArrayAdapter<String> arTypeNameAdapter = new ArrayAdapter<String>(
+				getActivity(), android.R.layout.simple_spinner_item,
+				arTypeNameList);
+		arTypeNameAdapter
+				.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		spArTypeName.setAdapter(arTypeNameAdapter);
 
 		tvStartDate = (TextView) view.findViewById(R.id.tvStartDate);
 		tvStartDate.setText(Util.getCurDateStr());
@@ -140,18 +150,28 @@ public class ArSearchFragment extends Fragment {
 			}
 		});
 
-		List<String> arTypeNameList = new ArrayList<String>();
-		arTypeNameList.add(ALL_AR_TYPE);
-		arTypeNameList.addAll(ArTypeService.queryAllArTypeName());
+		btArSearch = (Button) view.findViewById(R.id.btArSearch);
+		btArSearch.setOnClickListener(new View.OnClickListener() {
 
-		spArTypeName = (Spinner) view.findViewById(R.id.spArTypeName);
-		ArrayAdapter<String> arTypeNameAdapter = new ArrayAdapter<String>(
-				getActivity(), android.R.layout.simple_spinner_item,
-				arTypeNameList);
-		arTypeNameAdapter
-				.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-		spArTypeName.setAdapter(arTypeNameAdapter);
+			@Override
+			public void onClick(View v) {
+				// legal input certify
+				boolean isAccountLegal = etStartAccount.getText().toString()
+						.compareTo(etEndAccount.getText().toString()) <= 0;
+				boolean isDateLegal = tvStartDate.toString().compareTo(
+						tvEndDate.getText().toString()) <= 0;
 
+				if (!isAccountLegal) {
+					Util.createAlertDialog(getActivity(), "金额应该右边大于左边").show();
+					return;
+				}
+
+				if (!isDateLegal) {
+					Util.createAlertDialog(getActivity(), "日期应该右边大于左边").show();
+					return;
+				}
+			}
+		});
 		return view;
 	}
 }
