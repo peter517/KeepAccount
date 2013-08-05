@@ -9,7 +9,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.widget.DatePicker;
 
-import com.pengjun.ka.db.model.AccountRecord;
 import com.pengjun.keepaccounts.R;
 
 public class Util {
@@ -50,8 +49,8 @@ public class Util {
 		return curTimeStr;
 	}
 
-	public static String[] String2DateArr(AccountRecord ar) {
-		String[] date = ar.getCreateDate().split(TIME_SEPARATOR);
+	public static String[] String2DateArr(String dateStr) {
+		String[] date = dateStr.split(TIME_SEPARATOR);
 		return date;
 	}
 

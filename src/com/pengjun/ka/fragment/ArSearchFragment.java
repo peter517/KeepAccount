@@ -6,6 +6,7 @@ import java.util.List;
 
 import android.app.DatePickerDialog;
 import android.app.DatePickerDialog.OnDateSetListener;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -18,7 +19,10 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.pengjun.ka.activity.ArSearchResultActivity;
+import com.pengjun.ka.db.model.ArSearchCondition;
 import com.pengjun.ka.db.service.ArTypeService;
+import com.pengjun.ka.tools.Constants;
 import com.pengjun.ka.tools.Util;
 import com.pengjun.keepaccounts.R;
 
@@ -173,6 +177,26 @@ public class ArSearchFragment extends Fragment {
 					return;
 				}
 
+				Intent intent = new Intent();
+				intent.setClass(getActivity(), ArSearchResultActivity.class);
+
+				ArSearchCondition arSC = new ArSearchCondition();
+				arSC.setStartAccount(etStartAccount.getText().toString());
+				arSC.setEndAccount(etEndAccount.getText().toString());
+				arSC.setStartDate(tvStartDate.getText().toString());
+				arSC.setEndDate(tvEndDate.getText().toString());
+				if (!spArTypeName.getSelectedItem().toString()
+						.equals(ALL_AR_TYPE)) {
+					arSC.setType(spArTypeName.getSelectedItem().toString());
+				}
+
+				Bundle bundle = new Bundle();
+				bundle.putSerializable(Constants.INTENT_AR_SEARCH_CONDITION,
+						arSC);
+				intent.putExtras(bundle);
+				startActivity(intent);
+				getActivity().overridePendingTransition(R.anim.left_in,
+						R.anim.left_out);
 			}
 		});
 		return view;

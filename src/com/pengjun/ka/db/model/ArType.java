@@ -3,7 +3,7 @@ package com.pengjun.ka.db.model;
 import java.io.Serializable;
 
 import com.j256.ormlite.field.DatabaseField;
-import com.pengjun.ka.db.service.AccountRecordService;
+import com.pengjun.ka.db.service.ArService;
 
 public class ArType implements Serializable {
 
@@ -70,7 +70,7 @@ public class ArType implements Serializable {
 	}
 
 	public int getArSum(int typeId) {
-		return AccountRecordService.queryArSumByTypeId(typeId);
+		return ArService.queryArSumByTypeId(typeId);
 	}
 
 }

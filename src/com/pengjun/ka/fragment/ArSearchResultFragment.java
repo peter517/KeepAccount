@@ -28,12 +28,13 @@ import android.widget.Toast;
 
 import com.pengjun.ka.activity.AddArActivity;
 import com.pengjun.ka.db.model.AccountRecord;
+import com.pengjun.ka.db.model.ArSearchCondition;
 import com.pengjun.ka.db.service.ArService;
 import com.pengjun.ka.tools.Constants;
 import com.pengjun.ka.tools.MyDebug;
 import com.pengjun.keepaccounts.R;
 
-public class ArFragment extends Fragment {
+public class ArSearchResultFragment extends Fragment {
 
 	private ListView lvAr;
 	private ProgressBar pbLoad;
@@ -46,7 +47,9 @@ public class ArFragment extends Fragment {
 	private AccountListAdapter arAdapter;
 	private List<AccountRecord> arList = new ArrayList<AccountRecord>();
 
-	private static ArFragment instance = null;
+	private static ArSearchResultFragment instance = null;
+
+	ArSearchCondition arSC;
 
 	private static final int MSG_LISTVIEW_TO_TOP = 0x01;
 	Handler handler = new Handler() {
@@ -79,10 +82,12 @@ public class ArFragment extends Fragment {
 		super.onDestroy();
 	}
 
-	public static ArFragment newInstance() {
+	public static ArSearchResultFragment newInstance(ArSearchCondition arSC) {
 		if (instance == null) {
-			instance = new ArFragment();
+			instance = new ArSearchResultFragment();
 		}
+		instance.arSC = arSC;
+
 		return instance;
 	}
 
@@ -226,9 +231,7 @@ public class ArFragment extends Fragment {
 		protected List<AccountRecord> doInBackground(Boolean... params) {
 
 			isListViewDataChange = params[0];
-			List<AccountRecord> tempArList = null;
-
-			tempArList = ArService.queryLimitRows(0,
+			List<AccountRecord> tempArList = ArService.queryAr(arSC, 0,
 					Math.max(LIMIT_ROW_TOTAL, arList.size()));
 			if (tempArList != null) {
 				arList = tempArList;
@@ -250,14 +253,12 @@ public class ArFragment extends Fragment {
 			}
 
 			if (tempArList == null || tempArList.size() == 0) {
-				Toast.makeText(ArFragment.this.getActivity(), "没有数据，请记账",
-						Constants.TOAST_EXSIT_TIME).show();
 				return;
 			}
 
 			arAdapter.notifyDataSetChanged();
 			if (isListViewDataChange) {
-				ArFragment.this.setListViewToTop();
+				ArSearchResultFragment.this.setListViewToTop();
 			}
 
 			super.onPostExecute(tempArList);
@@ -271,8 +272,7 @@ public class ArFragment extends Fragment {
 
 			List<AccountRecord> tempArList = null;
 
-			tempArList = ArService.queryLimitRows(offset,
-					LIMIT_ROW_TOTAL);
+			tempArList = ArService.queryAr(arSC, offset, LIMIT_ROW_TOTAL);
 			if (tempArList != null) {
 				arList.addAll(tempArList);
 			}
@@ -286,8 +286,8 @@ public class ArFragment extends Fragment {
 			hideProgress();
 
 			if (tempArList == null || tempArList.size() == 0) {
-				Toast.makeText(ArFragment.this.getActivity(), "没有新数据",
-						Constants.TOAST_EXSIT_TIME).show();
+				Toast.makeText(ArSearchResultFragment.this.getActivity(),
+						"没有新数据", Constants.TOAST_EXSIT_TIME).show();
 			}
 
 			arAdapter.notifyDataSetChanged();

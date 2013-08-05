@@ -18,6 +18,8 @@
             android:name="com.pengjun.ka.activity.AddArActivity"/>
          <activity 
             android:name="com.pengjun.ka.activity.ManageArTypeActivity"/>
+         <activity 
+            android:name="com.pengjun.ka.activity.ArSearchResultActivity"/>
           <activity 
             android:name="com.pengjun.ka.activity.AddArTypeActivity"
             android:windowSoftInputMode="adjustUnspecified|stateHidden"/>

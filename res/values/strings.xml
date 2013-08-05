@@ -10,6 +10,7 @@
     <string name="newAr">新增账目</string>
     <string name="backUp">备份数据</string>
     <string name="loadMore">加载更多数据</string>
+    <string name="searchResult">查询结果</string>
 
     
     <!-- AR Type -->

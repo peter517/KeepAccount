@@ -8,11 +8,13 @@ import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.stmt.DeleteBuilder;
 import com.j256.ormlite.stmt.QueryBuilder;
+import com.j256.ormlite.stmt.Where;
 import com.pengjun.ka.activity.KAApplication;
 import com.pengjun.ka.db.model.AccountRecord;
+import com.pengjun.ka.db.model.ArSearchCondition;
 import com.pengjun.ka.tools.Constants;
 
-public class AccountRecordService {
+public class ArService {
 
 	private static AndroidConnectionSource cs = KAApplication
 			.getAndroidConnectionSource();
@@ -109,8 +111,58 @@ public class AccountRecordService {
 
 			queryBuilder.offset(offset).limit(limtRows);
 			queryBuilder.orderBy(AccountRecord.COL_UPDATE_TIME, false);
-			List<AccountRecord> tmp = dao.query(queryBuilder.prepare());
-			return tmp;
+			return dao.query(queryBuilder.prepare());
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return Constants.DB_SEARCH_LIST_NOT_FOUND;
+	}
+
+	public static List<AccountRecord> queryAr(ArSearchCondition arSC,
+			int offset, int limtRows) {
+
+		if (arSC == null) {
+			return null;
+		}
+
+		try {
+			QueryBuilder<AccountRecord, Integer> queryBuilder = dao
+					.queryBuilder();
+
+			Where<AccountRecord, Integer> where = queryBuilder.where();
+			where.isNotNull(AccountRecord.COL_ACOUNT);
+
+			// account
+			if (arSC.getStartAccount() != null
+					&& !arSC.getStartAccount().equals("")) {
+				where.and();
+				where.ge(AccountRecord.COL_ACOUNT,
+						Float.valueOf(arSC.getStartAccount()));
+
+			}
+			if (arSC.getEndAccount() != null
+					&& !arSC.getEndAccount().equals("")) {
+				where.and();
+				where.le(AccountRecord.COL_ACOUNT,
+						Float.valueOf(arSC.getEndAccount()));
+			}
+
+			// type
+			if (arSC.getType() != null && !arSC.getType().equals("")) {
+				where.and();
+				where.eq(AccountRecord.COL_TYPE_ID,
+						ArTypeService.getIdByArTpye(arSC.getType()));
+			}
+
+			// date
+			where.and();
+			where.ge(AccountRecord.COL_CREATE_DATE, arSC.getStartDate());
+			where.and();
+			where.le(AccountRecord.COL_CREATE_DATE, arSC.getEndDate());
+			queryBuilder.offset(offset).limit(limtRows);
+			queryBuilder.orderBy(AccountRecord.COL_UPDATE_TIME, false);
+
+			return dao.query(queryBuilder.prepare());
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

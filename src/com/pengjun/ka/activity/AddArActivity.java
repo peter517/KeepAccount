@@ -16,7 +16,7 @@ import android.widget.ImageButton;
 import android.widget.Spinner;
 
 import com.pengjun.ka.db.model.AccountRecord;
-import com.pengjun.ka.db.service.AccountRecordService;
+import com.pengjun.ka.db.service.ArService;
 import com.pengjun.ka.db.service.ArTypeService;
 import com.pengjun.ka.tools.Constants;
 import com.pengjun.ka.tools.Util;
@@ -86,10 +86,10 @@ public class AddArActivity extends Activity {
 					if (ar == null) {
 						ar = new AccountRecord();
 						getArFromView(ar);
-						AccountRecordService.insert(ar);
+						ArService.insert(ar);
 					} else {
 						getArFromView(ar);
-						AccountRecordService.update(ar);
+						ArService.update(ar);
 					}
 
 					setResult(RESULT_OK, null);
@@ -140,7 +140,7 @@ public class AddArActivity extends Activity {
 				ar.getType()));
 		etComment.setText(String.valueOf((ar.getComment())));
 
-		String[] date = Util.String2DateArr(ar);
+		String[] date = Util.String2DateArr(ar.getCreateDate());
 		dpCreateDate.updateDate(Integer.valueOf(date[0]),
 				Integer.valueOf(date[1]) - 1, Integer.valueOf(date[2]));
 	}

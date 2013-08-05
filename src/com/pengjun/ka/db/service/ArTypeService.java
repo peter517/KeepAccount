@@ -156,7 +156,7 @@ public class ArTypeService {
 	public static void delete(ArType arType) {
 		try {
 			dao.delete(arType);
-			AccountRecordService.deleteByTypeId(arType.getId());
+			ArService.deleteByTypeId(arType.getId());
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

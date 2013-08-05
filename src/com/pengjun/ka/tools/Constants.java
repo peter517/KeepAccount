@@ -35,6 +35,8 @@ public class Constants {
 	public static final String INTENT_AR_TYPE_BEAN = "ar_type_bean";
 	public static final String INTENT_AR_TYPE_NAME_LIST_BEAN = "ar_type_name_list_bean";
 
+	public static final String INTENT_AR_SEARCH_CONDITION = "ar_search_condition";
+
 	// res
 	public static final String RES_IMAGE_PREFIX = "type";
 }
