@@ -158,18 +158,21 @@ public class ArSearchFragment extends Fragment {
 				// legal input certify
 				boolean isAccountLegal = etStartAccount.getText().toString()
 						.compareTo(etEndAccount.getText().toString()) <= 0;
-				boolean isDateLegal = tvStartDate.toString().compareTo(
-						tvEndDate.getText().toString()) <= 0;
+				boolean isDateLegal = tvStartDate.getText().toString()
+						.compareTo(tvEndDate.getText().toString()) <= 0;
 
 				if (!isAccountLegal) {
-					Util.createAlertDialog(getActivity(), "金额应该右边大于左边").show();
+					Util.createAlertDialog(getActivity(), "金额应该右边大于或等于左边")
+							.show();
 					return;
 				}
 
 				if (!isDateLegal) {
-					Util.createAlertDialog(getActivity(), "日期应该右边大于左边").show();
+					Util.createAlertDialog(getActivity(), "日期应该右边大于或等于左边")
+							.show();
 					return;
 				}
+
 			}
 		});
 		return view;
