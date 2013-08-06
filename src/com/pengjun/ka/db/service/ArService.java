@@ -65,6 +65,13 @@ public class ArService {
 		}
 	}
 
+	public static void reCreateTable(List<AccountRecord> arList) {
+		deleteAll(queryAll());
+		for (AccountRecord ar : arList) {
+			insert(ar);
+		}
+	}
+
 	public static List<AccountRecord> queryAll() {
 		try {
 			QueryBuilder<AccountRecord, Integer> queryBuilder = dao

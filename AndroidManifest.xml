@@ -7,33 +7,36 @@
         android:minSdkVersion="10"
         android:targetSdkVersion="10" />
 
+    <!-- 往sdcard中写入数据的权限 -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" >
+    </uses-permission>     
+    <!-- 在sdcard中创建/删除文件的权限 -->
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" >
+    </uses-permission>
+
     <application
         android:name="com.pengjun.ka.activity.KaApplication"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/KATheme" >
+        <activity android:name="com.pengjun.ka.activity.KaMainActivity" />
+        <activity android:name="com.pengjun.ka.activity.AddArActivity" />
+        <activity android:name="com.pengjun.ka.activity.ManageArTypeActivity" />
+        <activity android:name="com.pengjun.ka.activity.ArSearchResultActivity" />
         <activity
-            android:name="com.pengjun.ka.activity.KaMainActivity"/>
-        <activity 
-            android:name="com.pengjun.ka.activity.AddArActivity"/>
-         <activity 
-            android:name="com.pengjun.ka.activity.ManageArTypeActivity"/>
-         <activity 
-            android:name="com.pengjun.ka.activity.ArSearchResultActivity"/>
-          <activity 
             android:name="com.pengjun.ka.activity.AddArTypeActivity"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden"/>
-         <activity
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
+        <activity
             android:name="com.pengjun.ka.activity.LoadingActivity"
-            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
-            android:label="@string/app_name" >
+            android:label="@string/app_name"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-         <!-- android:windowSoftInputMode="stateVisible|adjustPan" -->
+        <!-- android:windowSoftInputMode="stateVisible|adjustPan" -->
     </application>
 
 </manifest>
