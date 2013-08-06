@@ -160,8 +160,17 @@ public class ArSearchFragment extends Fragment {
 			@Override
 			public void onClick(View v) {
 				// legal input certify
-				boolean isAccountLegal = etStartAccount.getText().toString()
-						.compareTo(etEndAccount.getText().toString()) <= 0;
+
+				boolean isAccountLegal = true;
+
+				// both not empty
+				if (!etStartAccount.getText().toString().equals("")
+						&& !etEndAccount.getText().toString().equals("")) {
+					isAccountLegal = Float.valueOf(etStartAccount.getText()
+							.toString()) <= Float.valueOf(etEndAccount
+							.getText().toString());
+				}
+
 				boolean isDateLegal = tvStartDate.getText().toString()
 						.compareTo(tvEndDate.getText().toString()) <= 0;
 
@@ -185,6 +194,7 @@ public class ArSearchFragment extends Fragment {
 				arSC.setEndAccount(etEndAccount.getText().toString());
 				arSC.setStartDate(tvStartDate.getText().toString());
 				arSC.setEndDate(tvEndDate.getText().toString());
+
 				if (!spArTypeName.getSelectedItem().toString()
 						.equals(ALL_AR_TYPE)) {
 					arSC.setType(spArTypeName.getSelectedItem().toString());
@@ -194,7 +204,7 @@ public class ArSearchFragment extends Fragment {
 				bundle.putSerializable(Constants.INTENT_AR_SEARCH_CONDITION,
 						arSC);
 				intent.putExtras(bundle);
-				startActivity(intent);
+				startActivityForResult(intent, Constants.CB_ADD_AR);
 				getActivity().overridePendingTransition(R.anim.left_in,
 						R.anim.left_out);
 			}

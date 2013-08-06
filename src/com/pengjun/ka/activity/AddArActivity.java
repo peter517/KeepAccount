@@ -69,11 +69,15 @@ public class AddArActivity extends Activity {
 			public void onClick(View v) {
 				Intent intent = new Intent();
 				intent.setClass(AddArActivity.this, ManageArTypeActivity.class);
-				startActivityForResult(intent,
-						Constants.CB_ADD_AR_TYPE_NAME_LIST);
+				startActivityForResult(intent, Constants.CB_ADD_AR_TYPE_NAME);
 				overridePendingTransition(R.anim.left_in, R.anim.left_out);
 			}
 		});
+
+		if ((Boolean) getIntent().getSerializableExtra(
+				Constants.INTENT_DISABLE_AR_TYPE_MANAGE) != null) {
+			btManageArType.setVisibility(View.GONE);
+		}
 
 		btSave = (ImageButton) findViewById(R.id.btSave);
 		btSave.setOnClickListener(new View.OnClickListener() {
@@ -113,7 +117,7 @@ public class AddArActivity extends Activity {
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		if (requestCode == Constants.CB_ADD_AR_TYPE_NAME_LIST) {
+		if (requestCode == Constants.CB_ADD_AR_TYPE_NAME) {
 			if (resultCode == RESULT_OK) {
 				ArrayList<String> arTypeNameList = data.getExtras()
 						.getStringArrayList(

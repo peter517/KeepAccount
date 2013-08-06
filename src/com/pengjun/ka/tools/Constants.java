@@ -28,12 +28,13 @@ public class Constants {
 	// activity call-back tag
 	public static final int CB_ADD_AR = 01;
 	public static final int CB_ADD_AR_TYPE = 02;
-	public static final int CB_ADD_AR_TYPE_NAME_LIST = 03;
+	public static final int CB_ADD_AR_TYPE_NAME = 03;
 
 	// activity intent translate data tag
 	public static final String INTENT_AR_BEAN = "ar_bean";
 	public static final String INTENT_AR_TYPE_BEAN = "ar_type_bean";
 	public static final String INTENT_AR_TYPE_NAME_LIST_BEAN = "ar_type_name_list_bean";
+	public static final String INTENT_DISABLE_AR_TYPE_MANAGE = "disable_ar_type_manage";
 
 	public static final String INTENT_AR_SEARCH_CONDITION = "ar_search_condition";
 

@@ -6,54 +6,50 @@ public class ArSearchCondition implements Serializable {
 
 	private static final long serialVersionUID = -4580647869739349892L;
 
-	private static String startAccount;
-	private static String endAccount;
-	private static String startDate;
-	private static String endDate;
-	private static String type;
+	private String startAccount;
+	private String endAccount;
+	private String startDate;
+	private String endDate;
+	private String type;
 
-	public static String getType() {
-		return type;
-	}
-
-	public static void setType(String type) {
-		ArSearchCondition.type = type;
-	}
-
-	public static String getStartAccount() {
+	public String getStartAccount() {
 		return startAccount;
 	}
 
-	public static void setStartAccount(String startAccount) {
-		ArSearchCondition.startAccount = startAccount;
+	public void setStartAccount(String startAccount) {
+		this.startAccount = startAccount;
 	}
 
-	public static String getEndAccount() {
+	public String getEndAccount() {
 		return endAccount;
 	}
 
-	public static void setEndAccount(String endAccount) {
-		ArSearchCondition.endAccount = endAccount;
+	public void setEndAccount(String endAccount) {
+		this.endAccount = endAccount;
 	}
 
-	public static String getStartDate() {
+	public String getStartDate() {
 		return startDate;
 	}
 
-	public static void setStartDate(String startDate) {
-		ArSearchCondition.startDate = startDate;
+	public void setStartDate(String startDate) {
+		this.startDate = startDate;
 	}
 
-	public static String getEndDate() {
+	public String getEndDate() {
 		return endDate;
 	}
 
-	public static void setEndDate(String endDate) {
-		ArSearchCondition.endDate = endDate;
+	public void setEndDate(String endDate) {
+		this.endDate = endDate;
 	}
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
 	}
 
 }

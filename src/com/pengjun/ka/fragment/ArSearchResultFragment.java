@@ -85,8 +85,11 @@ public class ArSearchResultFragment extends Fragment {
 	public static ArSearchResultFragment newInstance(ArSearchCondition arSC) {
 		if (instance == null) {
 			instance = new ArSearchResultFragment();
+
 		}
-		instance.arSC = arSC;
+		if (arSC != null) {
+			instance.arSC = arSC;
+		}
 
 		return instance;
 	}
@@ -128,6 +131,8 @@ public class ArSearchResultFragment extends Fragment {
 				AccountRecord ar = arList.get(position);
 				Bundle bundle = new Bundle();
 				bundle.putSerializable(Constants.INTENT_AR_BEAN, ar);
+				bundle.putSerializable(Constants.INTENT_DISABLE_AR_TYPE_MANAGE,
+						true);
 				intent.putExtras(bundle);
 				getActivity().startActivityForResult(intent,
 						Constants.CB_ADD_AR);
