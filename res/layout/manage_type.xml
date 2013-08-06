@@ -27,7 +27,6 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:text="@string/manageType" />
-
     </RelativeLayout>
 
     <RelativeLayout
@@ -36,24 +35,25 @@
         android:layout_below="@+id/llToolBar" >
 
         <ListView
-        android:id="@+id/lvArType"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="top"
-        android:scrollingCache="false" >
-    </ListView>
-    
-     <RelativeLayout
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent" >
-        <ProgressBar
-            android:id="@+id/pbLoad"
+            android:id="@+id/lvArType"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:visibility="gone" />
-    </RelativeLayout>
-     
+            android:layout_gravity="top"
+            android:fadingEdge="none"
+            android:scrollingCache="false" >
+        </ListView>
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" >
+
+            <ProgressBar
+                android:id="@+id/pbLoad"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:visibility="gone" />
+        </RelativeLayout>
     </RelativeLayout>
 
 </RelativeLayout>

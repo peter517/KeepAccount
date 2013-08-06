@@ -177,7 +177,7 @@ public class ArFragment extends Fragment {
 					btNegative.setBackgroundResource(R.drawable.btn_normal);
 				}
 
-				return false;
+				return true;
 			}
 		});
 
@@ -271,8 +271,7 @@ public class ArFragment extends Fragment {
 
 			List<AccountRecord> tempArList = null;
 
-			tempArList = ArService.queryLimitRows(offset,
-					LIMIT_ROW_TOTAL);
+			tempArList = ArService.queryLimitRows(offset, LIMIT_ROW_TOTAL);
 			if (tempArList != null) {
 				arList.addAll(tempArList);
 			}

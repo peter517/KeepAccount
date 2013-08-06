@@ -5,12 +5,12 @@ import android.app.Application;
 import com.j256.ormlite.android.AndroidConnectionSource;
 import com.pengjun.ka.db.DbHelper;
 
-public final class KAApplication extends Application {
-	private final static String TAG = KAApplication.class.getSimpleName();
+public final class KaApplication extends Application {
+	private final static String TAG = KaApplication.class.getSimpleName();
 
-	private static KAApplication instance = null;
+	private static KaApplication instance = null;
 
-	public static KAApplication instance() {
+	public static KaApplication instance() {
 		return instance;
 	}
 

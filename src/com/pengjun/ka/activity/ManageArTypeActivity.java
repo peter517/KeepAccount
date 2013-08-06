@@ -156,7 +156,7 @@ public class ManageArTypeActivity extends Activity {
 					btNegative.setBackgroundResource(R.drawable.btn_normal);
 				}
 
-				return false;
+				return true;
 			}
 		});
 

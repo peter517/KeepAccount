@@ -16,7 +16,7 @@ public class LoadingActivity extends Activity {
 		@Override
 		public void handleMessage(android.os.Message msg) {
 			Intent intent = new Intent(LoadingActivity.this,
-					KAMainActivity.class);
+					KaMainActivity.class);
 			startActivity(intent);
 			finish();
 		};

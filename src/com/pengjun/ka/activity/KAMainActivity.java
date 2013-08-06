@@ -18,7 +18,7 @@ import com.pengjun.ka.fragment.FragmentDirector;
 import com.pengjun.ka.tools.Constants;
 import com.pengjun.keepaccounts.R;
 
-public class KAMainActivity extends FragmentActivity {
+public class KaMainActivity extends FragmentActivity {
 
 	ImageButton ibAddAccount;
 	ImageButton ibSetListViewToTop;
@@ -73,7 +73,7 @@ public class KAMainActivity extends FragmentActivity {
 			public void onClick(View v) {
 				// add new account record
 				Intent intent = new Intent();
-				intent.setClass(KAMainActivity.this, AddArActivity.class);
+				intent.setClass(KaMainActivity.this, AddArActivity.class);
 				startActivityForResult(intent, Constants.CB_ADD_AR);
 				overridePendingTransition(R.anim.left_in, R.anim.left_out);
 
@@ -99,7 +99,7 @@ public class KAMainActivity extends FragmentActivity {
 			@Override
 			public void onFocusChange(View v, boolean hasFocus) {
 				if (hasFocus) {
-					FragmentDirector.replaceFragment(KAMainActivity.this,
+					FragmentDirector.replaceFragment(KaMainActivity.this,
 							R.id.mainConent, ArFragment.newInstance());
 
 					ibAddAccount.setVisibility(View.VISIBLE);
@@ -115,7 +115,7 @@ public class KAMainActivity extends FragmentActivity {
 			@Override
 			public void onFocusChange(View v, boolean hasFocus) {
 				if (hasFocus) {
-					FragmentDirector.replaceFragment(KAMainActivity.this,
+					FragmentDirector.replaceFragment(KaMainActivity.this,
 							R.id.mainConent, ArSearchFragment.newInstance());
 
 					ibAddAccount.setVisibility(View.GONE);
@@ -131,7 +131,7 @@ public class KAMainActivity extends FragmentActivity {
 			@Override
 			public void onFocusChange(View v, boolean hasFocus) {
 				if (hasFocus) {
-					FragmentDirector.replaceFragment(KAMainActivity.this,
+					FragmentDirector.replaceFragment(KaMainActivity.this,
 							R.id.mainConent, BackupFragment.newInstance());
 
 					ibAddAccount.setVisibility(View.GONE);

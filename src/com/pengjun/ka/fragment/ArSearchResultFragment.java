@@ -187,7 +187,7 @@ public class ArSearchResultFragment extends Fragment {
 					btNegative.setBackgroundResource(R.drawable.btn_normal);
 				}
 
-				return false;
+				return true;
 			}
 		});
 

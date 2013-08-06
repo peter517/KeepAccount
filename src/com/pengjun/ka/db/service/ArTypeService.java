@@ -8,7 +8,7 @@ import com.j256.ormlite.android.AndroidConnectionSource;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.stmt.QueryBuilder;
-import com.pengjun.ka.activity.KAApplication;
+import com.pengjun.ka.activity.KaApplication;
 import com.pengjun.ka.db.model.AccountRecord;
 import com.pengjun.ka.db.model.ArType;
 import com.pengjun.ka.tools.Constants;
@@ -16,7 +16,7 @@ import com.pengjun.ka.tools.Util;
 
 public class ArTypeService {
 
-	private static AndroidConnectionSource cs = KAApplication
+	private static AndroidConnectionSource cs = KaApplication
 			.getAndroidConnectionSource();
 
 	private static Dao<ArType, Integer> dao = null;
