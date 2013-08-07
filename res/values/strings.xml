@@ -8,9 +8,10 @@
     <!-- KA Main -->
     <string name="recentArs">最近账目</string>
     <string name="newAr">新增账目</string>
-    <string name="backUp">备份数据</string>
     <string name="loadMore">加载更多数据</string>
     <string name="searchResult">查询结果</string>
+    <string name="staticChart">统计图表</string>
+    <string name="systemSetting">设置</string>
 
     
     <!-- AR Type -->
@@ -26,10 +27,20 @@
     <string name="comment">备注</string>
     
      <!-- AR Search-->
-         <string name="searchAr">查询账目</string>
+    <string name="searchAr">查询账目</string>
     <string name="startDate">选择开始日期</string>
     <string name="endDate">选择结束日期</string>
     <string name="accountRange">金额</string>
     <string name="startSearchAr">查询账目</string>
-
+    
+    <!-- AR Chart-->
+    <string name="pieChart">饼状图</string>
+    <string name="lineChart">线状图</string>
+    <string name="columnarChart">柱状图</string>
+    
+     <!-- System Settings-->
+    <string name="exit">退出</string>
+    <string name="backUp">备份数据</string>
+    
+    
 </resources>

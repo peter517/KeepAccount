@@ -11,10 +11,11 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.pengjun.ka.db.service.ArTypeService;
+import com.pengjun.ka.fragment.ArChartFragment;
 import com.pengjun.ka.fragment.ArFragment;
 import com.pengjun.ka.fragment.ArSearchFragment;
-import com.pengjun.ka.fragment.BackupFragment;
 import com.pengjun.ka.fragment.FragmentDirector;
+import com.pengjun.ka.fragment.SettingFragment;
 import com.pengjun.ka.tools.Constants;
 import com.pengjun.keepaccounts.R;
 
@@ -142,13 +143,13 @@ public class KaMainActivity extends FragmentActivity {
 			public void onFocusChange(View v, boolean hasFocus) {
 				if (hasFocus) {
 					FragmentDirector.replaceFragment(KaMainActivity.this,
-							R.id.mainConent, BackupFragment.newInstance());
+							R.id.mainConent, ArChartFragment.newInstance());
 
 					ibSearch.setBackgroundResource(R.drawable.search_normal);
 
 					ibAddAccount.setVisibility(View.GONE);
 					ibSetListViewToTop.setVisibility(View.GONE);
-					tvTopTitle.setText(R.string.backUp);
+					tvTopTitle.setText(R.string.staticChart);
 				}
 
 			}
@@ -162,6 +163,9 @@ public class KaMainActivity extends FragmentActivity {
 				if (hasFocus) {
 
 					ibSearch.setBackgroundResource(R.drawable.search_normal);
+					tvTopTitle.setText(R.string.systemSetting);
+					FragmentDirector.replaceFragment(KaMainActivity.this,
+							R.id.mainConent, SettingFragment.newInstance());
 
 				}
 			}
@@ -184,10 +188,10 @@ public class KaMainActivity extends FragmentActivity {
 	// the same as backing home operation
 	@Override
 	public void onBackPressed() {
-		// Intent homeIntent = new Intent(Intent.ACTION_MAIN);
-		// homeIntent.addCategory(Intent.CATEGORY_HOME);
-		// startActivity(homeIntent);
-		finish();
+		Intent homeIntent = new Intent(Intent.ACTION_MAIN);
+		homeIntent.addCategory(Intent.CATEGORY_HOME);
+		startActivity(homeIntent);
+		// finish();
 	}
 
 	@Override
