@@ -81,8 +81,7 @@
                 android:layout_height="fill_parent"
                 android:background="@android:color/transparent"
                 android:layout_centerInParent="true"
-                android:focusableInTouchMode="true"
-                android:src="@drawable/search_selector_xml" />
+                android:focusableInTouchMode="true" />
         </RelativeLayout>
 
         <RelativeLayout

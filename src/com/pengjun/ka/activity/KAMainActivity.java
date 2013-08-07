@@ -102,6 +102,8 @@ public class KaMainActivity extends FragmentActivity {
 					FragmentDirector.replaceFragment(KaMainActivity.this,
 							R.id.mainConent, ArFragment.newInstance());
 
+					ibSearch.setBackgroundResource(R.drawable.search_normal);
+
 					ibAddAccount.setVisibility(View.VISIBLE);
 					ibSetListViewToTop.setVisibility(View.VISIBLE);
 					tvTopTitle.setText(R.string.recentArs);
@@ -109,7 +111,10 @@ public class KaMainActivity extends FragmentActivity {
 			}
 		});
 
+		// the text in searchFragment could be focused
+		// so ibSearch icon change process dependently
 		ibSearch = (ImageButton) findViewById(R.id.ibSearch);
+		ibSearch.setBackgroundResource(R.drawable.search_normal);
 		ibSearch.setOnFocusChangeListener(new View.OnFocusChangeListener() {
 
 			@Override
@@ -118,9 +123,14 @@ public class KaMainActivity extends FragmentActivity {
 					FragmentDirector.replaceFragment(KaMainActivity.this,
 							R.id.mainConent, ArSearchFragment.newInstance());
 
+					ibSearch.setBackgroundResource(R.drawable.search_focused);
+
 					ibAddAccount.setVisibility(View.GONE);
 					ibSetListViewToTop.setVisibility(View.GONE);
 					tvTopTitle.setText(R.string.searchAr);
+
+				} else {
+
 				}
 			}
 		});
@@ -133,6 +143,8 @@ public class KaMainActivity extends FragmentActivity {
 				if (hasFocus) {
 					FragmentDirector.replaceFragment(KaMainActivity.this,
 							R.id.mainConent, BackupFragment.newInstance());
+
+					ibSearch.setBackgroundResource(R.drawable.search_normal);
 
 					ibAddAccount.setVisibility(View.GONE);
 					ibSetListViewToTop.setVisibility(View.GONE);
@@ -148,6 +160,8 @@ public class KaMainActivity extends FragmentActivity {
 			@Override
 			public void onFocusChange(View v, boolean hasFocus) {
 				if (hasFocus) {
+
+					ibSearch.setBackgroundResource(R.drawable.search_normal);
 
 				}
 			}

@@ -16,7 +16,7 @@
             style="@style/ArTextStyle"
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
-             android:gravity="center"
+            android:gravity="center"
             android:text="@string/accountRange" />
 
         <LinearLayout
@@ -46,7 +46,7 @@
                 android:numeric="decimal" />
         </LinearLayout>
     </LinearLayout>
-    
+
     <LinearLayout
         android:id="@+id/rlArType"
         android:layout_width="fill_parent"
@@ -71,68 +71,59 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/rlStartDate"
+        android:id="@+id/rlDate"
         android:layout_width="fill_parent"
         android:layout_height="@dimen/text_heigth"
         android:layout_below="@+id/rlArType"
         android:layout_marginTop="10dp"
         android:orientation="horizontal" >
 
-        <Button
-            android:id="@+id/btStartDate"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@drawable/btn_selector_xml"
-            android:text="@string/startDate" >
-        </Button>
-
-        <Button
-            android:id="@+id/btEndDate"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@drawable/btn_selector_xml"
-            android:text="@string/endDate" >
-        </Button>
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/rlEndDate"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/rlStartDate"
-        android:layout_marginTop="10dp"
-        android:orientation="horizontal" >
-
         <TextView
             style="@style/ArTextStyle"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
             android:gravity="center"
-            android:id="@+id/tvStartDate" >
+            android:text="@string/date" >
         </TextView>
 
-        <TextView
-            style="@style/ArTextStyle"
+        <LinearLayout
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:id="@+id/tvEndDate"  >
-        </TextView>
+            android:layout_height="@dimen/text_heigth"
+            android:orientation="horizontal" >
+
+            <Button
+                android:id="@+id/btStartDate"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/text_selector_xml"
+                android:text="@string/startDate" >
+            </Button>
+
+            <ImageView
+                android:layout_width="@dimen/bar_img_width"
+                android:layout_height="fill_parent"
+                android:src="@drawable/arrow_right" />
+
+            <Button
+                android:id="@+id/btEndDate"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/text_selector_xml"
+                android:text="@string/endDate" >
+            </Button>
+        </LinearLayout>
     </LinearLayout>
 
     <Button
         android:id="@+id/btArSearch"
-        android:layout_width="180dp"
-        android:layout_height="60dp"
-        android:layout_below="@+id/rlEndDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rlDate"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="50dp"
-        android:background="@drawable/btn_selector_xml"
-        android:text="@string/startSearchAr" >
+        android:background="@drawable/btn_search_selector_xml" >
     </Button>
 
 </RelativeLayout>

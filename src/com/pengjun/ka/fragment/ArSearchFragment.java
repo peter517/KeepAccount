@@ -17,7 +17,6 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
 
 import com.pengjun.ka.activity.ArSearchResultActivity;
 import com.pengjun.ka.db.model.ArSearchCondition;
@@ -35,9 +34,6 @@ public class ArSearchFragment extends Fragment {
 
 	private Button btStartDate;
 	private Button btEndDate;
-
-	private TextView tvStartDate;
-	private TextView tvEndDate;
 
 	private Button btArSearch;
 
@@ -58,6 +54,10 @@ public class ArSearchFragment extends Fragment {
 	@Override
 	public void onDestroy() {
 		super.onDestroy();
+	}
+
+	public boolean isTvAccountFocous() {
+		return etStartAccount.isFocused() || etEndAccount.isFocused();
 	}
 
 	public static ArSearchFragment newInstance() {
@@ -87,12 +87,8 @@ public class ArSearchFragment extends Fragment {
 				.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		spArTypeName.setAdapter(arTypeNameAdapter);
 
-		tvStartDate = (TextView) view.findViewById(R.id.tvStartDate);
-		tvStartDate.setText(Util.getCurDateStr());
-		tvEndDate = (TextView) view.findViewById(R.id.tvEndDate);
-		tvEndDate.setText(Util.getCurDateStr());
-
 		btStartDate = (Button) view.findViewById(R.id.btStartDate);
+		btStartDate.setText(Util.getCurDateStr());
 		btStartDate.setOnClickListener(new View.OnClickListener() {
 
 			OnDateSetListener dateSetListener = new OnDateSetListener() {
@@ -102,7 +98,7 @@ public class ArSearchFragment extends Fragment {
 						int monthOfYear, int dayOfMonth) {
 					String setDateStr = String.format(Util.DATE_FORMT, year,
 							monthOfYear + 1, dayOfMonth);
-					tvStartDate.setText(setDateStr);
+					btStartDate.setText(setDateStr);
 				}
 			};
 
@@ -124,6 +120,7 @@ public class ArSearchFragment extends Fragment {
 		});
 
 		btEndDate = (Button) view.findViewById(R.id.btEndDate);
+		btEndDate.setText(Util.getCurDateStr());
 		btEndDate.setOnClickListener(new View.OnClickListener() {
 
 			OnDateSetListener dateSetListener = new OnDateSetListener() {
@@ -133,7 +130,7 @@ public class ArSearchFragment extends Fragment {
 						int monthOfYear, int dayOfMonth) {
 					String setDateStr = String.format(Util.DATE_FORMT, year,
 							monthOfYear + 1, dayOfMonth);
-					tvEndDate.setText(setDateStr);
+					btEndDate.setText(setDateStr);
 				}
 			};
 
@@ -171,8 +168,8 @@ public class ArSearchFragment extends Fragment {
 							.getText().toString());
 				}
 
-				boolean isDateLegal = tvStartDate.getText().toString()
-						.compareTo(tvEndDate.getText().toString()) <= 0;
+				boolean isDateLegal = btStartDate.getText().toString()
+						.compareTo(btEndDate.getText().toString()) <= 0;
 
 				if (!isAccountLegal) {
 					Util.createAlertDialog(getActivity(), "金额应该右边大于或等于左边")
@@ -192,8 +189,8 @@ public class ArSearchFragment extends Fragment {
 				ArSearchCondition arSC = new ArSearchCondition();
 				arSC.setStartAccount(etStartAccount.getText().toString());
 				arSC.setEndAccount(etEndAccount.getText().toString());
-				arSC.setStartDate(tvStartDate.getText().toString());
-				arSC.setEndDate(tvEndDate.getText().toString());
+				arSC.setStartDate(btStartDate.getText().toString());
+				arSC.setEndDate(btEndDate.getText().toString());
 
 				if (!spArTypeName.getSelectedItem().toString()
 						.equals(ALL_AR_TYPE)) {
