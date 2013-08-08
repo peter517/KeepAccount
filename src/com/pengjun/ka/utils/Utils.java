@@ -1,4 +1,4 @@
-package com.pengjun.ka.tools;
+package com.pengjun.ka.utils;
 
 import java.util.Calendar;
 import java.util.List;
@@ -11,7 +11,7 @@ import android.widget.DatePicker;
 
 import com.pengjun.keepaccounts.R;
 
-public class Util {
+public class Utils {
 
 	public static final String TIME_FORMT = "%d-%02d-%02d-%02d-%02d-%02d";
 	public static final String DATE_FORMT = "%d-%02d-%02d";

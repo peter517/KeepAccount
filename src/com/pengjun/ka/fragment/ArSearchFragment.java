@@ -21,8 +21,8 @@ import android.widget.Spinner;
 import com.pengjun.ka.activity.ArSearchResultActivity;
 import com.pengjun.ka.db.model.ArSearchCondition;
 import com.pengjun.ka.db.service.ArTypeService;
-import com.pengjun.ka.tools.Constants;
-import com.pengjun.ka.tools.Util;
+import com.pengjun.ka.utils.Constants;
+import com.pengjun.ka.utils.Utils;
 import com.pengjun.keepaccounts.R;
 
 public class ArSearchFragment extends Fragment {
@@ -88,7 +88,7 @@ public class ArSearchFragment extends Fragment {
 		spArTypeName.setAdapter(arTypeNameAdapter);
 
 		btStartDate = (Button) view.findViewById(R.id.btStartDate);
-		btStartDate.setText(Util.getCurDateStr());
+		btStartDate.setText(Utils.getCurDateStr());
 		btStartDate.setOnClickListener(new View.OnClickListener() {
 
 			OnDateSetListener dateSetListener = new OnDateSetListener() {
@@ -96,7 +96,7 @@ public class ArSearchFragment extends Fragment {
 				@Override
 				public void onDateSet(DatePicker view, int year,
 						int monthOfYear, int dayOfMonth) {
-					String setDateStr = String.format(Util.DATE_FORMT, year,
+					String setDateStr = String.format(Utils.DATE_FORMT, year,
 							monthOfYear + 1, dayOfMonth);
 					btStartDate.setText(setDateStr);
 				}
@@ -120,7 +120,7 @@ public class ArSearchFragment extends Fragment {
 		});
 
 		btEndDate = (Button) view.findViewById(R.id.btEndDate);
-		btEndDate.setText(Util.getCurDateStr());
+		btEndDate.setText(Utils.getCurDateStr());
 		btEndDate.setOnClickListener(new View.OnClickListener() {
 
 			OnDateSetListener dateSetListener = new OnDateSetListener() {
@@ -128,7 +128,7 @@ public class ArSearchFragment extends Fragment {
 				@Override
 				public void onDateSet(DatePicker view, int year,
 						int monthOfYear, int dayOfMonth) {
-					String setDateStr = String.format(Util.DATE_FORMT, year,
+					String setDateStr = String.format(Utils.DATE_FORMT, year,
 							monthOfYear + 1, dayOfMonth);
 					btEndDate.setText(setDateStr);
 				}
@@ -172,13 +172,13 @@ public class ArSearchFragment extends Fragment {
 						.compareTo(btEndDate.getText().toString()) <= 0;
 
 				if (!isAccountLegal) {
-					Util.createAlertDialog(getActivity(), "金额应该右边大于或等于左边")
+					Utils.createAlertDialog(getActivity(), "金额应该右边大于或等于左边")
 							.show();
 					return;
 				}
 
 				if (!isDateLegal) {
-					Util.createAlertDialog(getActivity(), "日期应该右边大于或等于左边")
+					Utils.createAlertDialog(getActivity(), "日期应该右边大于或等于左边")
 							.show();
 					return;
 				}

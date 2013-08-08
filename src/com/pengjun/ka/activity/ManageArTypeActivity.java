@@ -30,9 +30,10 @@ import android.widget.Toast;
 
 import com.pengjun.ka.db.model.ArType;
 import com.pengjun.ka.db.service.ArTypeService;
-import com.pengjun.ka.tools.Constants;
-import com.pengjun.ka.tools.MyDebug;
-import com.pengjun.ka.tools.Util;
+import com.pengjun.ka.utils.Constants;
+import com.pengjun.ka.utils.MyDebug;
+import com.pengjun.ka.utils.ResManageUtils;
+import com.pengjun.ka.utils.Utils;
 import com.pengjun.keepaccounts.R;
 
 public class ManageArTypeActivity extends Activity {
@@ -114,7 +115,7 @@ public class ManageArTypeActivity extends Activity {
 					int position, long id) {
 
 				if (arTypeList.size() == 1) {
-					Util.createAlertDialog(ManageArTypeActivity.this,
+					Utils.createAlertDialog(ManageArTypeActivity.this,
 							"至少要有一个分类").show();
 					return false;
 				}
@@ -294,8 +295,8 @@ public class ManageArTypeActivity extends Activity {
 			ArType arType = arTypeList.get(position);
 			holder.arSum.setText("记账数："
 					+ String.valueOf(arType.getArSum(arType.getId())));
-			holder.ivType.setImageResource(Constants.resName2Id.get(arType
-					.getImgResName()));
+			holder.ivType.setImageResource(ResManageUtils
+					.getImgResIdByName(arType.getImgResName()));
 			holder.tvType.setText(arType.getTypeName());
 			holder.createDate.setText(arType.getCreateDate());
 

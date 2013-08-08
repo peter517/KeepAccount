@@ -12,7 +12,7 @@ import com.j256.ormlite.stmt.Where;
 import com.pengjun.ka.activity.KaApplication;
 import com.pengjun.ka.db.model.AccountRecord;
 import com.pengjun.ka.db.model.ArSearchCondition;
-import com.pengjun.ka.tools.Constants;
+import com.pengjun.ka.utils.Constants;
 
 public class ArService {
 

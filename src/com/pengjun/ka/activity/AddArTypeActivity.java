@@ -21,8 +21,9 @@ import android.widget.ImageView;
 
 import com.pengjun.ka.db.model.ArType;
 import com.pengjun.ka.db.service.ArTypeService;
-import com.pengjun.ka.tools.Constants;
-import com.pengjun.ka.tools.Util;
+import com.pengjun.ka.utils.Constants;
+import com.pengjun.ka.utils.ResManageUtils;
+import com.pengjun.ka.utils.Utils;
 import com.pengjun.keepaccounts.R;
 
 public class AddArTypeActivity extends Activity {
@@ -66,19 +67,19 @@ public class AddArTypeActivity extends Activity {
 
 				// error info
 				if (etArTypeName.getText().toString().equals("")) {
-					Util.createAlertDialog(AddArTypeActivity.this, "请输入新建类名称")
+					Utils.createAlertDialog(AddArTypeActivity.this, "请输入新建类名称")
 							.show();
 					return;
 				}
 				if (selectPos == GV_UNSELECTED) {
-					Util.createAlertDialog(AddArTypeActivity.this, "请选择图片")
+					Utils.createAlertDialog(AddArTypeActivity.this, "请选择图片")
 							.show();
 					return;
 				}
 
 				if (ArTypeService.isTypeNameExsit(etArTypeName.getText()
 						.toString())) {
-					Util.createAlertDialog(AddArTypeActivity.this,
+					Utils.createAlertDialog(AddArTypeActivity.this,
 							"类名称已存在，请重新输入").show();
 					return;
 				}
@@ -87,13 +88,13 @@ public class AddArTypeActivity extends Activity {
 					arType = new ArType();
 					arType.setTypeName(etArTypeName.getText().toString());
 					arType.setImgResName(resNameList.get(selectPos));
-					arType.setCreateDate(Util.getCurDateStr());
-					arType.setUpdateTime(Util.getCurTimeStr());
+					arType.setCreateDate(Utils.getCurDateStr());
+					arType.setUpdateTime(Utils.getCurTimeStr());
 					ArTypeService.insert(arType);
 				} else {
 					arType.setTypeName(etArTypeName.getText().toString());
 					arType.setImgResName(resNameList.get(selectPos));
-					arType.setUpdateTime(Util.getCurTimeStr());
+					arType.setUpdateTime(Utils.getCurTimeStr());
 					ArTypeService.update(arType);
 				}
 
@@ -146,7 +147,7 @@ public class AddArTypeActivity extends Activity {
 			Field[] fields = R.drawable.class.getDeclaredFields();
 			for (Field field : fields) {
 				// get all image from res which name start with type
-				if (field.getName().startsWith(Constants.RES_IMAGE_PREFIX)) {
+				if (field.getName().startsWith(ResManageUtils.RES_IMAGE_PREFIX)) {
 					resNameList.add(field.getName());
 				}
 			}
@@ -183,8 +184,8 @@ public class AddArTypeActivity extends Activity {
 				holder = (ArTypeHolder) convertView.getTag();
 			}
 
-			holder.ivArType.setImageResource(Constants.resName2Id
-					.get(resNameList.get(position)));
+			holder.ivArType.setImageResource(ResManageUtils
+					.getImgResIdByName(resNameList.get(position)));
 			return convertView;
 
 		}

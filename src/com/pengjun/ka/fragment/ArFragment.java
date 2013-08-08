@@ -29,8 +29,9 @@ import android.widget.Toast;
 import com.pengjun.ka.activity.AddArActivity;
 import com.pengjun.ka.db.model.AccountRecord;
 import com.pengjun.ka.db.service.ArService;
-import com.pengjun.ka.tools.Constants;
-import com.pengjun.ka.tools.MyDebug;
+import com.pengjun.ka.utils.Constants;
+import com.pengjun.ka.utils.MyDebug;
+import com.pengjun.ka.utils.ResManageUtils;
 import com.pengjun.keepaccounts.R;
 
 public class ArFragment extends Fragment {
@@ -333,7 +334,7 @@ public class ArFragment extends Fragment {
 			// fill content
 			AccountRecord ar = arList.get(position);
 			holder.account.setText(String.valueOf(ar.getAccount()));
-			holder.ivType.setImageResource(Constants.resName2Id.get(ar
+			holder.ivType.setImageResource(ResManageUtils.getImgResIdByName(ar
 					.getImgResName()));
 			holder.tvType.setText(ar.getTypeName());
 			holder.date.setText(ar.getCreateDate());

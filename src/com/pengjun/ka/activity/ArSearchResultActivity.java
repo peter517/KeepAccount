@@ -10,7 +10,7 @@ import com.pengjun.ka.db.model.ArSearchCondition;
 import com.pengjun.ka.fragment.ArFragment;
 import com.pengjun.ka.fragment.ArSearchResultFragment;
 import com.pengjun.ka.fragment.FragmentDirector;
-import com.pengjun.ka.tools.Constants;
+import com.pengjun.ka.utils.Constants;
 import com.pengjun.keepaccounts.R;
 
 public class ArSearchResultActivity extends FragmentActivity {

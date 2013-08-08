@@ -18,8 +18,8 @@ import android.widget.Spinner;
 import com.pengjun.ka.db.model.AccountRecord;
 import com.pengjun.ka.db.service.ArService;
 import com.pengjun.ka.db.service.ArTypeService;
-import com.pengjun.ka.tools.Constants;
-import com.pengjun.ka.tools.Util;
+import com.pengjun.ka.utils.Constants;
+import com.pengjun.ka.utils.Utils;
 import com.pengjun.keepaccounts.R;
 
 public class AddArActivity extends Activity {
@@ -99,7 +99,7 @@ public class AddArActivity extends Activity {
 					setResult(RESULT_OK, null);
 					finish();
 				} else {
-					Util.createAlertDialog(AddArActivity.this, "请输入金额").show();
+					Utils.createAlertDialog(AddArActivity.this, "请输入金额").show();
 				}
 			}
 
@@ -140,11 +140,11 @@ public class AddArActivity extends Activity {
 
 	private void putArToView(AccountRecord ar) {
 		etAccount.setText(String.valueOf((ar.getAccount())));
-		spArTypeName.setSelection(Util.getPosFromList(arTypeNameList,
+		spArTypeName.setSelection(Utils.getPosFromList(arTypeNameList,
 				ar.getTypeName()));
 		etComment.setText(String.valueOf((ar.getComment())));
 
-		String[] date = Util.String2DateArr(ar.getCreateDate());
+		String[] date = Utils.String2DateArr(ar.getCreateDate());
 		dpCreateDate.updateDate(Integer.valueOf(date[0]),
 				Integer.valueOf(date[1]) - 1, Integer.valueOf(date[2]));
 	}
@@ -152,8 +152,8 @@ public class AddArActivity extends Activity {
 	private void getArFromView(AccountRecord ar) {
 		ar.setAccount(Float.valueOf(etAccount.getText().toString()));
 		ar.setTypeName(spArTypeName.getSelectedItem().toString());
-		ar.setCreateDate(Util.DatePicker2FormatStr(dpCreateDate));
+		ar.setCreateDate(Utils.DatePicker2FormatStr(dpCreateDate));
 		ar.setComment(etComment.getText().toString());
-		ar.setUpdateTime(Util.getCurTimeStr());
+		ar.setUpdateTime(Utils.getCurTimeStr());
 	}
 }

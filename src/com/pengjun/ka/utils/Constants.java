@@ -1,36 +1,12 @@
-package com.pengjun.ka.tools;
+package com.pengjun.ka.utils;
 
-import java.lang.reflect.Field;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
-import com.pengjun.keepaccounts.R;
 
 public class Constants {
 
 	public static int TOAST_EXSIT_TIME = 2000;
 
-	public static Map<String, Integer> resName2Id = new HashMap<String, Integer>();
-
-	static {
-		Field[] fields = R.drawable.class.getDeclaredFields();
-		for (Field field : fields) {
-			// get all image from res which name start with type
-			if (field.getName().startsWith(Constants.RES_IMAGE_PREFIX)) {
-				try {
-					resName2Id.put(field.getName(),
-							field.getInt(R.drawable.class));
-				} catch (IllegalArgumentException e) {
-					e.printStackTrace();
-				} catch (IllegalAccessException e) {
-					e.printStackTrace();
-				}
-			}
-		}
-	}
-
-	// Ar Type
+	// init Ar Type
 	public static final String[] TYPE_STR_ARR = { "吃饭", "娱乐", "衣服", "交通", "其他" };
 	public static final String[] TYPE_IMAGE_RES_ID_ARR = { "type_eat",
 			"type_play", "type_dress", "type_car", "type_other" };
@@ -46,7 +22,7 @@ public class Constants {
 	public static String SP_KEY_FIRST_START_APP = "frist_start_app";
 	public static String SP_VALUE_FIRST_START_APP = "frist_start_app";
 
-	// activity call-back tag
+	// activity intent callback tag
 	public static final int CB_ADD_AR = 01;
 	public static final int CB_ADD_AR_TYPE = 02;
 	public static final int CB_ADD_AR_TYPE_NAME = 03;
@@ -56,9 +32,6 @@ public class Constants {
 	public static final String INTENT_AR_TYPE_BEAN = "ar_type_bean";
 	public static final String INTENT_AR_TYPE_NAME_LIST_BEAN = "ar_type_name_list_bean";
 	public static final String INTENT_DISABLE_AR_TYPE_MANAGE = "disable_ar_type_manage";
-
 	public static final String INTENT_AR_SEARCH_CONDITION = "ar_search_condition";
 
-	// res
-	public static final String RES_IMAGE_PREFIX = "type";
 }

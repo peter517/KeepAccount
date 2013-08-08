@@ -16,7 +16,7 @@ import com.pengjun.ka.fragment.ArFragment;
 import com.pengjun.ka.fragment.ArSearchFragment;
 import com.pengjun.ka.fragment.FragmentDirector;
 import com.pengjun.ka.fragment.SettingFragment;
-import com.pengjun.ka.tools.Constants;
+import com.pengjun.ka.utils.Constants;
 import com.pengjun.keepaccounts.R;
 
 public class KaMainActivity extends FragmentActivity {
