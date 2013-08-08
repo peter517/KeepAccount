@@ -21,7 +21,7 @@ public class ArType implements Serializable {
 	String typeName;
 
 	@DatabaseField(canBeNull = false)
-	int imgResId;
+	String imgResName;
 
 	@DatabaseField(canBeNull = false)
 	String createDate;
@@ -29,20 +29,20 @@ public class ArType implements Serializable {
 	@DatabaseField(canBeNull = false)
 	String updateTime;
 
+	public String getImgResName() {
+		return imgResName;
+	}
+
+	public void setImgResName(String imgResName) {
+		this.imgResName = imgResName;
+	}
+
 	public String getCreateDate() {
 		return createDate;
 	}
 
 	public void setCreateDate(String createDate) {
 		this.createDate = createDate;
-	}
-
-	public int getImgResId() {
-		return imgResId;
-	}
-
-	public void setImgResId(int imgResId) {
-		this.imgResId = imgResId;
 	}
 
 	public String getUpdateTime() {

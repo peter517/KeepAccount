@@ -54,9 +54,7 @@ public class GalleryFlow extends Gallery {
 				+ getPaddingLeft();
 	}
 
-	private static int getCenterOfView(View view) {
-		System.out.println("view left :" + view.getLeft());
-		System.out.println("view width :" + view.getWidth());
+	private int getCenterOfView(View view) {
 		return view.getLeft() + view.getWidth() / 2;
 	}
 

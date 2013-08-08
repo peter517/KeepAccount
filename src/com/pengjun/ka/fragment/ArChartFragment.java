@@ -124,9 +124,6 @@ public class ArChartFragment extends Fragment {
 				// 创建矩阵对象
 				Matrix matrix = new Matrix();
 
-				// 指定一个角度以0,0为坐标进行旋转
-				// matrix.setRotate(30);
-
 				// 指定矩阵(x轴不变，y轴相反)
 				matrix.preScale(1, -1);
 
@@ -198,10 +195,6 @@ public class ArChartFragment extends Fragment {
 
 		public View getView(int position, View convertView, ViewGroup parent) {
 			return mImages[position];
-		}
-
-		public float getScale(boolean focused, int offset) {
-			return Math.max(0, 1.0f / (float) Math.pow(2, Math.abs(offset)));
 		}
 	}
 }

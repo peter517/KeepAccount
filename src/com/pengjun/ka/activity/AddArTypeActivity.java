@@ -36,7 +36,7 @@ public class AddArTypeActivity extends Activity {
 	private final int GV_UNSELECTED = -1;
 	private int selectPos = GV_UNSELECTED;
 
-	private ArrayList<Integer> imgResIdList = new ArrayList<Integer>();
+	private ArrayList<String> resNameList = new ArrayList<String>();
 	private ArTypeImgAdapter arTypeImgAdapter;
 	private ArType arType;
 
@@ -86,13 +86,13 @@ public class AddArTypeActivity extends Activity {
 				if (arType == null) {
 					arType = new ArType();
 					arType.setTypeName(etArTypeName.getText().toString());
-					arType.setImgResId(imgResIdList.get(selectPos));
+					arType.setImgResName(resNameList.get(selectPos));
 					arType.setCreateDate(Util.getCurDateStr());
 					arType.setUpdateTime(Util.getCurTimeStr());
 					ArTypeService.insert(arType);
 				} else {
 					arType.setTypeName(etArTypeName.getText().toString());
-					arType.setImgResId(imgResIdList.get(selectPos));
+					arType.setImgResName(resNameList.get(selectPos));
 					arType.setUpdateTime(Util.getCurTimeStr());
 					ArTypeService.update(arType);
 				}
@@ -147,22 +147,14 @@ public class AddArTypeActivity extends Activity {
 			for (Field field : fields) {
 				// get all image from res which name start with type
 				if (field.getName().startsWith(Constants.RES_IMAGE_PREFIX)) {
-					int index = 0;
-					try {
-						index = field.getInt(R.drawable.class);
-					} catch (IllegalArgumentException e) {
-						e.printStackTrace();
-					} catch (IllegalAccessException e) {
-						e.printStackTrace();
-					}
-					imgResIdList.add(index);
+					resNameList.add(field.getName());
 				}
 			}
 		}
 
 		@Override
 		public int getCount() {
-			return imgResIdList.size();
+			return resNameList.size();
 		}
 
 		@Override
@@ -191,8 +183,8 @@ public class AddArTypeActivity extends Activity {
 				holder = (ArTypeHolder) convertView.getTag();
 			}
 
-			holder.ivArType.setImageResource(imgResIdList.get(position));
-
+			holder.ivArType.setImageResource(Constants.resName2Id
+					.get(resNameList.get(position)));
 			return convertView;
 
 		}

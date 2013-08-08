@@ -294,7 +294,8 @@ public class ManageArTypeActivity extends Activity {
 			ArType arType = arTypeList.get(position);
 			holder.arSum.setText("记账数："
 					+ String.valueOf(arType.getArSum(arType.getId())));
-			holder.ivType.setImageResource(arType.getImgResId());
+			holder.ivType.setImageResource(Constants.resName2Id.get(arType
+					.getImgResName()));
 			holder.tvType.setText(arType.getTypeName());
 			holder.createDate.setText(arType.getCreateDate());
 

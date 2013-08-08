@@ -68,16 +68,16 @@ public class AccountRecord implements Serializable {
 		this.account = acount;
 	}
 
-	public String getType() {
-		return ArTypeService.getArTpyeById(typeId);
+	public String getTypeName() {
+		return ArTypeService.getArTpyeNameById(typeId);
 	}
 
-	public void setType(String arTpye) {
+	public void setTypeName(String arTpye) {
 		typeId = ArTypeService.getIdByArTpye(arTpye);
 	}
 
-	public int getImgResId() {
-		return ArTypeService.getImgResIdById(typeId);
+	public String getImgResName() {
+		return ArTypeService.getImgResNameById(typeId);
 	}
 
 	public String getCreateDate() {

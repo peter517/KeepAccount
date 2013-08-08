@@ -333,8 +333,9 @@ public class ArFragment extends Fragment {
 			// fill content
 			AccountRecord ar = arList.get(position);
 			holder.account.setText(String.valueOf(ar.getAccount()));
-			holder.ivType.setImageResource(ar.getImgResId());
-			holder.tvType.setText(ar.getType());
+			holder.ivType.setImageResource(Constants.resName2Id.get(ar
+					.getImgResName()));
+			holder.tvType.setText(ar.getTypeName());
 			holder.date.setText(ar.getCreateDate());
 
 			return convertView;

@@ -141,7 +141,7 @@ public class AddArActivity extends Activity {
 	private void putArToView(AccountRecord ar) {
 		etAccount.setText(String.valueOf((ar.getAccount())));
 		spArTypeName.setSelection(Util.getPosFromList(arTypeNameList,
-				ar.getType()));
+				ar.getTypeName()));
 		etComment.setText(String.valueOf((ar.getComment())));
 
 		String[] date = Util.String2DateArr(ar.getCreateDate());
@@ -151,7 +151,7 @@ public class AddArActivity extends Activity {
 
 	private void getArFromView(AccountRecord ar) {
 		ar.setAccount(Float.valueOf(etAccount.getText().toString()));
-		ar.setType(spArTypeName.getSelectedItem().toString());
+		ar.setTypeName(spArTypeName.getSelectedItem().toString());
 		ar.setCreateDate(Util.DatePicker2FormatStr(dpCreateDate));
 		ar.setComment(etComment.getText().toString());
 		ar.setUpdateTime(Util.getCurTimeStr());

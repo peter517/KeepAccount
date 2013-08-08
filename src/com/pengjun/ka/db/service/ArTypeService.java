@@ -37,7 +37,7 @@ public class ArTypeService {
 			arType.setTypeName(Constants.TYPE_STR_ARR[i]);
 			arType.setUpdateTime(Util.getCurTimeStr());
 			arType.setCreateDate(Util.getCurDateStr());
-			arType.setImgResId(Constants.TYPE_IMAGE_RES_ID_ARR[i]);
+			arType.setImgResName(Constants.TYPE_IMAGE_RES_ID_ARR[i]);
 			try {
 				dao.create(arType);
 			} catch (SQLException e) {
@@ -74,10 +74,20 @@ public class ArTypeService {
 		return Constants.DB_SEARCH_LIST_NOT_FOUND;
 	}
 
-	public static String getArTpyeById(int id) {
+	public static String getArTpyeNameById(int id) {
 		try {
 			ArType arType = dao.queryForId(id);
 			return arType.getTypeName();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return Constants.DB_SEARCH_STRING_NOT_FOUND;
+	}
+
+	public static String getImgResNameById(int id) {
+		try {
+			ArType arType = dao.queryForId(id);
+			return arType.getImgResName();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -108,16 +118,6 @@ public class ArTypeService {
 			e.printStackTrace();
 		}
 		return false;
-	}
-
-	public static int getImgResIdById(int id) {
-		try {
-			ArType arType = dao.queryForId(id);
-			return arType.getImgResId();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return Constants.DB_SEARCH_INT_NOT_FOUND;
 	}
 
 	public static void insert(ArType arType) {
