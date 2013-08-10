@@ -227,7 +227,7 @@ public class ManageArTypeActivity extends Activity {
 			isListViewDataChange = params[0];
 			List<ArType> tempArList = null;
 
-			tempArList = ArTypeService.queryAll();
+			tempArList = ArTypeService.queryAllByUpdate();
 			if (tempArList != null) {
 				arTypeList = tempArList;
 			}

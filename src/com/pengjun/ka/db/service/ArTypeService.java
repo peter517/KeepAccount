@@ -8,6 +8,7 @@ import com.j256.ormlite.android.AndroidConnectionSource;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.stmt.QueryBuilder;
+import com.j256.ormlite.table.TableUtils;
 import com.pengjun.ka.activity.KaApplication;
 import com.pengjun.ka.db.model.AccountRecord;
 import com.pengjun.ka.db.model.ArType;
@@ -16,8 +17,7 @@ import com.pengjun.ka.utils.Utils;
 
 public class ArTypeService {
 
-	private static AndroidConnectionSource cs = KaApplication
-			.getAndroidConnectionSource();
+	private static AndroidConnectionSource cs = KaApplication.getAndroidConnectionSource();
 
 	private static Dao<ArType, Integer> dao = null;
 
@@ -47,7 +47,7 @@ public class ArTypeService {
 
 	}
 
-	public static List<ArType> queryAll() {
+	public static List<ArType> queryAllByUpdate() {
 		try {
 			QueryBuilder<ArType, Integer> queryBuilder = dao.queryBuilder();
 			queryBuilder.orderBy(AccountRecord.COL_UPDATE_TIME, false);
@@ -96,8 +96,7 @@ public class ArTypeService {
 
 	public static int getIdByArTpye(String arTpye) {
 		try {
-			List<ArType> arTypeList = dao.queryForEq(ArType.COL_TYPE_NAME,
-					arTpye);
+			List<ArType> arTypeList = dao.queryForEq(ArType.COL_TYPE_NAME, arTpye);
 			if (arTypeList.size() == 1) {
 				return arTypeList.get(0).getId();
 			}
@@ -109,8 +108,7 @@ public class ArTypeService {
 
 	public static boolean ifArTypeExist(String arTpye) {
 		try {
-			List<ArType> arTypeList = dao.queryForEq(ArType.COL_TYPE_NAME,
-					arTpye);
+			List<ArType> arTypeList = dao.queryForEq(ArType.COL_TYPE_NAME, arTpye);
 			if (arTypeList.size() == 1) {
 				return true;
 			}
@@ -159,6 +157,20 @@ public class ArTypeService {
 			ArService.deleteByTypeId(arType.getId());
 		} catch (SQLException e) {
 			e.printStackTrace();
+		}
+	}
+
+	public static void reCreateTable(List<ArType> arTypeList) {
+
+		try {
+			TableUtils.dropTable(cs, ArType.class, false);
+			TableUtils.createTable(cs, ArType.class);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		for (int i = arTypeList.size() - 1; i >= 0; i--) {
+			insert(arTypeList.get(i));
 		}
 	}
 

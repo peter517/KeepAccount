@@ -10,7 +10,7 @@
     <string name="newAr">新增账目</string>
     <string name="loadMore">加载更多数据</string>
     <string name="searchResult">查询结果</string>
-    <string name="staticChart">统计图表</string>
+    <string name="magicBox">数据魔方</string>
     <string name="systemSetting">设置</string>
 
     
@@ -39,8 +39,10 @@
     <string name="columnarChart">柱状图</string>
     
      <!-- System Settings-->
+    <string name="backUp">数据备份</string>
+    <string name="arTypeClassify">账目分类</string>
+    <string name="manageBackUpData">管理备份数据</string>
     <string name="exit">退出</string>
-    <string name="backUp">备份数据</string>
     
     
 </resources>

@@ -13,7 +13,7 @@
         android:orientation="horizontal" >
 
         <ImageButton
-            android:id="@+id/ibAddTpye"
+            android:id="@+id/ibAddBackup"
             android:layout_width="@dimen/bar_img_width"
             android:layout_height="fill_parent"
             android:layout_alignParentLeft="true"
@@ -26,7 +26,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="@string/manageType" />
+            android:text="@string/manageBackUpData" />
+        
+        <ImageButton
+            android:id="@+id/ibRestore"
+            android:layout_width="@dimen/bar_img_width"
+            android:layout_height="fill_parent"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/menu_btn_selector_xml"
+            android:src="@drawable/menu_btn_restore" />
+        
     </RelativeLayout>
 
     <RelativeLayout
@@ -34,15 +43,19 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/llToolBar" >
 
-        <ListView
-            android:id="@+id/lvArType"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="top"
-            android:fadingEdge="none"
-            android:scrollingCache="false" >
-        </ListView>
-
+        <GridView
+            android:id="@+id/gvBackup"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:columnWidth="90dp"
+            android:gravity="center"
+            android:horizontalSpacing="10dp"
+            android:listSelector="@drawable/gridview_selector_xml"
+            android:numColumns="auto_fit"
+            android:stretchMode="columnWidth"
+            android:focusableInTouchMode="true"
+            android:verticalSpacing="10dp" />
+        
         <RelativeLayout
             android:layout_width="fill_parent"
             android:layout_height="fill_parent" >
@@ -54,6 +67,7 @@
                 android:layout_centerInParent="true"
                 android:visibility="gone" />
         </RelativeLayout>
+
     </RelativeLayout>
 
 </RelativeLayout>

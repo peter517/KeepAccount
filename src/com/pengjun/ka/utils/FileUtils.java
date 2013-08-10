@@ -5,15 +5,31 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.util.ArrayList;
 import java.util.List;
 
 import android.os.Environment;
 
-import com.pengjun.ka.db.model.AccountRecord;
-
 public class FileUtils {
+
+	public static boolean createDir(String dir) {
+		File file = new File(dir);
+		if (!file.exists() && file.mkdir() == false) {
+			return false;
+		}
+		return true;
+	}
+
+	public static List<String> getFileNameList(File dir) {
+
+		File[] files = dir.listFiles();
+		List<String> fileNameList = new ArrayList<String>();
+		for (int i = 0; i < files.length; i++) {
+			fileNameList.add(files[i].getName());
+		}
+
+		return fileNameList;
+	}
 
 	public static boolean saveToSDCard(String filename, String content) {
 
@@ -22,8 +38,7 @@ public class FileUtils {
 			return false;
 		}
 
-		File file = new File(Environment.getExternalStorageDirectory(),
-				filename);
+		File file = new File(Environment.getExternalStorageDirectory(), filename);
 		FileOutputStream fos;
 		try {
 			fos = new FileOutputStream(file);
@@ -101,30 +116,4 @@ public class FileUtils {
 		return new String(data);
 	}
 
-	public static void backupAr(List<AccountRecord> arList) {
-		try {
-			ObjectOutputStream out = new ObjectOutputStream(
-					new FileOutputStream("/sdcard/ar.dat"));
-			out.writeObject(arList);
-			out.close();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-	}
-
-	public static List<AccountRecord> restoreAr() {
-
-		List<AccountRecord> arList = null;
-		try {
-			ObjectInputStream in = new ObjectInputStream(new FileInputStream(
-					"/sdcard/ar.dat"));
-			arList = (List<AccountRecord>) in.readObject();
-			in.close();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		return arList;
-	}
 }

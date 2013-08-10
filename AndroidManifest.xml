@@ -29,6 +29,12 @@
             android:name="com.pengjun.ka.activity.ArSearchResultActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name="com.pengjun.ka.activity.ArChartActivity"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name="com.pengjun.ka.activity.ArBackupActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name="com.pengjun.ka.activity.AddArTypeActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />

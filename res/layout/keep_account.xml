@@ -91,13 +91,13 @@
             android:orientation="horizontal" >
 
             <ImageButton
-                android:id="@+id/ibChart"
+                android:id="@+id/ibMagicbox"
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
                 android:background="@android:color/transparent"
                 android:layout_centerInParent="true"
                 android:focusableInTouchMode="true"
-                android:src="@drawable/chart_selector_xml" />
+                android:src="@drawable/magicbox_selector_xml" />
         </RelativeLayout>
 
         <ImageButton

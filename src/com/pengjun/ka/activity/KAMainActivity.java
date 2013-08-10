@@ -11,7 +11,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.pengjun.ka.db.service.ArTypeService;
-import com.pengjun.ka.fragment.ArChartFragment;
+import com.pengjun.ka.fragment.MagicBoxFragment;
 import com.pengjun.ka.fragment.ArFragment;
 import com.pengjun.ka.fragment.ArSearchFragment;
 import com.pengjun.ka.fragment.FragmentDirector;
@@ -26,7 +26,7 @@ public class KaMainActivity extends FragmentActivity {
 
 	ImageButton ibHome;
 	ImageButton ibSearch;
-	ImageButton ibChart;
+	ImageButton ibMagicbox;
 	ImageButton ibSettings;
 
 	TextView tvTopTitle;
@@ -136,20 +136,20 @@ public class KaMainActivity extends FragmentActivity {
 			}
 		});
 
-		ibChart = (ImageButton) findViewById(R.id.ibChart);
-		ibChart.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+		ibMagicbox = (ImageButton) findViewById(R.id.ibMagicbox);
+		ibMagicbox.setOnFocusChangeListener(new View.OnFocusChangeListener() {
 
 			@Override
 			public void onFocusChange(View v, boolean hasFocus) {
 				if (hasFocus) {
 					FragmentDirector.replaceFragment(KaMainActivity.this,
-							R.id.mainConent, ArChartFragment.newInstance());
+							R.id.mainConent, MagicBoxFragment.newInstance());
 
 					ibSearch.setBackgroundResource(R.drawable.search_normal);
 
 					ibAddAccount.setVisibility(View.GONE);
 					ibSetListViewToTop.setVisibility(View.GONE);
-					tvTopTitle.setText(R.string.staticChart);
+					tvTopTitle.setText(R.string.magicBox);
 				}
 
 			}

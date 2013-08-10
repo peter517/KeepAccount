@@ -9,6 +9,7 @@ import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.stmt.DeleteBuilder;
 import com.j256.ormlite.stmt.QueryBuilder;
 import com.j256.ormlite.stmt.Where;
+import com.j256.ormlite.table.TableUtils;
 import com.pengjun.ka.activity.KaApplication;
 import com.pengjun.ka.db.model.AccountRecord;
 import com.pengjun.ka.db.model.ArSearchCondition;
@@ -16,8 +17,7 @@ import com.pengjun.ka.utils.Constants;
 
 public class ArService {
 
-	private static AndroidConnectionSource cs = KaApplication
-			.getAndroidConnectionSource();
+	private static AndroidConnectionSource cs = KaApplication.getAndroidConnectionSource();
 
 	private static Dao<AccountRecord, Integer> dao = null;
 
@@ -31,7 +31,7 @@ public class ArService {
 
 	public static void insert(AccountRecord ar) {
 		try {
-			// for (int i = 0; i < 30; i++)
+			// for (int i = 0; i < 3000; i++)
 			dao.create(ar);
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -66,16 +66,23 @@ public class ArService {
 	}
 
 	public static void reCreateTable(List<AccountRecord> arList) {
-		deleteAll(queryAll());
-		for (AccountRecord ar : arList) {
-			insert(ar);
+
+		try {
+			TableUtils.dropTable(cs, AccountRecord.class, false);
+			TableUtils.createTable(cs, AccountRecord.class);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		for (int i = arList.size() - 1; i >= 0; i--) {
+			arList.get(i).setId(-1);
+			insert(arList.get(i));
 		}
 	}
 
-	public static List<AccountRecord> queryAll() {
+	public static List<AccountRecord> queryAllByUpdate() {
 		try {
-			QueryBuilder<AccountRecord, Integer> queryBuilder = dao
-					.queryBuilder();
+			QueryBuilder<AccountRecord, Integer> queryBuilder = dao.queryBuilder();
 			queryBuilder.orderBy(AccountRecord.COL_UPDATE_TIME, false);
 			return queryBuilder.query();
 		} catch (SQLException e) {
@@ -113,8 +120,7 @@ public class ArService {
 
 	public static List<AccountRecord> queryLimitRows(int offset, int limtRows) {
 		try {
-			QueryBuilder<AccountRecord, Integer> queryBuilder = dao
-					.queryBuilder();
+			QueryBuilder<AccountRecord, Integer> queryBuilder = dao.queryBuilder();
 
 			queryBuilder.offset(offset).limit(limtRows);
 			queryBuilder.orderBy(AccountRecord.COL_UPDATE_TIME, false);
@@ -125,40 +131,33 @@ public class ArService {
 		return Constants.DB_SEARCH_LIST_NOT_FOUND;
 	}
 
-	public static List<AccountRecord> queryAr(ArSearchCondition arSC,
-			int offset, int limtRows) {
+	public static List<AccountRecord> queryAr(ArSearchCondition arSC, int offset, int limtRows) {
 
 		if (arSC == null) {
 			return null;
 		}
 
 		try {
-			QueryBuilder<AccountRecord, Integer> queryBuilder = dao
-					.queryBuilder();
+			QueryBuilder<AccountRecord, Integer> queryBuilder = dao.queryBuilder();
 
 			Where<AccountRecord, Integer> where = queryBuilder.where();
 			where.isNotNull(AccountRecord.COL_ACOUNT);
 
 			// account
-			if (arSC.getStartAccount() != null
-					&& !arSC.getStartAccount().equals("")) {
+			if (arSC.getStartAccount() != null && !arSC.getStartAccount().equals("")) {
 				where.and();
-				where.ge(AccountRecord.COL_ACOUNT,
-						Float.valueOf(arSC.getStartAccount()));
+				where.ge(AccountRecord.COL_ACOUNT, Float.valueOf(arSC.getStartAccount()));
 
 			}
-			if (arSC.getEndAccount() != null
-					&& !arSC.getEndAccount().equals("")) {
+			if (arSC.getEndAccount() != null && !arSC.getEndAccount().equals("")) {
 				where.and();
-				where.le(AccountRecord.COL_ACOUNT,
-						Float.valueOf(arSC.getEndAccount()));
+				where.le(AccountRecord.COL_ACOUNT, Float.valueOf(arSC.getEndAccount()));
 			}
 
 			// type
 			if (arSC.getType() != null && !arSC.getType().equals("")) {
 				where.and();
-				where.eq(AccountRecord.COL_TYPE_ID,
-						ArTypeService.getIdByArTpye(arSC.getType()));
+				where.eq(AccountRecord.COL_TYPE_ID, ArTypeService.getIdByArTpye(arSC.getType()));
 			}
 
 			// date

@@ -33,6 +33,5 @@
     <style name="ArTextStyle">
         <item name="android:textColor">@color/black</item>
         <item name="android:textSize">15sp</item>
-        <item name="android:textStyle">bold</item>
     </style>
 </resources>

@@ -1,5 +1,6 @@
-package com.pengjun.ka.fragment;
+package com.pengjun.ka.activity;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -12,10 +13,9 @@ import android.graphics.Paint;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Shader.TileMode;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
@@ -25,44 +25,33 @@ import android.widget.Toast;
 import com.pengjun.ka.component.GalleryFlow;
 import com.pengjun.keepaccounts.R;
 
-public class ArChartFragment extends Fragment {
+public class ArChartActivity extends Activity {
 
 	GalleryFlow gfChart;
 
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
+	protected void onCreate(Bundle savedInstanceState) {
+
 		super.onCreate(savedInstanceState);
-	}
-
-	public static ArChartFragment instance = null;
-
-	public static ArChartFragment newInstance() {
-		if (instance == null) {
-			instance = new ArChartFragment();
-			return instance;
-		}
-		return instance;
-	}
-
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
-
-		View view = inflater.inflate(R.layout.ar_chart, null);
-		gfChart = (GalleryFlow) view.findViewById(R.id.gfChart);
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
+		// getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+		// WindowManager.LayoutParams.FLAG_FULLSCREEN);
+		setContentView(R.layout.ar_chart);
+		gfChart = (GalleryFlow) findViewById(R.id.gfChart);
 
 		Integer[] images = { R.drawable.chart_columnar, R.drawable.chart_pie,
 				R.drawable.chart_line };
 
-		ImageAdapter adapter = new ImageAdapter(getActivity(), images);
+		ImageAdapter adapter = new ImageAdapter(this, images);
 		adapter.createReflectedImages();// 创建倒影效果
 		gfChart.setFadingEdgeLength(0);
-		gfChart.setSpacing(-50); // 图片之间的间距
+		gfChart.setSpacing(-25); // 图片之间的间距
 		gfChart.setAdapter(adapter);
 
 		gfChart.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
-				Toast.makeText(getActivity(), String.valueOf(position),
+				Toast.makeText(ArChartActivity.this, String.valueOf(position),
 						Toast.LENGTH_SHORT).show();
 			}
 
@@ -91,7 +80,6 @@ public class ArChartFragment extends Fragment {
 		// return true;
 		// }
 		// });
-		return view;
 	}
 
 	class ImageAdapter extends BaseAdapter {
