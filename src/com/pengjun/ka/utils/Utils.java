@@ -29,8 +29,7 @@ public class Utils {
 		int minute = mCalendar.get(Calendar.MINUTE);
 		int second = mCalendar.get(Calendar.SECOND);
 
-		String curTimeStr = String.format(TIME_FORMT, year, mouth + 1, day,
-				hour, minute, second);
+		String curTimeStr = String.format(TIME_FORMT, year, mouth + 1, day, hour, minute, second);
 
 		return curTimeStr;
 	}
@@ -49,21 +48,29 @@ public class Utils {
 		return curTimeStr;
 	}
 
+	public static String getRandomDateStr(int year, int mouth, int day) {
+
+		return String.format(DATE_FORMT, year, mouth + 1, day);
+	}
+
+	public static String getRandomTimeStr(int year, int mouth, int day, int hour, int minute, int second) {
+
+		return String.format(TIME_FORMT, year, mouth + 1, day, hour, minute, second);
+	}
+
 	public static String[] String2DateArr(String dateStr) {
 		String[] date = dateStr.split(TIME_SEPARATOR);
 		return date;
 	}
 
 	public static String DatePicker2FormatStr(DatePicker dp) {
-		return String.format(DATE_FORMT, dp.getYear(), dp.getMonth() + 1,
-				dp.getDayOfMonth());
+		return String.format(DATE_FORMT, dp.getYear(), dp.getMonth() + 1, dp.getDayOfMonth());
 	}
 
 	public static void printCurDir(Context context) {
 		Context cont = context.getApplicationContext();
 		MyDebug.printFromPJ("cont.getCacheDir() = " + cont.getCacheDir());
-		MyDebug.printFromPJ("cont.getDatabasePath = "
-				+ cont.getDatabasePath("temp"));
+		MyDebug.printFromPJ("cont.getDatabasePath = " + cont.getDatabasePath("temp"));
 		MyDebug.printFromPJ("cont.getFilesDir() = " + cont.getFilesDir());
 	}
 
