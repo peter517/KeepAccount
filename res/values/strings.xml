@@ -34,6 +34,7 @@
     <string name="startSearchAr">查询账目</string>
     
     <!-- AR Chart-->
+    <string name="chooseChart">请选择显示图表类型</string>
     <string name="pieChart">饼状图</string>
     <string name="lineChart">线状图</string>
     <string name="columnarChart">柱状图</string>

@@ -32,6 +32,11 @@
             android:name="com.pengjun.ka.activity.ArChartActivity"
             android:screenOrientation="landscape" />
         <activity
+            android:name="com.pengjun.ka.activity.ArChartDisplayActivity"
+            android:screenOrientation="landscape" />
+        <activity android:name="org.achartengine.GraphicalActivity" 
+            android:screenOrientation="landscape"/>
+        <activity
             android:name="com.pengjun.ka.activity.ArBackupActivity"
             android:screenOrientation="portrait" />
         <activity

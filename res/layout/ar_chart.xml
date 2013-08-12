@@ -4,9 +4,18 @@
     android:layout_height="fill_parent"
     android:orientation="vertical" >
 
+    <TextView 
+        style="@style/TopTitleTextStyle"
+        android:id="@+id/tvTilte"
+        android:layout_marginTop="10dp"
+        android:layout_width="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_height="wrap_content"
+        android:text="@string/chooseChart"/>
+    
     <com.pengjun.ka.component.GalleryFlow
         android:id="@+id/gfChart"
-        android:layout_marginTop="20dp"
+        android:layout_below="@+id/tvTilte"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"/>
 
