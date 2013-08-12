@@ -13,6 +13,7 @@ import com.j256.ormlite.table.TableUtils;
 import com.pengjun.ka.activity.KaApplication;
 import com.pengjun.ka.db.model.AccountRecord;
 import com.pengjun.ka.db.model.ArSearchCondition;
+import com.pengjun.ka.test.DataCreater;
 import com.pengjun.ka.utils.Constants;
 
 public class ArService {
@@ -31,8 +32,8 @@ public class ArService {
 
 	public static void insert(AccountRecord ar) {
 		try {
-			// for (int i = 0; i < 3000; i++)
-			dao.create(ar);
+			for (int i = 0; i < 100; i++)
+				dao.create(DataCreater.getRandomAr());
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

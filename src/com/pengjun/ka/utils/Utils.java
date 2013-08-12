@@ -48,6 +48,16 @@ public class Utils {
 		return curTimeStr;
 	}
 
+	public static String getRandomDateStr(int year, int mouth, int day) {
+
+		return String.format(DATE_FORMT, year, mouth + 1, day);
+	}
+
+	public static String getRandomTimeStr(int year, int mouth, int day, int hour, int minute, int second) {
+
+		return String.format(TIME_FORMT, year, mouth + 1, day, hour, minute, second);
+	}
+
 	public static String[] String2DateArr(String dateStr) {
 		String[] date = dateStr.split(TIME_SEPARATOR);
 		return date;
