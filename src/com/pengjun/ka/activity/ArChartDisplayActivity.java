@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.Window;
 
-import com.pengjun.ka.chart.AverageTemperatureChart;
+import com.pengjun.ka.chart.LineChart;
 
 public class ArChartDisplayActivity extends Activity {
 
@@ -15,6 +15,6 @@ public class ArChartDisplayActivity extends Activity {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		// getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 		// WindowManager.LayoutParams.FLAG_FULLSCREEN);
-		setContentView(new AverageTemperatureChart().getView(this));
+		setContentView(new LineChart().getView(this));
 	}
 }

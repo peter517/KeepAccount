@@ -31,7 +31,7 @@ import android.view.View;
 /**
  * Average temperature demo chart.
  */
-public class AverageTemperatureChart extends AbstractDemoChart {
+public class LineChart extends AbstractDemoChart {
 	/**
 	 * Returns the chart name.
 	 * 
