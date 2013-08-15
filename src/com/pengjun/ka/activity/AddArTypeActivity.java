@@ -21,9 +21,10 @@ import android.widget.ImageView;
 
 import com.pengjun.ka.db.model.ArType;
 import com.pengjun.ka.db.service.ArTypeService;
+import com.pengjun.ka.utils.ComponentUtils;
 import com.pengjun.ka.utils.Constants;
 import com.pengjun.ka.utils.ResManageUtils;
-import com.pengjun.ka.utils.Utils;
+import com.pengjun.ka.utils.TimeUtils;
 import com.pengjun.keepaccounts.R;
 
 public class AddArTypeActivity extends Activity {
@@ -67,19 +68,19 @@ public class AddArTypeActivity extends Activity {
 
 				// error info
 				if (etArTypeName.getText().toString().equals("")) {
-					Utils.createAlertDialog(AddArTypeActivity.this, "请输入新建类名称")
+					ComponentUtils.createAlertDialog(AddArTypeActivity.this, "请输入新建类名称")
 							.show();
 					return;
 				}
 				if (selectPos == GV_UNSELECTED) {
-					Utils.createAlertDialog(AddArTypeActivity.this, "请选择图片")
+					ComponentUtils.createAlertDialog(AddArTypeActivity.this, "请选择图片")
 							.show();
 					return;
 				}
 
 				if (ArTypeService.isTypeNameExsit(etArTypeName.getText()
 						.toString())) {
-					Utils.createAlertDialog(AddArTypeActivity.this,
+					ComponentUtils.createAlertDialog(AddArTypeActivity.this,
 							"类名称已存在，请重新输入").show();
 					return;
 				}
@@ -88,13 +89,13 @@ public class AddArTypeActivity extends Activity {
 					arType = new ArType();
 					arType.setTypeName(etArTypeName.getText().toString());
 					arType.setImgResName(resNameList.get(selectPos));
-					arType.setCreateDate(Utils.getCurDateStr());
-					arType.setUpdateTime(Utils.getCurTimeStr());
+					arType.setCreateDate(TimeUtils.getCurDateStr());
+					arType.setUpdateTime(TimeUtils.getCurTimeStr());
 					ArTypeService.insert(arType);
 				} else {
 					arType.setTypeName(etArTypeName.getText().toString());
 					arType.setImgResName(resNameList.get(selectPos));
-					arType.setUpdateTime(Utils.getCurTimeStr());
+					arType.setUpdateTime(TimeUtils.getCurTimeStr());
 					ArTypeService.update(arType);
 				}
 

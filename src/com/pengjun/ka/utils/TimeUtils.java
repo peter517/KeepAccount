@@ -1,21 +1,21 @@
 package com.pengjun.ka.utils;
 
 import java.util.Calendar;
-import java.util.List;
+import java.util.Random;
 
-import android.app.AlertDialog;
-import android.app.Dialog;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.widget.DatePicker;
 
-import com.pengjun.keepaccounts.R;
 
-public class Utils {
+public class TimeUtils {
 
 	public static final String TIME_FORMT = "%d-%02d-%02d-%02d-%02d-%02d";
 	public static final String DATE_FORMT = "%d-%02d-%02d";
 	public static final String TIME_SEPARATOR = "-";
+
+	private static Random random = new Random();
+	static {
+		random.setSeed(System.currentTimeMillis());
+	}
 
 	public static String getCurTimeStr() {
 
@@ -48,14 +48,24 @@ public class Utils {
 		return curTimeStr;
 	}
 
-	public static String getRandomDateStr(int year, int mouth, int day) {
-
-		return String.format(DATE_FORMT, year, mouth + 1, day);
+	public static String getRandomDateStr() {
+		return String.format(DATE_FORMT, 2000 + random.nextInt(13), 1 + random.nextInt(12),
+				1 + random.nextInt(30));
 	}
 
-	public static String getRandomTimeStr(int year, int mouth, int day, int hour, int minute, int second) {
+	public static float getRandomFloat() {
+		return random.nextFloat();
+	}
 
-		return String.format(TIME_FORMT, year, mouth + 1, day, hour, minute, second);
+	public static int getRandomInt(int max) {
+		return random.nextInt(max);
+	}
+
+	public static String getRandomTimeStr() {
+
+		return String.format(TIME_FORMT, 2000 + random.nextInt(13), 1 + random.nextInt(12),
+				1 + random.nextInt(30), 1 + random.nextInt(24), 1 + random.nextInt(60),
+				1 + random.nextInt(60));
 	}
 
 	public static String[] String2DateArr(String dateStr) {
@@ -65,35 +75,6 @@ public class Utils {
 
 	public static String DatePicker2FormatStr(DatePicker dp) {
 		return String.format(DATE_FORMT, dp.getYear(), dp.getMonth() + 1, dp.getDayOfMonth());
-	}
-
-	public static void printCurDir(Context context) {
-		Context cont = context.getApplicationContext();
-		MyDebug.printFromPJ("cont.getCacheDir() = " + cont.getCacheDir());
-		MyDebug.printFromPJ("cont.getDatabasePath = " + cont.getDatabasePath("temp"));
-		MyDebug.printFromPJ("cont.getFilesDir() = " + cont.getFilesDir());
-	}
-
-	public static int getPosFromList(List<String> strList, String str) {
-
-		for (int i = 0; i < strList.size(); i++) {
-			if (str.equals(strList.get(i))) {
-				return i;
-			}
-		}
-		return 0;
-	}
-
-	public static Dialog createAlertDialog(Context context, String warnInfo) {
-		AlertDialog.Builder builder = new AlertDialog.Builder(context);
-		builder.setIcon(R.drawable.title_warning);
-		builder.setTitle("警告");
-		builder.setMessage(warnInfo);
-		builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
-			public void onClick(DialogInterface dialog, int whichButton) {
-			}
-		});
-		return builder.create();
 	}
 
 }

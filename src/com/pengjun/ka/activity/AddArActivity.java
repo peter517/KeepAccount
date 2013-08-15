@@ -18,8 +18,10 @@ import android.widget.Spinner;
 import com.pengjun.ka.db.model.AccountRecord;
 import com.pengjun.ka.db.service.ArService;
 import com.pengjun.ka.db.service.ArTypeService;
+import com.pengjun.ka.utils.CollectionUtils;
+import com.pengjun.ka.utils.ComponentUtils;
 import com.pengjun.ka.utils.Constants;
-import com.pengjun.ka.utils.Utils;
+import com.pengjun.ka.utils.TimeUtils;
 import com.pengjun.keepaccounts.R;
 
 public class AddArActivity extends Activity {
@@ -57,8 +59,7 @@ public class AddArActivity extends Activity {
 		dpCreateDate = (DatePicker) findViewById(R.id.dpCreateDate);
 		etComment = (EditText) findViewById(R.id.etComment);
 
-		ar = (AccountRecord) getIntent().getSerializableExtra(
-				Constants.INTENT_AR_BEAN);
+		ar = (AccountRecord) getIntent().getSerializableExtra(Constants.INTENT_AR_BEAN);
 		if (ar != null) {
 			putArToView(ar);
 		}
@@ -74,8 +75,7 @@ public class AddArActivity extends Activity {
 			}
 		});
 
-		if ((Boolean) getIntent().getSerializableExtra(
-				Constants.INTENT_DISABLE_AR_TYPE_MANAGE) != null) {
+		if ((Boolean) getIntent().getSerializableExtra(Constants.INTENT_DISABLE_AR_TYPE_MANAGE) != null) {
 			btManageArType.setVisibility(View.GONE);
 		}
 
@@ -99,7 +99,7 @@ public class AddArActivity extends Activity {
 					setResult(RESULT_OK, null);
 					finish();
 				} else {
-					Utils.createAlertDialog(AddArActivity.this, "请输入金额").show();
+					ComponentUtils.createAlertDialog(AddArActivity.this, "请输入金额").show();
 				}
 			}
 
@@ -119,9 +119,8 @@ public class AddArActivity extends Activity {
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (requestCode == Constants.CB_ADD_AR_TYPE_NAME) {
 			if (resultCode == RESULT_OK) {
-				ArrayList<String> arTypeNameList = data.getExtras()
-						.getStringArrayList(
-								Constants.INTENT_AR_TYPE_NAME_LIST_BEAN);
+				ArrayList<String> arTypeNameList = data.getExtras().getStringArrayList(
+						Constants.INTENT_AR_TYPE_NAME_LIST_BEAN);
 				this.arTypeNameList = arTypeNameList;
 				updataSpTypeAdapter();
 				arTypeNameAdapter.notifyDataSetChanged();
@@ -131,29 +130,27 @@ public class AddArActivity extends Activity {
 	}
 
 	private void updataSpTypeAdapter() {
-		arTypeNameAdapter = new ArrayAdapter<String>(this,
-				android.R.layout.simple_spinner_item, arTypeNameList);
-		arTypeNameAdapter
-				.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		arTypeNameAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item,
+				arTypeNameList);
+		arTypeNameAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		spArTypeName.setAdapter(arTypeNameAdapter);
 	}
 
 	private void putArToView(AccountRecord ar) {
 		etAccount.setText(String.valueOf((ar.getAccount())));
-		spArTypeName.setSelection(Utils.getPosFromList(arTypeNameList,
-				ar.getTypeName()));
+		spArTypeName.setSelection(CollectionUtils.getPosFromList(arTypeNameList, ar.getTypeName()));
 		etComment.setText(String.valueOf((ar.getComment())));
 
-		String[] date = Utils.String2DateArr(ar.getCreateDate());
-		dpCreateDate.updateDate(Integer.valueOf(date[0]),
-				Integer.valueOf(date[1]) - 1, Integer.valueOf(date[2]));
+		String[] date = TimeUtils.String2DateArr(ar.getCreateDate());
+		dpCreateDate.updateDate(Integer.valueOf(date[0]), Integer.valueOf(date[1]) - 1,
+				Integer.valueOf(date[2]));
 	}
 
 	private void getArFromView(AccountRecord ar) {
 		ar.setAccount(Float.valueOf(etAccount.getText().toString()));
 		ar.setTypeName(spArTypeName.getSelectedItem().toString());
-		ar.setCreateDate(Utils.DatePicker2FormatStr(dpCreateDate));
+		ar.setCreateDate(TimeUtils.DatePicker2FormatStr(dpCreateDate));
 		ar.setComment(etComment.getText().toString());
-		ar.setUpdateTime(Utils.getCurTimeStr());
+		ar.setUpdateTime(TimeUtils.getCurTimeStr());
 	}
 }

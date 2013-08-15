@@ -96,8 +96,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:background="@drawable/text_selector_xml"
-                android:text="@string/startDate" >
+                android:background="@drawable/text_selector_xml" >
             </Button>
 
             <ImageView
@@ -110,8 +109,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:background="@drawable/text_selector_xml"
-                android:text="@string/endDate" >
+                android:background="@drawable/text_selector_xml" >
             </Button>
         </LinearLayout>
     </LinearLayout>

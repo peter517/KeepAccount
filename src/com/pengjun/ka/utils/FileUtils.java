@@ -8,9 +8,17 @@ import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.content.Context;
 import android.os.Environment;
 
 public class FileUtils {
+
+	public static void printCurDir(Context context) {
+		Context cont = context.getApplicationContext();
+		MyDebug.printFromPJ("cont.getCacheDir() = " + cont.getCacheDir());
+		MyDebug.printFromPJ("cont.getDatabasePath = " + cont.getDatabasePath("temp"));
+		MyDebug.printFromPJ("cont.getFilesDir() = " + cont.getFilesDir());
+	}
 
 	public static boolean createDir(String dir) {
 		File file = new File(dir);

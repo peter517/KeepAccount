@@ -30,10 +30,10 @@ import android.widget.Toast;
 
 import com.pengjun.ka.db.model.ArType;
 import com.pengjun.ka.db.service.ArTypeService;
+import com.pengjun.ka.utils.ComponentUtils;
 import com.pengjun.ka.utils.Constants;
 import com.pengjun.ka.utils.MyDebug;
 import com.pengjun.ka.utils.ResManageUtils;
-import com.pengjun.ka.utils.Utils;
 import com.pengjun.keepaccounts.R;
 
 public class ManageArTypeActivity extends Activity {
@@ -115,7 +115,7 @@ public class ManageArTypeActivity extends Activity {
 					int position, long id) {
 
 				if (arTypeList.size() == 1) {
-					Utils.createAlertDialog(ManageArTypeActivity.this,
+					ComponentUtils.createAlertDialog(ManageArTypeActivity.this,
 							"至少要有一个分类").show();
 					return false;
 				}

@@ -1,18 +1,3 @@
-/**
- * Copyright (C) 2009, 2010 SC 4ViewSoft SRL
- *  
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *  
- *      http://www.apache.org/licenses/LICENSE-2.0
- *  
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 package com.pengjun.ka.chart;
 
 import java.util.ArrayList;
@@ -28,36 +13,11 @@ import android.graphics.Color;
 import android.graphics.Paint.Align;
 import android.view.View;
 
-/**
- * Average temperature demo chart.
- */
-public class LineChart extends AbstractDemoChart {
-	/**
-	 * Returns the chart name.
-	 * 
-	 * @return the chart name
-	 */
-	public String getName() {
-		return "Average temperature";
-	}
+import com.pengjun.ka.db.model.AccountRecord;
 
-	/**
-	 * Returns the chart description.
-	 * 
-	 * @return the chart description
-	 */
-	public String getDesc() {
-		return "The average temperature in 4 Greek islands (line chart)";
-	}
+public class ArLineChart extends AbstractChart {
 
-	/**
-	 * Executes the chart demo.
-	 * 
-	 * @param context
-	 *            the context
-	 * @return the built intent
-	 */
-	public View getView(Context context) {
+	public View getView(Context context, List<AccountRecord> arList, CallBack cb) {
 		String[] titles = new String[] { "Crete", "Corfu", "Thassos", "Skiathos" };
 		List<double[]> x = new ArrayList<double[]>();
 		for (int i = 0; i < titles.length; i++) {
@@ -87,6 +47,7 @@ public class LineChart extends AbstractDemoChart {
 		renderer.setPanLimits(new double[] { -10, 20, -10, 40 });
 		renderer.setZoomLimits(new double[] { -10, 20, -10, 40 });
 		View view = ChartFactory.getLineChartView(context, buildDataset(titles, x, values), renderer);
+
 		return view;
 	}
 

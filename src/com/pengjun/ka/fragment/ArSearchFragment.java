@@ -21,8 +21,9 @@ import android.widget.Spinner;
 import com.pengjun.ka.activity.ArSearchResultActivity;
 import com.pengjun.ka.db.model.ArSearchCondition;
 import com.pengjun.ka.db.service.ArTypeService;
+import com.pengjun.ka.utils.ComponentUtils;
 import com.pengjun.ka.utils.Constants;
-import com.pengjun.ka.utils.Utils;
+import com.pengjun.ka.utils.TimeUtils;
 import com.pengjun.keepaccounts.R;
 
 public class ArSearchFragment extends Fragment {
@@ -67,8 +68,7 @@ public class ArSearchFragment extends Fragment {
 		return instance;
 	}
 
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
 		View view = inflater.inflate(R.layout.ar_search, null);
 
@@ -80,24 +80,20 @@ public class ArSearchFragment extends Fragment {
 		arTypeNameList.addAll(ArTypeService.queryAllArTypeName());
 
 		spArTypeName = (Spinner) view.findViewById(R.id.spArTypeName);
-		ArrayAdapter<String> arTypeNameAdapter = new ArrayAdapter<String>(
-				getActivity(), android.R.layout.simple_spinner_item,
-				arTypeNameList);
-		arTypeNameAdapter
-				.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		ArrayAdapter<String> arTypeNameAdapter = new ArrayAdapter<String>(getActivity(),
+				android.R.layout.simple_spinner_item, arTypeNameList);
+		arTypeNameAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		spArTypeName.setAdapter(arTypeNameAdapter);
 
 		btStartDate = (Button) view.findViewById(R.id.btStartDate);
-		btStartDate.setText(Utils.getCurDateStr());
 		btStartDate.setOnClickListener(new View.OnClickListener() {
 
 			OnDateSetListener dateSetListener = new OnDateSetListener() {
 
 				@Override
-				public void onDateSet(DatePicker view, int year,
-						int monthOfYear, int dayOfMonth) {
-					String setDateStr = String.format(Utils.DATE_FORMT, year,
-							monthOfYear + 1, dayOfMonth);
+				public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+					String setDateStr = String
+							.format(TimeUtils.DATE_FORMT, year, monthOfYear + 1, dayOfMonth);
 					btStartDate.setText(setDateStr);
 				}
 			};
@@ -112,24 +108,22 @@ public class ArSearchFragment extends Fragment {
 				int mouth = mCalendar.get(Calendar.MONTH);
 				int day = mCalendar.get(Calendar.DAY_OF_MONTH);
 
-				DatePickerDialog datePickerDialog = new DatePickerDialog(
-						getActivity(), dateSetListener, year, mouth, day);
+				DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), dateSetListener,
+						year, mouth, day);
 
 				datePickerDialog.show();
 			}
 		});
 
 		btEndDate = (Button) view.findViewById(R.id.btEndDate);
-		btEndDate.setText(Utils.getCurDateStr());
 		btEndDate.setOnClickListener(new View.OnClickListener() {
 
 			OnDateSetListener dateSetListener = new OnDateSetListener() {
 
 				@Override
-				public void onDateSet(DatePicker view, int year,
-						int monthOfYear, int dayOfMonth) {
-					String setDateStr = String.format(Utils.DATE_FORMT, year,
-							monthOfYear + 1, dayOfMonth);
+				public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+					String setDateStr = String
+							.format(TimeUtils.DATE_FORMT, year, monthOfYear + 1, dayOfMonth);
 					btEndDate.setText(setDateStr);
 				}
 			};
@@ -144,8 +138,8 @@ public class ArSearchFragment extends Fragment {
 				int mouth = mCalendar.get(Calendar.MONTH);
 				int day = mCalendar.get(Calendar.DAY_OF_MONTH);
 
-				DatePickerDialog datePickerDialog = new DatePickerDialog(
-						getActivity(), dateSetListener, year, mouth, day);
+				DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), dateSetListener,
+						year, mouth, day);
 
 				datePickerDialog.show();
 			}
@@ -163,23 +157,23 @@ public class ArSearchFragment extends Fragment {
 				// both not empty
 				if (!etStartAccount.getText().toString().equals("")
 						&& !etEndAccount.getText().toString().equals("")) {
-					isAccountLegal = Float.valueOf(etStartAccount.getText()
-							.toString()) <= Float.valueOf(etEndAccount
-							.getText().toString());
+					isAccountLegal = Float.valueOf(etStartAccount.getText().toString()) <= Float
+							.valueOf(etEndAccount.getText().toString());
 				}
 
-				boolean isDateLegal = btStartDate.getText().toString()
-						.compareTo(btEndDate.getText().toString()) <= 0;
+				boolean isDateLegal = true;
+				if (!btStartDate.getText().toString().equals("")
+						&& !btEndDate.getText().toString().equals("")) {
+					isDateLegal = btStartDate.getText().toString().compareTo(btEndDate.getText().toString()) <= 0;
+				}
 
 				if (!isAccountLegal) {
-					Utils.createAlertDialog(getActivity(), "金额应该右边大于或等于左边")
-							.show();
+					ComponentUtils.createAlertDialog(getActivity(), "金额应该右边大于或等于左边").show();
 					return;
 				}
 
 				if (!isDateLegal) {
-					Utils.createAlertDialog(getActivity(), "日期应该右边大于或等于左边")
-							.show();
+					ComponentUtils.createAlertDialog(getActivity(), "日期应该右边大于或等于左边").show();
 					return;
 				}
 
@@ -192,18 +186,15 @@ public class ArSearchFragment extends Fragment {
 				arSC.setStartDate(btStartDate.getText().toString());
 				arSC.setEndDate(btEndDate.getText().toString());
 
-				if (!spArTypeName.getSelectedItem().toString()
-						.equals(ALL_AR_TYPE)) {
+				if (!spArTypeName.getSelectedItem().toString().equals(ALL_AR_TYPE)) {
 					arSC.setType(spArTypeName.getSelectedItem().toString());
 				}
 
 				Bundle bundle = new Bundle();
-				bundle.putSerializable(Constants.INTENT_AR_SEARCH_CONDITION,
-						arSC);
+				bundle.putSerializable(Constants.INTENT_AR_SEARCH_CONDITION, arSC);
 				intent.putExtras(bundle);
 				startActivityForResult(intent, Constants.CB_ADD_AR);
-				getActivity().overridePendingTransition(R.anim.left_in,
-						R.anim.left_out);
+				getActivity().overridePendingTransition(R.anim.left_in, R.anim.left_out);
 			}
 		});
 		return view;

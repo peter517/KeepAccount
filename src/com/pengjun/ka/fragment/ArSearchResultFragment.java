@@ -50,7 +50,7 @@ public class ArSearchResultFragment extends Fragment {
 
 	private static ArSearchResultFragment instance = null;
 
-	ArSearchCondition arSC;
+	private static ArSearchCondition arSC;
 
 	private static final int MSG_LISTVIEW_TO_TOP = 0x01;
 	Handler handler = new Handler() {
@@ -83,6 +83,10 @@ public class ArSearchResultFragment extends Fragment {
 		super.onDestroy();
 	}
 
+	public static ArSearchCondition getArSearchCondition() {
+		return arSC;
+	}
+
 	public static ArSearchResultFragment newInstance(ArSearchCondition arSC) {
 		if (instance == null) {
 			instance = new ArSearchResultFragment();
@@ -95,8 +99,7 @@ public class ArSearchResultFragment extends Fragment {
 		return instance;
 	}
 
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
 		// AccountRecordService.deleteAll(AccountRecordService.queryAll());
 		View view = inflater.inflate(R.layout.ar_listview, null);
@@ -122,8 +125,7 @@ public class ArSearchResultFragment extends Fragment {
 		lvAr.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
-			public void onItemClick(AdapterView<?> parent, View view,
-					int position, long id) {
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
 				// view account record
 				Intent intent = new Intent();
@@ -132,13 +134,10 @@ public class ArSearchResultFragment extends Fragment {
 				AccountRecord ar = arList.get(position);
 				Bundle bundle = new Bundle();
 				bundle.putSerializable(Constants.INTENT_AR_BEAN, ar);
-				bundle.putSerializable(Constants.INTENT_DISABLE_AR_TYPE_MANAGE,
-						true);
+				bundle.putSerializable(Constants.INTENT_DISABLE_AR_TYPE_MANAGE, true);
 				intent.putExtras(bundle);
-				getActivity().startActivityForResult(intent,
-						Constants.CB_ADD_AR);
-				getActivity().overridePendingTransition(R.anim.left_in,
-						R.anim.left_out);
+				getActivity().startActivityForResult(intent, Constants.CB_ADD_AR);
+				getActivity().overridePendingTransition(R.anim.left_in, R.anim.left_out);
 
 			}
 		});
@@ -147,43 +146,35 @@ public class ArSearchResultFragment extends Fragment {
 			private int selectPos = 0;
 
 			@Override
-			public boolean onItemLongClick(AdapterView<?> parent, View view,
-					int position, long id) {
+			public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
 
 				// delete account record
 				selectPos = position;
-				AlertDialog.Builder builder = new AlertDialog.Builder(
-						getActivity());
+				AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 				builder.setIcon(R.drawable.mark_delete);
 				builder.setTitle("删除记账");
 				builder.setMessage("确定要删除该次记账？");
-				builder.setPositiveButton("删除",
-						new DialogInterface.OnClickListener() {
-							public void onClick(DialogInterface dialog,
-									int whichButton) {
-								AccountRecord ar = arList.get(selectPos);
-								ArService.delete(ar);
-								updateArListView(false);
-							}
-						});
-				builder.setNegativeButton("取消",
-						new DialogInterface.OnClickListener() {
-							public void onClick(DialogInterface dialog,
-									int whichButton) {
+				builder.setPositiveButton("删除", new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int whichButton) {
+						AccountRecord ar = arList.get(selectPos);
+						ArService.delete(ar);
+						updateArListView(false);
+					}
+				});
+				builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int whichButton) {
 
-							}
-						});
+					}
+				});
 				AlertDialog dialog = builder.create();
 				dialog.show();
 
 				// modified dialog button
-				Button btPositive = dialog
-						.getButton(DialogInterface.BUTTON_POSITIVE);
+				Button btPositive = dialog.getButton(DialogInterface.BUTTON_POSITIVE);
 				if (btPositive != null) {
 					btPositive.setBackgroundResource(R.drawable.btn_alert);
 				}
-				Button btNegative = dialog
-						.getButton(DialogInterface.BUTTON_NEGATIVE);
+				Button btNegative = dialog.getButton(DialogInterface.BUTTON_NEGATIVE);
 				if (btNegative != null) {
 					btNegative.setBackgroundResource(R.drawable.btn_normal);
 				}
@@ -292,8 +283,8 @@ public class ArSearchResultFragment extends Fragment {
 			hideProgress();
 
 			if (tempArList == null || tempArList.size() == 0) {
-				Toast.makeText(ArSearchResultFragment.this.getActivity(),
-						"没有新数据", Constants.TOAST_EXSIT_TIME).show();
+				Toast.makeText(ArSearchResultFragment.this.getActivity(), "没有新数据", Constants.TOAST_EXSIT_TIME)
+						.show();
 			}
 
 			arAdapter.notifyDataSetChanged();
@@ -302,8 +293,8 @@ public class ArSearchResultFragment extends Fragment {
 	}
 
 	public class AccountListAdapter extends BaseAdapter {
-		LayoutInflater inflater = (LayoutInflater) getActivity()
-				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(
+				Context.LAYOUT_INFLATER_SERVICE);
 
 		public int getCount() {
 			return arList.size();
@@ -324,13 +315,10 @@ public class ArSearchResultFragment extends Fragment {
 
 				convertView = inflater.inflate(R.layout.ar_listview_item, null);
 
-				holder.account = (TextView) convertView
-						.findViewById(R.id.tvCost);
-				holder.ivType = (ImageView) convertView
-						.findViewById(R.id.ivType);
+				holder.account = (TextView) convertView.findViewById(R.id.tvCost);
+				holder.ivType = (ImageView) convertView.findViewById(R.id.ivType);
 				holder.date = (TextView) convertView.findViewById(R.id.tvDate);
-				holder.tvType = (TextView) convertView
-						.findViewById(R.id.tvType);
+				holder.tvType = (TextView) convertView.findViewById(R.id.tvType);
 
 				convertView.setTag(holder);
 			} else {
@@ -340,8 +328,7 @@ public class ArSearchResultFragment extends Fragment {
 			// fill content
 			AccountRecord ar = arList.get(position);
 			holder.account.setText(String.valueOf(ar.getAccount()));
-			holder.ivType.setImageResource(ResManageUtils.getImgResIdByName(ar
-					.getImgResName()));
+			holder.ivType.setImageResource(ResManageUtils.getImgResIdByName(ar.getImgResName()));
 			holder.tvType.setText(ar.getTypeName());
 			holder.date.setText(ar.getCreateDate());
 

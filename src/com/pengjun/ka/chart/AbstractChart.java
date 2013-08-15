@@ -1,18 +1,3 @@
-/**
- * Copyright (C) 2009, 2010 SC 4ViewSoft SRL
- *  
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *  
- *      http://www.apache.org/licenses/LICENSE-2.0
- *  
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 package com.pengjun.ka.chart;
 
 import java.util.Date;
@@ -29,11 +14,17 @@ import org.achartengine.renderer.SimpleSeriesRenderer;
 import org.achartengine.renderer.XYMultipleSeriesRenderer;
 import org.achartengine.renderer.XYSeriesRenderer;
 
-/**
- * An abstract class for the demo charts to extend. It contains some methods for
- * building datasets and renderers.
- */
-public abstract class AbstractDemoChart implements IDemoChart {
+import android.content.Context;
+import android.view.View;
+
+import com.pengjun.ka.db.model.AccountRecord;
+
+public abstract class AbstractChart {
+
+	public interface CallBack {
+	}
+
+	public abstract View getView(Context context, List<AccountRecord> arList, CallBack cb);
 
 	/**
 	 * Builds an XY multiple dataset using the provided values.

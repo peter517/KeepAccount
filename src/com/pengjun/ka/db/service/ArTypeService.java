@@ -13,7 +13,7 @@ import com.pengjun.ka.activity.KaApplication;
 import com.pengjun.ka.db.model.AccountRecord;
 import com.pengjun.ka.db.model.ArType;
 import com.pengjun.ka.utils.Constants;
-import com.pengjun.ka.utils.Utils;
+import com.pengjun.ka.utils.TimeUtils;
 
 public class ArTypeService {
 
@@ -35,8 +35,8 @@ public class ArTypeService {
 		for (int i = 0; i < Constants.TYPE_STR_ARR.length; i++) {
 			ArType arType = new ArType();
 			arType.setTypeName(Constants.TYPE_STR_ARR[i]);
-			arType.setUpdateTime(Utils.getCurTimeStr());
-			arType.setCreateDate(Utils.getCurDateStr());
+			arType.setUpdateTime(TimeUtils.getCurTimeStr());
+			arType.setCreateDate(TimeUtils.getCurDateStr());
 			arType.setImgResName(Constants.TYPE_IMAGE_RES_ID_ARR[i]);
 			try {
 				dao.create(arType);

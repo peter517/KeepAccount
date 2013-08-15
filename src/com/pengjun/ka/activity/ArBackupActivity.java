@@ -26,9 +26,10 @@ import android.widget.TextView;
 
 import com.pengjun.ka.db.service.BackupService;
 import com.pengjun.ka.fragment.ArFragment;
+import com.pengjun.ka.utils.ComponentUtils;
 import com.pengjun.ka.utils.Constants;
 import com.pengjun.ka.utils.FileUtils;
-import com.pengjun.ka.utils.Utils;
+import com.pengjun.ka.utils.TimeUtils;
 import com.pengjun.keepaccounts.R;
 
 public class ArBackupActivity extends Activity {
@@ -67,8 +68,8 @@ public class ArBackupActivity extends Activity {
 
 				selectPos = GV_UNSELECTED;
 
-				curDateStr = Utils.getCurDateStr();
-				if (backupDateStrList.size() != 0 && backupDateStrList.contains(Utils.getCurDateStr())) {
+				curDateStr = TimeUtils.getCurDateStr();
+				if (backupDateStrList.size() != 0 && backupDateStrList.contains(TimeUtils.getCurDateStr())) {
 					AlertDialog.Builder builder = new AlertDialog.Builder(ArBackupActivity.this);
 					builder.setIcon(R.drawable.mark_paste);
 					builder.setTitle("替换备份");
@@ -110,7 +111,7 @@ public class ArBackupActivity extends Activity {
 			public void onClick(View v) {
 
 				if (selectPos == GV_UNSELECTED) {
-					Utils.createAlertDialog(ArBackupActivity.this, "请选择还原日期").show();
+					ComponentUtils.createAlertDialog(ArBackupActivity.this, "请选择还原日期").show();
 					return;
 				}
 
@@ -221,7 +222,7 @@ public class ArBackupActivity extends Activity {
 		@Override
 		protected void onPostExecute(Void v) {
 
-			Utils.createAlertDialog(ArBackupActivity.this, "数据已还原至日期：" + backupDateStrList.get(selectPos))
+			ComponentUtils.createAlertDialog(ArBackupActivity.this, "数据已还原至日期：" + backupDateStrList.get(selectPos))
 					.show();
 
 			selectPos = GV_UNSELECTED;

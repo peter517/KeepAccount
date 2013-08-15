@@ -1,5 +1,9 @@
 package com.pengjun.ka.activity;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -13,6 +17,7 @@ import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Shader.TileMode;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,13 +26,23 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.pengjun.ka.component.GalleryFlow;
+import com.pengjun.ka.db.model.AccountRecord;
+import com.pengjun.ka.db.service.ArService;
+import com.pengjun.ka.fragment.ArSearchResultFragment;
+import com.pengjun.ka.utils.Constants;
+import com.pengjun.ka.utils.Constants.ChartType;
 import com.pengjun.keepaccounts.R;
 
 public class ArChartActivity extends Activity {
 
-	GalleryFlow gfChart;
+	private GalleryFlow gfChart;
+	private ProgressBar pbLoad;
+	private List<AccountRecord> arList = new ArrayList<AccountRecord>();
+	private TextView tvTilte;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +53,8 @@ public class ArChartActivity extends Activity {
 		// WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		setContentView(R.layout.ar_chart);
 		gfChart = (GalleryFlow) findViewById(R.id.gfChart);
+		pbLoad = (ProgressBar) findViewById(R.id.pbLoad);
+		tvTilte = (TextView) findViewById(R.id.tvTilte);
 
 		Integer[] images = { R.drawable.chart_columnar, R.drawable.chart_pie, R.drawable.chart_line };
 
@@ -49,19 +66,60 @@ public class ArChartActivity extends Activity {
 
 		gfChart.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				if (position == 2) {
-					Intent intent = new Intent(ArChartActivity.this, ArChartDisplayActivity.class);
-					startActivity(intent);
 
-					// Intent intent = new
-					// AverageTemperatureChart().execute(ArChartActivity.this);
-					// startActivity(intent);
+				Intent intent = new Intent(ArChartActivity.this, ArChartDisplayActivity.class);
+				Bundle bundle = new Bundle();
+				bundle.putSerializable(Constants.INTENT_AR_LIST, (Serializable) arList);
+				switch (position) {
+				case 0:
+					bundle.putSerializable(Constants.INTENT_AR_CHART_TYPE, ChartType.bar);
+					break;
+				case 1:
+					bundle.putSerializable(Constants.INTENT_AR_CHART_TYPE, ChartType.pie);
+					break;
+				case 2:
+					bundle.putSerializable(Constants.INTENT_AR_CHART_TYPE, ChartType.line);
+					break;
 				}
+				intent.putExtras(bundle);
+				startActivity(intent);
 			}
 
 		});
 		gfChart.setSelection(1);
 
+		showProgress();
+		new LoadArTask().execute();
+
+	}
+
+	private void showProgress() {
+		pbLoad.setVisibility(View.VISIBLE);
+		gfChart.setVisibility(View.GONE);
+		tvTilte.setVisibility(View.GONE);
+
+	}
+
+	private void hideProgress() {
+		pbLoad.setVisibility(View.GONE);
+		gfChart.setVisibility(View.VISIBLE);
+		tvTilte.setVisibility(View.VISIBLE);
+	}
+
+	class LoadArTask extends AsyncTask<Void, Void, Void> {
+
+		@Override
+		protected Void doInBackground(Void... params) {
+			arList = ArService.queryAr(ArSearchResultFragment.getArSearchCondition(), 0, -1);
+			return null;
+
+		}
+
+		@Override
+		protected void onPostExecute(Void v) {
+			hideProgress();
+			super.onPostExecute(v);
+		}
 	}
 
 	class ImageAdapter extends BaseAdapter {

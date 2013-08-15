@@ -35,22 +35,17 @@ public class ArSearchResultActivity extends FragmentActivity {
 			@Override
 			public void onClick(View v) {
 				Intent intent = new Intent();
-				intent.setClass(ArSearchResultActivity.this,
-						ArChartActivity.class);
+				intent.setClass(ArSearchResultActivity.this, ArChartActivity.class);
 
-				Bundle bundle = new Bundle();
-				bundle.putSerializable(Constants.INTENT_AR_LIST, null);
-				intent.putExtras(bundle);
 				startActivity(intent);
 			}
 		});
 
-		ArSearchCondition arSC = (ArSearchCondition) getIntent().getExtras()
-				.getSerializable(Constants.INTENT_AR_SEARCH_CONDITION);
+		ArSearchCondition arSC = (ArSearchCondition) getIntent().getExtras().getSerializable(
+				Constants.INTENT_AR_SEARCH_CONDITION);
 
 		// main content
-		FragmentDirector.replaceFragment(this, R.id.mainConent,
-				ArSearchResultFragment.newInstance(arSC));
+		FragmentDirector.replaceFragment(this, R.id.mainConent, ArSearchResultFragment.newInstance(arSC));
 
 	}
 
@@ -60,8 +55,7 @@ public class ArSearchResultActivity extends FragmentActivity {
 			if (resultCode == RESULT_OK) {
 				ArSearchResultFragment.newInstance(null).updateArListView(true);
 			} else {
-				ArSearchResultFragment.newInstance(null)
-						.updateArListView(false);
+				ArSearchResultFragment.newInstance(null).updateArListView(false);
 			}
 		}
 		super.onActivityResult(requestCode, resultCode, data);

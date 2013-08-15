@@ -162,11 +162,18 @@ public class ArService {
 			}
 
 			// date
-			where.and();
-			where.ge(AccountRecord.COL_CREATE_DATE, arSC.getStartDate());
-			where.and();
-			where.le(AccountRecord.COL_CREATE_DATE, arSC.getEndDate());
-			queryBuilder.offset(offset).limit(limtRows);
+			if (arSC.getStartDate() != null && !arSC.getStartDate().equals("")) {
+				where.and();
+				where.ge(AccountRecord.COL_CREATE_DATE, arSC.getStartDate());
+			}
+			if (arSC.getEndDate() != null && !arSC.getEndDate().equals("")) {
+				where.and();
+				where.le(AccountRecord.COL_CREATE_DATE, arSC.getEndDate());
+			}
+
+			if (limtRows != -1) {
+				queryBuilder.offset(offset).limit(limtRows);
+			}
 			queryBuilder.orderBy(AccountRecord.COL_UPDATE_TIME, false);
 
 			return dao.query(queryBuilder.prepare());
