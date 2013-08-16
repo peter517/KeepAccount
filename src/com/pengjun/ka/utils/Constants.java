@@ -7,9 +7,19 @@ public class Constants {
 	public static int TOAST_EXSIT_TIME = 2000;
 
 	// init Ar Type
-	public static final String[] TYPE_STR_ARR = { "吃饭", "娱乐", "衣服", "交通", "其他" };
-	public static final String[] TYPE_IMAGE_RES_ID_ARR = { "type_eat", "type_play", "type_dress", "type_car",
-			"type_other" };
+	public enum InitArType {
+		type_eat("吃饭"), type_play("娱乐"), type_dress("衣服"), type_car("交通"), type_other("其他");
+
+		String typename;
+
+		private InitArType(String typename) {
+			this.typename = typename;
+		}
+
+		public String getTypeName() {
+			return typename;
+		}
+	}
 
 	// DB search error
 	public static int DB_SEARCH_INT_NOT_FOUND = -1;
@@ -42,7 +52,7 @@ public class Constants {
 	public static final String BACK_AR_FILE_NAME = "ar.dat";
 	public static final String BACK_AR_TYPE_FILE_NAME = "arType.dat";
 
-	// chart
+	// chart type
 	public enum ChartType {
 		pie, line, bar;
 

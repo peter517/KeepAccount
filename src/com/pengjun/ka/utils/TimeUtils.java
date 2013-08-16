@@ -1,20 +1,34 @@
 package com.pengjun.ka.utils;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Random;
 
 import android.widget.DatePicker;
-
 
 public class TimeUtils {
 
 	public static final String TIME_FORMT = "%d-%02d-%02d-%02d-%02d-%02d";
 	public static final String DATE_FORMT = "%d-%02d-%02d";
+	public static final String TO_DATE_FORMT = "yyyy-mm-dd";
 	public static final String TIME_SEPARATOR = "-";
 
 	private static Random random = new Random();
 	static {
 		random.setSeed(System.currentTimeMillis());
+	}
+
+	public static Date string2Date(String dateStr) {
+		DateFormat dateFormat = new SimpleDateFormat(TO_DATE_FORMT);
+		try {
+			return dateFormat.parse(dateStr);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	public static String getCurTimeStr() {
@@ -49,7 +63,7 @@ public class TimeUtils {
 	}
 
 	public static String getRandomDateStr() {
-		return String.format(DATE_FORMT, 2000 + random.nextInt(13), 1 + random.nextInt(12),
+		return String.format(DATE_FORMT, 2000 + random.nextInt(13), 1 + random.nextInt(13),
 				1 + random.nextInt(30));
 	}
 
@@ -63,7 +77,7 @@ public class TimeUtils {
 
 	public static String getRandomTimeStr() {
 
-		return String.format(TIME_FORMT, 2000 + random.nextInt(13), 1 + random.nextInt(12),
+		return String.format(TIME_FORMT, 2000 + random.nextInt(13), 1 + random.nextInt(13),
 				1 + random.nextInt(30), 1 + random.nextInt(24), 1 + random.nextInt(60),
 				1 + random.nextInt(60));
 	}

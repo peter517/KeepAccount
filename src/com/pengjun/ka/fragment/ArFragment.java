@@ -243,6 +243,8 @@ public class ArFragment extends Fragment {
 		@Override
 		protected void onPostExecute(List<AccountRecord> tempArList) {
 
+			hideProgress();
+
 			// rows too little to display load btLoadMore
 			if (arList.size() < LIMIT_ROW_TOTAL) {
 				btLoadMore.setVisibility(View.GONE);
@@ -259,8 +261,6 @@ public class ArFragment extends Fragment {
 			if (isSetListViewToTop) {
 				ArFragment.this.setListViewToTop();
 			}
-
-			hideProgress();
 
 			super.onPostExecute(tempArList);
 		}

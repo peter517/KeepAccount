@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Environment;
@@ -14,6 +15,8 @@ import com.pengjun.keepaccounts.R;
 
 public class ResManageUtils {
 
+	public static int[] colors = new int[] { Color.BLUE, Color.GREEN, Color.MAGENTA, Color.YELLOW,
+			Color.CYAN, Color.BLACK, Color.DKGRAY, Color.GRAY, Color.LTGRAY, Color.RED, Color.WHITE };
 	// res
 	public static final String RES_IMAGE_PREFIX = "type";
 

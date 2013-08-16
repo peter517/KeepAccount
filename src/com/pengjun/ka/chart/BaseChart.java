@@ -18,13 +18,16 @@ import android.content.Context;
 import android.view.View;
 
 import com.pengjun.ka.db.model.AccountRecord;
+import com.pengjun.ka.utils.TimeUtils;
 
-public abstract class AbstractChart {
+public abstract class BaseChart {
 
 	public interface CallBack {
 	}
 
-	public abstract View getView(Context context, List<AccountRecord> arList, CallBack cb);
+	public abstract void compute(List<AccountRecord> arList);
+
+	public abstract View getView(Context context);
 
 	/**
 	 * Builds an XY multiple dataset using the provided values.
@@ -155,6 +158,17 @@ public abstract class AbstractChart {
 		return dataset;
 	}
 
+	protected XYMultipleSeriesDataset buildDateDataset(String titles, String[] xValues, double[] yValues) {
+		XYMultipleSeriesDataset dataset = new XYMultipleSeriesDataset();
+		TimeSeries series = new TimeSeries(titles);
+		int seriesLength = xValues.length;
+		for (int k = 0; k < seriesLength; k++) {
+			series.add(TimeUtils.string2Date(xValues[k]), yValues[k]);
+		}
+		dataset.addSeries(series);
+		return dataset;
+	}
+
 	/**
 	 * Builds a category series using the provided values.
 	 * 
@@ -164,11 +178,11 @@ public abstract class AbstractChart {
 	 *            the values
 	 * @return the category series
 	 */
-	protected CategorySeries buildCategoryDataset(String title, double[] values) {
+	protected CategorySeries buildCategoryDataset(String title, String[] items, double[] values) {
 		CategorySeries series = new CategorySeries(title);
 		int k = 0;
 		for (double value : values) {
-			series.add("Project " + ++k, value);
+			series.add(items[k++], value);
 		}
 
 		return series;
@@ -238,6 +252,17 @@ public abstract class AbstractChart {
 		return dataset;
 	}
 
+	protected XYMultipleSeriesDataset buildBarDataset(String titles, double[] values) {
+		XYMultipleSeriesDataset dataset = new XYMultipleSeriesDataset();
+		CategorySeries series = new CategorySeries(titles);
+		int seriesLength = values.length;
+		for (int k = 0; k < seriesLength; k++) {
+			series.add(values[k]);
+		}
+		dataset.addSeries(series.toXYSeries());
+		return dataset;
+	}
+
 	/**
 	 * Builds a bar multiple series renderer to use the provided colors.
 	 * 
@@ -253,7 +278,7 @@ public abstract class AbstractChart {
 		renderer.setLegendTextSize(15);
 		int length = colors.length;
 		for (int i = 0; i < length; i++) {
-			SimpleSeriesRenderer r = new SimpleSeriesRenderer();
+			XYSeriesRenderer r = new XYSeriesRenderer();
 			r.setColor(colors[i]);
 			renderer.addSeriesRenderer(r);
 		}

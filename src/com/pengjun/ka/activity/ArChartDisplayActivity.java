@@ -13,17 +13,15 @@ import android.view.Window;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 
-import com.pengjun.ka.chart.AbstractChart;
-import com.pengjun.ka.chart.ArBarChart;
-import com.pengjun.ka.chart.ArLineChart;
-import com.pengjun.ka.chart.ArPieChart;
+import com.pengjun.ka.chart.BaseChart;
+import com.pengjun.ka.chart.ChartFactory;
 import com.pengjun.ka.db.model.AccountRecord;
 import com.pengjun.ka.utils.Constants;
 import com.pengjun.ka.utils.Constants.ChartType;
 import com.pengjun.ka.utils.MyDebug;
 import com.pengjun.keepaccounts.R;
 
-public class ArChartDisplayActivity extends Activity implements AbstractChart.CallBack {
+public class ArChartDisplayActivity extends Activity implements BaseChart.CallBack {
 
 	private ProgressBar pbLoad;
 	private RelativeLayout rlChart;
@@ -76,33 +74,22 @@ public class ArChartDisplayActivity extends Activity implements AbstractChart.Ca
 		rlChart.setVisibility(View.VISIBLE);
 	}
 
-	class LoadArChartTask extends AsyncTask<Void, Void, View> {
+	class LoadArChartTask extends AsyncTask<Void, Void, Void> {
+
+		BaseChart baseChart;
 
 		@Override
-		protected View doInBackground(Void... params) {
+		protected Void doInBackground(Void... params) {
 
-			View view = null;
-			switch (chartType) {
-			case bar:
-				view = (new ArBarChart().getView(ArChartDisplayActivity.this, arList, null));
-				break;
-			case pie:
-				view = (new ArPieChart().getView(ArChartDisplayActivity.this, arList, null));
-				break;
-			case line:
-				view = (new ArLineChart().getView(ArChartDisplayActivity.this, arList, null));
-				break;
-			}
-			return view;
+			baseChart = ChartFactory.createChart(chartType);
+			baseChart.compute(arList);
 
+			return null;
 		}
 
 		@Override
-		protected void onPostExecute(View v) {
-			Message msg = new Message();
-			msg.obj = v;
-			msg.what = MSG_CREATE_CHART_FINISHED;
-			handler.sendMessage(msg);
+		protected void onPostExecute(Void v) {
+			rlChart.addView(baseChart.getView(ArChartDisplayActivity.this));
 			hideProgress();
 			super.onPostExecute(v);
 		}

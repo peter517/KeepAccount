@@ -68,8 +68,13 @@ public class AccountRecord implements Serializable {
 		this.account = acount;
 	}
 
+	private String typeName;
+
 	public String getTypeName() {
-		return ArTypeService.getArTpyeNameById(typeId);
+		if (typeName == null) {
+			typeName = ArTypeService.getArTpyeNameById(typeId);
+		}
+		return typeName;
 	}
 
 	public void setTypeName(String arTpye) {
