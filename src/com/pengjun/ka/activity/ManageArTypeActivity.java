@@ -74,8 +74,7 @@ public class ManageArTypeActivity extends Activity {
 			public void onClick(View v) {
 
 				Intent intent = new Intent();
-				intent.setClass(ManageArTypeActivity.this,
-						AddArTypeActivity.class);
+				intent.setClass(ManageArTypeActivity.this, AddArTypeActivity.class);
 				startActivityForResult(intent, Constants.CB_ADD_AR_TYPE);
 				overridePendingTransition(R.anim.left_in, R.anim.left_out);
 			}
@@ -88,13 +87,11 @@ public class ManageArTypeActivity extends Activity {
 		lvArType.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
-			public void onItemClick(AdapterView<?> parent, View view,
-					int position, long id) {
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
 				// view account record
 				Intent intent = new Intent();
-				intent.setClass(ManageArTypeActivity.this,
-						AddArTypeActivity.class);
+				intent.setClass(ManageArTypeActivity.this, AddArTypeActivity.class);
 
 				ArType arType = arTypeList.get(position);
 				Bundle bundle = new Bundle();
@@ -111,48 +108,39 @@ public class ManageArTypeActivity extends Activity {
 			private int selectPos = 0;
 
 			@Override
-			public boolean onItemLongClick(AdapterView<?> parent, View view,
-					int position, long id) {
+			public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
 
 				if (arTypeList.size() == 1) {
-					ComponentUtils.createAlertDialog(ManageArTypeActivity.this,
-							"至少要有一个分类").show();
+					ComponentUtils.createAlertDialog(ManageArTypeActivity.this, "至少要有一个分类").show();
 					return false;
 				}
 				// delete account record
 				selectPos = position;
-				AlertDialog.Builder builder = new AlertDialog.Builder(
-						ManageArTypeActivity.this);
+				AlertDialog.Builder builder = new AlertDialog.Builder(ManageArTypeActivity.this);
 				builder.setIcon(R.drawable.mark_delete);
 				builder.setTitle("删除记账");
 				builder.setMessage("确定要删除该分类？");
-				builder.setPositiveButton("删除",
-						new DialogInterface.OnClickListener() {
-							public void onClick(DialogInterface dialog,
-									int whichButton) {
-								ArType ar = arTypeList.get(selectPos);
-								ArTypeService.delete(ar);
-								updateArTypeLv(false);
-							}
-						});
-				builder.setNegativeButton("取消",
-						new DialogInterface.OnClickListener() {
-							public void onClick(DialogInterface dialog,
-									int whichButton) {
+				builder.setPositiveButton("删除", new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int whichButton) {
+						ArType ar = arTypeList.get(selectPos);
+						ArTypeService.delete(ar);
+						updateArTypeLv(false);
+					}
+				});
+				builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int whichButton) {
 
-							}
-						});
+					}
+				});
 				AlertDialog dialog = builder.create();
 				dialog.show();
 
 				// modified dialog button
-				Button btPositive = dialog
-						.getButton(DialogInterface.BUTTON_POSITIVE);
+				Button btPositive = dialog.getButton(DialogInterface.BUTTON_POSITIVE);
 				if (btPositive != null) {
 					btPositive.setBackgroundResource(R.drawable.btn_alert);
 				}
-				Button btNegative = dialog
-						.getButton(DialogInterface.BUTTON_NEGATIVE);
+				Button btNegative = dialog.getButton(DialogInterface.BUTTON_NEGATIVE);
 				if (btNegative != null) {
 					btNegative.setBackgroundResource(R.drawable.btn_normal);
 				}
@@ -176,8 +164,7 @@ public class ManageArTypeActivity extends Activity {
 
 		Intent intent = new Intent();
 		Bundle bundle = new Bundle();
-		bundle.putStringArrayList(Constants.INTENT_AR_TYPE_NAME_LIST_BEAN,
-				arTypeNameList);
+		bundle.putStringArrayList(Constants.INTENT_AR_TYPE_NAME_LIST_BEAN, arTypeNameList);
 		intent.putExtras(bundle);
 
 		setResult(RESULT_OK, intent);
@@ -192,9 +179,17 @@ public class ManageArTypeActivity extends Activity {
 	}
 
 	// fill listview
-	public void updateArTypeLv(Boolean isListViewDataChange) {
+	public void updateArTypeLv(Boolean isSetListViewToTop) {
 		showProgress();
-		new LoadArTypeTask().execute(isListViewDataChange);
+		new LoadArTypeTask().execute(isSetListViewToTop);
+	}
+
+	public void updateArTypeLv() {
+
+		arTypeList = ArTypeService.queryAllByUpdate();
+
+		arTypeAdapter.notifyDataSetChanged();
+		ManageArTypeActivity.this.setListViewToTop();
 	}
 
 	private void showProgress() {
@@ -211,7 +206,7 @@ public class ManageArTypeActivity extends Activity {
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (requestCode == Constants.CB_ADD_AR_TYPE) {
 			if (resultCode == RESULT_OK) {
-				updateArTypeLv(true);
+				updateArTypeLv();
 			}
 		}
 		super.onActivityResult(requestCode, resultCode, data);
@@ -219,12 +214,12 @@ public class ManageArTypeActivity extends Activity {
 
 	class LoadArTypeTask extends AsyncTask<Boolean, Void, List<ArType>> {
 
-		private boolean isListViewDataChange = false;
+		private boolean isSetListViewToTop = false;
 
 		@Override
 		protected List<ArType> doInBackground(Boolean... params) {
 
-			isListViewDataChange = params[0];
+			isSetListViewToTop = params[0];
 			List<ArType> tempArList = null;
 
 			tempArList = ArTypeService.queryAllByUpdate();
@@ -241,13 +236,12 @@ public class ManageArTypeActivity extends Activity {
 			hideProgress();
 
 			if (tempArList == null || tempArList.size() == 0) {
-				Toast.makeText(ManageArTypeActivity.this, "没有分类，请新建",
-						Constants.TOAST_EXSIT_TIME).show();
+				Toast.makeText(ManageArTypeActivity.this, "没有分类，请新建", Constants.TOAST_EXSIT_TIME).show();
 				return;
 			}
 
 			arTypeAdapter.notifyDataSetChanged();
-			if (isListViewDataChange) {
+			if (isSetListViewToTop) {
 				ManageArTypeActivity.this.setListViewToTop();
 			}
 
@@ -275,17 +269,12 @@ public class ManageArTypeActivity extends Activity {
 			AccountHolder holder = new AccountHolder();
 			if (convertView == null) {
 
-				convertView = inflater.inflate(R.layout.ar_type_listview_item,
-						null);
+				convertView = inflater.inflate(R.layout.ar_type_listview_item, null);
 
-				holder.arSum = (TextView) convertView
-						.findViewById(R.id.tvArSum);
-				holder.ivType = (ImageView) convertView
-						.findViewById(R.id.ivType);
-				holder.createDate = (TextView) convertView
-						.findViewById(R.id.tvCreateTime);
-				holder.tvType = (TextView) convertView
-						.findViewById(R.id.tvType);
+				holder.arSum = (TextView) convertView.findViewById(R.id.tvArSum);
+				holder.ivType = (ImageView) convertView.findViewById(R.id.ivType);
+				holder.createDate = (TextView) convertView.findViewById(R.id.tvCreateTime);
+				holder.tvType = (TextView) convertView.findViewById(R.id.tvType);
 
 				convertView.setTag(holder);
 			} else {
@@ -293,10 +282,8 @@ public class ManageArTypeActivity extends Activity {
 			}
 
 			ArType arType = arTypeList.get(position);
-			holder.arSum.setText("记账数："
-					+ String.valueOf(arType.getArSum(arType.getId())));
-			holder.ivType.setImageResource(ResManageUtils
-					.getImgResIdByName(arType.getImgResName()));
+			holder.arSum.setText("记账数：" + String.valueOf(arType.getArSum(arType.getId())));
+			holder.ivType.setImageResource(ResManageUtils.getImgResIdByName(arType.getImgResName()));
 			holder.tvType.setText(arType.getTypeName());
 			holder.createDate.setText(arType.getCreateDate());
 

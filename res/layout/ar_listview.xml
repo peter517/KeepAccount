@@ -11,6 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="top"
         android:fadingEdge="none"  
+        android:cacheColorHint="#000000"
         android:scrollingCache="false" >
     </ListView>
 

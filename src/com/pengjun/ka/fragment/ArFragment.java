@@ -44,7 +44,7 @@ public class ArFragment extends Fragment {
 	private int offset = 0;
 	private final int LIMIT_ROW_TOTAL = 30;
 
-	private AccountListAdapter arAdapter;
+	private ArLvAdapter arAdapter;
 	private List<AccountRecord> arList = new ArrayList<AccountRecord>();
 
 	private static ArFragment instance = null;
@@ -87,16 +87,16 @@ public class ArFragment extends Fragment {
 		return instance;
 	}
 
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
 		// AccountRecordService.deleteAll(AccountRecordService.queryAll());
 		View view = inflater.inflate(R.layout.ar_listview, null);
 
 		pbLoad = (ProgressBar) view.findViewById(R.id.pbLoad);
 
-		loadMoreView = inflater.inflate(R.layout.laod_button, null);
+		loadMoreView = inflater.inflate(R.layout.load_button, null);
 		btLoadMore = (Button) loadMoreView.findViewById(R.id.btLoadMore);
+		btLoadMore.setVisibility(View.GONE);
 		btLoadMore.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -108,14 +108,13 @@ public class ArFragment extends Fragment {
 
 		lvAr = (ListView) view.findViewById(R.id.lvAcountRecord);
 		lvAr.addFooterView(loadMoreView);
-		arAdapter = new AccountListAdapter();
+		arAdapter = new ArLvAdapter();
 		lvAr.setAdapter(arAdapter);
 
 		lvAr.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
-			public void onItemClick(AdapterView<?> parent, View view,
-					int position, long id) {
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
 				// view account record
 				Intent intent = new Intent();
@@ -125,10 +124,8 @@ public class ArFragment extends Fragment {
 				Bundle bundle = new Bundle();
 				bundle.putSerializable(Constants.INTENT_AR_BEAN, ar);
 				intent.putExtras(bundle);
-				getActivity().startActivityForResult(intent,
-						Constants.CB_ADD_AR);
-				getActivity().overridePendingTransition(R.anim.left_in,
-						R.anim.left_out);
+				getActivity().startActivityForResult(intent, Constants.CB_ADD_AR);
+				getActivity().overridePendingTransition(R.anim.left_in, R.anim.left_out);
 
 			}
 		});
@@ -137,43 +134,35 @@ public class ArFragment extends Fragment {
 			private int selectPos = 0;
 
 			@Override
-			public boolean onItemLongClick(AdapterView<?> parent, View view,
-					int position, long id) {
+			public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
 
 				// delete account record
 				selectPos = position;
-				AlertDialog.Builder builder = new AlertDialog.Builder(
-						getActivity());
+				AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 				builder.setIcon(R.drawable.mark_delete);
 				builder.setTitle("删除记账");
 				builder.setMessage("确定要删除该次记账？");
-				builder.setPositiveButton("删除",
-						new DialogInterface.OnClickListener() {
-							public void onClick(DialogInterface dialog,
-									int whichButton) {
-								AccountRecord ar = arList.get(selectPos);
-								ArService.delete(ar);
-								updateArListView(false);
-							}
-						});
-				builder.setNegativeButton("取消",
-						new DialogInterface.OnClickListener() {
-							public void onClick(DialogInterface dialog,
-									int whichButton) {
+				builder.setPositiveButton("删除", new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int whichButton) {
+						AccountRecord ar = arList.get(selectPos);
+						ArService.delete(ar);
+						updateArListView(false);
+					}
+				});
+				builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int whichButton) {
 
-							}
-						});
+					}
+				});
 				AlertDialog dialog = builder.create();
 				dialog.show();
 
 				// modified dialog button
-				Button btPositive = dialog
-						.getButton(DialogInterface.BUTTON_POSITIVE);
+				Button btPositive = dialog.getButton(DialogInterface.BUTTON_POSITIVE);
 				if (btPositive != null) {
 					btPositive.setBackgroundResource(R.drawable.btn_alert);
 				}
-				Button btNegative = dialog
-						.getButton(DialogInterface.BUTTON_NEGATIVE);
+				Button btNegative = dialog.getButton(DialogInterface.BUTTON_NEGATIVE);
 				if (btNegative != null) {
 					btNegative.setBackgroundResource(R.drawable.btn_normal);
 				}
@@ -199,9 +188,23 @@ public class ArFragment extends Fragment {
 	}
 
 	// fill listview
-	public void updateArListView(Boolean isListViewDataChange) {
+	public void updateArListView(Boolean isSetListViewToTop) {
 		showProgress();
-		new LoadArTask().execute(isListViewDataChange);
+		new LoadArTask().execute(isSetListViewToTop);
+	}
+
+	public void updateArListView() {
+
+		arList = ArService.queryLimitRows(0, Math.max(LIMIT_ROW_TOTAL, arList.size()));
+
+		if (arList.size() < LIMIT_ROW_TOTAL) {
+			btLoadMore.setVisibility(View.GONE);
+		} else {
+			btLoadMore.setVisibility(View.VISIBLE);
+		}
+
+		arAdapter.notifyDataSetChanged();
+		ArFragment.this.setListViewToTop();
 	}
 
 	public void loadMoreArListView() {
@@ -221,16 +224,15 @@ public class ArFragment extends Fragment {
 
 	class LoadArTask extends AsyncTask<Boolean, Void, List<AccountRecord>> {
 
-		private boolean isListViewDataChange = false;
+		private boolean isSetListViewToTop = false;
 
 		@Override
 		protected List<AccountRecord> doInBackground(Boolean... params) {
 
-			isListViewDataChange = params[0];
+			isSetListViewToTop = params[0];
 			List<AccountRecord> tempArList = null;
 
-			tempArList = ArService.queryLimitRows(0,
-					Math.max(LIMIT_ROW_TOTAL, arList.size()));
+			tempArList = ArService.queryLimitRows(0, Math.max(LIMIT_ROW_TOTAL, arList.size()));
 			if (tempArList != null) {
 				arList = tempArList;
 			}
@@ -241,8 +243,6 @@ public class ArFragment extends Fragment {
 		@Override
 		protected void onPostExecute(List<AccountRecord> tempArList) {
 
-			hideProgress();
-
 			// rows too little to display load btLoadMore
 			if (arList.size() < LIMIT_ROW_TOTAL) {
 				btLoadMore.setVisibility(View.GONE);
@@ -251,15 +251,16 @@ public class ArFragment extends Fragment {
 			}
 
 			if (tempArList == null || tempArList.size() == 0) {
-				Toast.makeText(ArFragment.this.getActivity(), "没有数据，请记账",
-						Constants.TOAST_EXSIT_TIME).show();
+				Toast.makeText(ArFragment.this.getActivity(), "没有数据，请记账", Constants.TOAST_EXSIT_TIME).show();
 				return;
 			}
 
 			arAdapter.notifyDataSetChanged();
-			if (isListViewDataChange) {
+			if (isSetListViewToTop) {
 				ArFragment.this.setListViewToTop();
 			}
+
+			hideProgress();
 
 			super.onPostExecute(tempArList);
 		}
@@ -283,21 +284,22 @@ public class ArFragment extends Fragment {
 		@Override
 		protected void onPostExecute(List<AccountRecord> tempArList) {
 
-			hideProgress();
-
 			if (tempArList == null || tempArList.size() == 0) {
-				Toast.makeText(ArFragment.this.getActivity(), "没有新数据",
-						Constants.TOAST_EXSIT_TIME).show();
+				Toast.makeText(ArFragment.this.getActivity(), "没有新数据", Constants.TOAST_EXSIT_TIME).show();
+			} else {
+				btLoadMore.setVisibility(View.VISIBLE);
 			}
 
 			arAdapter.notifyDataSetChanged();
+
+			hideProgress();
 			super.onPostExecute(tempArList);
 		}
 	}
 
-	public class AccountListAdapter extends BaseAdapter {
-		LayoutInflater inflater = (LayoutInflater) getActivity()
-				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+	public class ArLvAdapter extends BaseAdapter {
+		LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(
+				Context.LAYOUT_INFLATER_SERVICE);
 
 		public int getCount() {
 			return arList.size();
@@ -318,13 +320,10 @@ public class ArFragment extends Fragment {
 
 				convertView = inflater.inflate(R.layout.ar_listview_item, null);
 
-				holder.account = (TextView) convertView
-						.findViewById(R.id.tvCost);
-				holder.ivType = (ImageView) convertView
-						.findViewById(R.id.ivType);
+				holder.account = (TextView) convertView.findViewById(R.id.tvCost);
+				holder.ivType = (ImageView) convertView.findViewById(R.id.ivType);
 				holder.date = (TextView) convertView.findViewById(R.id.tvDate);
-				holder.tvType = (TextView) convertView
-						.findViewById(R.id.tvType);
+				holder.tvType = (TextView) convertView.findViewById(R.id.tvType);
 
 				convertView.setTag(holder);
 			} else {
@@ -334,8 +333,7 @@ public class ArFragment extends Fragment {
 			// fill content
 			AccountRecord ar = arList.get(position);
 			holder.account.setText(String.valueOf(ar.getAccount()));
-			holder.ivType.setImageResource(ResManageUtils.getImgResIdByName(ar
-					.getImgResName()));
+			holder.ivType.setImageResource(ResManageUtils.getImgResIdByName(ar.getImgResName()));
 			holder.tvType.setText(ar.getTypeName());
 			holder.date.setText(ar.getCreateDate());
 

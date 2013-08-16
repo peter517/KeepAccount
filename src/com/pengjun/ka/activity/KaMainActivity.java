@@ -11,10 +11,10 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.pengjun.ka.db.service.ArTypeService;
-import com.pengjun.ka.fragment.MagicBoxFragment;
 import com.pengjun.ka.fragment.ArFragment;
 import com.pengjun.ka.fragment.ArSearchFragment;
 import com.pengjun.ka.fragment.FragmentDirector;
+import com.pengjun.ka.fragment.MagicBoxFragment;
 import com.pengjun.ka.fragment.SettingFragment;
 import com.pengjun.ka.utils.Constants;
 import com.pengjun.keepaccounts.R;
@@ -40,27 +40,21 @@ public class KaMainActivity extends FragmentActivity {
 		// WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		setContentView(R.layout.keep_account);
 
-		// Toast.makeText(this, "123", 5000).show();
 		// top bar
 		createTopBar();
 
 		// main content
-		FragmentDirector.replaceFragment(this, R.id.mainConent,
-				ArFragment.newInstance());
+		FragmentDirector.replaceFragment(this, R.id.mainConent, ArFragment.newInstance());
 
 		// bottom bar
 		createBottomBar();
 
-		SharedPreferences firstInstall = getSharedPreferences(
-				Constants.SP_TAG_INSTALL, 0);
+		SharedPreferences firstInstall = getSharedPreferences(Constants.SP_TAG_INSTALL, 0);
 
 		// if first start of the app
-		if (firstInstall.getString(Constants.SP_KEY_FIRST_START_APP, "")
-				.equals("")) {
-			firstInstall
-					.edit()
-					.putString(Constants.SP_KEY_FIRST_START_APP,
-							Constants.SP_VALUE_FIRST_START_APP).commit();
+		if (firstInstall.getString(Constants.SP_KEY_FIRST_START_APP, "").equals("")) {
+			firstInstall.edit()
+					.putString(Constants.SP_KEY_FIRST_START_APP, Constants.SP_VALUE_FIRST_START_APP).commit();
 			ArTypeService.initTable();
 		}
 
@@ -100,8 +94,8 @@ public class KaMainActivity extends FragmentActivity {
 			@Override
 			public void onFocusChange(View v, boolean hasFocus) {
 				if (hasFocus) {
-					FragmentDirector.replaceFragment(KaMainActivity.this,
-							R.id.mainConent, ArFragment.newInstance());
+					FragmentDirector.replaceFragment(KaMainActivity.this, R.id.mainConent,
+							ArFragment.newInstance());
 
 					ibSearch.setBackgroundResource(R.drawable.search_normal);
 
@@ -121,8 +115,8 @@ public class KaMainActivity extends FragmentActivity {
 			@Override
 			public void onFocusChange(View v, boolean hasFocus) {
 				if (hasFocus) {
-					FragmentDirector.replaceFragment(KaMainActivity.this,
-							R.id.mainConent, ArSearchFragment.newInstance());
+					FragmentDirector.replaceFragment(KaMainActivity.this, R.id.mainConent,
+							ArSearchFragment.newInstance());
 
 					ibSearch.setBackgroundResource(R.drawable.search_focused);
 
@@ -142,8 +136,8 @@ public class KaMainActivity extends FragmentActivity {
 			@Override
 			public void onFocusChange(View v, boolean hasFocus) {
 				if (hasFocus) {
-					FragmentDirector.replaceFragment(KaMainActivity.this,
-							R.id.mainConent, MagicBoxFragment.newInstance());
+					FragmentDirector.replaceFragment(KaMainActivity.this, R.id.mainConent,
+							MagicBoxFragment.newInstance());
 
 					ibSearch.setBackgroundResource(R.drawable.search_normal);
 
@@ -164,8 +158,8 @@ public class KaMainActivity extends FragmentActivity {
 
 					ibSearch.setBackgroundResource(R.drawable.search_normal);
 					tvTopTitle.setText(R.string.systemSetting);
-					FragmentDirector.replaceFragment(KaMainActivity.this,
-							R.id.mainConent, SettingFragment.newInstance());
+					FragmentDirector.replaceFragment(KaMainActivity.this, R.id.mainConent,
+							SettingFragment.newInstance());
 
 				}
 			}
@@ -177,9 +171,7 @@ public class KaMainActivity extends FragmentActivity {
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (requestCode == Constants.CB_ADD_AR) {
 			if (resultCode == RESULT_OK) {
-				ArFragment.newInstance().updateArListView(true);
-			} else {
-				ArFragment.newInstance().updateArListView(false);
+				ArFragment.newInstance().updateArListView();
 			}
 		}
 		super.onActivityResult(requestCode, resultCode, data);

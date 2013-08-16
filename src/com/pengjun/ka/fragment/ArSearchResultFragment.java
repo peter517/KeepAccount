@@ -45,7 +45,7 @@ public class ArSearchResultFragment extends Fragment {
 	private int offset = 0;
 	private final int LIMIT_ROW_TOTAL = 30;
 
-	private AccountListAdapter arAdapter;
+	private ArLvAdapter arAdapter;
 	private List<AccountRecord> arList = new ArrayList<AccountRecord>();
 
 	private static ArSearchResultFragment instance = null;
@@ -53,6 +53,7 @@ public class ArSearchResultFragment extends Fragment {
 	private static ArSearchCondition arSC;
 
 	private static final int MSG_LISTVIEW_TO_TOP = 0x01;
+
 	Handler handler = new Handler() {
 		@Override
 		public void handleMessage(Message msg) {
@@ -106,8 +107,9 @@ public class ArSearchResultFragment extends Fragment {
 
 		pbLoad = (ProgressBar) view.findViewById(R.id.pbLoad);
 
-		loadMoreView = inflater.inflate(R.layout.laod_button, null);
+		loadMoreView = inflater.inflate(R.layout.load_button, null);
 		btLoadMore = (Button) loadMoreView.findViewById(R.id.btLoadMore);
+		btLoadMore.setVisibility(View.GONE);
 		btLoadMore.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -119,7 +121,7 @@ public class ArSearchResultFragment extends Fragment {
 
 		lvAr = (ListView) view.findViewById(R.id.lvAcountRecord);
 		lvAr.addFooterView(loadMoreView);
-		arAdapter = new AccountListAdapter();
+		arAdapter = new ArLvAdapter();
 		lvAr.setAdapter(arAdapter);
 
 		lvAr.setOnItemClickListener(new OnItemClickListener() {
@@ -200,9 +202,23 @@ public class ArSearchResultFragment extends Fragment {
 	}
 
 	// fill listview
-	public void updateArListView(Boolean isListViewDataChange) {
+	public void updateArListView(Boolean isSetListViewToTop) {
 		showProgress();
-		new LoadArTask().execute(isListViewDataChange);
+		new LoadArTask().execute(isSetListViewToTop);
+	}
+
+	public void updateArListView() {
+
+		arList = ArService.queryLimitRows(0, Math.max(LIMIT_ROW_TOTAL, arList.size()));
+
+		if (arList.size() < LIMIT_ROW_TOTAL) {
+			btLoadMore.setVisibility(View.GONE);
+		} else {
+			btLoadMore.setVisibility(View.VISIBLE);
+		}
+
+		arAdapter.notifyDataSetChanged();
+		ArSearchResultFragment.this.setListViewToTop();
 	}
 
 	public void loadMoreArListView() {
@@ -222,12 +238,12 @@ public class ArSearchResultFragment extends Fragment {
 
 	class LoadArTask extends AsyncTask<Boolean, Void, List<AccountRecord>> {
 
-		private boolean isListViewDataChange = false;
+		private boolean isSetListViewToTop = false;
 
 		@Override
 		protected List<AccountRecord> doInBackground(Boolean... params) {
 
-			isListViewDataChange = params[0];
+			isSetListViewToTop = params[0];
 			List<AccountRecord> tempArList = ArService.queryAr(arSC, 0,
 					Math.max(LIMIT_ROW_TOTAL, arList.size()));
 			if (tempArList != null) {
@@ -254,7 +270,7 @@ public class ArSearchResultFragment extends Fragment {
 			}
 
 			arAdapter.notifyDataSetChanged();
-			if (isListViewDataChange) {
+			if (isSetListViewToTop) {
 				ArSearchResultFragment.this.setListViewToTop();
 			}
 
@@ -272,6 +288,8 @@ public class ArSearchResultFragment extends Fragment {
 			tempArList = ArService.queryAr(arSC, offset, LIMIT_ROW_TOTAL);
 			if (tempArList != null) {
 				arList.addAll(tempArList);
+			} else {
+				btLoadMore.setVisibility(View.VISIBLE);
 			}
 
 			return tempArList;
@@ -292,7 +310,7 @@ public class ArSearchResultFragment extends Fragment {
 		}
 	}
 
-	public class AccountListAdapter extends BaseAdapter {
+	public class ArLvAdapter extends BaseAdapter {
 		LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(
 				Context.LAYOUT_INFLATER_SERVICE);
 
