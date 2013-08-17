@@ -21,7 +21,7 @@ import com.pengjun.ka.utils.Constants.ChartType;
 import com.pengjun.ka.utils.MyDebug;
 import com.pengjun.keepaccounts.R;
 
-public class ArChartDisplayActivity extends Activity implements BaseChart.CallBack {
+public class ArChartDisplayActivity extends Activity {
 
 	private ProgressBar pbLoad;
 	private RelativeLayout rlChart;
@@ -60,7 +60,6 @@ public class ArChartDisplayActivity extends Activity implements BaseChart.CallBa
 		rlChart = (RelativeLayout) findViewById(R.id.rlChart);
 
 		showProgress();
-
 		new LoadArChartTask().execute();
 	}
 

@@ -31,7 +31,7 @@ public class ArService {
 
 	public static void insert(AccountRecord ar) {
 		try {
-			// for (int i = 0; i < 100; i++)
+			// for (int i = 0; i < 500; i++)
 			// dao.create(DataCreater.getRandomAr());
 			dao.create(ar);
 		} catch (SQLException e) {

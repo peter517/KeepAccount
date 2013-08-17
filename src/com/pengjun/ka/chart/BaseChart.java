@@ -15,15 +15,14 @@ import org.achartengine.renderer.XYMultipleSeriesRenderer;
 import org.achartengine.renderer.XYSeriesRenderer;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.Paint.Align;
 import android.view.View;
 
 import com.pengjun.ka.db.model.AccountRecord;
 import com.pengjun.ka.utils.TimeUtils;
 
 public abstract class BaseChart {
-
-	public interface CallBack {
-	}
 
 	public abstract void compute(List<AccountRecord> arList);
 
@@ -83,6 +82,7 @@ public abstract class BaseChart {
 		renderer.setLabelsTextSize(15);
 		renderer.setLegendTextSize(15);
 		renderer.setPointSize(5f);
+		renderer.setZoomEnabled(true);
 		renderer.setMargins(new int[] { 20, 30, 15, 20 });
 		int length = colors.length;
 		for (int i = 0; i < length; i++) {
@@ -130,6 +130,48 @@ public abstract class BaseChart {
 		renderer.setLabelsColor(labelsColor);
 	}
 
+	protected void setXStringChartSettings(XYMultipleSeriesRenderer renderer, String title, String xTitle,
+			String yTitle, double yMin, double yMax, int axesColor, int labelsColor) {
+		renderer.setChartTitle(title);
+		renderer.setLabelsColor(Color.YELLOW);
+		renderer.setXTitle(xTitle);
+		renderer.setXLabelsColor(Color.GREEN);
+		renderer.setYTitle(yTitle);
+		renderer.setYLabelsColor(0, Color.GREEN);
+		renderer.setXLabelsAlign(Align.CENTER);
+		renderer.setYLabelsAlign(Align.CENTER);
+		renderer.setXLabels(0);
+		renderer.setYAxisMin(yMin);
+		renderer.setYAxisMax(yMax);
+		renderer.setAxesColor(axesColor);
+		renderer.setLabelsColor(labelsColor);
+	}
+
+	protected XYMultipleSeriesRenderer createXYChartRenderer(String xTitle, String yTitle) {
+
+		XYMultipleSeriesRenderer renderer = new XYMultipleSeriesRenderer();
+		XYSeriesRenderer r = new XYSeriesRenderer();
+		r.setColor(Color.MAGENTA);
+
+		renderer.addSeriesRenderer(r);
+		renderer.setLabelsColor(Color.YELLOW);
+		renderer.setXTitle(xTitle);
+		renderer.setXLabelsColor(Color.GREEN);
+		renderer.setYTitle(yTitle);
+		renderer.setYLabelsColor(0, Color.GREEN);
+		renderer.setXLabelsAlign(Align.CENTER);
+		renderer.setYLabelsAlign(Align.CENTER);
+		renderer.setAxesColor(Color.GRAY);
+		renderer.setAxisTitleTextSize(16);
+		renderer.setChartTitleTextSize(20);
+		renderer.setLabelsTextSize(15);
+		renderer.setLegendTextSize(15);
+		renderer.setZoomEnabled(true);
+		renderer.setZoomButtonsVisible(true);
+
+		return renderer;
+	}
+
 	/**
 	 * Builds an XY multiple time dataset using the provided values.
 	 * 
@@ -158,12 +200,40 @@ public abstract class BaseChart {
 		return dataset;
 	}
 
-	protected XYMultipleSeriesDataset buildDateDataset(String titles, String[] xValues, double[] yValues) {
+	protected XYMultipleSeriesDataset buildTimeDataset(String titles, String[] xValues, double[] yValues) {
 		XYMultipleSeriesDataset dataset = new XYMultipleSeriesDataset();
 		TimeSeries series = new TimeSeries(titles);
 		int seriesLength = xValues.length;
 		for (int k = 0; k < seriesLength; k++) {
 			series.add(TimeUtils.string2Date(xValues[k]), yValues[k]);
+		}
+		dataset.addSeries(series);
+		return dataset;
+	}
+
+	protected XYMultipleSeriesDataset buildXStringDataset(String titles, double[] yValues) {
+
+		XYMultipleSeriesDataset dataset = new XYMultipleSeriesDataset();
+		int seriesLength = yValues.length;
+		XYSeries series = new XYSeries(titles);
+
+		series.add(0, 0);
+		int k = 0;
+		for (k = 0; k < seriesLength; k++) {
+			series.add(k + 1, yValues[k]);
+
+		}
+		series.add(k + 1, 0);
+		dataset.addSeries(series);
+		return dataset;
+	}
+
+	protected XYMultipleSeriesDataset buildDataset(String titles, int[] xValues, double[] yValues) {
+		XYMultipleSeriesDataset dataset = new XYMultipleSeriesDataset();
+		XYSeries series = new XYSeries(titles);
+		int seriesLength = xValues.length;
+		for (int k = 0; k < seriesLength; k++) {
+			series.add(xValues[k], yValues[k]);
 		}
 		dataset.addSeries(series);
 		return dataset;
@@ -219,6 +289,24 @@ public abstract class BaseChart {
 		DefaultRenderer renderer = new DefaultRenderer();
 		renderer.setLabelsTextSize(15);
 		renderer.setLegendTextSize(15);
+		renderer.setMargins(new int[] { 20, 30, 15, 0 });
+		for (int color : colors) {
+			SimpleSeriesRenderer r = new SimpleSeriesRenderer();
+			r.setColor(color);
+			renderer.addSeriesRenderer(r);
+		}
+		return renderer;
+	}
+
+	protected DefaultRenderer createCategoryRenderer(String title, int[] colors) {
+		DefaultRenderer renderer = new DefaultRenderer();
+		renderer.setChartTitle(title);
+		renderer.setLabelsTextSize(15);
+		renderer.setLegendTextSize(15);
+		renderer.setZoomButtonsVisible(true);
+		renderer.setZoomEnabled(true);
+		renderer.setChartTitleTextSize(20);
+		renderer.setLabelsColor(Color.BLACK);
 		renderer.setMargins(new int[] { 20, 30, 15, 0 });
 		for (int color : colors) {
 			SimpleSeriesRenderer r = new SimpleSeriesRenderer();

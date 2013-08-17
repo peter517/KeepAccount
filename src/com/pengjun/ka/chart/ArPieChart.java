@@ -5,28 +5,20 @@ import java.util.List;
 import java.util.Map;
 
 import org.achartengine.ChartFactory;
+import org.achartengine.model.CategorySeries;
 import org.achartengine.renderer.DefaultRenderer;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.view.View;
 
 import com.pengjun.ka.db.model.AccountRecord;
+import com.pengjun.ka.utils.MathUtils;
 import com.pengjun.ka.utils.ResManageUtils;
 
 public class ArPieChart extends BaseChart {
 
-	private double[] valueArr;
-	private String[] typeArr;
 	private DefaultRenderer renderer;
-
-	@Override
-	public View getView(Context context) {
-
-		View view = ChartFactory.getPieChartView(context,
-				buildCategoryDataset("type distribute", typeArr, valueArr), renderer);
-		return view;
-	}
+	private CategorySeries series;
 
 	@Override
 	public void compute(List<AccountRecord> arList) {
@@ -41,30 +33,32 @@ public class ArPieChart extends BaseChart {
 			map.put(ar.getTypeName(), ++count);
 		}
 
+		series = new CategorySeries("");
+
 		int[] colorArr = new int[map.size()];
-		typeArr = new String[map.size()];
-		valueArr = new double[map.size()];
 		int k = 0;
 		double total = 0;
+
 		for (Map.Entry<String, Double> entry : map.entrySet()) {
-			typeArr[k] = entry.getKey();
-			valueArr[k] = entry.getValue();
+			total += entry.getValue();
+		}
+		for (Map.Entry<String, Double> entry : map.entrySet()) {
 			colorArr[k] = ResManageUtils.colors[k % ResManageUtils.colors.length];
-			total += valueArr[k];
+			// ratio of each type , keep two decimal place
+			series.add(entry.getKey() + "(" + MathUtils.formatDouble(entry.getValue() * 100 / total) + "%)",
+					entry.getValue());
 			k++;
 		}
 
-		// ratio of each type
-		for (int i = 0; i < k; i++) {
-			// keep two decimal place
-			typeArr[i] += "(" + ((int) (valueArr[i] / total * 10000)) / 100.0 + "%)";
-		}
-
-		renderer = buildCategoryRenderer(colorArr);
-		renderer.setZoomButtonsVisible(true);
-		renderer.setZoomEnabled(true);
-		renderer.setChartTitleTextSize(20);
-		renderer.setLabelsColor(Color.BLACK);
+		renderer = createCategoryRenderer("各类型分布比例", colorArr);
 
 	}
+
+	@Override
+	public View getView(Context context) {
+
+		View view = ChartFactory.getPieChartView(context, series, renderer);
+		return view;
+	}
+
 }

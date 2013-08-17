@@ -5,79 +5,78 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import org.achartengine.ChartFactory;
+import org.achartengine.chart.BarChart.Type;
+import org.achartengine.model.XYMultipleSeriesDataset;
+import org.achartengine.model.XYSeries;
 import org.achartengine.renderer.XYMultipleSeriesRenderer;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.graphics.Paint.Align;
 import android.view.View;
 
 import com.pengjun.ka.db.model.AccountRecord;
-import com.pengjun.ka.utils.TimeUtils;
+import com.pengjun.ka.utils.MathUtils;
 
 public class ArBarChart extends BaseChart {
 
 	private String titles;
 	private XYMultipleSeriesRenderer renderer;
-	private double[] valueArr;
-	String[] dateStrArr;
+	private XYMultipleSeriesDataset dataset;
 
 	@Override
 	public void compute(List<AccountRecord> arList) {
 
-		titles = "消费趋势图";
+		titles = "各类型消费总数";
 
 		// compute each date account
 		Map<String, Double> map = new TreeMap<String, Double>();
 		for (AccountRecord ar : arList) {
-			Double count = map.get(ar.getCreateDate());
+			Double count = map.get(ar.getTypeName());
 			if (count == null) {
 				count = 0.0;
 			}
-			map.put(ar.getCreateDate(), count + ar.getAccount());
+			map.put(ar.getTypeName(), count + ar.getAccount());
 		}
 
-		valueArr = new double[map.size()];
-		dateStrArr = new String[map.size()];
+		renderer = createXYChartRenderer("种类", "金额");
+
+		dataset = new XYMultipleSeriesDataset();
+		XYSeries series = new XYSeries(titles);
+
+		// fill first invalid data
+		series.add(0, 0);
+		renderer.addXTextLabel(0, "");
+
 		int k = 0;
 		Double maxValue = Double.MIN_VALUE;
 		Double minValue = Double.MAX_VALUE;
-		String firstDate = null;
-		String lastDate = null;
 		for (Map.Entry<String, Double> entry : map.entrySet()) {
-			if (k == 0) {
-				firstDate = entry.getKey();
-			}
-			if (k == map.size() - 1) {
-				lastDate = entry.getKey();
-			}
-			dateStrArr[k] = entry.getKey();
-			valueArr[k] = entry.getValue();
-			maxValue = Math.max(valueArr[k], maxValue);
-			minValue = Math.max(valueArr[k], minValue);
+			maxValue = Math.max(entry.getValue(), maxValue);
+			minValue = Math.max(entry.getValue(), minValue);
+			renderer.addTextLabel(k + 1, entry.getKey());
+			series.add(k + 1, MathUtils.formatDouble(entry.getValue()));
 			k++;
 		}
 
-		int[] colors = new int[] { Color.BLUE };
-		renderer = buildBarRenderer(colors);
-		setChartSettings(renderer, "消费趋势图", "时间", "金额", TimeUtils.string2Date(firstDate).getTime(), TimeUtils
-				.string2Date(lastDate).getTime(), minValue, maxValue, Color.GRAY, Color.BLACK);
+		// fill last invalid data
+		series.add(k + 1, 0);
+		renderer.addXTextLabel(k + 1, "");
+
+		dataset.addSeries(series);
+
+		renderer.setYAxisMin(minValue);
+		renderer.setYAxisMax(maxValue * 1.1f);
+		renderer.setXLabels(0);
 		renderer.getSeriesRendererAt(0).setDisplayChartValues(true);
-		renderer.setXLabels(12);
-		renderer.setYLabels(10);
-		renderer.setXLabelsAlign(Align.LEFT);
-		renderer.setYLabelsAlign(Align.LEFT);
-		renderer.setPanEnabled(true, false);
-		renderer.setZoomEnabled(true);
-		renderer.setZoomRate(1.1f);
-		renderer.setBarSpacing(0.5f);
+		renderer.setBarSpacing(2.0f);
+		renderer.setShowGrid(true);
+		renderer.setGridColor(Color.BLUE);
+
 	}
 
 	@Override
 	public View getView(Context context) {
-
-		View view = ChartFactory.getTimeChartView(context, buildDateDataset(titles, dateStrArr, valueArr),
-				renderer, "MM/dd/yyyy");
+		View view = ChartFactory.getBarChartView(context, dataset, renderer, Type.DEFAULT);
 		return view;
 	}
 }

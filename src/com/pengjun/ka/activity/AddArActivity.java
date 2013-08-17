@@ -21,6 +21,7 @@ import com.pengjun.ka.db.service.ArTypeService;
 import com.pengjun.ka.utils.CollectionUtils;
 import com.pengjun.ka.utils.ComponentUtils;
 import com.pengjun.ka.utils.Constants;
+import com.pengjun.ka.utils.MathUtils;
 import com.pengjun.ka.utils.TimeUtils;
 import com.pengjun.keepaccounts.R;
 
@@ -86,6 +87,13 @@ public class AddArActivity extends Activity {
 			public void onClick(View v) {
 				if (!etAccount.getText().toString().equals("")) {
 
+					Float account = Float.valueOf(etAccount.getText().toString());
+					if (account.isInfinite() || account.isNaN()) {
+						etAccount.setText("");
+						ComponentUtils.createAlertDialog(AddArActivity.this, "输入金额无效").show();
+						return;
+					}
+
 					// add or update
 					if (ar == null) {
 						ar = new AccountRecord();
@@ -147,7 +155,7 @@ public class AddArActivity extends Activity {
 	}
 
 	private void getArFromView(AccountRecord ar) {
-		ar.setAccount(Float.valueOf(etAccount.getText().toString()));
+		ar.setAccount(MathUtils.formatFloat(Float.valueOf(etAccount.getText().toString())));
 		ar.setTypeName(spArTypeName.getSelectedItem().toString());
 		ar.setCreateDate(TimeUtils.DatePicker2FormatStr(dpCreateDate));
 		ar.setComment(etComment.getText().toString());
