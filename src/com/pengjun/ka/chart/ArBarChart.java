@@ -26,7 +26,7 @@ public class ArBarChart extends BaseChart {
 	@Override
 	public void compute(List<AccountRecord> arList) {
 
-		titles = "各类型消费总数";
+		titles = "各类型花费总额";
 
 		// compute each date account
 		Map<String, Double> map = new TreeMap<String, Double>();
@@ -47,30 +47,30 @@ public class ArBarChart extends BaseChart {
 		series.add(0, 0);
 		renderer.addXTextLabel(0, "");
 
-		int k = 0;
+		int pointCnt = 0;
 		Double maxValue = Double.MIN_VALUE;
 		Double minValue = Double.MAX_VALUE;
 		for (Map.Entry<String, Double> entry : map.entrySet()) {
 			maxValue = Math.max(entry.getValue(), maxValue);
-			minValue = Math.max(entry.getValue(), minValue);
-			renderer.addTextLabel(k + 1, entry.getKey());
-			series.add(k + 1, MathUtils.formatDouble(entry.getValue()));
-			k++;
+			minValue = Math.min(entry.getValue(), minValue);
+			renderer.addTextLabel(pointCnt + 1, entry.getKey());
+			series.add(pointCnt + 1, MathUtils.formatDouble(entry.getValue()));
+			pointCnt++;
 		}
 
 		// fill last invalid data
-		series.add(k + 1, 0);
-		renderer.addXTextLabel(k + 1, "");
+		series.add(pointCnt + 1, 0);
+		renderer.addXTextLabel(pointCnt + 1, "");
 
 		dataset.addSeries(series);
 
-		renderer.setYAxisMin(minValue);
+		renderer.setYAxisMin(minValue * 0.5f);
 		renderer.setYAxisMax(maxValue * 1.1f);
 		renderer.setXLabels(0);
-		renderer.getSeriesRendererAt(0).setDisplayChartValues(true);
 		renderer.setBarSpacing(2.0f);
 		renderer.setShowGrid(true);
 		renderer.setGridColor(Color.BLUE);
+		renderer.getSeriesRendererAt(0).setDisplayChartValues(true);
 
 	}
 

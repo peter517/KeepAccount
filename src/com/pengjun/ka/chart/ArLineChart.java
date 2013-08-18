@@ -1,60 +1,155 @@
 package com.pengjun.ka.chart;
 
-import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 import org.achartengine.ChartFactory;
-import org.achartengine.chart.PointStyle;
+import org.achartengine.model.TimeSeries;
+import org.achartengine.model.XYMultipleSeriesDataset;
 import org.achartengine.renderer.XYMultipleSeriesRenderer;
-import org.achartengine.renderer.XYSeriesRenderer;
 
 import android.content.Context;
-import android.graphics.Color;
-import android.graphics.Paint.Align;
 import android.view.View;
 
 import com.pengjun.ka.db.model.AccountRecord;
+import com.pengjun.ka.utils.Constants.ChartType;
+import com.pengjun.ka.utils.MathUtils;
+import com.pengjun.ka.utils.TimeUtils;
 
 public class ArLineChart extends BaseChart {
 
-	private String[] titles;
-	private XYMultipleSeriesRenderer renderer;
-	private List<double[]> values = new ArrayList<double[]>();
-	List<double[]> x = new ArrayList<double[]>();
+	private static final int DISPALY_CHART_VALUE_POINT_MAX_NUM = 15;
+	private ChartType chartType;
 
-	public void compute(List<AccountRecord> arList) {
-		titles = new String[] { "Crete", "Corfu", "Thassos", "Skiathos" };
-
-		for (int i = 0; i < titles.length; i++) {
-			x.add(new double[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 });
-		}
-		values.add(new double[] { 12.3, 12.5, 13.8, 16.8, 20.4, 24.4, 26.4, 26.1, 23.6, 20.3, 17.2, 13.9 });
-		values.add(new double[] { 10, 10, 12, 15, 20, 24, 26, 26, 23, 18, 14, 11 });
-		values.add(new double[] { 5, 5.3, 8, 12, 17, 22, 24.2, 24, 19, 15, 9, 6 });
-		values.add(new double[] { 9, 10, 11, 15, 19, 23, 26, 25, 22, 18, 13, 10 });
-		int[] colors = new int[] { Color.BLUE, Color.GREEN, Color.CYAN, Color.YELLOW };
-		PointStyle[] styles = new PointStyle[] { PointStyle.CIRCLE, PointStyle.DIAMOND, PointStyle.TRIANGLE,
-				PointStyle.SQUARE };
-		XYMultipleSeriesRenderer renderer = buildRenderer(colors, styles);
-		int length = renderer.getSeriesRendererCount();
-		for (int i = 0; i < length; i++) {
-			((XYSeriesRenderer) renderer.getSeriesRendererAt(i)).setFillPoints(true);
-		}
-		setChartSettings(renderer, "Average temperature", "Month", "Temperature", 0.5, 12.5, -10, 40,
-				Color.LTGRAY, Color.LTGRAY);
-		renderer.setXLabels(12);
-		renderer.setYLabels(10);
-		renderer.setShowGrid(true);
-		renderer.setXLabelsAlign(Align.RIGHT);
-		renderer.setYLabelsAlign(Align.RIGHT);
-		renderer.setZoomButtonsVisible(true);
-		renderer.setPanLimits(new double[] { -10, 20, -10, 40 });
-		renderer.setZoomLimits(new double[] { -10, 20, -10, 40 });
+	public ArLineChart(ChartType chartType) {
+		this.chartType = chartType;
 	}
 
-	public View getView(Context context) {
+	private String titles;
+	private XYMultipleSeriesRenderer renderer;
+	XYMultipleSeriesDataset dataset;
 
-		View view = ChartFactory.getLineChartView(context, buildDataset(titles, x, values), renderer);
+	@Override
+	public void compute(List<AccountRecord> arList) {
+
+		// compute each date account
+		Map<Date, Double> map = new TreeMap<Date, Double>();
+		switch (chartType) {
+		case line_day:
+			for (AccountRecord ar : arList) {
+
+				Date date = TimeUtils.string2Date(ar.getCreateDate());
+				Double count = map.get(date);
+				if (count == null) {
+					count = 0.0;
+				}
+				map.put(date, count + ar.getAccount());
+			}
+			titles = "每天花费总额曲线图";
+			break;
+		case line_mouth:
+			for (AccountRecord ar : arList) {
+
+				Date yearMonth = TimeUtils.string2YearMonth(TimeUtils.getYearMouthFromDateStr(ar
+						.getCreateDate()));
+				Double count = map.get(yearMonth);
+				if (count == null) {
+					count = 0.0;
+				}
+				map.put(yearMonth, count + ar.getAccount());
+			}
+			titles = "每月花费总额曲线图";
+			break;
+		case line_year:
+			for (AccountRecord ar : arList) {
+
+				Date year = TimeUtils.string2Year(TimeUtils.getYearFromDateStr(ar.getCreateDate()));
+				Double count = map.get(year);
+				if (count == null) {
+					count = 0.0;
+				}
+				map.put(year, count + ar.getAccount());
+			}
+			titles = "每年花费总额曲线图";
+			break;
+		}
+
+		int pointCnt = 0;
+		Double maxValue = Double.MIN_VALUE;
+		Double minValue = Double.MAX_VALUE;
+		Date firstDate = null;
+		Date lastDate = null;
+
+		dataset = new XYMultipleSeriesDataset();
+		TimeSeries series = new TimeSeries(titles);
+
+		for (Map.Entry<Date, Double> entry : map.entrySet()) {
+			if (pointCnt == 0) {
+				firstDate = entry.getKey();
+			}
+			if (pointCnt == map.size() - 1) {
+				lastDate = entry.getKey();
+			}
+			maxValue = Math.max(entry.getValue(), maxValue);
+			minValue = Math.min(entry.getValue(), minValue);
+			series.add(entry.getKey(), MathUtils.formatDouble(entry.getValue()));
+			pointCnt++;
+		}
+		dataset.addSeries(series);
+
+		renderer = createXYChartRenderer("时间", "金额");
+
+		// fill last invalid data
+
+		switch (chartType) {
+		case line_day:
+			firstDate.setDate(firstDate.getDate() - 1);
+			lastDate.setDate(lastDate.getDate() + 1);
+			break;
+		case line_mouth:
+			firstDate.setMonth(firstDate.getMonth() - 1);
+			lastDate.setMonth(lastDate.getMonth() + 1);
+			break;
+		case line_year:
+			firstDate.setYear(firstDate.getYear() - 1);
+			lastDate.setYear(lastDate.getYear() + 1);
+			break;
+		}
+
+		renderer.setXLabels(10);
+		renderer.setXAxisMin(firstDate.getTime());
+		renderer.setXAxisMax(lastDate.getTime());
+
+		// set point to middle when only one point
+		if (pointCnt == 1) {
+			renderer.setXAxisMin(firstDate.getTime() / 2);
+			renderer.setXAxisMax(lastDate.getTime() * 2);
+		}
+		renderer.setYAxisMin(minValue * 0.5f);
+		renderer.setYAxisMax(maxValue * 1.1f);
+		if (pointCnt <= DISPALY_CHART_VALUE_POINT_MAX_NUM) {
+			renderer.getSeriesRendererAt(0).setDisplayChartValues(true);
+		}
+
+	}
+
+	@Override
+	public View getView(Context context) {
+		View view = null;
+		switch (chartType) {
+		case line_day:
+			view = ChartFactory.getTimeChartView(context, dataset, renderer, TimeUtils.TO_DATE_FORMT);
+			break;
+		case line_mouth:
+			view = ChartFactory.getTimeChartView(context, dataset, renderer, TimeUtils.TO_YERA_MONTH_FORMT);
+			break;
+		case line_year:
+			view = ChartFactory.getTimeChartView(context, dataset, renderer, TimeUtils.TO_YERA_FORMT);
+			break;
+		}
+
 		return view;
 	}
 

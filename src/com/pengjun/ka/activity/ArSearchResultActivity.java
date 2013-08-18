@@ -12,6 +12,7 @@ import com.pengjun.ka.db.model.ArSearchCondition;
 import com.pengjun.ka.fragment.ArFragment;
 import com.pengjun.ka.fragment.ArSearchResultFragment;
 import com.pengjun.ka.fragment.FragmentDirector;
+import com.pengjun.ka.utils.ComponentUtils;
 import com.pengjun.ka.utils.Constants;
 import com.pengjun.keepaccounts.R;
 
@@ -34,6 +35,11 @@ public class ArSearchResultActivity extends FragmentActivity {
 		ibChart.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
+
+				if (!ArSearchResultFragment.newInstance(null).hasSearchResult()) {
+					ComponentUtils.createAlertDialog(ArSearchResultActivity.this, "没有查询数据，不能生成图表").show();
+					return;
+				}
 				Intent intent = new Intent();
 				intent.setClass(ArSearchResultActivity.this, ArChartActivity.class);
 

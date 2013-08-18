@@ -1,7 +1,6 @@
 package com.pengjun.ka.utils;
 
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -13,7 +12,9 @@ public class TimeUtils {
 
 	public static final String TIME_FORMT = "%d-%02d-%02d-%02d-%02d-%02d";
 	public static final String DATE_FORMT = "%d-%02d-%02d";
-	public static final String TO_DATE_FORMT = "yyyy-mm-dd";
+	public static final String TO_DATE_FORMT = "yyyy-MM-dd";
+	public static final String TO_YERA_MONTH_FORMT = "yyyy-MM";
+	public static final String TO_YERA_FORMT = "yyyy";
 	public static final String TIME_SEPARATOR = "-";
 
 	private static Random random = new Random();
@@ -21,11 +22,35 @@ public class TimeUtils {
 		random.setSeed(System.currentTimeMillis());
 	}
 
+	// public static Date string2Date(String dateStr) {
+	// return Date.valueOf(dateStr);
+	// }
+
 	public static Date string2Date(String dateStr) {
-		DateFormat dateFormat = new SimpleDateFormat(TO_DATE_FORMT);
+		DateFormat format = new SimpleDateFormat(TO_DATE_FORMT);
 		try {
-			return dateFormat.parse(dateStr);
-		} catch (ParseException e) {
+			return format.parse(dateStr);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	public static Date string2YearMonth(String dateStr) {
+		DateFormat format = new SimpleDateFormat(TO_YERA_MONTH_FORMT);
+		try {
+			return format.parse(dateStr);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	public static Date string2Year(String dateStr) {
+		DateFormat format = new SimpleDateFormat(TO_YERA_FORMT);
+		try {
+			return format.parse(dateStr);
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return null;
@@ -63,7 +88,7 @@ public class TimeUtils {
 	}
 
 	public static String getRandomDateStr() {
-		return String.format(DATE_FORMT, 2000 + random.nextInt(13), 1 + random.nextInt(13),
+		return String.format(DATE_FORMT, 2000 + random.nextInt(13), 1 + random.nextInt(12),
 				1 + random.nextInt(30));
 	}
 
@@ -77,7 +102,7 @@ public class TimeUtils {
 
 	public static String getRandomTimeStr() {
 
-		return String.format(TIME_FORMT, 2000 + random.nextInt(13), 1 + random.nextInt(13),
+		return String.format(TIME_FORMT, 2000 + random.nextInt(13), 1 + random.nextInt(12),
 				1 + random.nextInt(30), 1 + random.nextInt(24), 1 + random.nextInt(60),
 				1 + random.nextInt(60));
 	}
@@ -85,6 +110,16 @@ public class TimeUtils {
 	public static String[] String2DateArr(String dateStr) {
 		String[] date = dateStr.split(TIME_SEPARATOR);
 		return date;
+	}
+
+	public static String getYearMouthFromDateStr(String dateStr) {
+		String[] date = String2DateArr(dateStr);
+		return date[0] + "-" + date[1];
+	}
+
+	public static String getYearFromDateStr(String dateStr) {
+		String[] date = String2DateArr(dateStr);
+		return date[0];
 	}
 
 	public static String DatePicker2FormatStr(DatePicker dp) {

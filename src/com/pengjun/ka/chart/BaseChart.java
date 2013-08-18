@@ -152,7 +152,10 @@ public abstract class BaseChart {
 		XYMultipleSeriesRenderer renderer = new XYMultipleSeriesRenderer();
 		XYSeriesRenderer r = new XYSeriesRenderer();
 		r.setColor(Color.MAGENTA);
+		r.setPointStyle(PointStyle.CIRCLE);
 
+		renderer.setYLabels(5);
+		renderer.setPointSize(5f);
 		renderer.addSeriesRenderer(r);
 		renderer.setLabelsColor(Color.YELLOW);
 		renderer.setXTitle(xTitle);
@@ -168,6 +171,7 @@ public abstract class BaseChart {
 		renderer.setLegendTextSize(15);
 		renderer.setZoomEnabled(true);
 		renderer.setZoomButtonsVisible(true);
+		((XYSeriesRenderer) renderer.getSeriesRendererAt(0)).setFillPoints(true);
 
 		return renderer;
 	}

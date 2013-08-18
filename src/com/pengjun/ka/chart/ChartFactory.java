@@ -11,8 +11,12 @@ public class ChartFactory {
 			return new ArBarChart();
 		case pie:
 			return new ArPieChart();
-		case line:
-			return new ArLineChart();
+		case line_day:
+			return new ArLineChart(ChartType.line_day);
+		case line_mouth:
+			return new ArLineChart(ChartType.line_mouth);
+		case line_year:
+			return new ArLineChart(ChartType.line_year);
 		}
 		return null;
 	}

@@ -56,7 +56,8 @@ public class ArChartActivity extends Activity {
 		pbLoad = (ProgressBar) findViewById(R.id.pbLoad);
 		tvTilte = (TextView) findViewById(R.id.tvTilte);
 
-		Integer[] images = { R.drawable.chart_columnar, R.drawable.chart_pie, R.drawable.chart_line };
+		Integer[] images = { R.drawable.chart_columnar, R.drawable.chart_pie, R.drawable.chart_line_day,
+				R.drawable.chart_line_mouth, R.drawable.chart_line_year };
 
 		ImageAdapter adapter = new ImageAdapter(this, images);
 		adapter.createReflectedImages();// 创建倒影效果
@@ -78,7 +79,13 @@ public class ArChartActivity extends Activity {
 					bundle.putSerializable(Constants.INTENT_AR_CHART_TYPE, ChartType.pie);
 					break;
 				case 2:
-					bundle.putSerializable(Constants.INTENT_AR_CHART_TYPE, ChartType.line);
+					bundle.putSerializable(Constants.INTENT_AR_CHART_TYPE, ChartType.line_day);
+					break;
+				case 3:
+					bundle.putSerializable(Constants.INTENT_AR_CHART_TYPE, ChartType.line_mouth);
+					break;
+				case 4:
+					bundle.putSerializable(Constants.INTENT_AR_CHART_TYPE, ChartType.line_year);
 					break;
 				}
 				intent.putExtras(bundle);

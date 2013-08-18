@@ -50,7 +50,7 @@ public class ArPieChart extends BaseChart {
 			k++;
 		}
 
-		renderer = createCategoryRenderer("各类型分布比例", colorArr);
+		renderer = createCategoryRenderer("各类花费总额分布比例", colorArr);
 
 	}
 

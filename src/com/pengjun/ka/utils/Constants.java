@@ -54,7 +54,7 @@ public class Constants {
 
 	// chart type
 	public enum ChartType {
-		pie, line, bar;
+		pie, line_day, line_mouth, line_year, bar;
 
 		public static String[] names() {
 			String[] names = new String[ChartType.values().length];

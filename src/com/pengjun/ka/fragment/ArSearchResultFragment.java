@@ -84,6 +84,10 @@ public class ArSearchResultFragment extends Fragment {
 		super.onDestroy();
 	}
 
+	public boolean hasSearchResult() {
+		return arList.size() != 0;
+	}
+
 	public static ArSearchCondition getArSearchCondition() {
 		return arSC;
 	}
