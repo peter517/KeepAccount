@@ -107,18 +107,18 @@ public class TimeUtils {
 				1 + random.nextInt(60));
 	}
 
-	public static String[] String2DateArr(String dateStr) {
+	public static String[] String2DateStrArr(String dateStr) {
 		String[] date = dateStr.split(TIME_SEPARATOR);
 		return date;
 	}
 
 	public static String getYearMouthFromDateStr(String dateStr) {
-		String[] date = String2DateArr(dateStr);
+		String[] date = String2DateStrArr(dateStr);
 		return date[0] + "-" + date[1];
 	}
 
 	public static String getYearFromDateStr(String dateStr) {
-		String[] date = String2DateArr(dateStr);
+		String[] date = String2DateStrArr(dateStr);
 		return date[0];
 	}
 

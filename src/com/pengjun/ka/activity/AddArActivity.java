@@ -149,7 +149,7 @@ public class AddArActivity extends Activity {
 		spArTypeName.setSelection(CollectionUtils.getPosFromList(arTypeNameList, ar.getTypeName()));
 		etComment.setText(String.valueOf((ar.getComment())));
 
-		String[] date = TimeUtils.String2DateArr(ar.getCreateDate());
+		String[] date = TimeUtils.String2DateStrArr(ar.getCreateDate());
 		dpCreateDate.updateDate(Integer.valueOf(date[0]), Integer.valueOf(date[1]) - 1,
 				Integer.valueOf(date[2]));
 	}

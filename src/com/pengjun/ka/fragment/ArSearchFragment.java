@@ -68,6 +68,15 @@ public class ArSearchFragment extends Fragment {
 		return instance;
 	}
 
+	public void clearAll() {
+		instance.etStartAccount.setText("");
+		instance.etEndAccount.setText("");
+		instance.btStartDate.setText("");
+		instance.btEndDate.setText("");
+
+		instance.spArTypeName.setSelection(0);
+	}
+
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
 		View view = inflater.inflate(R.layout.ar_search, null);
@@ -101,15 +110,22 @@ public class ArSearchFragment extends Fragment {
 			@Override
 			public void onClick(View v) {
 
-				final Calendar mCalendar = Calendar.getInstance();
-				long time = System.currentTimeMillis();
-				mCalendar.setTimeInMillis(time);
-				int year = mCalendar.get(Calendar.YEAR);
-				int mouth = mCalendar.get(Calendar.MONTH);
-				int day = mCalendar.get(Calendar.DAY_OF_MONTH);
+				DatePickerDialog datePickerDialog = null;
+				if (!btStartDate.getText().equals("")) {
+					String dateStr = btStartDate.getText().toString();
+					String[] dateString = TimeUtils.String2DateStrArr(dateStr);
+					datePickerDialog = new DatePickerDialog(getActivity(), dateSetListener, Integer
+							.valueOf(dateString[0]), Integer.valueOf(dateString[1]) - 1, Integer
+							.valueOf(dateString[2]));
+				} else {
+					final Calendar mCalendar = Calendar.getInstance();
+					long time = System.currentTimeMillis();
+					mCalendar.setTimeInMillis(time);
 
-				DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), dateSetListener,
-						year, mouth, day);
+					datePickerDialog = new DatePickerDialog(getActivity(), dateSetListener, mCalendar
+							.get(Calendar.YEAR), mCalendar.get(Calendar.MONTH), mCalendar
+							.get(Calendar.DAY_OF_MONTH));
+				}
 
 				datePickerDialog.show();
 			}
@@ -131,15 +147,22 @@ public class ArSearchFragment extends Fragment {
 			@Override
 			public void onClick(View v) {
 
-				final Calendar mCalendar = Calendar.getInstance();
-				long time = System.currentTimeMillis();
-				mCalendar.setTimeInMillis(time);
-				int year = mCalendar.get(Calendar.YEAR);
-				int mouth = mCalendar.get(Calendar.MONTH);
-				int day = mCalendar.get(Calendar.DAY_OF_MONTH);
+				DatePickerDialog datePickerDialog = null;
+				if (!btEndDate.getText().equals("")) {
+					String dateStr = btEndDate.getText().toString();
+					String[] dateString = TimeUtils.String2DateStrArr(dateStr);
+					datePickerDialog = new DatePickerDialog(getActivity(), dateSetListener, Integer
+							.valueOf(dateString[0]), Integer.valueOf(dateString[1]) - 1, Integer
+							.valueOf(dateString[2]));
+				} else {
+					final Calendar mCalendar = Calendar.getInstance();
+					long time = System.currentTimeMillis();
+					mCalendar.setTimeInMillis(time);
 
-				DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), dateSetListener,
-						year, mouth, day);
+					datePickerDialog = new DatePickerDialog(getActivity(), dateSetListener, mCalendar
+							.get(Calendar.YEAR), mCalendar.get(Calendar.MONTH), mCalendar
+							.get(Calendar.DAY_OF_MONTH));
+				}
 
 				datePickerDialog.show();
 			}

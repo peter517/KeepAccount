@@ -82,6 +82,7 @@ public class KaMainActivity extends FragmentActivity {
 			@Override
 			public void onClick(View v) {
 				ArFragment.newInstance().setListViewToTop();
+				ArSearchFragment.newInstance().clearAll();
 			}
 		});
 	}
@@ -100,6 +101,7 @@ public class KaMainActivity extends FragmentActivity {
 					ibSearch.setBackgroundResource(R.drawable.search_normal);
 
 					ibAddAccount.setVisibility(View.VISIBLE);
+					ibSetListViewToTop.setBackgroundResource(R.drawable.menu_btn_to_top);
 					ibSetListViewToTop.setVisibility(View.VISIBLE);
 					tvTopTitle.setText(R.string.recentArs);
 				}
@@ -119,9 +121,9 @@ public class KaMainActivity extends FragmentActivity {
 							ArSearchFragment.newInstance());
 
 					ibSearch.setBackgroundResource(R.drawable.search_focused);
-
 					ibAddAccount.setVisibility(View.GONE);
-					ibSetListViewToTop.setVisibility(View.GONE);
+					ibSetListViewToTop.setVisibility(View.VISIBLE);
+					ibSetListViewToTop.setBackgroundResource(R.drawable.menu_btn_clear);
 					tvTopTitle.setText(R.string.searchAr);
 
 				} else {

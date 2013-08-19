@@ -33,8 +33,7 @@
             android:layout_width="@dimen/bar_img_width"
             android:layout_height="fill_parent"
             android:layout_alignParentRight="true"
-            android:background="@drawable/menu_btn_selector_xml"
-            android:src="@drawable/to_top" />
+            android:background="@drawable/menu_btn_selector_xml"/>
     </RelativeLayout>
 
     <RelativeLayout
