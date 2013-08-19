@@ -18,13 +18,13 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import com.pengjun.ka.R;
 import com.pengjun.ka.activity.ArSearchResultActivity;
 import com.pengjun.ka.db.model.ArSearchCondition;
 import com.pengjun.ka.db.service.ArTypeService;
 import com.pengjun.ka.utils.ComponentUtils;
 import com.pengjun.ka.utils.Constants;
 import com.pengjun.ka.utils.TimeUtils;
-import com.pengjun.keepaccounts.R;
 
 public class ArSearchFragment extends Fragment {
 

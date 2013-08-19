@@ -1,6 +1,5 @@
 package com.pengjun.ka.activity;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,19 +28,20 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.pengjun.ka.R;
 import com.pengjun.ka.component.GalleryFlow;
 import com.pengjun.ka.db.model.AccountRecord;
 import com.pengjun.ka.db.service.ArService;
 import com.pengjun.ka.fragment.ArSearchResultFragment;
 import com.pengjun.ka.utils.Constants;
 import com.pengjun.ka.utils.Constants.ChartType;
-import com.pengjun.keepaccounts.R;
+import com.pengjun.ka.utils.MyDebug;
 
 public class ArChartActivity extends Activity {
 
 	private GalleryFlow gfChart;
 	private ProgressBar pbLoad;
-	private List<AccountRecord> arList = new ArrayList<AccountRecord>();
+	public static List<AccountRecord> arList = new ArrayList<AccountRecord>();
 	private TextView tvTilte;
 
 	@Override
@@ -70,7 +70,8 @@ public class ArChartActivity extends Activity {
 
 				Intent intent = new Intent(ArChartActivity.this, ArChartDisplayActivity.class);
 				Bundle bundle = new Bundle();
-				bundle.putSerializable(Constants.INTENT_AR_LIST, (Serializable) arList);
+				// bundle.putSerializable(Constants.INTENT_AR_LIST,
+				// (Serializable) arList);
 				switch (position) {
 				case 0:
 					bundle.putSerializable(Constants.INTENT_AR_CHART_TYPE, ChartType.bar);
@@ -118,6 +119,7 @@ public class ArChartActivity extends Activity {
 		@Override
 		protected Void doInBackground(Void... params) {
 			arList = ArService.queryAr(ArSearchResultFragment.getArSearchCondition(), 0, -1);
+			MyDebug.printFromPJ("arListLen " + arList.size());
 			return null;
 
 		}

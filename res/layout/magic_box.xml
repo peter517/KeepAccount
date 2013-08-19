@@ -4,23 +4,29 @@
     android:layout_height="fill_parent"
     android:orientation="vertical" >
 
-    <TextView 
-        style="@style/TopTitleTextStyle"
-        android:id="@+id/tvTilte"
-        android:layout_marginTop="10dp"
-        android:layout_width="wrap_content"
-        android:layout_centerHorizontal="true"
+    <RelativeLayout
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="@string/chooseChart"/>
-    
-     <TextView 
-        style="@style/TopTitleTextStyle"
-        android:id="@+id/tvTilte1"
-        android:layout_below="@+id/tvTilte"
-        android:layout_marginTop="10dp"
-        android:layout_width="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_height="wrap_content"
-        android:text="@string/chooseChart"/>
+        android:layout_marginTop="60dp"
+        android:orientation="vertical" >
+
+        <ImageView
+            android:id="@+id/ivMagicBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/logo_magic_box" />
+        
+        	<Button  
+        	    android:layout_below="@+id/ivMagicBox"
+        	    android:layout_centerHorizontal="true"
+        	    android:layout_marginTop="30dp"
+                android:id="@+id/btOpenMagicBox"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/btn_selector_xml"
+                android:text="@string/startMagicBox"
+                />
+    </RelativeLayout>
 
 </RelativeLayout>

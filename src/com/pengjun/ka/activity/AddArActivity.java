@@ -15,6 +15,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
 
+import com.pengjun.ka.R;
 import com.pengjun.ka.db.model.AccountRecord;
 import com.pengjun.ka.db.service.ArService;
 import com.pengjun.ka.db.service.ArTypeService;
@@ -23,7 +24,6 @@ import com.pengjun.ka.utils.ComponentUtils;
 import com.pengjun.ka.utils.Constants;
 import com.pengjun.ka.utils.MathUtils;
 import com.pengjun.ka.utils.TimeUtils;
-import com.pengjun.keepaccounts.R;
 
 public class AddArActivity extends Activity {
 
@@ -93,6 +93,11 @@ public class AddArActivity extends Activity {
 						ComponentUtils.createAlertDialog(AddArActivity.this, "输入金额无效").show();
 						return;
 					}
+					if (account >= 10000000) {
+						etAccount.setText("");
+						ComponentUtils.createAlertDialog(AddArActivity.this, "单笔记账金额不能超过1千万").show();
+						return;
+					}
 
 					// add or update
 					if (ar == null) {
@@ -157,7 +162,7 @@ public class AddArActivity extends Activity {
 	private void getArFromView(AccountRecord ar) {
 		ar.setAccount(MathUtils.formatFloat(Float.valueOf(etAccount.getText().toString())));
 		ar.setTypeName(spArTypeName.getSelectedItem().toString());
-		ar.setCreateDate(TimeUtils.DatePicker2FormatStr(dpCreateDate));
+		ar.setCreateDate(ComponentUtils.DatePicker2FormatStr(dpCreateDate));
 		ar.setComment(etComment.getText().toString());
 		ar.setUpdateTime(TimeUtils.getCurTimeStr());
 	}

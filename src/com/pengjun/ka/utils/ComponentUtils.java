@@ -4,8 +4,9 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.widget.DatePicker;
 
-import com.pengjun.keepaccounts.R;
+import com.pengjun.ka.R;
 
 public class ComponentUtils {
 
@@ -19,6 +20,10 @@ public class ComponentUtils {
 			}
 		});
 		return builder.create();
+	}
+
+	public static String DatePicker2FormatStr(DatePicker dp) {
+		return String.format(TimeUtils.DATE_FORMT, dp.getYear(), dp.getMonth() + 1, dp.getDayOfMonth());
 	}
 
 }

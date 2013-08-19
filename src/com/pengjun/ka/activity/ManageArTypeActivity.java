@@ -28,13 +28,13 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.pengjun.ka.R;
 import com.pengjun.ka.db.model.ArType;
 import com.pengjun.ka.db.service.ArTypeService;
 import com.pengjun.ka.utils.ComponentUtils;
 import com.pengjun.ka.utils.Constants;
 import com.pengjun.ka.utils.MyDebug;
 import com.pengjun.ka.utils.ResManageUtils;
-import com.pengjun.keepaccounts.R;
 
 public class ManageArTypeActivity extends Activity {
 
@@ -142,7 +142,7 @@ public class ManageArTypeActivity extends Activity {
 				}
 				Button btNegative = dialog.getButton(DialogInterface.BUTTON_NEGATIVE);
 				if (btNegative != null) {
-					btNegative.setBackgroundResource(R.drawable.btn_normal);
+					btNegative.setBackgroundResource(R.drawable.btn_pressed);
 				}
 
 				return true;

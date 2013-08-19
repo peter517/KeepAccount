@@ -6,8 +6,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Random;
 
-import android.widget.DatePicker;
-
 public class TimeUtils {
 
 	public static final String TIME_FORMT = "%d-%02d-%02d-%02d-%02d-%02d";
@@ -16,6 +14,10 @@ public class TimeUtils {
 	public static final String TO_YERA_MONTH_FORMT = "yyyy-MM";
 	public static final String TO_YERA_FORMT = "yyyy";
 	public static final String TIME_SEPARATOR = "-";
+
+	private static DateFormat dateFormat = new SimpleDateFormat(TO_DATE_FORMT);
+	private static DateFormat yearMonthFormat = new SimpleDateFormat(TO_YERA_MONTH_FORMT);
+	private static DateFormat yearFormat = new SimpleDateFormat(TO_YERA_FORMT);
 
 	private static Random random = new Random();
 	static {
@@ -27,9 +29,8 @@ public class TimeUtils {
 	// }
 
 	public static Date string2Date(String dateStr) {
-		DateFormat format = new SimpleDateFormat(TO_DATE_FORMT);
 		try {
-			return format.parse(dateStr);
+			return dateFormat.parse(dateStr);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -37,9 +38,9 @@ public class TimeUtils {
 	}
 
 	public static Date string2YearMonth(String dateStr) {
-		DateFormat format = new SimpleDateFormat(TO_YERA_MONTH_FORMT);
+		yearMonthFormat = new SimpleDateFormat(TO_YERA_MONTH_FORMT);
 		try {
-			return format.parse(dateStr);
+			return yearMonthFormat.parse(dateStr);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -47,9 +48,8 @@ public class TimeUtils {
 	}
 
 	public static Date string2Year(String dateStr) {
-		DateFormat format = new SimpleDateFormat(TO_YERA_FORMT);
 		try {
-			return format.parse(dateStr);
+			return yearFormat.parse(dateStr);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -120,10 +120,6 @@ public class TimeUtils {
 	public static String getYearFromDateStr(String dateStr) {
 		String[] date = String2DateStrArr(dateStr);
 		return date[0];
-	}
-
-	public static String DatePicker2FormatStr(DatePicker dp) {
-		return String.format(DATE_FORMT, dp.getYear(), dp.getMonth() + 1, dp.getDayOfMonth());
 	}
 
 }

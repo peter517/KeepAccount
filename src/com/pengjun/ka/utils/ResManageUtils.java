@@ -11,7 +11,7 @@ import android.net.NetworkInfo;
 import android.os.Environment;
 import android.os.StatFs;
 
-import com.pengjun.keepaccounts.R;
+import com.pengjun.ka.R;
 
 public class ResManageUtils {
 

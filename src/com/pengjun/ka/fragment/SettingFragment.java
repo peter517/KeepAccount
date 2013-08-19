@@ -9,9 +9,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 
+import com.pengjun.ka.R;
 import com.pengjun.ka.activity.ArBackupActivity;
 import com.pengjun.ka.activity.ManageArTypeActivity;
-import com.pengjun.keepaccounts.R;
 
 public class SettingFragment extends Fragment {
 

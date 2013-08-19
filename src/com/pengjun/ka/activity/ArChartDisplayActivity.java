@@ -13,13 +13,13 @@ import android.view.Window;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 
+import com.pengjun.ka.R;
 import com.pengjun.ka.chart.BaseChart;
 import com.pengjun.ka.chart.ChartFactory;
 import com.pengjun.ka.db.model.AccountRecord;
 import com.pengjun.ka.utils.Constants;
 import com.pengjun.ka.utils.Constants.ChartType;
 import com.pengjun.ka.utils.MyDebug;
-import com.pengjun.keepaccounts.R;
 
 public class ArChartDisplayActivity extends Activity {
 
@@ -51,7 +51,7 @@ public class ArChartDisplayActivity extends Activity {
 		// getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 		// WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-		arList = (List<AccountRecord>) getIntent().getExtras().getSerializable(Constants.INTENT_AR_LIST);
+		arList = ArChartActivity.arList;
 		chartType = (ChartType) getIntent().getExtras().getSerializable(Constants.INTENT_AR_CHART_TYPE);
 
 		setContentView(R.layout.ar_chart_display);

@@ -26,6 +26,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.pengjun.ka.R;
 import com.pengjun.ka.activity.AddArActivity;
 import com.pengjun.ka.db.model.AccountRecord;
 import com.pengjun.ka.db.model.ArSearchCondition;
@@ -33,7 +34,6 @@ import com.pengjun.ka.db.service.ArService;
 import com.pengjun.ka.utils.Constants;
 import com.pengjun.ka.utils.MyDebug;
 import com.pengjun.ka.utils.ResManageUtils;
-import com.pengjun.keepaccounts.R;
 
 public class ArSearchResultFragment extends Fragment {
 
@@ -182,7 +182,7 @@ public class ArSearchResultFragment extends Fragment {
 				}
 				Button btNegative = dialog.getButton(DialogInterface.BUTTON_NEGATIVE);
 				if (btNegative != null) {
-					btNegative.setBackgroundResource(R.drawable.btn_normal);
+					btNegative.setBackgroundResource(R.drawable.btn_pressed);
 				}
 
 				return true;

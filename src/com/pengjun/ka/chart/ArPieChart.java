@@ -13,6 +13,7 @@ import android.view.View;
 
 import com.pengjun.ka.db.model.AccountRecord;
 import com.pengjun.ka.utils.MathUtils;
+import com.pengjun.ka.utils.MyDebug;
 import com.pengjun.ka.utils.ResManageUtils;
 
 public class ArPieChart extends BaseChart {
@@ -24,17 +25,20 @@ public class ArPieChart extends BaseChart {
 	public void compute(List<AccountRecord> arList) {
 
 		// compute type distribute
+		long time = System.currentTimeMillis();
 		Map<String, Double> map = new HashMap<String, Double>();
+		Double count = null;
 		for (AccountRecord ar : arList) {
-			Double count = map.get(ar.getTypeName());
+			count = map.get(ar.getTypeName());
 			if (count == null) {
 				count = 0.0;
 			}
 			map.put(ar.getTypeName(), ++count);
 		}
-
+		MyDebug.printFromPJ("map " + (System.currentTimeMillis() - time));
 		series = new CategorySeries("");
 
+		time = System.currentTimeMillis();
 		int[] colorArr = new int[map.size()];
 		int k = 0;
 		double total = 0;
@@ -51,13 +55,14 @@ public class ArPieChart extends BaseChart {
 		}
 
 		renderer = createCategoryRenderer("各类花费总额分布比例", colorArr);
-
+		MyDebug.printFromPJ("series " + (System.currentTimeMillis() - time));
 	}
 
 	@Override
 	public View getView(Context context) {
-
+		long time = System.currentTimeMillis();
 		View view = ChartFactory.getPieChartView(context, series, renderer);
+		MyDebug.printFromPJ("getPieChartView " + (System.currentTimeMillis() - time));
 		return view;
 	}
 

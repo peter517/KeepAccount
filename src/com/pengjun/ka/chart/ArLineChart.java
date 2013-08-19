@@ -36,12 +36,13 @@ public class ArLineChart extends BaseChart {
 
 		// compute each date account
 		Map<Date, Double> map = new TreeMap<Date, Double>();
+		Double count = null;
 		switch (chartType) {
 		case line_day:
 			for (AccountRecord ar : arList) {
 
 				Date date = TimeUtils.string2Date(ar.getCreateDate());
-				Double count = map.get(date);
+				count = map.get(date);
 				if (count == null) {
 					count = 0.0;
 				}
@@ -54,7 +55,7 @@ public class ArLineChart extends BaseChart {
 
 				Date yearMonth = TimeUtils.string2YearMonth(TimeUtils.getYearMouthFromDateStr(ar
 						.getCreateDate()));
-				Double count = map.get(yearMonth);
+				count = map.get(yearMonth);
 				if (count == null) {
 					count = 0.0;
 				}
@@ -66,7 +67,7 @@ public class ArLineChart extends BaseChart {
 			for (AccountRecord ar : arList) {
 
 				Date year = TimeUtils.string2Year(TimeUtils.getYearFromDateStr(ar.getCreateDate()));
-				Double count = map.get(year);
+				count = map.get(year);
 				if (count == null) {
 					count = 0.0;
 				}

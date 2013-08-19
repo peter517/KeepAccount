@@ -10,6 +10,7 @@ import android.view.Window;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.pengjun.ka.R;
 import com.pengjun.ka.db.service.ArTypeService;
 import com.pengjun.ka.fragment.ArFragment;
 import com.pengjun.ka.fragment.ArSearchFragment;
@@ -17,7 +18,6 @@ import com.pengjun.ka.fragment.FragmentDirector;
 import com.pengjun.ka.fragment.MagicBoxFragment;
 import com.pengjun.ka.fragment.SettingFragment;
 import com.pengjun.ka.utils.Constants;
-import com.pengjun.keepaccounts.R;
 
 public class KaMainActivity extends FragmentActivity {
 

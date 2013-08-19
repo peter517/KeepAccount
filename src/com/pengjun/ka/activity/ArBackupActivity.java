@@ -6,6 +6,7 @@ import java.util.List;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.AsyncTask;
@@ -21,23 +22,23 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageButton;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.pengjun.ka.R;
 import com.pengjun.ka.db.service.BackupService;
 import com.pengjun.ka.fragment.ArFragment;
 import com.pengjun.ka.utils.ComponentUtils;
 import com.pengjun.ka.utils.Constants;
 import com.pengjun.ka.utils.FileUtils;
 import com.pengjun.ka.utils.TimeUtils;
-import com.pengjun.keepaccounts.R;
 
 public class ArBackupActivity extends Activity {
 
 	private GridView gvBackup;
 	private ImageButton ibAddBackup;
 	private ImageButton ibRestore;
-	private ProgressBar pbLoad;
+	// private ProgressBar pbLoad;
+	private ProgressDialog pdLoad;
 
 	private List<String> backupDateStrList = new ArrayList<String>();
 	private BackupAdapter backupAdapter;
@@ -56,8 +57,6 @@ public class ArBackupActivity extends Activity {
 
 		FileUtils.createDir(Constants.BACK_UP_ROOT);
 		backupDateStrList = FileUtils.getFileNameList(new File(Constants.BACK_UP_ROOT));
-
-		pbLoad = (ProgressBar) findViewById(R.id.pbLoad);
 
 		ibAddBackup = (ImageButton) findViewById(R.id.ibAddBackup);
 		ibAddBackup.setOnClickListener(new View.OnClickListener() {
@@ -95,12 +94,13 @@ public class ArBackupActivity extends Activity {
 					}
 					Button btNegative = dialog.getButton(DialogInterface.BUTTON_NEGATIVE);
 					if (btNegative != null) {
-						btNegative.setBackgroundResource(R.drawable.btn_normal);
+						btNegative.setBackgroundResource(R.drawable.btn_pressed);
 					}
-				} else {
-					showProgress();
-					new BackupTask().execute(curDateStr);
+					return;
 				}
+
+				showProgress();
+				new BackupTask().execute(curDateStr);
 			}
 
 		});
@@ -115,6 +115,7 @@ public class ArBackupActivity extends Activity {
 					return;
 				}
 
+				showProgress();
 				new RestoreTask().execute(backupDateStrList.get(selectPos));
 
 			}
@@ -170,7 +171,7 @@ public class ArBackupActivity extends Activity {
 				}
 				Button btNegative = dialog.getButton(DialogInterface.BUTTON_NEGATIVE);
 				if (btNegative != null) {
-					btNegative.setBackgroundResource(R.drawable.btn_normal);
+					btNegative.setBackgroundResource(R.drawable.btn_pressed);
 				}
 
 				return true;
@@ -180,12 +181,12 @@ public class ArBackupActivity extends Activity {
 	}
 
 	private void showProgress() {
-		pbLoad.setVisibility(View.VISIBLE);
+		pdLoad = ProgressDialog.show(this, "请稍等", "正在备份……");
 		gvBackup.setVisibility(View.GONE);
 	}
 
 	private void hideProgress() {
-		pbLoad.setVisibility(View.GONE);
+		pdLoad.dismiss();
 		gvBackup.setVisibility(View.VISIBLE);
 	}
 
@@ -222,8 +223,8 @@ public class ArBackupActivity extends Activity {
 		@Override
 		protected void onPostExecute(Void v) {
 
-			ComponentUtils.createAlertDialog(ArBackupActivity.this, "数据已还原至日期：" + backupDateStrList.get(selectPos))
-					.show();
+			ComponentUtils.createAlertDialog(ArBackupActivity.this,
+					"数据已还原至日期：" + backupDateStrList.get(selectPos)).show();
 
 			selectPos = GV_UNSELECTED;
 			ArFragment.newInstance().recycle();

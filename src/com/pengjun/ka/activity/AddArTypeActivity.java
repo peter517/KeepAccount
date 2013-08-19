@@ -19,13 +19,13 @@ import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
+import com.pengjun.ka.R;
 import com.pengjun.ka.db.model.ArType;
 import com.pengjun.ka.db.service.ArTypeService;
 import com.pengjun.ka.utils.ComponentUtils;
 import com.pengjun.ka.utils.Constants;
 import com.pengjun.ka.utils.ResManageUtils;
 import com.pengjun.ka.utils.TimeUtils;
-import com.pengjun.keepaccounts.R;
 
 public class AddArTypeActivity extends Activity {
 

@@ -50,8 +50,7 @@ public class GalleryFlow extends Gallery {
 	}
 
 	private int getCenterOfCoverflow() {
-		return (getWidth() - getPaddingLeft() - getPaddingRight()) / 2
-				+ getPaddingLeft();
+		return (getWidth() - getPaddingLeft() - getPaddingRight()) / 2 + getPaddingLeft();
 	}
 
 	private int getCenterOfView(View view) {
@@ -62,7 +61,6 @@ public class GalleryFlow extends Gallery {
 	protected boolean getChildStaticTransformation(View child, Transformation t) {
 		// 取得当前子view的半径值
 		final int childCenter = getCenterOfView(child);
-		System.out.println("childCenter：" + childCenter);
 		final int childWidth = child.getWidth();
 		// 旋转角度
 		int rotationAngle = 0;
@@ -76,11 +74,9 @@ public class GalleryFlow extends Gallery {
 		} else {
 			// 根据图片在gallery中的位置来计算图片的旋转角度
 			rotationAngle = (int) (((float) (mCoveflowCenter - childCenter) / childWidth) * mMaxRotationAngle);
-			System.out.println("rotationAngle:" + rotationAngle);
 			// 如果旋转角度绝对值大于最大旋转角度返回（-mMaxRotationAngle或mMaxRotationAngle;）
 			if (Math.abs(rotationAngle) > mMaxRotationAngle) {
-				rotationAngle = (rotationAngle < 0) ? -mMaxRotationAngle
-						: mMaxRotationAngle;
+				rotationAngle = (rotationAngle < 0) ? -mMaxRotationAngle : mMaxRotationAngle;
 			}
 			transformImageBitmap((ImageView) child, t, rotationAngle);
 		}
@@ -92,8 +88,7 @@ public class GalleryFlow extends Gallery {
 		super.onSizeChanged(w, h, oldw, oldh);
 	}
 
-	private void transformImageBitmap(ImageView child, Transformation t,
-			int rotationAngle) {
+	private void transformImageBitmap(ImageView child, Transformation t, int rotationAngle) {
 		// 对效果进行保存
 		mCamera.save();
 		final Matrix imageMatrix = t.getMatrix();
@@ -127,8 +122,7 @@ public class GalleryFlow extends Gallery {
 	}
 
 	@Override
-	public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX,
-			float velocityY) {
+	public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
 		int keyCode;
 		if (isScrollingLeft(e1, e2)) {
 			keyCode = KeyEvent.KEYCODE_DPAD_LEFT;

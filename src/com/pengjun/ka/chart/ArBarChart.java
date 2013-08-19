@@ -1,8 +1,8 @@
 package com.pengjun.ka.chart;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.TreeMap;
 
 import org.achartengine.ChartFactory;
 import org.achartengine.chart.BarChart.Type;
@@ -29,9 +29,10 @@ public class ArBarChart extends BaseChart {
 		titles = "各类型花费总额";
 
 		// compute each date account
-		Map<String, Double> map = new TreeMap<String, Double>();
+		Map<String, Double> map = new HashMap<String, Double>();
+		Double count = null;
 		for (AccountRecord ar : arList) {
-			Double count = map.get(ar.getTypeName());
+			count = map.get(ar.getTypeName());
 			if (count == null) {
 				count = 0.0;
 			}
@@ -46,7 +47,6 @@ public class ArBarChart extends BaseChart {
 		// fill first invalid data
 		series.add(0, 0);
 		renderer.addXTextLabel(0, "");
-
 		int pointCnt = 0;
 		Double maxValue = Double.MIN_VALUE;
 		Double minValue = Double.MAX_VALUE;
