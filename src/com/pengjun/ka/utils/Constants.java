@@ -66,7 +66,7 @@ public class Constants {
 
 		public static ChartType getTypeFromString(String typeStr) {
 			for (ChartType type : ChartType.values()) {
-				if (type.toString().equals(typeStr))
+				if (type.name().equals(typeStr))
 					return type;
 			}
 			return null;

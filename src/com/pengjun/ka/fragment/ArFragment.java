@@ -146,7 +146,7 @@ public class ArFragment extends Fragment {
 					public void onClick(DialogInterface dialog, int whichButton) {
 						AccountRecord ar = arList.get(selectPos);
 						ArService.delete(ar);
-						updateArListView(false);
+						updateArListViewAsync(false);
 					}
 				});
 				builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
@@ -171,7 +171,9 @@ public class ArFragment extends Fragment {
 			}
 		});
 
-		updateArListView(false);
+		if (arList.size() == 0) {
+			updateArListViewAsync(false);
+		}
 
 		return view;
 	}
@@ -188,12 +190,12 @@ public class ArFragment extends Fragment {
 	}
 
 	// fill listview
-	public void updateArListView(Boolean isSetListViewToTop) {
+	public void updateArListViewAsync(Boolean isSetListViewToTop) {
 		showProgress();
 		new LoadArTask().execute(isSetListViewToTop);
 	}
 
-	public void updateArListView() {
+	public void updateArListViewSync() {
 
 		arList = ArService.queryLimitRows(0, Math.max(LIMIT_ROW_TOTAL, arList.size()));
 

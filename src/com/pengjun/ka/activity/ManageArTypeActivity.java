@@ -124,7 +124,7 @@ public class ManageArTypeActivity extends Activity {
 					public void onClick(DialogInterface dialog, int whichButton) {
 						ArType ar = arTypeList.get(selectPos);
 						ArTypeService.delete(ar);
-						updateArTypeLv(false);
+						updateArTypeListAsync(false);
 					}
 				});
 				builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
@@ -151,7 +151,7 @@ public class ManageArTypeActivity extends Activity {
 
 		pbLoad = (ProgressBar) findViewById(R.id.pbLoad);
 
-		updateArTypeLv(false);
+		updateArTypeListAsync(false);
 	}
 
 	@Override
@@ -179,12 +179,12 @@ public class ManageArTypeActivity extends Activity {
 	}
 
 	// fill listview
-	public void updateArTypeLv(Boolean isSetListViewToTop) {
+	public void updateArTypeListAsync(Boolean isSetListViewToTop) {
 		showProgress();
 		new LoadArTypeTask().execute(isSetListViewToTop);
 	}
 
-	public void updateArTypeLv() {
+	public void updateArTypeListSync() {
 
 		arTypeList = ArTypeService.queryAllByUpdate();
 
@@ -206,7 +206,7 @@ public class ManageArTypeActivity extends Activity {
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (requestCode == Constants.CB_ADD_AR_TYPE) {
 			if (resultCode == RESULT_OK) {
-				updateArTypeLv();
+				updateArTypeListSync();
 			}
 		}
 		super.onActivityResult(requestCode, resultCode, data);

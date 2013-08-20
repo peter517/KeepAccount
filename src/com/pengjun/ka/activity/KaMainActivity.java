@@ -3,6 +3,7 @@ package com.pengjun.ka.activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -22,7 +23,7 @@ import com.pengjun.ka.utils.Constants;
 public class KaMainActivity extends FragmentActivity {
 
 	ImageButton ibAddAccount;
-	ImageButton ibSetListViewToTop;
+	ImageButton ibMenuTopLeft;
 
 	ImageButton ibHome;
 	ImageButton ibSearch;
@@ -30,6 +31,12 @@ public class KaMainActivity extends FragmentActivity {
 	ImageButton ibSettings;
 
 	TextView tvTopTitle;
+
+	State curState = State.home;
+
+	enum State {
+		home, search, magicbox, setting
+	}
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -77,14 +84,55 @@ public class KaMainActivity extends FragmentActivity {
 
 		tvTopTitle = (TextView) findViewById(R.id.tvTopTitle);
 
-		ibSetListViewToTop = (ImageButton) findViewById(R.id.ibSetListViewToTop);
-		ibSetListViewToTop.setOnClickListener(new OnClickListener() {
+		ibMenuTopLeft = (ImageButton) findViewById(R.id.ibMenuTopLeft);
+		ibMenuTopLeft.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				ArFragment.newInstance().setListViewToTop();
-				ArSearchFragment.newInstance().clearAll();
+				switch (curState) {
+				case home:
+					ArFragment.newInstance().setListViewToTop();
+					break;
+				case search:
+					ArSearchFragment.newInstance().clearAll();
+					break;
+				}
+
 			}
 		});
+	}
+
+	private void stateChange(State state, Fragment fragment) {
+		switch (state) {
+		case home:
+			ibSearch.setBackgroundResource(R.drawable.search_normal);
+
+			ibAddAccount.setVisibility(View.VISIBLE);
+			ibMenuTopLeft.setBackgroundResource(R.drawable.menu_btn_to_top);
+			ibMenuTopLeft.setVisibility(View.VISIBLE);
+			tvTopTitle.setText(R.string.recentArs);
+			break;
+		case search:
+			ibSearch.setBackgroundResource(R.drawable.search_focused);
+			ibAddAccount.setVisibility(View.GONE);
+			ibMenuTopLeft.setVisibility(View.VISIBLE);
+			ibMenuTopLeft.setBackgroundResource(R.drawable.menu_btn_clear);
+			tvTopTitle.setText(R.string.searchAr);
+			break;
+		case magicbox:
+			ibSearch.setBackgroundResource(R.drawable.search_normal);
+
+			ibAddAccount.setVisibility(View.GONE);
+			ibMenuTopLeft.setVisibility(View.GONE);
+			tvTopTitle.setText(R.string.magicBox);
+			break;
+		case setting:
+
+			ibSearch.setBackgroundResource(R.drawable.search_normal);
+			tvTopTitle.setText(R.string.systemSetting);
+			break;
+		}
+		FragmentDirector.replaceFragment(KaMainActivity.this, R.id.mainConent, fragment);
+
 	}
 
 	private void createBottomBar() {
@@ -95,15 +143,8 @@ public class KaMainActivity extends FragmentActivity {
 			@Override
 			public void onFocusChange(View v, boolean hasFocus) {
 				if (hasFocus) {
-					FragmentDirector.replaceFragment(KaMainActivity.this, R.id.mainConent,
-							ArFragment.newInstance());
-
-					ibSearch.setBackgroundResource(R.drawable.search_normal);
-
-					ibAddAccount.setVisibility(View.VISIBLE);
-					ibSetListViewToTop.setBackgroundResource(R.drawable.menu_btn_to_top);
-					ibSetListViewToTop.setVisibility(View.VISIBLE);
-					tvTopTitle.setText(R.string.recentArs);
+					curState = State.home;
+					stateChange(curState, ArFragment.newInstance());
 				}
 			}
 		});
@@ -117,17 +158,8 @@ public class KaMainActivity extends FragmentActivity {
 			@Override
 			public void onFocusChange(View v, boolean hasFocus) {
 				if (hasFocus) {
-					FragmentDirector.replaceFragment(KaMainActivity.this, R.id.mainConent,
-							ArSearchFragment.newInstance());
-
-					ibSearch.setBackgroundResource(R.drawable.search_focused);
-					ibAddAccount.setVisibility(View.GONE);
-					ibSetListViewToTop.setVisibility(View.VISIBLE);
-					ibSetListViewToTop.setBackgroundResource(R.drawable.menu_btn_clear);
-					tvTopTitle.setText(R.string.searchAr);
-
-				} else {
-
+					curState = State.search;
+					stateChange(curState, ArSearchFragment.newInstance());
 				}
 			}
 		});
@@ -138,14 +170,8 @@ public class KaMainActivity extends FragmentActivity {
 			@Override
 			public void onFocusChange(View v, boolean hasFocus) {
 				if (hasFocus) {
-					FragmentDirector.replaceFragment(KaMainActivity.this, R.id.mainConent,
-							MagicBoxFragment.newInstance());
-
-					ibSearch.setBackgroundResource(R.drawable.search_normal);
-
-					ibAddAccount.setVisibility(View.GONE);
-					ibSetListViewToTop.setVisibility(View.GONE);
-					tvTopTitle.setText(R.string.magicBox);
+					curState = State.magicbox;
+					stateChange(curState, MagicBoxFragment.newInstance());
 				}
 
 			}
@@ -157,11 +183,8 @@ public class KaMainActivity extends FragmentActivity {
 			@Override
 			public void onFocusChange(View v, boolean hasFocus) {
 				if (hasFocus) {
-
-					ibSearch.setBackgroundResource(R.drawable.search_normal);
-					tvTopTitle.setText(R.string.systemSetting);
-					FragmentDirector.replaceFragment(KaMainActivity.this, R.id.mainConent,
-							SettingFragment.newInstance());
+					curState = State.setting;
+					stateChange(curState, SettingFragment.newInstance());
 
 				}
 			}
@@ -173,7 +196,7 @@ public class KaMainActivity extends FragmentActivity {
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (requestCode == Constants.CB_ADD_AR) {
 			if (resultCode == RESULT_OK) {
-				ArFragment.newInstance().updateArListView();
+				ArFragment.newInstance().updateArListViewSync();
 			}
 		}
 		super.onActivityResult(requestCode, resultCode, data);

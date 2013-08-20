@@ -174,8 +174,8 @@ public class ArService {
 
 			if (limtRows != -1) {
 				queryBuilder.offset(offset).limit(limtRows);
+				queryBuilder.orderBy(AccountRecord.COL_UPDATE_TIME, false);
 			}
-			queryBuilder.orderBy(AccountRecord.COL_UPDATE_TIME, false);
 
 			return dao.query(queryBuilder.prepare());
 		} catch (SQLException e) {

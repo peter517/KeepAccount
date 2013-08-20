@@ -128,6 +128,7 @@ public class ArLineChart extends BaseChart {
 			renderer.setXAxisMin(firstDate.getTime() / 2);
 			renderer.setXAxisMax(lastDate.getTime() * 2);
 		}
+
 		renderer.setYAxisMin(minValue * 0.5f);
 		renderer.setYAxisMax(maxValue * 1.1f);
 		if (pointCnt <= DISPALY_CHART_VALUE_POINT_MAX_NUM) {

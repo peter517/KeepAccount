@@ -70,8 +70,6 @@ public class ArChartActivity extends Activity {
 
 				Intent intent = new Intent(ArChartActivity.this, ArChartDisplayActivity.class);
 				Bundle bundle = new Bundle();
-				// bundle.putSerializable(Constants.INTENT_AR_LIST,
-				// (Serializable) arList);
 				switch (position) {
 				case 0:
 					bundle.putSerializable(Constants.INTENT_AR_CHART_TYPE, ChartType.bar);
@@ -96,8 +94,10 @@ public class ArChartActivity extends Activity {
 		});
 		gfChart.setSelection(1);
 
-		showProgress();
-		new LoadArTask().execute();
+		if (arList.size() == 0) {
+			showProgress();
+			new LoadArTask().execute();
+		}
 
 	}
 
@@ -112,6 +112,10 @@ public class ArChartActivity extends Activity {
 		pbLoad.setVisibility(View.GONE);
 		gfChart.setVisibility(View.VISIBLE);
 		tvTilte.setVisibility(View.VISIBLE);
+	}
+
+	public static void resetArList() {
+		arList = new ArrayList<AccountRecord>();
 	}
 
 	class LoadArTask extends AsyncTask<Void, Void, Void> {

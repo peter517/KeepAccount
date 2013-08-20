@@ -59,7 +59,7 @@ public class ArSearchResultActivity extends FragmentActivity {
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (requestCode == Constants.CB_ADD_AR) {
 			if (resultCode == RESULT_OK) {
-				ArSearchResultFragment.newInstance(null).updateArListView();
+				ArSearchResultFragment.newInstance(null).updateArListViewSync();
 			}
 		}
 		super.onActivityResult(requestCode, resultCode, data);

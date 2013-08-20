@@ -28,6 +28,7 @@ import android.widget.Toast;
 
 import com.pengjun.ka.R;
 import com.pengjun.ka.activity.AddArActivity;
+import com.pengjun.ka.activity.ArChartActivity;
 import com.pengjun.ka.db.model.AccountRecord;
 import com.pengjun.ka.db.model.ArSearchCondition;
 import com.pengjun.ka.db.service.ArService;
@@ -164,7 +165,8 @@ public class ArSearchResultFragment extends Fragment {
 					public void onClick(DialogInterface dialog, int whichButton) {
 						AccountRecord ar = arList.get(selectPos);
 						ArService.delete(ar);
-						updateArListView(false);
+						ArChartActivity.resetArList();
+						updateArListViewAsync(false);
 					}
 				});
 				builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
@@ -189,7 +191,8 @@ public class ArSearchResultFragment extends Fragment {
 			}
 		});
 
-		updateArListView(false);
+		ArChartActivity.resetArList();
+		updateArListViewAsync(false);
 
 		return view;
 	}
@@ -206,12 +209,12 @@ public class ArSearchResultFragment extends Fragment {
 	}
 
 	// fill listview
-	public void updateArListView(Boolean isSetListViewToTop) {
+	public void updateArListViewAsync(Boolean isSetListViewToTop) {
 		showProgress();
 		new LoadArTask().execute(isSetListViewToTop);
 	}
 
-	public void updateArListView() {
+	public void updateArListViewSync() {
 
 		arList = ArService.queryLimitRows(0, Math.max(LIMIT_ROW_TOTAL, arList.size()));
 
@@ -223,6 +226,7 @@ public class ArSearchResultFragment extends Fragment {
 
 		arAdapter.notifyDataSetChanged();
 		ArSearchResultFragment.this.setListViewToTop();
+		ArChartActivity.resetArList();
 	}
 
 	public void loadMoreArListView() {

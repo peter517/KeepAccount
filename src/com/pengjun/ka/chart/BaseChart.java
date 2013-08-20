@@ -172,6 +172,7 @@ public abstract class BaseChart {
 		renderer.setZoomEnabled(true);
 		renderer.setZoomButtonsVisible(true);
 		((XYSeriesRenderer) renderer.getSeriesRendererAt(0)).setFillPoints(true);
+		((XYSeriesRenderer) renderer.getSeriesRendererAt(0)).setLineWidth(1.5f);
 
 		return renderer;
 	}

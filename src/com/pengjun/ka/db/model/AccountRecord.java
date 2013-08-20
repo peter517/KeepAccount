@@ -1,6 +1,8 @@
 package com.pengjun.ka.db.model;
 
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
 
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
@@ -10,6 +12,8 @@ import com.pengjun.ka.db.service.ArTypeService;
 public class AccountRecord implements Serializable {
 
 	private static final long serialVersionUID = -4580617869739349892L;
+
+	private static Map<Integer, String> id2TypeMap = new HashMap<Integer, String>();
 
 	public static final String COL_ID = "id";
 	public static final String COL_ACOUNT = "account";
@@ -68,11 +72,13 @@ public class AccountRecord implements Serializable {
 		this.account = acount;
 	}
 
-	private String typeName;
-
 	public String getTypeName() {
+		// typeId is increasing and unique
+		// even typeName is deleted, the typeId could not reused
+		String typeName = id2TypeMap.get(typeId);
 		if (typeName == null) {
 			typeName = ArTypeService.getArTpyeNameById(typeId);
+			id2TypeMap.put(typeId, typeName);
 		}
 		return typeName;
 	}
