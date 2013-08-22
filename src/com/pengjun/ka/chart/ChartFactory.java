@@ -7,16 +7,16 @@ public class ChartFactory {
 	public static BaseChart createChart(ChartType chartType) {
 
 		switch (chartType) {
-		case bar:
+		case Bar:
 			return new ArBarChart();
-		case pie:
+		case Pie:
 			return new ArPieChart();
-		case line_day:
-			return new ArLineChart(ChartType.line_day);
-		case line_mouth:
-			return new ArLineChart(ChartType.line_mouth);
-		case line_year:
-			return new ArLineChart(ChartType.line_year);
+		case LineDay:
+			return new ArLineChart(ChartType.LineDay);
+		case LineMonth:
+			return new ArLineChart(ChartType.LineMonth);
+		case LineYear:
+			return new ArLineChart(ChartType.LineYear);
 		}
 		return null;
 	}

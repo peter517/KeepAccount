@@ -1,0 +1,20 @@
+package com.pengjun.ka.protobuf;
+option java_package = "com.pengjun.ka.protobuf";
+option java_outer_classname = "KaProtocol";
+
+message ArProtocol {
+  required int32 id = 1;
+  required float account = 2;      
+  required int32 typeId = 3;
+  required string createDate = 4;
+  optional string comment = 5;
+  required string updateTime = 6;
+}
+
+message ArTpyeProtocol {
+  required int32 id = 1;
+  required string typeName = 2;
+  required string imgResName = 3;
+  required string createDate = 4;
+  required string updateTime = 5;
+}

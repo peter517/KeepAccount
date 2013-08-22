@@ -271,7 +271,6 @@ public class ManageArTypeActivity extends Activity {
 
 				convertView = inflater.inflate(R.layout.ar_type_listview_item, null);
 
-				holder.arSum = (TextView) convertView.findViewById(R.id.tvArSum);
 				holder.ivType = (ImageView) convertView.findViewById(R.id.ivType);
 				holder.createDate = (TextView) convertView.findViewById(R.id.tvCreateTime);
 				holder.tvType = (TextView) convertView.findViewById(R.id.tvType);
@@ -282,7 +281,6 @@ public class ManageArTypeActivity extends Activity {
 			}
 
 			ArType arType = arTypeList.get(position);
-			holder.arSum.setText("记账数：" + String.valueOf(arType.getArSum(arType.getId())));
 			holder.ivType.setImageResource(ResManageUtils.getImgResIdByName(arType.getImgResName()));
 			holder.tvType.setText(arType.getTypeName());
 			holder.createDate.setText(arType.getCreateDate());
@@ -291,7 +289,6 @@ public class ManageArTypeActivity extends Activity {
 		}
 
 		private class AccountHolder {
-			public TextView arSum;
 			public ImageView ivType;
 			public TextView tvType;
 			public TextView createDate;

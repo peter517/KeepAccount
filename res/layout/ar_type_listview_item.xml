@@ -26,13 +26,6 @@
         android:layout_below="@+id/tvType"
         android:layout_toRightOf="@+id/ivType" >
 
-        <TextView
-            style="@style/ArTextStyle"
-             android:id="@+id/tvArSum"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true" >
-        </TextView>
 
         <TextView
             style="@style/ArTextStyle"

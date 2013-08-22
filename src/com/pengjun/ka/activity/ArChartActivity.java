@@ -72,19 +72,19 @@ public class ArChartActivity extends Activity {
 				Bundle bundle = new Bundle();
 				switch (position) {
 				case 0:
-					bundle.putSerializable(Constants.INTENT_AR_CHART_TYPE, ChartType.bar);
+					bundle.putSerializable(Constants.INTENT_AR_CHART_TYPE, ChartType.Bar);
 					break;
 				case 1:
-					bundle.putSerializable(Constants.INTENT_AR_CHART_TYPE, ChartType.pie);
+					bundle.putSerializable(Constants.INTENT_AR_CHART_TYPE, ChartType.Pie);
 					break;
 				case 2:
-					bundle.putSerializable(Constants.INTENT_AR_CHART_TYPE, ChartType.line_day);
+					bundle.putSerializable(Constants.INTENT_AR_CHART_TYPE, ChartType.LineDay);
 					break;
 				case 3:
-					bundle.putSerializable(Constants.INTENT_AR_CHART_TYPE, ChartType.line_mouth);
+					bundle.putSerializable(Constants.INTENT_AR_CHART_TYPE, ChartType.LineMonth);
 					break;
 				case 4:
-					bundle.putSerializable(Constants.INTENT_AR_CHART_TYPE, ChartType.line_year);
+					bundle.putSerializable(Constants.INTENT_AR_CHART_TYPE, ChartType.LineYear);
 					break;
 				}
 				intent.putExtras(bundle);

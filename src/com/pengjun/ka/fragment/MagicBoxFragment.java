@@ -5,13 +5,16 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.pengjun.ka.R;
 import com.pengjun.ka.component.GalleryFlow;
+import com.pengjun.ka.net.KaClient;
 
 public class MagicBoxFragment extends Fragment {
 
 	GalleryFlow gfChart;
+	Button btOpenMagicBox;
 
 	// ImageView ivMagicBox;
 	// TextView tvTilte;
@@ -35,9 +38,23 @@ public class MagicBoxFragment extends Fragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
 		View view = inflater.inflate(R.layout.magic_box, null);
+		btOpenMagicBox = (Button) view.findViewById(R.id.btOpenMagicBox);
 
-		// tvTilte = (TextView) view.findViewById(R.id.tvTilte);
-		// tvTilte1 = (TextView) view.findViewById(R.id.tvTilte1);
+		KaClient.getInstance().connect();
+		btOpenMagicBox.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				KaClient.getInstance().sendData();
+			}
+		});
 		return view;
 	}
+
+	@Override
+	public void onDestroy() {
+		KaClient.getInstance().disConnect();
+		super.onDestroy();
+	}
+
 }

@@ -38,7 +38,7 @@ public class ArLineChart extends BaseChart {
 		Map<Date, Double> map = new TreeMap<Date, Double>();
 		Double count = null;
 		switch (chartType) {
-		case line_day:
+		case LineDay:
 			for (AccountRecord ar : arList) {
 
 				Date date = TimeUtils.string2Date(ar.getCreateDate());
@@ -50,7 +50,7 @@ public class ArLineChart extends BaseChart {
 			}
 			titles = "每天花费总额曲线图";
 			break;
-		case line_mouth:
+		case LineMonth:
 			for (AccountRecord ar : arList) {
 
 				Date yearMonth = TimeUtils.string2YearMonth(TimeUtils.getYearMouthFromDateStr(ar
@@ -63,7 +63,7 @@ public class ArLineChart extends BaseChart {
 			}
 			titles = "每月花费总额曲线图";
 			break;
-		case line_year:
+		case LineYear:
 			for (AccountRecord ar : arList) {
 
 				Date year = TimeUtils.string2Year(TimeUtils.getYearFromDateStr(ar.getCreateDate()));
@@ -105,15 +105,15 @@ public class ArLineChart extends BaseChart {
 		// fill last invalid data
 
 		switch (chartType) {
-		case line_day:
+		case LineDay:
 			firstDate.setDate(firstDate.getDate() - 1);
 			lastDate.setDate(lastDate.getDate() + 1);
 			break;
-		case line_mouth:
+		case LineMonth:
 			firstDate.setMonth(firstDate.getMonth() - 1);
 			lastDate.setMonth(lastDate.getMonth() + 1);
 			break;
-		case line_year:
+		case LineYear:
 			firstDate.setYear(firstDate.getYear() - 1);
 			lastDate.setYear(lastDate.getYear() + 1);
 			break;
@@ -141,13 +141,13 @@ public class ArLineChart extends BaseChart {
 	public View getView(Context context) {
 		View view = null;
 		switch (chartType) {
-		case line_day:
+		case LineDay:
 			view = ChartFactory.getTimeChartView(context, dataset, renderer, TimeUtils.TO_DATE_FORMT);
 			break;
-		case line_mouth:
+		case LineMonth:
 			view = ChartFactory.getTimeChartView(context, dataset, renderer, TimeUtils.TO_YERA_MONTH_FORMT);
 			break;
-		case line_year:
+		case LineYear:
 			view = ChartFactory.getTimeChartView(context, dataset, renderer, TimeUtils.TO_YERA_FORMT);
 			break;
 		}

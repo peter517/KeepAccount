@@ -25,7 +25,6 @@ public class ArPieChart extends BaseChart {
 	public void compute(List<AccountRecord> arList) {
 
 		// compute type distribute
-		long time = System.currentTimeMillis();
 		Map<String, Double> map = new HashMap<String, Double>();
 		Double count = null;
 		for (AccountRecord ar : arList) {
@@ -35,10 +34,8 @@ public class ArPieChart extends BaseChart {
 			}
 			map.put(ar.getTypeName(), ++count);
 		}
-		MyDebug.printFromPJ("map " + (System.currentTimeMillis() - time));
 		series = new CategorySeries("");
 
-		time = System.currentTimeMillis();
 		int[] colorArr = new int[map.size()];
 		int k = 0;
 		double total = 0;
@@ -49,13 +46,17 @@ public class ArPieChart extends BaseChart {
 		for (Map.Entry<String, Double> entry : map.entrySet()) {
 			colorArr[k] = ResManageUtils.colors[k % ResManageUtils.colors.length];
 			// ratio of each type , keep two decimal place
-			series.add(entry.getKey() + "(" + MathUtils.formatDouble(entry.getValue() * 100 / total) + "%)",
-					entry.getValue());
+			double ratio = MathUtils.formatDouble(entry.getValue() * 100 / total);
+			if (ratio != 0) {
+				series.add(entry.getKey() + "(" + ratio + "%)", entry.getValue());
+			} else {
+				series.add(entry.getKey() + "(近似0.0%)", entry.getValue());
+			}
+
 			k++;
 		}
 
 		renderer = createCategoryRenderer("各类花费总额分布比例", colorArr);
-		MyDebug.printFromPJ("series " + (System.currentTimeMillis() - time));
 	}
 
 	@Override
