@@ -4,7 +4,7 @@ import java.util.List;
 
 public class Constants {
 
-	public static boolean IS_DEBUG = true;
+	public static boolean IS_DEBUG = false;
 
 	public static int TOAST_EXSIT_TIME = 2000;
 

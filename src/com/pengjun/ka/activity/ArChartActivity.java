@@ -33,6 +33,7 @@ import com.pengjun.ka.component.GalleryFlow;
 import com.pengjun.ka.db.model.AccountRecord;
 import com.pengjun.ka.db.service.ArService;
 import com.pengjun.ka.fragment.ArSearchResultFragment;
+import com.pengjun.ka.utils.ComponentUtils;
 import com.pengjun.ka.utils.Constants;
 import com.pengjun.ka.utils.Constants.ChartType;
 import com.pengjun.ka.utils.MyDebug;
@@ -204,7 +205,8 @@ public class ArChartActivity extends Activity {
 				ImageView imageView = new ImageView(mContext);
 				imageView.setImageBitmap(bitmapWithReflection);
 				// 设置imageView大小 ，也就是最终显示的图片大小
-				imageView.setLayoutParams(new GalleryFlow.LayoutParams(256, 256));
+				imageView.setLayoutParams(new GalleryFlow.LayoutParams(ComponentUtils.dip2px(
+						ArChartActivity.this, 128), ComponentUtils.dip2px(ArChartActivity.this, 128)));
 				// imageView.setScaleType(ScaleType.MATRIX);
 				mImages[index++] = imageView;
 			}
