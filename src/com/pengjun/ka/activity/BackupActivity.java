@@ -32,7 +32,7 @@ import com.pengjun.ka.utils.Constants;
 import com.pengjun.ka.utils.FileUtils;
 import com.pengjun.ka.utils.TimeUtils;
 
-public class ArBackupActivity extends Activity {
+public class BackupActivity extends Activity {
 
 	private GridView gvBackup;
 	private ImageButton ibAddBackup;
@@ -69,13 +69,13 @@ public class ArBackupActivity extends Activity {
 
 				curDateStr = TimeUtils.getCurDateStr();
 				if (backupDateStrList.size() != 0 && backupDateStrList.contains(TimeUtils.getCurDateStr())) {
-					AlertDialog.Builder builder = new AlertDialog.Builder(ArBackupActivity.this);
+					AlertDialog.Builder builder = new AlertDialog.Builder(BackupActivity.this);
 					builder.setIcon(R.drawable.mark_paste);
 					builder.setTitle("替换备份");
 					builder.setMessage("确定要替换日期为" + curDateStr + "的备份");
 					builder.setPositiveButton("替换", new DialogInterface.OnClickListener() {
 						public void onClick(DialogInterface dialog, int whichButton) {
-							showProgress();
+							showProgress("正在备份……");
 							new BackupTask().execute(curDateStr);
 						}
 					});
@@ -99,7 +99,7 @@ public class ArBackupActivity extends Activity {
 					return;
 				}
 
-				showProgress();
+				showProgress("正在加载……");
 				new BackupTask().execute(curDateStr);
 			}
 
@@ -111,11 +111,11 @@ public class ArBackupActivity extends Activity {
 			public void onClick(View v) {
 
 				if (selectPos == GV_UNSELECTED) {
-					ComponentUtils.createAlertDialog(ArBackupActivity.this, "请选择还原日期").show();
+					ComponentUtils.createAlertDialog(BackupActivity.this, "请选择还原日期").show();
 					return;
 				}
 
-				showProgress();
+				showProgress("正在恢复……");
 				new RestoreTask().execute(backupDateStrList.get(selectPos));
 
 			}
@@ -143,7 +143,7 @@ public class ArBackupActivity extends Activity {
 			public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
 
 				longClickPos = position;
-				AlertDialog.Builder builder = new AlertDialog.Builder(ArBackupActivity.this);
+				AlertDialog.Builder builder = new AlertDialog.Builder(BackupActivity.this);
 				builder.setIcon(R.drawable.mark_delete);
 				builder.setTitle("删除备份");
 				builder.setMessage("确定要删除日期为" + backupDateStrList.get(longClickPos) + "的备份");
@@ -151,7 +151,7 @@ public class ArBackupActivity extends Activity {
 					public void onClick(DialogInterface dialog, int whichButton) {
 
 						BackupService.deleteBackup(backupDateStrList.get(longClickPos));
-						ArBackupActivity.this.backupDateStrList = FileUtils.getFileNameList(new File(
+						BackupActivity.this.backupDateStrList = FileUtils.getFileNameList(new File(
 								Constants.BACK_UP_ROOT));
 						backupAdapter.notifyDataSetChanged();
 					}
@@ -180,7 +180,7 @@ public class ArBackupActivity extends Activity {
 
 	}
 
-	private void showProgress() {
+	private void showProgress(String info) {
 		pdLoad = ProgressDialog.show(this, "请稍等", "正在备份……");
 		gvBackup.setVisibility(View.GONE);
 	}
@@ -202,7 +202,7 @@ public class ArBackupActivity extends Activity {
 		@Override
 		protected void onPostExecute(Void v) {
 
-			ArBackupActivity.this.backupDateStrList = FileUtils.getFileNameList(new File(
+			BackupActivity.this.backupDateStrList = FileUtils.getFileNameList(new File(
 					Constants.BACK_UP_ROOT));
 			backupAdapter.notifyDataSetChanged();
 			hideProgress();
@@ -223,7 +223,7 @@ public class ArBackupActivity extends Activity {
 		@Override
 		protected void onPostExecute(Void v) {
 
-			ComponentUtils.createAlertDialog(ArBackupActivity.this,
+			ComponentUtils.createAlertDialog(BackupActivity.this,
 					"数据已还原至日期：" + backupDateStrList.get(selectPos)).show();
 
 			selectPos = GV_UNSELECTED;

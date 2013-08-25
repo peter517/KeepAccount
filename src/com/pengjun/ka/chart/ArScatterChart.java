@@ -22,6 +22,14 @@ public class ArScatterChart extends BaseChart {
 	int[] dayArr;
 
 	@Override
+	public void setZoomEnabled(boolean isZoomEnabled) {
+		if (renderer != null) {
+			renderer.setZoomEnabled(isZoomEnabled);
+		}
+
+	}
+
+	@Override
 	public void compute(List<AccountRecord> arList) {
 
 		titles = "每月消费分布图";

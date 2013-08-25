@@ -17,10 +17,10 @@ import android.os.StatFs;
 
 import com.pengjun.ka.R;
 
-public class ResManageUtils {
+public class ResourceUtils {
 
-	public static int[] colors = new int[] { Color.BLUE, Color.GREEN, Color.MAGENTA, Color.YELLOW,
-			Color.CYAN, Color.BLACK, Color.DKGRAY, Color.GRAY, Color.LTGRAY, Color.RED, Color.WHITE };
+	public static int[] colors = new int[] { Color.BLUE, Color.GREEN, Color.MAGENTA, Color.CYAN, Color.BLACK,
+			Color.DKGRAY, Color.GRAY, Color.LTGRAY, Color.RED, Color.WHITE };
 	// res
 	public static final String RES_IMAGE_PREFIX = "type";
 
@@ -96,5 +96,13 @@ public class ResManageUtils {
 		} catch (SocketException ex) {
 		}
 		return localIPs;
+	}
+
+	public static boolean hasExternalStorage() {
+		String state = android.os.Environment.getExternalStorageState();
+		if (android.os.Environment.MEDIA_MOUNTED.equals(state)) {
+			return true;
+		}
+		return false;
 	}
 }

@@ -4,11 +4,14 @@ import java.util.List;
 
 public class Constants {
 
+	public static boolean IS_DEBUG = true;
+
 	public static int TOAST_EXSIT_TIME = 2000;
 
 	// init Ar Type
 	public enum InitArType {
-		type_eat("吃饭"), type_play("娱乐"), type_dress("衣服"), type_car("交通"), type_other("其他");
+		type_eat("餐饮"), type_play("文化娱乐"), type_dress("服饰美容"), type_car("交通"), type_money("人情来往"), type_other(
+				"其他");
 
 		String typename;
 

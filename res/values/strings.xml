@@ -1,49 +1,56 @@
 <resources>
 
     <string name="app_name">KeepAccount</string>
-    
+
+    <!-- Common -->
     <string name="ok">保存</string>
     <string name="cancel">取消</string>
-    
+    <string name="loadMore">加载更多数据</string>
+
     <!-- KA Main -->
     <string name="recentArs">最近账目</string>
     <string name="newAr">新增账目</string>
-    <string name="loadMore">加载更多数据</string>
     <string name="searchResult">查询结果</string>
     <string name="magicBox">数据魔方</string>
     <string name="systemSetting">设置</string>
 
-    
     <!-- AR Type -->
     <string name="manageType">管理账目分类</string>
     <string name="newArTpye">新增账目分类</string>
     <string name="chooseArTypeImg">请选择相应的图标</string>
     <string name="arTypeName">分类名称</string>
-    
+
     <!-- Account Record -->
     <string name="account">金额</string>
     <string name="type">种类</string>
     <string name="date">日期</string>
     <string name="comment">备注</string>
-    
-     <!-- AR Search-->
+
+    <!-- AR Search -->
     <string name="searchAr">查询账目</string>
     <string name="accountRange">金额</string>
     <string name="startSearchAr">查询账目</string>
-    
-    <!-- AR Chart-->
+
+    <!-- AR Chart -->
     <string name="chooseChart">请选择显示图表类型</string>
     <string name="pieChart">饼状图</string>
     <string name="lineChart">线状图</string>
     <string name="columnarChart">柱状图</string>
-    
-     <!--Magic Box-->
-     <string name="startMagicBox">开启魔方</string>
-     <!-- System Settings-->
+
+    <!-- Magic Box -->
+    <string name="startMagicBox">开启魔方</string>
+    <string name="totalCountNum">总消费记录数</string>
+    <string name="totalCost">总消费</string>
+    <string name="avgCost">平均单笔消费</string>
+    <string name="costAvgMounth">每月平均消费</string>
+    <string name="maxCostMounth">消费最多的月份</string>
+    <string name="maxCostInterval">每月消费最多的时间段</string>
+    <string name="maxCost">最大的一笔消费</string>
+
+    <!-- System Settings -->
     <string name="backUp">数据备份</string>
     <string name="arTypeClassify">账目分类</string>
     <string name="manageBackUpData">管理备份数据</string>
     <string name="exit">退出</string>
-    
-    
+
 </resources>

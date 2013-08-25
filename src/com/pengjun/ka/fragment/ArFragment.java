@@ -32,7 +32,7 @@ import com.pengjun.ka.db.model.AccountRecord;
 import com.pengjun.ka.db.service.ArService;
 import com.pengjun.ka.utils.Constants;
 import com.pengjun.ka.utils.MyDebug;
-import com.pengjun.ka.utils.ResManageUtils;
+import com.pengjun.ka.utils.ResourceUtils;
 
 public class ArFragment extends Fragment {
 
@@ -85,6 +85,10 @@ public class ArFragment extends Fragment {
 			instance = new ArFragment();
 		}
 		return instance;
+	}
+
+	public boolean hasEnoughArData() {
+		return arList.size() >= 10;
 	}
 
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -322,9 +326,9 @@ public class ArFragment extends Fragment {
 
 				convertView = inflater.inflate(R.layout.ar_listview_item, null);
 
-				holder.account = (TextView) convertView.findViewById(R.id.tvCost);
+				holder.tvAccount = (TextView) convertView.findViewById(R.id.tvCost);
 				holder.ivType = (ImageView) convertView.findViewById(R.id.ivType);
-				holder.date = (TextView) convertView.findViewById(R.id.tvDate);
+				holder.tvDate = (TextView) convertView.findViewById(R.id.tvDate);
 				holder.tvType = (TextView) convertView.findViewById(R.id.tvType);
 
 				convertView.setTag(holder);
@@ -334,19 +338,19 @@ public class ArFragment extends Fragment {
 
 			// fill content
 			AccountRecord ar = arList.get(position);
-			holder.account.setText(String.valueOf(ar.getAccount()));
-			holder.ivType.setImageResource(ResManageUtils.getImgResIdByName(ar.getImgResName()));
+			holder.tvAccount.setText(String.valueOf(ar.getAccount()));
+			holder.ivType.setImageResource(ResourceUtils.getImgResIdByName(ar.getImgResName()));
 			holder.tvType.setText(ar.getTypeName());
-			holder.date.setText(ar.getCreateDate());
+			holder.tvDate.setText(ar.getCreateDate());
 
 			return convertView;
 		}
 
 		private class AccountHolder {
-			public TextView account;
+			public TextView tvAccount;
 			public ImageView ivType;
 			public TextView tvType;
-			public TextView date;
+			public TextView tvDate;
 		}
 	}
 }

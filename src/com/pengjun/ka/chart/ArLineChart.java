@@ -18,6 +18,12 @@ import com.pengjun.ka.utils.Constants.ChartType;
 import com.pengjun.ka.utils.MathUtils;
 import com.pengjun.ka.utils.TimeUtils;
 
+/**
+ * time-line of money
+ * 
+ * @author pengjun
+ * 
+ */
 public class ArLineChart extends BaseChart {
 
 	private static final int DISPALY_CHART_VALUE_POINT_MAX_NUM = 15;
@@ -27,9 +33,17 @@ public class ArLineChart extends BaseChart {
 		this.chartType = chartType;
 	}
 
-	private String titles;
+	private String title;
 	private XYMultipleSeriesRenderer renderer;
 	XYMultipleSeriesDataset dataset;
+
+	@Override
+	public void setZoomEnabled(boolean isZoomEnabled) {
+		if (renderer != null) {
+			renderer.setZoomEnabled(isZoomEnabled);
+		}
+
+	}
 
 	@Override
 	public void compute(List<AccountRecord> arList) {
@@ -48,7 +62,7 @@ public class ArLineChart extends BaseChart {
 				}
 				map.put(date, count + ar.getAccount());
 			}
-			titles = "每天花费总额曲线图";
+			title = "每天花费总额曲线图";
 			break;
 		case LineMonth:
 			for (AccountRecord ar : arList) {
@@ -61,7 +75,7 @@ public class ArLineChart extends BaseChart {
 				}
 				map.put(yearMonth, count + ar.getAccount());
 			}
-			titles = "每月花费总额曲线图";
+			title = "每月花费总额曲线图";
 			break;
 		case LineYear:
 			for (AccountRecord ar : arList) {
@@ -73,7 +87,7 @@ public class ArLineChart extends BaseChart {
 				}
 				map.put(year, count + ar.getAccount());
 			}
-			titles = "每年花费总额曲线图";
+			title = "每年花费总额曲线图";
 			break;
 		}
 
@@ -84,7 +98,7 @@ public class ArLineChart extends BaseChart {
 		Date lastDate = null;
 
 		dataset = new XYMultipleSeriesDataset();
-		TimeSeries series = new TimeSeries(titles);
+		TimeSeries series = new TimeSeries(title);
 
 		for (Map.Entry<Date, Double> entry : map.entrySet()) {
 			if (pointCnt == 0) {

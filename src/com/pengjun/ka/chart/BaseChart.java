@@ -28,6 +28,8 @@ public abstract class BaseChart {
 
 	public abstract View getView(Context context);
 
+	public abstract void setZoomEnabled(boolean isZoomEnabled);
+
 	/**
 	 * Builds an XY multiple dataset using the provided values.
 	 * 
@@ -170,6 +172,7 @@ public abstract class BaseChart {
 		renderer.setLabelsTextSize(15);
 		renderer.setLegendTextSize(15);
 		renderer.setZoomEnabled(true);
+		renderer.setInScroll(true);
 		renderer.setZoomButtonsVisible(true);
 		((XYSeriesRenderer) renderer.getSeriesRendererAt(0)).setFillPoints(true);
 		((XYSeriesRenderer) renderer.getSeriesRendererAt(0)).setLineWidth(1.5f);
@@ -312,6 +315,8 @@ public abstract class BaseChart {
 		renderer.setZoomEnabled(true);
 		renderer.setChartTitleTextSize(20);
 		renderer.setLabelsColor(Color.BLACK);
+		renderer.setInScroll(true);
+		renderer.setClickEnabled(true);
 		renderer.setMargins(new int[] { 20, 30, 15, 0 });
 		for (int color : colors) {
 			SimpleSeriesRenderer r = new SimpleSeriesRenderer();

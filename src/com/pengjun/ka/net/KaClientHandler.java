@@ -18,20 +18,20 @@ import com.pengjun.ka.db.model.AccountRecord;
 import com.pengjun.ka.net.exception.ErrorCode;
 import com.pengjun.ka.net.protobuf.KaProtocol.ArProtocol;
 import com.pengjun.ka.utils.MyDebug;
-import com.pengjun.ka.utils.ResManageUtils;
+import com.pengjun.ka.utils.ResourceUtils;
 
 public class KaClientHandler extends SimpleChannelUpstreamHandler {
 
 	private static final Logger logger = Logger.getLogger(KaClientHandler.class.getName());
 	private volatile Channel channel;
-	private final BlockingQueue<ArProtocol> answer = new LinkedBlockingQueue<ArProtocol>();
+	private final BlockingQueue<ArProtocol> arBq = new LinkedBlockingQueue<ArProtocol>();
 
 	public ArProtocol sendArList(AccountRecord sendAr) {
 
 		ArProtocol.Builder builder = ArProtocol.newBuilder();
 
 		builder.setAccount(2);
-		builder.setCreateDate(ResManageUtils.getLocalIpAddress());
+		builder.setCreateDate(ResourceUtils.getLocalIpAddress());
 		builder.setId(1);
 		builder.setTypeId(1);
 		builder.setUpdateTime(sendAr.getUpdateTime());
@@ -42,7 +42,7 @@ public class KaClientHandler extends SimpleChannelUpstreamHandler {
 		boolean interrupted = false;
 		for (;;) {
 			try {
-				revAr = answer.poll(3000, TimeUnit.MILLISECONDS);
+				revAr = arBq.poll(3000, TimeUnit.MILLISECONDS);
 				break;
 			} catch (InterruptedException e) {
 				interrupted = true;
@@ -83,7 +83,7 @@ public class KaClientHandler extends SimpleChannelUpstreamHandler {
 
 	@Override
 	public void messageReceived(ChannelHandlerContext ctx, final MessageEvent e) {
-		boolean offered = answer.offer((ArProtocol) e.getMessage());
+		boolean offered = arBq.offer((ArProtocol) e.getMessage());
 		assert offered;
 	}
 

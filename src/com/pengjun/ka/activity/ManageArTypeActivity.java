@@ -34,7 +34,7 @@ import com.pengjun.ka.db.service.ArTypeService;
 import com.pengjun.ka.utils.ComponentUtils;
 import com.pengjun.ka.utils.Constants;
 import com.pengjun.ka.utils.MyDebug;
-import com.pengjun.ka.utils.ResManageUtils;
+import com.pengjun.ka.utils.ResourceUtils;
 
 public class ManageArTypeActivity extends Activity {
 
@@ -281,7 +281,7 @@ public class ManageArTypeActivity extends Activity {
 			}
 
 			ArType arType = arTypeList.get(position);
-			holder.ivType.setImageResource(ResManageUtils.getImgResIdByName(arType.getImgResName()));
+			holder.ivType.setImageResource(ResourceUtils.getImgResIdByName(arType.getImgResName()));
 			holder.tvType.setText(arType.getTypeName());
 			holder.createDate.setText(arType.getCreateDate());
 

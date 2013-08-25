@@ -24,7 +24,7 @@ import com.pengjun.ka.db.model.ArType;
 import com.pengjun.ka.db.service.ArTypeService;
 import com.pengjun.ka.utils.ComponentUtils;
 import com.pengjun.ka.utils.Constants;
-import com.pengjun.ka.utils.ResManageUtils;
+import com.pengjun.ka.utils.ResourceUtils;
 import com.pengjun.ka.utils.TimeUtils;
 
 public class AddArTypeActivity extends Activity {
@@ -148,7 +148,7 @@ public class AddArTypeActivity extends Activity {
 			Field[] fields = R.drawable.class.getDeclaredFields();
 			for (Field field : fields) {
 				// get all image from res which name start with type
-				if (field.getName().startsWith(ResManageUtils.RES_IMAGE_PREFIX)) {
+				if (field.getName().startsWith(ResourceUtils.RES_IMAGE_PREFIX)) {
 					resNameList.add(field.getName());
 				}
 			}
@@ -185,7 +185,7 @@ public class AddArTypeActivity extends Activity {
 				holder = (ArTypeHolder) convertView.getTag();
 			}
 
-			holder.ivArType.setImageResource(ResManageUtils
+			holder.ivArType.setImageResource(ResourceUtils
 					.getImgResIdByName(resNameList.get(position)));
 			return convertView;
 

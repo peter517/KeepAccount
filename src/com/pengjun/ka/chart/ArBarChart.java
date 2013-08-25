@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.achartengine.ChartFactory;
+import org.achartengine.GraphicalView;
 import org.achartengine.chart.BarChart.Type;
 import org.achartengine.model.XYMultipleSeriesDataset;
 import org.achartengine.model.XYSeries;
@@ -15,46 +16,64 @@ import android.graphics.Color;
 import android.view.View;
 
 import com.pengjun.ka.db.model.AccountRecord;
-import com.pengjun.ka.utils.MathUtils;
 
+/**
+ * number of each cost interval
+ * 
+ * @author pengjun
+ * 
+ */
 public class ArBarChart extends BaseChart {
 
-	private String titles;
+	private String[] moneyRangeArr = { "100以下", "101-500", "501-1000", "1001-2000", "2000以上" };
+	private String title = "各区间花费数";
 	private XYMultipleSeriesRenderer renderer;
 	private XYMultipleSeriesDataset dataset;
+	private GraphicalView graphicalView;
 
 	@Override
 	public void compute(List<AccountRecord> arList) {
 
-		titles = "各类型花费总额";
-
 		// compute each date account
-		Map<String, Double> map = new HashMap<String, Double>();
-		Double count = null;
+		Map<String, Integer> map = new HashMap<String, Integer>();
+
+		for (int i = 0; i < moneyRangeArr.length; i++) {
+			map.put(moneyRangeArr[i], 0);
+		}
+		Integer count = null;
+		String range = null;
 		for (AccountRecord ar : arList) {
-			count = map.get(ar.getTypeName());
-			if (count == null) {
-				count = 0.0;
+			if (ar.getAccount() <= 100) {
+				range = moneyRangeArr[0];
+			} else if (ar.getAccount() > 100 && ar.getAccount() <= 500) {
+				range = moneyRangeArr[1];
+			} else if (ar.getAccount() > 500 && ar.getAccount() <= 1000) {
+				range = moneyRangeArr[2];
+			} else if (ar.getAccount() > 1000 && ar.getAccount() <= 2000) {
+				range = moneyRangeArr[3];
+			} else if (ar.getAccount() > 2000) {
+				range = moneyRangeArr[4];
 			}
-			map.put(ar.getTypeName(), count + ar.getAccount());
+			count = map.get(range);
+			map.put(range, ++count);
 		}
 
-		renderer = createXYChartRenderer("种类", "金额");
+		renderer = createXYChartRenderer("金额区间", "数量");
 
 		dataset = new XYMultipleSeriesDataset();
-		XYSeries series = new XYSeries(titles);
+		XYSeries series = new XYSeries(title);
 
 		// fill first invalid data
 		series.add(0, 0);
 		renderer.addXTextLabel(0, "");
 		int pointCnt = 0;
-		Double maxValue = Double.MIN_VALUE;
-		Double minValue = Double.MAX_VALUE;
-		for (Map.Entry<String, Double> entry : map.entrySet()) {
+		Integer maxValue = Integer.MIN_VALUE;
+		Integer minValue = Integer.MAX_VALUE;
+		for (Map.Entry<String, Integer> entry : map.entrySet()) {
 			maxValue = Math.max(entry.getValue(), maxValue);
 			minValue = Math.min(entry.getValue(), minValue);
 			renderer.addTextLabel(pointCnt + 1, entry.getKey());
-			series.add(pointCnt + 1, MathUtils.formatDouble(entry.getValue()));
+			series.add(pointCnt + 1, entry.getValue());
 			pointCnt++;
 		}
 
@@ -76,7 +95,16 @@ public class ArBarChart extends BaseChart {
 
 	@Override
 	public View getView(Context context) {
-		View view = ChartFactory.getBarChartView(context, dataset, renderer, Type.DEFAULT);
-		return view;
+		graphicalView = ChartFactory.getBarChartView(context, dataset, renderer, Type.DEFAULT);
+		return graphicalView;
+	}
+
+	@Override
+	public void setZoomEnabled(boolean isZoomEnabled) {
+		if (renderer != null) {
+			renderer.setZoomEnabled(isZoomEnabled);
+			renderer.setZoomButtonsVisible(isZoomEnabled);
+		}
+
 	}
 }

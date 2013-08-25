@@ -38,7 +38,10 @@
         <activity android:name="org.achartengine.GraphicalActivity" 
             android:screenOrientation="landscape"/>
         <activity
-            android:name="com.pengjun.ka.activity.ArBackupActivity"
+            android:name="com.pengjun.ka.activity.MagicBoxActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.pengjun.ka.activity.BackupActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name="com.pengjun.ka.activity.AddArTypeActivity"

@@ -6,8 +6,6 @@ import java.util.List;
 import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.view.View;
 import android.view.Window;
 import android.widget.ProgressBar;
@@ -19,7 +17,6 @@ import com.pengjun.ka.chart.ChartFactory;
 import com.pengjun.ka.db.model.AccountRecord;
 import com.pengjun.ka.utils.Constants;
 import com.pengjun.ka.utils.Constants.ChartType;
-import com.pengjun.ka.utils.MyDebug;
 
 public class ArChartDisplayActivity extends Activity {
 
@@ -27,21 +24,6 @@ public class ArChartDisplayActivity extends Activity {
 	private RelativeLayout rlChart;
 	private ChartType chartType;
 	private List<AccountRecord> arList = new ArrayList<AccountRecord>();
-
-	private static final int MSG_CREATE_CHART_FINISHED = 0x01;
-	Handler handler = new Handler() {
-		@Override
-		public void handleMessage(Message msg) {
-
-			switch (msg.what) {
-			case MSG_CREATE_CHART_FINISHED:
-				rlChart.addView((View) msg.obj);
-				break;
-			default:
-				MyDebug.printFromPJ("undefined msg:" + msg.what);
-			}
-		}
-	};
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

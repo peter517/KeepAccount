@@ -10,8 +10,10 @@ import android.widget.Button;
 import android.widget.RelativeLayout;
 
 import com.pengjun.ka.R;
-import com.pengjun.ka.activity.ArBackupActivity;
+import com.pengjun.ka.activity.BackupActivity;
 import com.pengjun.ka.activity.ManageArTypeActivity;
+import com.pengjun.ka.utils.ComponentUtils;
+import com.pengjun.ka.utils.ResourceUtils;
 
 public class SettingFragment extends Fragment {
 
@@ -34,8 +36,7 @@ public class SettingFragment extends Fragment {
 		return instance;
 	}
 
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
 		View view = inflater.inflate(R.layout.setting_sys, null);
 
@@ -51,8 +52,7 @@ public class SettingFragment extends Fragment {
 				Intent intent = new Intent();
 				intent.setClass(getActivity(), ManageArTypeActivity.class);
 				getActivity().startActivity(intent);
-				getActivity().overridePendingTransition(R.anim.left_in,
-						R.anim.left_out);
+				getActivity().overridePendingTransition(R.anim.left_in, R.anim.left_out);
 			}
 		});
 
@@ -62,13 +62,17 @@ public class SettingFragment extends Fragment {
 			@Override
 			public void onClick(View v) {
 
+				if (ResourceUtils.hasExternalStorage() == false) {
+					ComponentUtils.createAlertDialog(getActivity(), "请插入内存卡！").show();
+					return;
+				}
+
 				rlBackup.setBackgroundResource(R.drawable.text_focused);
 				rlManageType.setBackgroundResource(R.drawable.text_normal);
 				Intent intent = new Intent();
-				intent.setClass(getActivity(), ArBackupActivity.class);
+				intent.setClass(getActivity(), BackupActivity.class);
 				getActivity().startActivity(intent);
-				getActivity().overridePendingTransition(R.anim.left_in,
-						R.anim.left_out);
+				getActivity().overridePendingTransition(R.anim.left_in, R.anim.left_out);
 			}
 		});
 

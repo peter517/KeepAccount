@@ -13,7 +13,7 @@ import com.pengjun.ka.test.DataCreater;
 public class KaClient {
 
 	private final String REMOTE_IP = "10.9.9.12";
-	private int REMOTE_PORT = 8000;
+	private final int REMOTE_PORT = 8000;
 	private Channel channel = null;
 	private ClientBootstrap bootstrap = null;
 	private KaClientHandler handler = null;

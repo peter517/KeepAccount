@@ -1,0 +1,202 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:id="@+id/llToolBar"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/bar_heigth"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/top_bar"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:id="@+id/tvTopTitle"
+            style="@style/TopTitleTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/magicBox" />
+    </RelativeLayout>
+
+    <ScrollView
+        android:id="@+id/svMagicData"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@+id/llToolBar"
+        android:fillViewport="true" >
+
+        <RelativeLayout
+            android:id="@+id/rlMagicData"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:id="@+id/llTypeRatioChart"
+                android:layout_width="fill_parent"
+                android:layout_height="300dp"
+                android:layout_alignParentTop="true"
+                android:layout_centerInParent="true"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/text_selector_xml"
+                android:orientation="vertical" />
+
+            <RelativeLayout
+                android:id="@+id/rlTotalCost"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/llTypeRatioChart"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/text_selector_xml"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:id="@+id/tvTotalCountNumStr"
+                    style="@style/MagicTextStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/totalCountNum" />
+
+                <TextView
+                    android:id="@+id/tvTotalCountNum"
+                    style="@style/MagicRusultTextStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tvTotalCountNumStr"
+                    android:layout_centerInParent="true" />
+
+                <TextView
+                    android:id="@+id/tvTotalCostStr"
+                    style="@style/MagicTextStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tvTotalCountNum"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/totalCost" />
+
+                <TextView
+                    android:id="@+id/tvTotalCost"
+                    style="@style/MagicRusultTextStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tvTotalCostStr"
+                    android:layout_centerInParent="true" />
+
+                <TextView
+                    android:id="@+id/tvavgCostStr"
+                    style="@style/MagicTextStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tvTotalCost"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/avgCost" />
+
+                <TextView
+                    android:id="@+id/tvAvgCost"
+                    style="@style/MagicRusultTextStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tvavgCostStr"
+                    android:layout_centerInParent="true" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rlMounthCost"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/rlTotalCost"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/text_selector_xml"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:id="@+id/tvAvgCostMonthStr"
+                    style="@style/MagicTextStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/costAvgMounth" />
+
+                <TextView
+                    android:id="@+id/tvAvgCostMonth"
+                    style="@style/MagicRusultTextStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tvAvgCostMonthStr"
+                    android:layout_centerInParent="true" />
+
+                <TextView
+                    android:id="@+id/tvMaxCostMonthStr"
+                    style="@style/MagicTextStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tvAvgCostMonth"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/maxCostMounth" />
+
+                <TextView
+                    android:id="@+id/tvMaxCostMonth"
+                    style="@style/MagicRusultTextStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tvMaxCostMonthStr"
+                    android:layout_centerInParent="true" />
+
+                <TextView
+                    android:id="@+id/tvMaxCostIntervalStr"
+                    style="@style/MagicTextStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tvMaxCostMonth"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/maxCostInterval" />
+
+                <TextView
+                    android:id="@+id/tvMaxCostInterval"
+                    style="@style/MagicRusultTextStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tvMaxCostIntervalStr"
+                    android:layout_centerInParent="true" />
+
+                <TextView
+                    android:id="@+id/tvMaxCostStr"
+                    style="@style/MagicTextStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tvMaxCostInterval"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/maxCost" />
+
+                <LinearLayout
+                    android:id="@+id/llMaxCost"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tvMaxCostStr" >
+                    <include layout="@layout/ar_listview_item" />
+                </LinearLayout>
+            </RelativeLayout>
+        </RelativeLayout>
+    </ScrollView>
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" >
+
+        <ProgressBar
+            android:id="@+id/pbLoad"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:indeterminateDrawable="@drawable/progress_style_xml"
+            android:visibility="gone" />
+    </RelativeLayout>
+
+</RelativeLayout>

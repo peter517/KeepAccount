@@ -92,6 +92,16 @@ public class ArService {
 		return Constants.DB_SEARCH_LIST_NOT_FOUND;
 	}
 
+	public static List<AccountRecord> queryAll() {
+		try {
+			QueryBuilder<AccountRecord, Integer> queryBuilder = dao.queryBuilder();
+			return queryBuilder.query();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return Constants.DB_SEARCH_LIST_NOT_FOUND;
+	}
+
 	public static void deleteAll(List<AccountRecord> arList) {
 		try {
 			dao.delete(arList);
