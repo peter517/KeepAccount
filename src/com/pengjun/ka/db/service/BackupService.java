@@ -3,6 +3,8 @@ package com.pengjun.ka.db.service;
 import java.io.File;
 import java.util.List;
 
+import com.pengjun.ka.db.dao.ArDao;
+import com.pengjun.ka.db.dao.ArTypeDao;
 import com.pengjun.ka.db.model.AccountRecord;
 import com.pengjun.ka.db.model.ArType;
 import com.pengjun.ka.utils.Constants;
@@ -11,8 +13,8 @@ import com.pengjun.ka.utils.FileUtils;
 public class BackupService {
 
 	public static void saveBackupByDateStr(String dateStr) {
-		List<AccountRecord> arList = ArService.queryAllByUpdate();
-		List<ArType> arTypeList = ArTypeService.queryAllByUpdate();
+		List<AccountRecord> arList = ArDao.queryAllByUpdate();
+		List<ArType> arTypeList = ArTypeDao.queryAllByUpdate();
 		saveBackupAll(dateStr, arList, arTypeList);
 
 	}
@@ -37,8 +39,8 @@ public class BackupService {
 	}
 
 	private static void restoreAll(String curTimeStr, List<AccountRecord> arList, List<ArType> arTypeList) {
-		ArService.reCreateTable(arList);
-		ArTypeService.reCreateTable(arTypeList);
+		ArDao.reCreateTable(arList);
+		ArTypeDao.reCreateTable(arTypeList);
 	}
 
 	private static void saveBackupAll(String curTimeStr, List<AccountRecord> arList, List<ArType> arTypeList) {

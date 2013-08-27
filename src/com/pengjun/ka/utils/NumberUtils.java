@@ -2,7 +2,7 @@ package com.pengjun.ka.utils;
 
 import java.text.DecimalFormat;
 
-public class MathUtils {
+public class NumberUtils {
 
 	// Keep a decimal places
 	private static DecimalFormat df = new DecimalFormat("#.0");

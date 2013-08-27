@@ -1,4 +1,4 @@
-package com.pengjun.ka.db.service;
+package com.pengjun.ka.db.dao;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -9,14 +9,14 @@ import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.stmt.QueryBuilder;
 import com.j256.ormlite.table.TableUtils;
-import com.pengjun.ka.activity.KaApplication;
+import com.pengjun.ka.android.activity.KaApplication;
 import com.pengjun.ka.db.model.AccountRecord;
 import com.pengjun.ka.db.model.ArType;
 import com.pengjun.ka.utils.Constants;
 import com.pengjun.ka.utils.Constants.InitArType;
 import com.pengjun.ka.utils.TimeUtils;
 
-public class ArTypeService {
+public class ArTypeDao {
 
 	private static AndroidConnectionSource cs = KaApplication.getAndroidConnectionSource();
 
@@ -155,7 +155,7 @@ public class ArTypeService {
 	public static void delete(ArType arType) {
 		try {
 			dao.delete(arType);
-			ArService.deleteByTypeId(arType.getId());
+			ArDao.deleteByTypeId(arType.getId());
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

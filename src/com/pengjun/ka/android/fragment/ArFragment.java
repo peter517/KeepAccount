@@ -1,4 +1,4 @@
-package com.pengjun.ka.fragment;
+package com.pengjun.ka.android.fragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,9 +26,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.pengjun.ka.R;
-import com.pengjun.ka.activity.AddArActivity;
+import com.pengjun.ka.android.activity.AddArActivity;
+import com.pengjun.ka.db.dao.ArDao;
 import com.pengjun.ka.db.model.AccountRecord;
-import com.pengjun.ka.db.service.ArService;
 import com.pengjun.ka.utils.ComponentUtils;
 import com.pengjun.ka.utils.Constants;
 import com.pengjun.ka.utils.MyDebug;
@@ -133,7 +133,7 @@ public class ArFragment extends Fragment {
 				builder.setPositiveButton("删除", new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int whichButton) {
 						AccountRecord ar = arList.get(selectPos);
-						ArService.delete(ar);
+						ArDao.delete(ar);
 						updateArListViewAsync(false);
 					}
 				});
@@ -184,7 +184,7 @@ public class ArFragment extends Fragment {
 
 	public void updateArListViewSync() {
 
-		arList = ArService.queryLimitRows(0, Math.max(LIMIT_ROW_TOTAL, arList.size()));
+		arList = ArDao.queryLimitRows(0, Math.max(LIMIT_ROW_TOTAL, arList.size()));
 
 		if (arList.size() < LIMIT_ROW_TOTAL) {
 			btLoadMore.setVisibility(View.GONE);
@@ -221,7 +221,7 @@ public class ArFragment extends Fragment {
 			isSetListViewToTop = params[0];
 			List<AccountRecord> tempArList = null;
 
-			tempArList = ArService.queryLimitRows(0, Math.max(LIMIT_ROW_TOTAL, arList.size()));
+			tempArList = ArDao.queryLimitRows(0, Math.max(LIMIT_ROW_TOTAL, arList.size()));
 			if (tempArList != null) {
 				arList = tempArList;
 			}
@@ -262,7 +262,7 @@ public class ArFragment extends Fragment {
 
 			List<AccountRecord> tempArList = null;
 
-			tempArList = ArService.queryLimitRows(offset, LIMIT_ROW_TOTAL);
+			tempArList = ArDao.queryLimitRows(offset, LIMIT_ROW_TOTAL);
 			if (tempArList != null) {
 				arList.addAll(tempArList);
 			}

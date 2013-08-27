@@ -1,4 +1,4 @@
-package com.pengjun.ka.activity;
+package com.pengjun.ka.android.activity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,12 +16,12 @@ import android.widget.ImageButton;
 import android.widget.Spinner;
 
 import com.pengjun.ka.R;
+import com.pengjun.ka.db.dao.ArDao;
+import com.pengjun.ka.db.dao.ArTypeDao;
 import com.pengjun.ka.db.model.AccountRecord;
-import com.pengjun.ka.db.service.ArService;
-import com.pengjun.ka.db.service.ArTypeService;
 import com.pengjun.ka.utils.ComponentUtils;
 import com.pengjun.ka.utils.Constants;
-import com.pengjun.ka.utils.MathUtils;
+import com.pengjun.ka.utils.NumberUtils;
 import com.pengjun.ka.utils.TimeUtils;
 
 public class AddArActivity extends Activity {
@@ -48,7 +48,7 @@ public class AddArActivity extends Activity {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.add_ar);
 
-		arTypeNameList = ArTypeService.queryAllArTypeName();
+		arTypeNameList = ArTypeDao.queryAllArTypeName();
 
 		etAccount = (EditText) findViewById(R.id.etAccount);
 
@@ -101,10 +101,10 @@ public class AddArActivity extends Activity {
 					if (ar == null) {
 						ar = new AccountRecord();
 						getArFromView(ar);
-						ArService.insert(ar);
+						ArDao.insert(ar);
 					} else {
 						getArFromView(ar);
-						ArService.update(ar);
+						ArDao.update(ar);
 					}
 
 					setResult(RESULT_OK, null);
@@ -159,7 +159,7 @@ public class AddArActivity extends Activity {
 	}
 
 	private void getArFromView(AccountRecord ar) {
-		ar.setAccount(MathUtils.formatFloat(Float.valueOf(etAccount.getText().toString())));
+		ar.setAccount(NumberUtils.formatFloat(Float.valueOf(etAccount.getText().toString())));
 		ar.setTypeName(spArTypeName.getSelectedItem().toString());
 		ar.setCreateDate(ComponentUtils.DatePicker2FormatStr(dpCreateDate));
 		ar.setComment(etComment.getText().toString());

@@ -1,4 +1,4 @@
-package com.pengjun.ka.activity;
+package com.pengjun.ka.android.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,9 +9,9 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.pengjun.ka.R;
+import com.pengjun.ka.android.fragment.ArSearchResultFragment;
+import com.pengjun.ka.android.fragment.FragmentDirector;
 import com.pengjun.ka.db.model.ArSearchCondition;
-import com.pengjun.ka.fragment.ArSearchResultFragment;
-import com.pengjun.ka.fragment.FragmentDirector;
 import com.pengjun.ka.utils.ComponentUtils;
 import com.pengjun.ka.utils.Constants;
 

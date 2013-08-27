@@ -15,7 +15,7 @@ import android.graphics.Color;
 import android.view.View;
 
 import com.pengjun.ka.db.model.AccountRecord;
-import com.pengjun.ka.utils.MathUtils;
+import com.pengjun.ka.utils.NumberUtils;
 
 /**
  * count of each type cost
@@ -68,7 +68,7 @@ public class ArTypeBarChart extends BaseChart {
 			maxValue = Math.max(entry.getValue(), maxValue);
 			minValue = Math.min(entry.getValue(), minValue);
 			renderer.addTextLabel(pointCnt + 1, entry.getKey());
-			series.add(pointCnt + 1, MathUtils.formatDouble(entry.getValue()));
+			series.add(pointCnt + 1, NumberUtils.formatDouble(entry.getValue()));
 			pointCnt++;
 		}
 

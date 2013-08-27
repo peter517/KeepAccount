@@ -2,6 +2,9 @@ package com.pengjun.ka.utils;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.view.LayoutInflater;
@@ -45,6 +48,24 @@ public class ComponentUtils {
 			inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		}
 		return inflater;
+	}
+
+	public static void createNotification(Context context, String notificationTitle,
+			String notificationCotent, PendingIntent pendingIntent) {
+
+		Notification notification = new Notification(R.drawable.report, notificationTitle,
+				System.currentTimeMillis());
+
+		notification.flags |= Notification.FLAG_NO_CLEAR;
+		notification.flags = Notification.FLAG_AUTO_CANCEL;
+		notification.tickerText = notificationCotent;
+		notification.defaults = Notification.DEFAULT_SOUND;
+		notification.defaults |= Notification.DEFAULT_VIBRATE;
+		notification.setLatestEventInfo(context, notificationTitle, notificationCotent, pendingIntent);
+
+		NotificationManager notificationManager = (NotificationManager) context
+				.getSystemService(Context.NOTIFICATION_SERVICE);
+		notificationManager.notify(R.string.app_name, notification);
 	}
 
 }

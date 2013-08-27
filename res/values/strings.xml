@@ -52,5 +52,10 @@
     <string name="arTypeClassify">账目分类</string>
     <string name="manageBackUpData">管理备份数据</string>
     <string name="exit">退出</string>
+    
+    <!-- Report -->
+    <string name="monthReport">月报表</string>
+    <string name="everDayCostTrends">每天消费趋势</string>
+    <string name="maxCostDay">消费最多的一天</string>
 
 </resources>

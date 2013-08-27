@@ -1,4 +1,4 @@
-package com.pengjun.ka.activity;
+package com.pengjun.ka.android.activity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,10 +20,10 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.pengjun.ka.R;
-import com.pengjun.ka.component.GalleryFlow;
+import com.pengjun.ka.android.component.GalleryFlow;
+import com.pengjun.ka.android.fragment.ArSearchResultFragment;
+import com.pengjun.ka.db.dao.ArDao;
 import com.pengjun.ka.db.model.AccountRecord;
-import com.pengjun.ka.db.service.ArService;
-import com.pengjun.ka.fragment.ArSearchResultFragment;
 import com.pengjun.ka.utils.ComponentUtils;
 import com.pengjun.ka.utils.Constants;
 import com.pengjun.ka.utils.Constants.ChartType;
@@ -122,7 +122,7 @@ public class ArChartActivity extends Activity {
 		protected Void doInBackground(Void... params) {
 			// the data in ArSearchResult is searched by offset and limit
 			// so need to research
-			arList = ArService.queryAr(ArSearchResultFragment.getArSearchCondition(), 0, -1);
+			arList = ArDao.queryAr(ArSearchResultFragment.getArSearchCondition(), 0, -1);
 			return null;
 		}
 

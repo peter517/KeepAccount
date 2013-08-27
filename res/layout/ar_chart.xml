@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:text="@string/chooseChart"/>
     
-    <com.pengjun.ka.component.GalleryFlow
+    <com.pengjun.ka.android.component.GalleryFlow
         android:id="@+id/gfChart"
         android:layout_below="@+id/tvTilte"
         android:layout_width="fill_parent"

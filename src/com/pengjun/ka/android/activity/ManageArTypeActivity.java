@@ -1,4 +1,4 @@
-package com.pengjun.ka.activity;
+package com.pengjun.ka.android.activity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,8 +26,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.pengjun.ka.R;
+import com.pengjun.ka.db.dao.ArTypeDao;
 import com.pengjun.ka.db.model.ArType;
-import com.pengjun.ka.db.service.ArTypeService;
 import com.pengjun.ka.utils.ComponentUtils;
 import com.pengjun.ka.utils.Constants;
 import com.pengjun.ka.utils.MyDebug;
@@ -120,7 +120,7 @@ public class ManageArTypeActivity extends Activity {
 				builder.setPositiveButton("删除", new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int whichButton) {
 						ArType ar = arTypeList.get(selectPos);
-						ArTypeService.delete(ar);
+						ArTypeDao.delete(ar);
 						updateArTypeListAsync(false);
 					}
 				});
@@ -183,7 +183,7 @@ public class ManageArTypeActivity extends Activity {
 
 	public void updateArTypeListSync() {
 
-		arTypeList = ArTypeService.queryAllByUpdate();
+		arTypeList = ArTypeDao.queryAllByUpdate();
 
 		arTypeAdapter.notifyDataSetChanged();
 		ManageArTypeActivity.this.setListViewToTop();
@@ -219,7 +219,7 @@ public class ManageArTypeActivity extends Activity {
 			isSetListViewToTop = params[0];
 			List<ArType> tempArList = null;
 
-			tempArList = ArTypeService.queryAllByUpdate();
+			tempArList = ArTypeDao.queryAllByUpdate();
 			if (tempArList != null) {
 				arTypeList = tempArList;
 			}

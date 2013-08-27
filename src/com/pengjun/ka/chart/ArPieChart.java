@@ -13,7 +13,7 @@ import android.content.Context;
 import android.view.View;
 
 import com.pengjun.ka.db.model.AccountRecord;
-import com.pengjun.ka.utils.MathUtils;
+import com.pengjun.ka.utils.NumberUtils;
 import com.pengjun.ka.utils.ResourceUtils;
 
 /**
@@ -74,13 +74,13 @@ public class ArPieChart extends BaseChart {
 		series.clear();
 		if (isShowPercent) {
 			for (Map.Entry<String, Double> entry : name2CostMap.entrySet()) {
-				series.add(entry.getKey() + "(" + MathUtils.formatDouble(entry.getValue()) + ")",
+				series.add(entry.getKey() + "(" + NumberUtils.formatDouble(entry.getValue()) + ")",
 						entry.getValue());
 			}
 		} else {
 			for (Map.Entry<String, Double> entry : name2CostMap.entrySet()) {
 				// ratio of each type , keep two decimal place
-				double ratio = MathUtils.formatDouble(entry.getValue() * 100 / costTotal);
+				double ratio = NumberUtils.formatDouble(entry.getValue() * 100 / costTotal);
 				if (ratio != 0) {
 					series.add(entry.getKey() + "(" + ratio + "%)", entry.getValue());
 				} else {

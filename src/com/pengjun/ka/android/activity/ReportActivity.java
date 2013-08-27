@@ -1,5 +1,6 @@
-package com.pengjun.ka.activity;
+package com.pengjun.ka.android.activity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Activity;
@@ -17,26 +18,24 @@ import com.pengjun.ka.R;
 import com.pengjun.ka.chart.BaseChart;
 import com.pengjun.ka.chart.ChartFactory;
 import com.pengjun.ka.db.model.AccountRecord;
-import com.pengjun.ka.db.model.MagicBoxData;
-import com.pengjun.ka.db.service.ArService;
-import com.pengjun.ka.db.service.MagicBoxService;
+import com.pengjun.ka.db.model.ReportData;
+import com.pengjun.ka.db.service.ReportNotificationService;
 import com.pengjun.ka.utils.Constants.ChartType;
-import com.pengjun.ka.utils.MathUtils;
+import com.pengjun.ka.utils.NumberUtils;
 import com.pengjun.ka.utils.ResourceUtils;
 
-public class MagicBoxActivity extends Activity {
+public class ReportActivity extends Activity {
 
 	private LinearLayout llTypeRatioChart;
 	private ProgressBar pbLoad;
 	private ScrollView svMagicData;
 
-	private MagicBoxData magicBoxData;
+	private ReportData reportData;
 
 	private TextView tvTotalCountNum;
 	private TextView tvTotalCost;
 	private TextView tvAvgCost;
-	private TextView tvAvgCostMonth;
-	private TextView tvMaxCostMonth;
+	private TextView tvMaxCostDay;
 	private TextView tvMaxCostInterval;
 
 	private TextView tvAccount;
@@ -44,20 +43,23 @@ public class MagicBoxActivity extends Activity {
 	private TextView tvType;
 	private TextView tvDate;
 
+	private List<AccountRecord> arList = new ArrayList<AccountRecord>();
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		setContentView(R.layout.magic_box_open);
+		setContentView(R.layout.report);
+
+		arList = ReportNotificationService.arList;
 
 		llTypeRatioChart = (LinearLayout) findViewById(R.id.llTypeRatioChart);
 
 		tvTotalCountNum = (TextView) findViewById(R.id.tvTotalCountNum);
 		tvTotalCost = (TextView) findViewById(R.id.tvTotalCost);
 		tvAvgCost = (TextView) findViewById(R.id.tvAvgCost);
-		tvAvgCostMonth = (TextView) findViewById(R.id.tvAvgCostMonth);
-		tvMaxCostMonth = (TextView) findViewById(R.id.tvMaxCostMonth);
+		tvMaxCostDay = (TextView) findViewById(R.id.tvMaxCostDay);
 		tvMaxCostInterval = (TextView) findViewById(R.id.tvMaxCostInterval);
 
 		tvAccount = (TextView) findViewById(R.id.tvCost);
@@ -89,11 +91,10 @@ public class MagicBoxActivity extends Activity {
 		@Override
 		protected Void doInBackground(Void... params) {
 
-			List<AccountRecord> arList = ArService.queryAll();
 			typeRadioChart = ChartFactory.createChart(ChartType.Pie);
 			typeRadioChart.compute(arList);
 
-			magicBoxData = MagicBoxService.getTotalCountNum(arList);
+			reportData = ReportNotificationService.computeMagicBoxData(arList);
 			return null;
 		}
 
@@ -102,16 +103,15 @@ public class MagicBoxActivity extends Activity {
 
 			typeRadioChart.setZoomEnabled(false);
 
-			llTypeRatioChart.addView(typeRadioChart.getView(MagicBoxActivity.this));
+			llTypeRatioChart.addView(typeRadioChart.getView(ReportActivity.this));
 
-			tvTotalCountNum.setText(String.valueOf(magicBoxData.getTotalCountNum()));
-			tvTotalCost.setText(MathUtils.double2String(magicBoxData.getTotalCost()));
-			tvAvgCost.setText(String.valueOf(magicBoxData.getAvgCost()));
-			tvAvgCostMonth.setText(String.valueOf(magicBoxData.getAvgCostMonth()));
-			tvMaxCostMonth.setText(magicBoxData.getMaxCostMonth());
-			tvMaxCostInterval.setText(magicBoxData.getMaxCostInterval());
+			tvTotalCountNum.setText(String.valueOf(reportData.getTotalCountNum()));
+			tvTotalCost.setText(NumberUtils.double2String(reportData.getTotalCost()));
+			tvAvgCost.setText(String.valueOf(reportData.getAvgCost()));
+			tvMaxCostDay.setText(reportData.getMaxCostDay());
+			tvMaxCostInterval.setText(reportData.getMaxCostInterval());
 
-			AccountRecord ar = magicBoxData.getMaxCost();
+			AccountRecord ar = reportData.getMaxCost();
 			tvAccount.setText(String.valueOf(ar.getAccount()));
 			ivType.setImageResource(ResourceUtils.getImgResIdByResName(ar.getImgResName()));
 			tvType.setText(ar.getTypeName());

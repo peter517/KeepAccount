@@ -1,4 +1,4 @@
-package com.pengjun.ka.activity;
+package com.pengjun.ka.android.activity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -12,12 +12,13 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.pengjun.ka.R;
-import com.pengjun.ka.db.service.ArTypeService;
-import com.pengjun.ka.fragment.ArFragment;
-import com.pengjun.ka.fragment.ArSearchFragment;
-import com.pengjun.ka.fragment.FragmentDirector;
-import com.pengjun.ka.fragment.MagicBoxFragment;
-import com.pengjun.ka.fragment.SettingFragment;
+import com.pengjun.ka.android.fragment.ArFragment;
+import com.pengjun.ka.android.fragment.ArSearchFragment;
+import com.pengjun.ka.android.fragment.FragmentDirector;
+import com.pengjun.ka.android.fragment.MagicBoxFragment;
+import com.pengjun.ka.android.fragment.SettingFragment;
+import com.pengjun.ka.android.service.ReportService;
+import com.pengjun.ka.db.dao.ArTypeDao;
 import com.pengjun.ka.utils.Constants;
 import com.pengjun.ka.utils.ResourceUtils;
 
@@ -46,7 +47,11 @@ public class KaMainActivity extends FragmentActivity {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.keep_account);
 
-		ResourceUtils.getValue("debug");
+		if (ResourceUtils.isServiceRunning(this, ReportService.class.getName()) == false) {
+			Intent newIntent = new Intent(this, ReportService.class);
+			this.startService(newIntent);
+		}
+		ResourceUtils.isServiceRunning(this, ReportService.class.getName());
 		// top bar
 		createTopBar();
 
@@ -61,7 +66,7 @@ public class KaMainActivity extends FragmentActivity {
 		if (firstInstall.getString(Constants.SP_KEY_FIRST_START_APP, "").equals("")) {
 			firstInstall.edit()
 					.putString(Constants.SP_KEY_FIRST_START_APP, Constants.SP_VALUE_FIRST_START_APP).commit();
-			ArTypeService.initTable();
+			ArTypeDao.initTable();
 		}
 
 	}

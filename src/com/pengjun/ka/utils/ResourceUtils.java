@@ -7,9 +7,11 @@ import java.net.NetworkInterface;
 import java.net.SocketException;
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
+import android.app.ActivityManager;
 import android.content.Context;
 import android.graphics.Color;
 import android.net.ConnectivityManager;
@@ -87,6 +89,27 @@ public class ResourceUtils {
 			e.printStackTrace();
 			return null;
 		}
+	}
+
+	public static boolean isServiceRunning(Context context, String className) {
+
+		boolean isRunning = false;
+		ActivityManager activityManager = (ActivityManager) context
+				.getSystemService(Context.ACTIVITY_SERVICE);
+		List<ActivityManager.RunningServiceInfo> serviceList = activityManager.getRunningServices(30);
+
+		if (!(serviceList.size() > 0)) {
+			return false;
+		}
+
+		for (int i = 0; i < serviceList.size(); i++) {
+			if (serviceList.get(i).service.getClassName().equals(className) == true) {
+				isRunning = true;
+				break;
+			}
+		}
+
+		return isRunning;
 	}
 
 	public static boolean CheckNetwork(Context context, boolean isNotify) {

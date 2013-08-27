@@ -1,4 +1,4 @@
-package com.pengjun.ka.activity;
+package com.pengjun.ka.android.activity;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -18,8 +18,8 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import com.pengjun.ka.R;
+import com.pengjun.ka.db.dao.ArTypeDao;
 import com.pengjun.ka.db.model.ArType;
-import com.pengjun.ka.db.service.ArTypeService;
 import com.pengjun.ka.utils.ComponentUtils;
 import com.pengjun.ka.utils.Constants;
 import com.pengjun.ka.utils.ResourceUtils;
@@ -73,7 +73,7 @@ public class AddArTypeActivity extends Activity {
 					return;
 				}
 
-				if (ArTypeService.isTypeNameExsit(etArTypeName.getText().toString())) {
+				if (ArTypeDao.isTypeNameExsit(etArTypeName.getText().toString())) {
 					ComponentUtils.createInfoDialog(AddArTypeActivity.this, "类名称已存在，请重新输入").show();
 					return;
 				}
@@ -85,12 +85,12 @@ public class AddArTypeActivity extends Activity {
 					arType.setImgResName(resNameList.get(selectPos));
 					arType.setCreateDate(TimeUtils.getCurDateStr());
 					arType.setUpdateTime(TimeUtils.getCurTimeStr());
-					ArTypeService.insert(arType);
+					ArTypeDao.insert(arType);
 				} else {
 					arType.setTypeName(etArTypeName.getText().toString());
 					arType.setImgResName(resNameList.get(selectPos));
 					arType.setUpdateTime(TimeUtils.getCurTimeStr());
-					ArTypeService.update(arType);
+					ArTypeDao.update(arType);
 				}
 
 				setResult(RESULT_OK, null);

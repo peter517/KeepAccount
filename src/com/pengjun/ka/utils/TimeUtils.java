@@ -19,9 +19,14 @@ public class TimeUtils {
 	private static DateFormat yearMonthFormat = new SimpleDateFormat(YERA_MONTH_FORMT);
 	private static DateFormat yearFormat = new SimpleDateFormat(YERA_FORMT);
 
+	private final static Calendar calendar = Calendar.getInstance();
+
 	private static Random random = new Random();
 	static {
 		random.setSeed(System.currentTimeMillis());
+
+		long time = System.currentTimeMillis();
+		calendar.setTimeInMillis(time);
 	}
 
 	public static Date string2Date(String dateStr) {
@@ -31,6 +36,25 @@ public class TimeUtils {
 			e.printStackTrace();
 		}
 		return null;
+	}
+
+	public static String getLastMonthOfToDayStr() {
+		calendar.add(Calendar.MONTH, -1);
+		return dateFormat.format(calendar.getTime());
+	}
+
+	public static String getLastDayStr() {
+		calendar.add(Calendar.DAY_OF_MONTH, -1);
+		return dateFormat.format(calendar.getTime());
+	}
+
+	public static Date getCurDate() {
+		return calendar.getTime();
+	}
+
+	public static String getLastMonthStr() {
+		calendar.add(Calendar.MONTH, -1);
+		return yearMonthFormat.format(calendar.getTime());
 	}
 
 	public static Date string2YearMonthDate(String dateStr) {
@@ -53,15 +77,12 @@ public class TimeUtils {
 
 	public static String getCurTimeStr() {
 
-		final Calendar mCalendar = Calendar.getInstance();
-		long time = System.currentTimeMillis();
-		mCalendar.setTimeInMillis(time);
-		int year = mCalendar.get(Calendar.YEAR);
-		int mouth = mCalendar.get(Calendar.MONTH);
-		int day = mCalendar.get(Calendar.DAY_OF_MONTH);
-		int hour = mCalendar.get(Calendar.HOUR);
-		int minute = mCalendar.get(Calendar.MINUTE);
-		int second = mCalendar.get(Calendar.SECOND);
+		int year = calendar.get(Calendar.YEAR);
+		int mouth = calendar.get(Calendar.MONTH);
+		int day = calendar.get(Calendar.DAY_OF_MONTH);
+		int hour = calendar.get(Calendar.HOUR);
+		int minute = calendar.get(Calendar.MINUTE);
+		int second = calendar.get(Calendar.SECOND);
 
 		String curTimeStr = String.format(TIME_STRING_FORMT, year, mouth + 1, day, hour, minute, second);
 
@@ -70,16 +91,25 @@ public class TimeUtils {
 
 	public static String getCurDateStr() {
 
-		final Calendar mCalendar = Calendar.getInstance();
-		long time = System.currentTimeMillis();
-		mCalendar.setTimeInMillis(time);
-		int year = mCalendar.get(Calendar.YEAR);
-		int mouth = mCalendar.get(Calendar.MONTH);
-		int day = mCalendar.get(Calendar.DAY_OF_MONTH);
+		int year = calendar.get(Calendar.YEAR);
+		int mouth = calendar.get(Calendar.MONTH);
+		int day = calendar.get(Calendar.DAY_OF_MONTH);
 
 		String curTimeStr = String.format(DATE_STRING_FORMT, year, mouth + 1, day);
 
 		return curTimeStr;
+	}
+
+	public static String getCurYearStr() {
+		return String.valueOf(calendar.get(Calendar.YEAR));
+	}
+
+	public static String getCurMonthStr() {
+		return String.valueOf(calendar.get(Calendar.MONTH) + 1);
+	}
+
+	public static String getCurDayStr() {
+		return String.valueOf(calendar.get(Calendar.DAY_OF_MONTH));
 	}
 
 	public static String getRandomDateStr() {

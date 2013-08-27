@@ -1,4 +1,4 @@
-package com.pengjun.ka.component;
+package com.pengjun.ka.android.component;
 
 import android.content.Context;
 import android.graphics.Camera;

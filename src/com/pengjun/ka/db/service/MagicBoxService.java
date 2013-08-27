@@ -1,21 +1,22 @@
 package com.pengjun.ka.db.service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.TreeMap;
 
 import com.pengjun.ka.db.model.AccountRecord;
 import com.pengjun.ka.db.model.MagicBoxData;
-import com.pengjun.ka.utils.MathUtils;
+import com.pengjun.ka.utils.NumberUtils;
 import com.pengjun.ka.utils.TimeUtils;
 
 public class MagicBoxService {
-	public static MagicBoxData getTotalCountNum(List<AccountRecord> arList) {
+
+	public static MagicBoxData computeMagicBoxData(List<AccountRecord> arList) {
 
 		double totalCost = 0;
 
-		Map<String, Double> yearMonth2AccountMap = new TreeMap<String, Double>();
-		Map<String, Double> monthMap2Account = new TreeMap<String, Double>();
+		Map<String, Double> yearMonth2AccountMap = new HashMap<String, Double>();
+		Map<String, Double> month2AccountMap = new HashMap<String, Double>();
 
 		AccountRecord maxCostAr = new AccountRecord();
 		maxCostAr.setAccount(Float.MIN_VALUE);
@@ -40,11 +41,11 @@ public class MagicBoxService {
 			}
 
 			String month = TimeUtils.String2DateStrArr(ar.getCreateDate())[1];
-			account = monthMap2Account.get(month);
+			account = month2AccountMap.get(month);
 			if (account == null) {
 				account = 0.0;
 			}
-			monthMap2Account.put(month, account + ar.getAccount());
+			month2AccountMap.put(month, account + ar.getAccount());
 
 			String yearMonth = TimeUtils.String2YearMonthDateStr(ar.getCreateDate());
 			account = yearMonth2AccountMap.get(yearMonth);
@@ -65,14 +66,14 @@ public class MagicBoxService {
 		}
 
 		magicBoxData.setTotalCountNum(arList.size());
-		magicBoxData.setTotalCost(MathUtils.formatDouble(totalCost));
-		magicBoxData.setAvgCost(MathUtils.formatDouble(totalCost / arList.size()));
-		magicBoxData.setAvgCostMonth(MathUtils.formatDouble(totalCost / yearMonth2AccountMap.size()));
+		magicBoxData.setTotalCost(NumberUtils.formatDouble(totalCost));
+		magicBoxData.setAvgCost(NumberUtils.formatDouble(totalCost / arList.size()));
+		magicBoxData.setAvgCostMonth(NumberUtils.formatDouble(totalCost / yearMonth2AccountMap.size()));
 		magicBoxData.setMaxCost(maxCostAr);
 
 		String maxCostMonthStr = null;
 		Double maxCostMonth = Double.MIN_VALUE;
-		for (Map.Entry<String, Double> entry : monthMap2Account.entrySet()) {
+		for (Map.Entry<String, Double> entry : month2AccountMap.entrySet()) {
 			if (maxCostMonth < entry.getValue()) {
 				maxCostMonth = entry.getValue();
 				maxCostMonthStr = entry.getKey();

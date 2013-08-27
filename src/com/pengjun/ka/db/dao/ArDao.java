@@ -1,4 +1,4 @@
-package com.pengjun.ka.db.service;
+package com.pengjun.ka.db.dao;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -10,12 +10,12 @@ import com.j256.ormlite.stmt.DeleteBuilder;
 import com.j256.ormlite.stmt.QueryBuilder;
 import com.j256.ormlite.stmt.Where;
 import com.j256.ormlite.table.TableUtils;
-import com.pengjun.ka.activity.KaApplication;
+import com.pengjun.ka.android.activity.KaApplication;
 import com.pengjun.ka.db.model.AccountRecord;
 import com.pengjun.ka.db.model.ArSearchCondition;
 import com.pengjun.ka.utils.Constants;
 
-public class ArService {
+public class ArDao {
 
 	private static AndroidConnectionSource cs = KaApplication.getAndroidConnectionSource();
 
@@ -168,7 +168,7 @@ public class ArService {
 			// type
 			if (arSC.getType() != null && !arSC.getType().equals("")) {
 				where.and();
-				where.eq(AccountRecord.COL_TYPE_ID, ArTypeService.getIdByArTpye(arSC.getType()));
+				where.eq(AccountRecord.COL_TYPE_ID, ArTypeDao.getIdByArTpye(arSC.getType()));
 			}
 
 			// date

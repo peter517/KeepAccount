@@ -15,7 +15,7 @@ import android.view.View;
 
 import com.pengjun.ka.db.model.AccountRecord;
 import com.pengjun.ka.utils.Constants.ChartType;
-import com.pengjun.ka.utils.MathUtils;
+import com.pengjun.ka.utils.NumberUtils;
 import com.pengjun.ka.utils.TimeUtils;
 
 /**
@@ -109,7 +109,7 @@ public class ArLineChart extends BaseChart {
 			}
 			maxValue = Math.max(entry.getValue(), maxValue);
 			minValue = Math.min(entry.getValue(), minValue);
-			series.add(entry.getKey(), MathUtils.formatDouble(entry.getValue()));
+			series.add(entry.getKey(), NumberUtils.formatDouble(entry.getValue()));
 			pointCnt++;
 		}
 		dataset.addSeries(series);

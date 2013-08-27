@@ -1,4 +1,4 @@
-package com.pengjun.ka.fragment;
+package com.pengjun.ka.android.fragment;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -19,9 +19,9 @@ import android.widget.EditText;
 import android.widget.Spinner;
 
 import com.pengjun.ka.R;
-import com.pengjun.ka.activity.ArSearchResultActivity;
+import com.pengjun.ka.android.activity.ArSearchResultActivity;
+import com.pengjun.ka.db.dao.ArTypeDao;
 import com.pengjun.ka.db.model.ArSearchCondition;
-import com.pengjun.ka.db.service.ArTypeService;
 import com.pengjun.ka.utils.ComponentUtils;
 import com.pengjun.ka.utils.Constants;
 import com.pengjun.ka.utils.TimeUtils;
@@ -71,7 +71,7 @@ public class ArSearchFragment extends Fragment {
 
 		List<String> arTypeNameList = new ArrayList<String>();
 		arTypeNameList.add(ALL_AR_TYPE);
-		arTypeNameList.addAll(ArTypeService.queryAllArTypeName());
+		arTypeNameList.addAll(ArTypeDao.queryAllArTypeName());
 
 		spArTypeName = (Spinner) view.findViewById(R.id.spArTypeName);
 		ArrayAdapter<String> arTypeNameAdapter = new ArrayAdapter<String>(getActivity(),

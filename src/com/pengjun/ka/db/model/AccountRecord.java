@@ -6,7 +6,7 @@ import java.util.Map;
 
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
-import com.pengjun.ka.db.service.ArTypeService;
+import com.pengjun.ka.db.dao.ArTypeDao;
 
 @DatabaseTable
 public class AccountRecord implements Serializable {
@@ -77,18 +77,18 @@ public class AccountRecord implements Serializable {
 		// even typeName is deleted, the typeId could not reused
 		String typeName = id2TypeMap.get(typeId);
 		if (typeName == null) {
-			typeName = ArTypeService.getArTpyeNameById(typeId);
+			typeName = ArTypeDao.getArTpyeNameById(typeId);
 			id2TypeMap.put(typeId, typeName);
 		}
 		return typeName;
 	}
 
 	public void setTypeName(String arTpye) {
-		typeId = ArTypeService.getIdByArTpye(arTpye);
+		typeId = ArTypeDao.getIdByArTpye(arTpye);
 	}
 
 	public String getImgResName() {
-		return ArTypeService.getImgResNameById(typeId);
+		return ArTypeDao.getImgResNameById(typeId);
 	}
 
 	public String getCreateDate() {

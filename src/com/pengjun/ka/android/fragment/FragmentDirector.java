@@ -1,4 +1,4 @@
-package com.pengjun.ka.fragment;
+package com.pengjun.ka.android.fragment;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;

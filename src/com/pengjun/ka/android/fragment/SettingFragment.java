@@ -1,4 +1,4 @@
-package com.pengjun.ka.fragment;
+package com.pengjun.ka.android.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,8 +10,8 @@ import android.widget.Button;
 import android.widget.RelativeLayout;
 
 import com.pengjun.ka.R;
-import com.pengjun.ka.activity.BackupActivity;
-import com.pengjun.ka.activity.ManageArTypeActivity;
+import com.pengjun.ka.android.activity.BackupActivity;
+import com.pengjun.ka.android.activity.ManageArTypeActivity;
 import com.pengjun.ka.utils.ComponentUtils;
 import com.pengjun.ka.utils.ResourceUtils;
 
