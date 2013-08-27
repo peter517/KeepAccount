@@ -4,8 +4,9 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     
-    <dimen name="bar_img_width">48dp</dimen>
+    <dimen name="top_bar_img_width">48dp</dimen>
     <dimen name="bar_heigth">48dp</dimen>
     <dimen name="text_heigth">48dp</dimen>
+    <dimen name="bottom_bar_img_width">48dp</dimen>
 
 </resources>

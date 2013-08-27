@@ -13,9 +13,8 @@
 
         <ImageButton
             android:id="@+id/ibAddAccount"
-            android:layout_width="@dimen/bar_img_width"
+            android:layout_width="@dimen/top_bar_img_width"
             android:layout_height="fill_parent"
-           
             android:layout_alignParentLeft="true"
             android:background="@drawable/menu_btn_selector_xml"
             android:src="@drawable/menu_btn_add_ar" />
@@ -30,10 +29,10 @@
 
         <ImageButton
             android:id="@+id/ibMenuTopLeft"
-            android:layout_width="@dimen/bar_img_width"
+            android:layout_width="@dimen/top_bar_img_width"
             android:layout_height="fill_parent"
             android:layout_alignParentRight="true"
-            android:background="@drawable/menu_btn_selector_xml"/>
+            android:background="@drawable/menu_btn_selector_xml" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -42,6 +41,7 @@
         android:layout_height="fill_parent"
         android:layout_above="@+id/llTab"
         android:layout_below="@+id/llToolBar" >
+
         <RelativeLayout
             android:id="@+id/mainConent"
             android:layout_width="fill_parent"
@@ -56,56 +56,96 @@
         android:background="@drawable/bottom_bar"
         android:orientation="horizontal" >
 
-        <ImageButton
-            android:id="@+id/ibHome"
+        <FrameLayout
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
-            android:layout_gravity="left"
-            android:background="@android:color/transparent"
             android:layout_weight="1"
-            android:focusableInTouchMode="true"
-            android:src="@drawable/home_selector_xml"/>
+            android:orientation="vertical" >
 
-        <RelativeLayout
+            <ImageButton
+                android:id="@+id/ibHome"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@android:color/transparent"
+                android:focusableInTouchMode="true"
+                android:src="@drawable/home_selector_xml" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|bottom"
+                android:gravity="center"
+                android:text="主页" />
+        </FrameLayout>
+
+        <FrameLayout
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
             android:layout_weight="1"
-            android:orientation="horizontal" >
+            android:orientation="vertical" >
 
             <ImageButton
                 android:id="@+id/ibSearch"
                 android:layout_width="wrap_content"
-                android:layout_height="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:background="@android:color/transparent"
-                android:layout_centerInParent="true"
                 android:focusableInTouchMode="true" />
-        </RelativeLayout>
 
-        <RelativeLayout
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|bottom"
+                android:gravity="center"
+                android:text="查找" />
+        </FrameLayout>
+
+        <FrameLayout
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
             android:layout_weight="1"
-            android:orientation="horizontal" >
+            android:orientation="vertical" >
 
             <ImageButton
                 android:id="@+id/ibMagicbox"
                 android:layout_width="wrap_content"
-                android:layout_height="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:background="@android:color/transparent"
-                android:layout_centerInParent="true"
                 android:focusableInTouchMode="true"
                 android:src="@drawable/magicbox_selector_xml" />
-        </RelativeLayout>
 
-        <ImageButton
-            android:id="@+id/ibSettings"
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|bottom"
+                android:gravity="center"
+                android:text="魔方" />
+        </FrameLayout>
+
+        <FrameLayout
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
-            android:layout_gravity="right"
-            android:focusableInTouchMode="true"
-            android:background="@android:color/transparent"
             android:layout_weight="1"
-            android:src="@drawable/settings_selector_xml" />
+            android:orientation="vertical" >
+
+            <ImageButton
+                android:id="@+id/ibSettings"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@android:color/transparent"
+                android:focusableInTouchMode="true"
+                android:src="@drawable/settings_selector_xml" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|bottom"
+                android:gravity="center"
+                android:text="设置" />
+        </FrameLayout>
     </LinearLayout>
 
 </RelativeLayout>

@@ -33,7 +33,7 @@
                 android:numeric="decimal" />
 
             <ImageView
-                android:layout_width="@dimen/bar_img_width"
+                android:layout_width="@dimen/top_bar_img_width"
                 android:layout_height="fill_parent"
                 android:src="@drawable/arrow_right" />
 
@@ -100,7 +100,7 @@
             </Button>
 
             <ImageView
-                android:layout_width="@dimen/bar_img_width"
+                android:layout_width="@dimen/top_bar_img_width"
                 android:layout_height="fill_parent"
                 android:src="@drawable/arrow_right" />
 

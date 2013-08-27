@@ -12,7 +12,7 @@
 
         <ImageButton
             android:id="@+id/btCancel"
-            android:layout_width="@dimen/bar_img_width"
+            android:layout_width="@dimen/top_bar_img_width"
             android:layout_height="fill_parent"
             android:layout_alignParentLeft="true"
             android:background="@drawable/menu_btn_selector_xml"
@@ -27,7 +27,7 @@
 
         <ImageButton
             android:id="@+id/btSave"
-            android:layout_width="@dimen/bar_img_width"
+            android:layout_width="@dimen/top_bar_img_width"
             android:layout_height="fill_parent"
             android:layout_alignParentRight="true"
             android:background="@drawable/menu_btn_selector_xml"
