@@ -1,5 +1,6 @@
 package com.pengjun.ka.utils;
 
+import java.io.InputStream;
 import java.lang.reflect.Field;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
@@ -7,6 +8,7 @@ import java.net.SocketException;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -19,12 +21,14 @@ import com.pengjun.ka.R;
 
 public class ResourceUtils {
 
-	public static int[] colors = new int[] { Color.BLUE, Color.MAGENTA, Color.DKGRAY, Color.CYAN,
+	public static final String IS_DEBUG = "debug";
+
+	public static int[] COLOR_ARR = new int[] { Color.BLUE, Color.MAGENTA, Color.DKGRAY, Color.CYAN,
 			Color.GREEN, Color.GRAY, Color.RED, Color.WHITE, Color.LTGRAY };
 	// res
 	public static final String RES_IMAGE_PREFIX = "type";
 
-	public static Map<String, Integer> imgResName2ResId = new HashMap<String, Integer>();
+	private static Map<String, Integer> imgResName2ResId = new HashMap<String, Integer>();
 
 	static {
 		Field[] fields = R.drawable.class.getDeclaredFields();
@@ -44,6 +48,45 @@ public class ResourceUtils {
 
 	public static int getImgResIdByResName(String imgResName) {
 		return imgResName2ResId.get(imgResName);
+	}
+
+	private static Properties props = new Properties();
+
+	static {
+		try {
+			InputStream in = ResourceUtils.class.getResourceAsStream("/setting.properties");
+			props.load(in);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	public static boolean getBoolean(String key, boolean defaultValue) {
+		String value = (String) props.get(key);
+		return value == null ? defaultValue : Boolean.valueOf(value);
+	}
+
+	public static String getString(String key, String defaultValue) {
+		String value = (String) props.get(key);
+		return value == null ? defaultValue : value;
+	}
+
+	public static int getInteger(String key, int defaultValue) {
+		String value = (String) props.get(key);
+		return value == null ? defaultValue : Integer.valueOf(value);
+	}
+
+	public static String getValue(String key) {
+
+		try {
+			String value = props.getProperty(key);
+			MyDebug.printFromPJ(value);
+			return value;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 	public static boolean CheckNetwork(Context context, boolean isNotify) {

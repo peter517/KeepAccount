@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.os.Handler;
 
 import com.pengjun.ka.R;
-import com.pengjun.ka.utils.Constants;
+import com.pengjun.ka.utils.ResourceUtils;
 
 public class LoadingActivity extends Activity {
 
@@ -25,7 +25,7 @@ public class LoadingActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		if (Constants.IS_DEBUG) {
+		if (ResourceUtils.getBoolean(ResourceUtils.IS_DEBUG, false)) {
 			handler.sendEmptyMessageDelayed(GOTO_MAIN, 0);
 		} else {
 			handler.sendEmptyMessageDelayed(GOTO_MAIN, COVER_EXIST_TIME);

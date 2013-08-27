@@ -19,6 +19,7 @@ import com.pengjun.ka.fragment.FragmentDirector;
 import com.pengjun.ka.fragment.MagicBoxFragment;
 import com.pengjun.ka.fragment.SettingFragment;
 import com.pengjun.ka.utils.Constants;
+import com.pengjun.ka.utils.ResourceUtils;
 
 public class KaMainActivity extends FragmentActivity {
 
@@ -45,6 +46,7 @@ public class KaMainActivity extends FragmentActivity {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.keep_account);
 
+		ResourceUtils.getValue("debug");
 		// top bar
 		createTopBar();
 

@@ -56,7 +56,7 @@ public class ArPieChart extends BaseChart {
 		int[] colorArr = new int[name2CostMap.size()];
 		int k = 0;
 		for (Map.Entry<String, Double> entry : name2CostMap.entrySet()) {
-			colorArr[k] = ResourceUtils.colors[k % ResourceUtils.colors.length];
+			colorArr[k] = ResourceUtils.COLOR_ARR[k % ResourceUtils.COLOR_ARR.length];
 			costTotal += entry.getValue();
 			k++;
 		}
