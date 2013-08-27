@@ -118,9 +118,9 @@
         android:id="@+id/btArSearch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/rlDate"
+        android:layout_marginBottom="40dp"
+        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="50dp"
         android:background="@drawable/btn_search_selector_xml" >
     </Button>
 
