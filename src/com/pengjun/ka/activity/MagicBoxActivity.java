@@ -32,17 +32,17 @@ public class MagicBoxActivity extends Activity {
 
 	private MagicBoxData magicBoxData;
 
-	TextView tvTotalCountNum;
-	TextView tvTotalCost;
-	TextView tvAvgCost;
-	TextView tvAvgCostMonth;
-	TextView tvMaxCostMonth;
-	TextView tvMaxCostInterval;
+	private TextView tvTotalCountNum;
+	private TextView tvTotalCost;
+	private TextView tvAvgCost;
+	private TextView tvAvgCostMonth;
+	private TextView tvMaxCostMonth;
+	private TextView tvMaxCostInterval;
 
-	TextView tvAccount;
-	ImageView ivType;
-	TextView tvType;
-	TextView tvDate;
+	private TextView tvAccount;
+	private ImageView ivType;
+	private TextView tvType;
+	private TextView tvDate;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -113,7 +113,7 @@ public class MagicBoxActivity extends Activity {
 
 			AccountRecord ar = magicBoxData.getMaxCost();
 			tvAccount.setText(String.valueOf(ar.getAccount()));
-			ivType.setImageResource(ResourceUtils.getImgResIdByName(ar.getImgResName()));
+			ivType.setImageResource(ResourceUtils.getImgResIdByResName(ar.getImgResName()));
 			tvType.setText(ar.getTypeName());
 			tvDate.setText(ar.getCreateDate());
 

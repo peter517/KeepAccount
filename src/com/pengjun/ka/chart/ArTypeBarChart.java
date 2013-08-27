@@ -44,13 +44,13 @@ public class ArTypeBarChart extends BaseChart {
 
 		// compute each date account
 		Map<String, Double> map = new HashMap<String, Double>();
-		Double count = null;
+		Double account = null;
 		for (AccountRecord ar : arList) {
-			count = map.get(ar.getTypeName());
-			if (count == null) {
-				count = 0.0;
+			account = map.get(ar.getTypeName());
+			if (account == null) {
+				account = 0.0;
 			}
-			map.put(ar.getTypeName(), count + ar.getAccount());
+			map.put(ar.getTypeName(), account + ar.getAccount());
 		}
 
 		renderer = createXYChartRenderer("种类", "金额");

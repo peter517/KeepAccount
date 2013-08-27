@@ -19,7 +19,7 @@ public class ArScatterChart extends BaseChart {
 	private String titles;
 	private XYMultipleSeriesRenderer renderer;
 	private double[] valueArr;
-	int[] dayArr;
+	private int[] dayArr;
 
 	@Override
 	public void setZoomEnabled(boolean isZoomEnabled) {

@@ -5,14 +5,12 @@ import java.util.List;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -26,7 +24,6 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.pengjun.ka.R;
 import com.pengjun.ka.db.model.ArType;
@@ -52,7 +49,7 @@ public class ManageArTypeActivity extends Activity {
 
 			switch (msg.what) {
 			case MSG_LISTVIEW_TO_TOP:
-				// if add the new ArType, set ListView to the top
+				// if add or update the new ArType, set ListView to the top
 				lvArType.setSelectionFromTop(0, 0);
 				break;
 			default:
@@ -111,10 +108,10 @@ public class ManageArTypeActivity extends Activity {
 			public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
 
 				if (arTypeList.size() == 1) {
-					ComponentUtils.createAlertDialog(ManageArTypeActivity.this, "至少要有一个分类").show();
+					ComponentUtils.createInfoDialog(ManageArTypeActivity.this, "至少要有一个分类").show();
 					return false;
 				}
-				// delete account record
+
 				selectPos = position;
 				AlertDialog.Builder builder = new AlertDialog.Builder(ManageArTypeActivity.this);
 				builder.setIcon(R.drawable.mark_delete);
@@ -235,11 +232,6 @@ public class ManageArTypeActivity extends Activity {
 
 			hideProgress();
 
-			if (tempArList == null || tempArList.size() == 0) {
-				Toast.makeText(ManageArTypeActivity.this, "没有分类，请新建", Constants.TOAST_EXSIT_TIME).show();
-				return;
-			}
-
 			arTypeAdapter.notifyDataSetChanged();
 			if (isSetListViewToTop) {
 				ManageArTypeActivity.this.setListViewToTop();
@@ -250,7 +242,6 @@ public class ManageArTypeActivity extends Activity {
 	}
 
 	public class ArTypeAdapter extends BaseAdapter {
-		LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
 		public int getCount() {
 			return arTypeList.size();
@@ -269,7 +260,8 @@ public class ManageArTypeActivity extends Activity {
 			AccountHolder holder = new AccountHolder();
 			if (convertView == null) {
 
-				convertView = inflater.inflate(R.layout.ar_type_listview_item, null);
+				convertView = ComponentUtils.getLayoutInflater(ManageArTypeActivity.this).inflate(
+						R.layout.ar_type_listview_item, null);
 
 				holder.ivType = (ImageView) convertView.findViewById(R.id.ivType);
 				holder.createDate = (TextView) convertView.findViewById(R.id.tvCreateTime);
@@ -281,7 +273,7 @@ public class ManageArTypeActivity extends Activity {
 			}
 
 			ArType arType = arTypeList.get(position);
-			holder.ivType.setImageResource(ResourceUtils.getImgResIdByName(arType.getImgResName()));
+			holder.ivType.setImageResource(ResourceUtils.getImgResIdByResName(arType.getImgResName()));
 			holder.tvType.setText(arType.getTypeName());
 			holder.createDate.setText(arType.getCreateDate());
 

@@ -30,10 +30,10 @@ public class ArChartDisplayActivity extends Activity {
 
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		// getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-		// WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
+		// arList maybe too large to transfers by Intent
 		arList = ArChartActivity.arList;
+
 		chartType = (ChartType) getIntent().getExtras().getSerializable(Constants.INTENT_AR_CHART_TYPE);
 
 		setContentView(R.layout.ar_chart_display);
@@ -64,13 +64,14 @@ public class ArChartDisplayActivity extends Activity {
 
 			baseChart = ChartFactory.createChart(chartType);
 			baseChart.compute(arList);
-
 			return null;
 		}
 
 		@Override
 		protected void onPostExecute(Void v) {
+			// must done by main thread
 			rlChart.addView(baseChart.getView(ArChartDisplayActivity.this));
+
 			hideProgress();
 			super.onPostExecute(v);
 		}

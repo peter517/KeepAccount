@@ -10,7 +10,7 @@ import com.pengjun.ka.utils.Constants;
 
 public class LoadingActivity extends Activity {
 
-	private static final int GO_MAIN = 0;
+	private static final int GOTO_MAIN = 0;
 	private static final int COVER_EXIST_TIME = 3000;
 
 	Handler handler = new Handler() {
@@ -26,9 +26,9 @@ public class LoadingActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		if (Constants.IS_DEBUG) {
-			handler.sendEmptyMessageDelayed(GO_MAIN, 0);
+			handler.sendEmptyMessageDelayed(GOTO_MAIN, 0);
 		} else {
-			handler.sendEmptyMessageDelayed(GO_MAIN, COVER_EXIST_TIME);
+			handler.sendEmptyMessageDelayed(GOTO_MAIN, COVER_EXIST_TIME);
 		}
 
 		setContentView(R.layout.enter_cover);
@@ -37,7 +37,7 @@ public class LoadingActivity extends Activity {
 
 	@Override
 	protected void onDestroy() {
-		handler.removeMessages(GO_MAIN);
+		handler.removeMessages(GOTO_MAIN);
 		super.onDestroy();
 	}
 }

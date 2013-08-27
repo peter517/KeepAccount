@@ -19,7 +19,6 @@ import com.pengjun.ka.R;
 import com.pengjun.ka.db.model.AccountRecord;
 import com.pengjun.ka.db.service.ArService;
 import com.pengjun.ka.db.service.ArTypeService;
-import com.pengjun.ka.utils.CollectionUtils;
 import com.pengjun.ka.utils.ComponentUtils;
 import com.pengjun.ka.utils.Constants;
 import com.pengjun.ka.utils.MathUtils;
@@ -27,6 +26,7 @@ import com.pengjun.ka.utils.TimeUtils;
 
 public class AddArActivity extends Activity {
 
+	private static final int MAX_COUNT_PER_AR = 10000000;
 	private EditText etAccount = null;
 	private Spinner spArTypeName = null;
 	private DatePicker dpCreateDate = null;
@@ -38,16 +38,14 @@ public class AddArActivity extends Activity {
 
 	private AccountRecord ar;
 
-	List<String> arTypeNameList = new ArrayList<String>();
-	ArrayAdapter<String> arTypeNameAdapter;
+	private List<String> arTypeNameList = new ArrayList<String>();
+	private ArrayAdapter<String> arTypeNameAdapter;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		// getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-		// WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		setContentView(R.layout.add_ar);
 
 		arTypeNameList = ArTypeService.queryAllArTypeName();
@@ -90,12 +88,12 @@ public class AddArActivity extends Activity {
 					Float account = Float.valueOf(etAccount.getText().toString());
 					if (account.isInfinite() || account.isNaN()) {
 						etAccount.setText("");
-						ComponentUtils.createAlertDialog(AddArActivity.this, "输入金额无效").show();
+						ComponentUtils.createInfoDialog(AddArActivity.this, "输入金额无效").show();
 						return;
 					}
-					if (account >= 10000000) {
+					if (account > MAX_COUNT_PER_AR) {
 						etAccount.setText("");
-						ComponentUtils.createAlertDialog(AddArActivity.this, "单笔记账金额不能超过1千万").show();
+						ComponentUtils.createInfoDialog(AddArActivity.this, "单笔记账金额不能超过1千万").show();
 						return;
 					}
 
@@ -112,7 +110,7 @@ public class AddArActivity extends Activity {
 					setResult(RESULT_OK, null);
 					finish();
 				} else {
-					ComponentUtils.createAlertDialog(AddArActivity.this, "请输入金额").show();
+					ComponentUtils.createInfoDialog(AddArActivity.this, "请输入金额").show();
 				}
 			}
 
@@ -151,7 +149,8 @@ public class AddArActivity extends Activity {
 
 	private void putArToView(AccountRecord ar) {
 		etAccount.setText(String.valueOf((ar.getAccount())));
-		spArTypeName.setSelection(CollectionUtils.getPosFromList(arTypeNameList, ar.getTypeName()));
+
+		spArTypeName.setSelection(arTypeNameList.indexOf(ar.getTypeName()));
 		etComment.setText(String.valueOf((ar.getComment())));
 
 		String[] date = TimeUtils.String2DateStrArr(ar.getCreateDate());

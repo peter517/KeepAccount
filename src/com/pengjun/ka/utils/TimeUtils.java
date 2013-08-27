@@ -8,25 +8,21 @@ import java.util.Random;
 
 public class TimeUtils {
 
-	public static final String TIME_FORMT = "%d-%02d-%02d-%02d-%02d-%02d";
-	public static final String DATE_FORMT = "%d-%02d-%02d";
-	public static final String TO_DATE_FORMT = "yyyy-MM-dd";
-	public static final String TO_YERA_MONTH_FORMT = "yyyy-MM";
-	public static final String TO_YERA_FORMT = "yyyy";
+	public static final String TIME_STRING_FORMT = "%d-%02d-%02d-%02d-%02d-%02d";
+	public static final String DATE_STRING_FORMT = "%d-%02d-%02d";
+	public static final String DATE_FORMT = "yyyy-MM-dd";
+	public static final String YERA_MONTH_FORMT = "yyyy-MM";
+	public static final String YERA_FORMT = "yyyy";
 	public static final String TIME_SEPARATOR = "-";
 
-	private static DateFormat dateFormat = new SimpleDateFormat(TO_DATE_FORMT);
-	private static DateFormat yearMonthFormat = new SimpleDateFormat(TO_YERA_MONTH_FORMT);
-	private static DateFormat yearFormat = new SimpleDateFormat(TO_YERA_FORMT);
+	private static DateFormat dateFormat = new SimpleDateFormat(DATE_FORMT);
+	private static DateFormat yearMonthFormat = new SimpleDateFormat(YERA_MONTH_FORMT);
+	private static DateFormat yearFormat = new SimpleDateFormat(YERA_FORMT);
 
 	private static Random random = new Random();
 	static {
 		random.setSeed(System.currentTimeMillis());
 	}
-
-	// public static Date string2Date(String dateStr) {
-	// return Date.valueOf(dateStr);
-	// }
 
 	public static Date string2Date(String dateStr) {
 		try {
@@ -37,8 +33,7 @@ public class TimeUtils {
 		return null;
 	}
 
-	public static Date string2YearMonth(String dateStr) {
-		yearMonthFormat = new SimpleDateFormat(TO_YERA_MONTH_FORMT);
+	public static Date string2YearMonthDate(String dateStr) {
 		try {
 			return yearMonthFormat.parse(dateStr);
 		} catch (Exception e) {
@@ -47,7 +42,7 @@ public class TimeUtils {
 		return null;
 	}
 
-	public static Date string2Year(String dateStr) {
+	public static Date string2YearDate(String dateStr) {
 		try {
 			return yearFormat.parse(dateStr);
 		} catch (Exception e) {
@@ -68,7 +63,7 @@ public class TimeUtils {
 		int minute = mCalendar.get(Calendar.MINUTE);
 		int second = mCalendar.get(Calendar.SECOND);
 
-		String curTimeStr = String.format(TIME_FORMT, year, mouth + 1, day, hour, minute, second);
+		String curTimeStr = String.format(TIME_STRING_FORMT, year, mouth + 1, day, hour, minute, second);
 
 		return curTimeStr;
 	}
@@ -82,13 +77,13 @@ public class TimeUtils {
 		int mouth = mCalendar.get(Calendar.MONTH);
 		int day = mCalendar.get(Calendar.DAY_OF_MONTH);
 
-		String curTimeStr = String.format(DATE_FORMT, year, mouth + 1, day);
+		String curTimeStr = String.format(DATE_STRING_FORMT, year, mouth + 1, day);
 
 		return curTimeStr;
 	}
 
 	public static String getRandomDateStr() {
-		return String.format(DATE_FORMT, 2000 + random.nextInt(13), 1 + random.nextInt(12),
+		return String.format(DATE_STRING_FORMT, 2000 + random.nextInt(13), 1 + random.nextInt(12),
 				1 + random.nextInt(30));
 	}
 
@@ -102,7 +97,7 @@ public class TimeUtils {
 
 	public static String getRandomTimeStr() {
 
-		return String.format(TIME_FORMT, 2000 + random.nextInt(13), 1 + random.nextInt(12),
+		return String.format(TIME_STRING_FORMT, 2000 + random.nextInt(13), 1 + random.nextInt(12),
 				1 + random.nextInt(30), 1 + random.nextInt(24), 1 + random.nextInt(60),
 				1 + random.nextInt(60));
 	}
@@ -112,12 +107,12 @@ public class TimeUtils {
 		return date;
 	}
 
-	public static String getYearMouthFromDateStr(String dateStr) {
+	public static String String2YearMonthDateStr(String dateStr) {
 		String[] date = String2DateStrArr(dateStr);
 		return date[0] + "-" + date[1];
 	}
 
-	public static String getYearFromDateStr(String dateStr) {
+	public static String String2YearDateStr(String dateStr) {
 		String[] date = String2DateStrArr(dateStr);
 		return date[0];
 	}

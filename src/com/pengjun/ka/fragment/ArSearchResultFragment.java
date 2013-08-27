@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -32,6 +31,7 @@ import com.pengjun.ka.activity.ArChartActivity;
 import com.pengjun.ka.db.model.AccountRecord;
 import com.pengjun.ka.db.model.ArSearchCondition;
 import com.pengjun.ka.db.service.ArService;
+import com.pengjun.ka.utils.ComponentUtils;
 import com.pengjun.ka.utils.Constants;
 import com.pengjun.ka.utils.MyDebug;
 import com.pengjun.ka.utils.ResourceUtils;
@@ -69,21 +69,6 @@ public class ArSearchResultFragment extends Fragment {
 			}
 		}
 	};
-
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-	}
-
-	@Override
-	public void onResume() {
-		super.onResume();
-	}
-
-	@Override
-	public void onDestroy() {
-		super.onDestroy();
-	}
 
 	public boolean hasSearchResult() {
 		return arList.size() != 0;
@@ -319,8 +304,6 @@ public class ArSearchResultFragment extends Fragment {
 	}
 
 	public class ArLvAdapter extends BaseAdapter {
-		LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(
-				Context.LAYOUT_INFLATER_SERVICE);
 
 		public int getCount() {
 			return arList.size();
@@ -339,7 +322,8 @@ public class ArSearchResultFragment extends Fragment {
 			AccountHolder holder = new AccountHolder();
 			if (convertView == null) {
 
-				convertView = inflater.inflate(R.layout.ar_listview_item, null);
+				convertView = ComponentUtils.getLayoutInflater(getActivity()).inflate(
+						R.layout.ar_listview_item, null);
 
 				holder.account = (TextView) convertView.findViewById(R.id.tvCost);
 				holder.ivType = (ImageView) convertView.findViewById(R.id.ivType);
@@ -354,7 +338,7 @@ public class ArSearchResultFragment extends Fragment {
 			// fill content
 			AccountRecord ar = arList.get(position);
 			holder.account.setText(String.valueOf(ar.getAccount()));
-			holder.ivType.setImageResource(ResourceUtils.getImgResIdByName(ar.getImgResName()));
+			holder.ivType.setImageResource(ResourceUtils.getImgResIdByResName(ar.getImgResName()));
 			holder.tvType.setText(ar.getTypeName());
 			holder.date.setText(ar.getCreateDate());
 

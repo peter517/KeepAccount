@@ -58,6 +58,7 @@ public class GalleryFlow extends Gallery {
 	}
 
 	// 控制gallery中每个图片的旋转(重写的gallery中方法)
+	@Override
 	protected boolean getChildStaticTransformation(View child, Transformation t) {
 		// 取得当前子view的半径值
 		final int childCenter = getCenterOfView(child);

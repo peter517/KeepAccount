@@ -20,15 +20,6 @@ public class MagicBoxFragment extends Fragment {
 	GalleryFlow gfChart;
 	Button btOpenMagicBox;
 
-	// ImageView ivMagicBox;
-	// TextView tvTilte;
-	// TextView tvTilte1;
-
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-	}
-
 	public static MagicBoxFragment instance = null;
 
 	public static MagicBoxFragment newInstance() {

@@ -50,42 +50,42 @@ public class ArLineChart extends BaseChart {
 
 		// compute each date account
 		Map<Date, Double> map = new TreeMap<Date, Double>();
-		Double count = null;
+		Double account = null;
 		switch (chartType) {
 		case LineDay:
 			for (AccountRecord ar : arList) {
 
 				Date date = TimeUtils.string2Date(ar.getCreateDate());
-				count = map.get(date);
-				if (count == null) {
-					count = 0.0;
+				account = map.get(date);
+				if (account == null) {
+					account = 0.0;
 				}
-				map.put(date, count + ar.getAccount());
+				map.put(date, account + ar.getAccount());
 			}
 			title = "每天花费总额曲线图";
 			break;
 		case LineMonth:
 			for (AccountRecord ar : arList) {
 
-				Date yearMonth = TimeUtils.string2YearMonth(TimeUtils.getYearMouthFromDateStr(ar
+				Date yearMonth = TimeUtils.string2YearMonthDate(TimeUtils.String2YearMonthDateStr(ar
 						.getCreateDate()));
-				count = map.get(yearMonth);
-				if (count == null) {
-					count = 0.0;
+				account = map.get(yearMonth);
+				if (account == null) {
+					account = 0.0;
 				}
-				map.put(yearMonth, count + ar.getAccount());
+				map.put(yearMonth, account + ar.getAccount());
 			}
 			title = "每月花费总额曲线图";
 			break;
 		case LineYear:
 			for (AccountRecord ar : arList) {
 
-				Date year = TimeUtils.string2Year(TimeUtils.getYearFromDateStr(ar.getCreateDate()));
-				count = map.get(year);
-				if (count == null) {
-					count = 0.0;
+				Date year = TimeUtils.string2YearDate(TimeUtils.String2YearDateStr(ar.getCreateDate()));
+				account = map.get(year);
+				if (account == null) {
+					account = 0.0;
 				}
-				map.put(year, count + ar.getAccount());
+				map.put(year, account + ar.getAccount());
 			}
 			title = "每年花费总额曲线图";
 			break;
@@ -156,13 +156,13 @@ public class ArLineChart extends BaseChart {
 		View view = null;
 		switch (chartType) {
 		case LineDay:
-			view = ChartFactory.getTimeChartView(context, dataset, renderer, TimeUtils.TO_DATE_FORMT);
+			view = ChartFactory.getTimeChartView(context, dataset, renderer, TimeUtils.DATE_FORMT);
 			break;
 		case LineMonth:
-			view = ChartFactory.getTimeChartView(context, dataset, renderer, TimeUtils.TO_YERA_MONTH_FORMT);
+			view = ChartFactory.getTimeChartView(context, dataset, renderer, TimeUtils.YERA_MONTH_FORMT);
 			break;
 		case LineYear:
-			view = ChartFactory.getTimeChartView(context, dataset, renderer, TimeUtils.TO_YERA_FORMT);
+			view = ChartFactory.getTimeChartView(context, dataset, renderer, TimeUtils.YERA_FORMT);
 			break;
 		}
 

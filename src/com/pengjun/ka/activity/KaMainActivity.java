@@ -22,20 +22,20 @@ import com.pengjun.ka.utils.Constants;
 
 public class KaMainActivity extends FragmentActivity {
 
-	ImageButton ibAddAccount;
-	ImageButton ibMenuTopLeft;
+	private ImageButton ibAddAccount;
+	private ImageButton ibMenuTopLeft;
 
-	ImageButton ibHome;
-	ImageButton ibSearch;
-	ImageButton ibMagicbox;
-	ImageButton ibSettings;
+	private ImageButton ibHome;
+	private ImageButton ibSearch;
+	private ImageButton ibMagicbox;
+	private ImageButton ibSettings;
 
-	TextView tvTopTitle;
+	private TextView tvTopTitle;
 
-	State curState = State.home;
+	private State curState = State.Home;
 
 	enum State {
-		home, search, magicbox, setting
+		Home, Search, Report, Setting
 	}
 
 	@Override
@@ -43,8 +43,6 @@ public class KaMainActivity extends FragmentActivity {
 
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		// getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-		// WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		setContentView(R.layout.keep_account);
 
 		// top bar
@@ -56,9 +54,8 @@ public class KaMainActivity extends FragmentActivity {
 		// bottom bar
 		createBottomBar();
 
-		SharedPreferences firstInstall = getSharedPreferences(Constants.SP_TAG_INSTALL, 0);
-
 		// if first start of the app
+		SharedPreferences firstInstall = getSharedPreferences(Constants.SP_TAG_INSTALL, 0);
 		if (firstInstall.getString(Constants.SP_KEY_FIRST_START_APP, "").equals("")) {
 			firstInstall.edit()
 					.putString(Constants.SP_KEY_FIRST_START_APP, Constants.SP_VALUE_FIRST_START_APP).commit();
@@ -73,7 +70,6 @@ public class KaMainActivity extends FragmentActivity {
 		ibAddAccount.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				// add new account record
 				Intent intent = new Intent();
 				intent.setClass(KaMainActivity.this, AddArActivity.class);
 				startActivityForResult(intent, Constants.CB_ADD_AR);
@@ -89,10 +85,10 @@ public class KaMainActivity extends FragmentActivity {
 			@Override
 			public void onClick(View v) {
 				switch (curState) {
-				case home:
+				case Home:
 					ArFragment.newInstance().setListViewToTop();
 					break;
-				case search:
+				case Search:
 					ArSearchFragment.newInstance().clearAll();
 					break;
 				}
@@ -103,31 +99,37 @@ public class KaMainActivity extends FragmentActivity {
 
 	private void stateChange(State state, Fragment fragment) {
 		switch (state) {
-		case home:
+		case Home:
 			ibSearch.setBackgroundResource(R.drawable.search_normal);
 
 			ibAddAccount.setVisibility(View.VISIBLE);
 			ibMenuTopLeft.setBackgroundResource(R.drawable.menu_btn_to_top);
 			ibMenuTopLeft.setVisibility(View.VISIBLE);
+
 			tvTopTitle.setText(R.string.recentArs);
 			break;
-		case search:
+		case Search:
+			// the text in searchFragment could be focused
+			// so the process dependently when ibSearch icon change
 			ibSearch.setBackgroundResource(R.drawable.search_focused);
+
 			ibAddAccount.setVisibility(View.GONE);
 			ibMenuTopLeft.setVisibility(View.VISIBLE);
 			ibMenuTopLeft.setBackgroundResource(R.drawable.menu_btn_clear);
+
 			tvTopTitle.setText(R.string.searchAr);
 			break;
-		case magicbox:
+		case Report:
 			ibSearch.setBackgroundResource(R.drawable.search_normal);
 
 			ibAddAccount.setVisibility(View.GONE);
 			ibMenuTopLeft.setVisibility(View.GONE);
+
 			tvTopTitle.setText(R.string.magicBox);
 			break;
-		case setting:
-
+		case Setting:
 			ibSearch.setBackgroundResource(R.drawable.search_normal);
+
 			tvTopTitle.setText(R.string.systemSetting);
 			break;
 		}
@@ -143,14 +145,12 @@ public class KaMainActivity extends FragmentActivity {
 			@Override
 			public void onFocusChange(View v, boolean hasFocus) {
 				if (hasFocus) {
-					curState = State.home;
+					curState = State.Home;
 					stateChange(curState, ArFragment.newInstance());
 				}
 			}
 		});
 
-		// the text in searchFragment could be focused
-		// so ibSearch icon change process dependently
 		ibSearch = (ImageButton) findViewById(R.id.ibSearch);
 		ibSearch.setBackgroundResource(R.drawable.search_normal);
 		ibSearch.setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -158,7 +158,7 @@ public class KaMainActivity extends FragmentActivity {
 			@Override
 			public void onFocusChange(View v, boolean hasFocus) {
 				if (hasFocus) {
-					curState = State.search;
+					curState = State.Search;
 					stateChange(curState, ArSearchFragment.newInstance());
 				}
 			}
@@ -170,10 +170,9 @@ public class KaMainActivity extends FragmentActivity {
 			@Override
 			public void onFocusChange(View v, boolean hasFocus) {
 				if (hasFocus) {
-					curState = State.magicbox;
+					curState = State.Report;
 					stateChange(curState, MagicBoxFragment.newInstance());
 				}
-
 			}
 		});
 
@@ -183,9 +182,8 @@ public class KaMainActivity extends FragmentActivity {
 			@Override
 			public void onFocusChange(View v, boolean hasFocus) {
 				if (hasFocus) {
-					curState = State.setting;
+					curState = State.Setting;
 					stateChange(curState, SettingFragment.newInstance());
-
 				}
 			}
 		});
@@ -213,8 +211,8 @@ public class KaMainActivity extends FragmentActivity {
 
 	@Override
 	protected void onDestroy() {
-
-		ArFragment.newInstance().recycle();
+		// strange thing: reEnter app after close the app, instance still exist
+		ArFragment.newInstance().refresh();
 		super.onDestroy();
 	}
 

@@ -45,17 +45,16 @@ public class ArPieChart extends BaseChart {
 
 		// compute type distribute
 		name2CostMap = new HashMap<String, Double>();
-		Double cost = null;
+		Double account = null;
 		for (AccountRecord ar : arList) {
-			if (cost == null) {
-				cost = 0.0;
+			if (account == null) {
+				account = 0.0;
 			}
-			name2CostMap.put(ar.getTypeName(), cost + ar.getAccount());
+			name2CostMap.put(ar.getTypeName(), account + ar.getAccount());
 		}
 
 		int[] colorArr = new int[name2CostMap.size()];
 		int k = 0;
-
 		for (Map.Entry<String, Double> entry : name2CostMap.entrySet()) {
 			colorArr[k] = ResourceUtils.colors[k % ResourceUtils.colors.length];
 			costTotal += entry.getValue();

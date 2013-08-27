@@ -42,21 +42,6 @@ public class ArSearchFragment extends Fragment {
 
 	private static ArSearchFragment instance = null;
 
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-	}
-
-	@Override
-	public void onResume() {
-		super.onResume();
-	}
-
-	@Override
-	public void onDestroy() {
-		super.onDestroy();
-	}
-
 	public boolean isTvAccountFocous() {
 		return etStartAccount.isFocused() || etEndAccount.isFocused();
 	}
@@ -101,8 +86,8 @@ public class ArSearchFragment extends Fragment {
 
 				@Override
 				public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-					String setDateStr = String
-							.format(TimeUtils.DATE_FORMT, year, monthOfYear + 1, dayOfMonth);
+					String setDateStr = String.format(TimeUtils.DATE_STRING_FORMT, year, monthOfYear + 1,
+							dayOfMonth);
 					btStartDate.setText(setDateStr);
 				}
 			};
@@ -138,8 +123,8 @@ public class ArSearchFragment extends Fragment {
 
 				@Override
 				public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-					String setDateStr = String
-							.format(TimeUtils.DATE_FORMT, year, monthOfYear + 1, dayOfMonth);
+					String setDateStr = String.format(TimeUtils.DATE_STRING_FORMT, year, monthOfYear + 1,
+							dayOfMonth);
 					btEndDate.setText(setDateStr);
 				}
 			};
@@ -173,7 +158,6 @@ public class ArSearchFragment extends Fragment {
 
 			@Override
 			public void onClick(View v) {
-				// legal input certify
 
 				boolean isAccountLegal = true;
 
@@ -191,12 +175,12 @@ public class ArSearchFragment extends Fragment {
 				}
 
 				if (!isAccountLegal) {
-					ComponentUtils.createAlertDialog(getActivity(), "金额应该右边大于或等于左边").show();
+					ComponentUtils.createInfoDialog(getActivity(), "金额应该右边大于或等于左边").show();
 					return;
 				}
 
 				if (!isDateLegal) {
-					ComponentUtils.createAlertDialog(getActivity(), "日期应该右边大于或等于左边").show();
+					ComponentUtils.createInfoDialog(getActivity(), "日期应该右边大于或等于左边").show();
 					return;
 				}
 

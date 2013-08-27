@@ -25,7 +25,7 @@ import com.pengjun.ka.db.model.AccountRecord;
  */
 public class ArBarChart extends BaseChart {
 
-	private String[] moneyRangeArr = { "100以下", "101-500", "501-1000", "1001-2000", "2000以上" };
+	private String[] MONEY_RANGE_ARR = { "100以下", "101-500", "501-1000", "1001-2000", "2000以上" };
 	private String title = "各区间花费数";
 	private XYMultipleSeriesRenderer renderer;
 	private XYMultipleSeriesDataset dataset;
@@ -37,22 +37,22 @@ public class ArBarChart extends BaseChart {
 		// compute each date account
 		Map<String, Integer> map = new HashMap<String, Integer>();
 
-		for (int i = 0; i < moneyRangeArr.length; i++) {
-			map.put(moneyRangeArr[i], 0);
+		for (int i = 0; i < MONEY_RANGE_ARR.length; i++) {
+			map.put(MONEY_RANGE_ARR[i], 0);
 		}
 		Integer count = null;
 		String range = null;
 		for (AccountRecord ar : arList) {
 			if (ar.getAccount() <= 100) {
-				range = moneyRangeArr[0];
+				range = MONEY_RANGE_ARR[0];
 			} else if (ar.getAccount() > 100 && ar.getAccount() <= 500) {
-				range = moneyRangeArr[1];
+				range = MONEY_RANGE_ARR[1];
 			} else if (ar.getAccount() > 500 && ar.getAccount() <= 1000) {
-				range = moneyRangeArr[2];
+				range = MONEY_RANGE_ARR[2];
 			} else if (ar.getAccount() > 1000 && ar.getAccount() <= 2000) {
-				range = moneyRangeArr[3];
+				range = MONEY_RANGE_ARR[3];
 			} else if (ar.getAccount() > 2000) {
-				range = moneyRangeArr[4];
+				range = MONEY_RANGE_ARR[4];
 			}
 			count = map.get(range);
 			map.put(range, ++count);
@@ -66,6 +66,7 @@ public class ArBarChart extends BaseChart {
 		// fill first invalid data
 		series.add(0, 0);
 		renderer.addXTextLabel(0, "");
+
 		int pointCnt = 0;
 		Integer maxValue = Integer.MIN_VALUE;
 		Integer minValue = Integer.MAX_VALUE;

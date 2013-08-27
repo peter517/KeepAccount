@@ -4,9 +4,7 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 
 import android.app.Activity;
-import android.content.Context;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnFocusChangeListener;
 import android.view.ViewGroup;
@@ -35,8 +33,8 @@ public class AddArTypeActivity extends Activity {
 	private ImageButton btSave;
 	private ImageButton btCancel;
 
-	private final int GV_UNSELECTED = -1;
-	private int selectPos = GV_UNSELECTED;
+	private final int GRIDVIEW_UNSELECTED = -1;
+	private int selectPos = GRIDVIEW_UNSELECTED;
 
 	private ArrayList<String> resNameList = new ArrayList<String>();
 	private ArTypeImgAdapter arTypeImgAdapter;
@@ -55,7 +53,7 @@ public class AddArTypeActivity extends Activity {
 			@Override
 			public void onFocusChange(View v, boolean hasFocus) {
 				if (hasFocus) {
-					selectPos = GV_UNSELECTED;
+					selectPos = GRIDVIEW_UNSELECTED;
 				}
 			}
 		});
@@ -66,25 +64,21 @@ public class AddArTypeActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 
-				// error info
 				if (etArTypeName.getText().toString().equals("")) {
-					ComponentUtils.createAlertDialog(AddArTypeActivity.this, "请输入新建类名称")
-							.show();
+					ComponentUtils.createInfoDialog(AddArTypeActivity.this, "请输入新建类名称").show();
 					return;
 				}
-				if (selectPos == GV_UNSELECTED) {
-					ComponentUtils.createAlertDialog(AddArTypeActivity.this, "请选择图片")
-							.show();
-					return;
-				}
-
-				if (ArTypeService.isTypeNameExsit(etArTypeName.getText()
-						.toString())) {
-					ComponentUtils.createAlertDialog(AddArTypeActivity.this,
-							"类名称已存在，请重新输入").show();
+				if (selectPos == GRIDVIEW_UNSELECTED) {
+					ComponentUtils.createInfoDialog(AddArTypeActivity.this, "请选择图片").show();
 					return;
 				}
 
+				if (ArTypeService.isTypeNameExsit(etArTypeName.getText().toString())) {
+					ComponentUtils.createInfoDialog(AddArTypeActivity.this, "类名称已存在，请重新输入").show();
+					return;
+				}
+
+				// add or update
 				if (arType == null) {
 					arType = new ArType();
 					arType.setTypeName(etArTypeName.getText().toString());
@@ -121,18 +115,17 @@ public class AddArTypeActivity extends Activity {
 		gvArTypeImg.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
-			public void onItemClick(AdapterView<?> parent, View selectedView,
-					int position, long id) {
+			public void onItemClick(AdapterView<?> parent, View selectedView, int position, long id) {
 
 				selectPos = position;
 
+				// make gridview item focused effect
 				gvArTypeImg.requestFocusFromTouch();
 				selectedView.requestFocusFromTouch();
 			}
 		});
 
-		arType = (ArType) getIntent().getSerializableExtra(
-				Constants.INTENT_AR_TYPE_BEAN);
+		arType = (ArType) getIntent().getSerializableExtra(Constants.INTENT_AR_TYPE_BEAN);
 		if (arType != null) {
 			etArTypeName.setText(arType.getTypeName());
 		}
@@ -141,13 +134,11 @@ public class AddArTypeActivity extends Activity {
 
 	private class ArTypeImgAdapter extends BaseAdapter {
 
-		LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
 		public ArTypeImgAdapter() {
 
+			// get all image from res which name start with type
 			Field[] fields = R.drawable.class.getDeclaredFields();
 			for (Field field : fields) {
-				// get all image from res which name start with type
 				if (field.getName().startsWith(ResourceUtils.RES_IMAGE_PREFIX)) {
 					resNameList.add(field.getName());
 				}
@@ -175,18 +166,16 @@ public class AddArTypeActivity extends Activity {
 			ArTypeHolder holder = new ArTypeHolder();
 			if (convertView == null) {
 
-				convertView = inflater.inflate(R.layout.ar_type_gridview_item,
-						null);
-				holder.ivArType = (ImageView) convertView
-						.findViewById(R.id.ivArType);
+				convertView = ComponentUtils.getLayoutInflater(AddArTypeActivity.this).inflate(
+						R.layout.ar_type_gridview_item, null);
+				holder.ivArType = (ImageView) convertView.findViewById(R.id.ivArType);
 
 				convertView.setTag(holder);
 			} else {
 				holder = (ArTypeHolder) convertView.getTag();
 			}
 
-			holder.ivArType.setImageResource(ResourceUtils
-					.getImgResIdByName(resNameList.get(position)));
+			holder.ivArType.setImageResource(ResourceUtils.getImgResIdByResName(resNameList.get(position)));
 			return convertView;
 
 		}

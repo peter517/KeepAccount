@@ -7,11 +7,9 @@ import java.util.List;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -37,22 +35,19 @@ public class BackupActivity extends Activity {
 	private GridView gvBackup;
 	private ImageButton ibAddBackup;
 	private ImageButton ibRestore;
-	// private ProgressBar pbLoad;
 	private ProgressDialog pdLoad;
 
 	private List<String> backupDateStrList = new ArrayList<String>();
 	private BackupAdapter backupAdapter;
 
-	private final int GV_UNSELECTED = -1;
-	private int selectPos = GV_UNSELECTED;
+	private final int GRIDVIEW_UNSELECTED = -1;
+	private int selectPos = GRIDVIEW_UNSELECTED;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		// getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-		// WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		setContentView(R.layout.backup);
 
 		FileUtils.createDir(Constants.BACK_UP_ROOT);
@@ -65,7 +60,7 @@ public class BackupActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 
-				selectPos = GV_UNSELECTED;
+				selectPos = GRIDVIEW_UNSELECTED;
 
 				curDateStr = TimeUtils.getCurDateStr();
 				if (backupDateStrList.size() != 0 && backupDateStrList.contains(TimeUtils.getCurDateStr())) {
@@ -110,8 +105,8 @@ public class BackupActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 
-				if (selectPos == GV_UNSELECTED) {
-					ComponentUtils.createAlertDialog(BackupActivity.this, "请选择还原日期").show();
+				if (selectPos == GRIDVIEW_UNSELECTED) {
+					ComponentUtils.createInfoDialog(BackupActivity.this, "请选择还原日期").show();
 					return;
 				}
 
@@ -130,6 +125,8 @@ public class BackupActivity extends Activity {
 			public void onItemClick(AdapterView<?> parent, View selectedView, int position, long id) {
 
 				selectPos = position;
+
+				// make gridview item focused effect
 				gvBackup.requestFocusFromTouch();
 				selectedView.requestFocusFromTouch();
 			}
@@ -150,7 +147,7 @@ public class BackupActivity extends Activity {
 				builder.setPositiveButton("删除", new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int whichButton) {
 
-						BackupService.deleteBackup(backupDateStrList.get(longClickPos));
+						BackupService.deleteBackupFromDateStr(backupDateStrList.get(longClickPos));
 						BackupActivity.this.backupDateStrList = FileUtils.getFileNameList(new File(
 								Constants.BACK_UP_ROOT));
 						backupAdapter.notifyDataSetChanged();
@@ -195,15 +192,15 @@ public class BackupActivity extends Activity {
 		@Override
 		protected Void doInBackground(String... params) {
 			String curDateStr = params[0];
-			BackupService.backup(curDateStr);
+			BackupService.saveBackupByDateStr(curDateStr);
 			return null;
 		}
 
 		@Override
 		protected void onPostExecute(Void v) {
 
-			BackupActivity.this.backupDateStrList = FileUtils.getFileNameList(new File(
-					Constants.BACK_UP_ROOT));
+			BackupActivity.this.backupDateStrList = FileUtils
+					.getFileNameList(new File(Constants.BACK_UP_ROOT));
 			backupAdapter.notifyDataSetChanged();
 			hideProgress();
 
@@ -216,26 +213,25 @@ public class BackupActivity extends Activity {
 		@Override
 		protected Void doInBackground(String... params) {
 			String curDateStr = params[0];
-			BackupService.restore(curDateStr);
+			BackupService.restoreByDateStr(curDateStr);
 			return null;
 		}
 
 		@Override
 		protected void onPostExecute(Void v) {
 
-			ComponentUtils.createAlertDialog(BackupActivity.this,
+			ComponentUtils.createInfoDialog(BackupActivity.this,
 					"数据已还原至日期：" + backupDateStrList.get(selectPos)).show();
 
-			selectPos = GV_UNSELECTED;
-			ArFragment.newInstance().recycle();
+			selectPos = GRIDVIEW_UNSELECTED;
+			// refresh ArFragment data
+			ArFragment.newInstance().refresh();
 			hideProgress();
 			super.onPostExecute(v);
 		}
 	}
 
 	private class BackupAdapter extends BaseAdapter {
-
-		LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
 		@Override
 		public int getCount() {
@@ -258,7 +254,8 @@ public class BackupActivity extends Activity {
 			BackupHolder holder = new BackupHolder();
 			if (convertView == null) {
 
-				convertView = inflater.inflate(R.layout.backup_gridview_item, null);
+				convertView = ComponentUtils.getLayoutInflater(BackupActivity.this).inflate(
+						R.layout.backup_gridview_item, null);
 				holder.tvBackupDate = (TextView) convertView.findViewById(R.id.tvBackupDate);
 
 				convertView.setTag(holder);
@@ -266,8 +263,7 @@ public class BackupActivity extends Activity {
 				holder = (BackupHolder) convertView.getTag();
 			}
 
-			String backupFileName = backupDateStrList.get(position);
-			holder.tvBackupDate.setText(backupFileName);
+			holder.tvBackupDate.setText(backupDateStrList.get(position));
 			return convertView;
 
 		}

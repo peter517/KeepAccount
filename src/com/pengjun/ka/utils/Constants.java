@@ -4,14 +4,14 @@ import java.util.List;
 
 public class Constants {
 
-	public static boolean IS_DEBUG = false;
+	public static boolean IS_DEBUG = true;
 
 	public static int TOAST_EXSIT_TIME = 2000;
 
 	// init Ar Type
 	public enum InitArType {
-		type_eat("餐饮"), type_play("文化娱乐"), type_dress("服饰美容"), type_car("交通"), type_money("人情来往"), type_other(
-				"其他");
+		type_eat("餐饮"), type_play("文化娱乐"), type_dress("服饰美容"), type_car("交通"), type_house("住宿"), type_money(
+				"人情来往"), type_shopping("生活用品"), type_other("其他");
 
 		String typename;
 
@@ -25,15 +25,15 @@ public class Constants {
 	}
 
 	// DB search error
-	public static int DB_SEARCH_INT_NOT_FOUND = -1;
-	public static String DB_SEARCH_STRING_NOT_FOUND = null;
-	public static float DB_SEARCH_FLOAT_NOT_FOUND = -1.0f;
-	public static List DB_SEARCH_LIST_NOT_FOUND = null;
+	public final static int DB_SEARCH_INT_NOT_FOUND = -1;
+	public final static String DB_SEARCH_STRING_NOT_FOUND = null;
+	public final static float DB_SEARCH_FLOAT_NOT_FOUND = -1.0f;
+	public final static List DB_SEARCH_LIST_NOT_FOUND = null;
 
 	// use SharedPreferences to check first install
-	public static String SP_TAG_INSTALL = "intall_tag";
-	public static String SP_KEY_FIRST_START_APP = "frist_start_app";
-	public static String SP_VALUE_FIRST_START_APP = "frist_start_app";
+	public final static String SP_TAG_INSTALL = "intall_tag";
+	public final static String SP_KEY_FIRST_START_APP = "frist_start_app";
+	public final static String SP_VALUE_FIRST_START_APP = "frist_start_app";
 
 	// activity intent callback tag
 	public static final int CB_ADD_AR = 01;

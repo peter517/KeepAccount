@@ -10,7 +10,6 @@ import android.widget.TextView;
 
 import com.pengjun.ka.R;
 import com.pengjun.ka.db.model.ArSearchCondition;
-import com.pengjun.ka.fragment.ArFragment;
 import com.pengjun.ka.fragment.ArSearchResultFragment;
 import com.pengjun.ka.fragment.FragmentDirector;
 import com.pengjun.ka.utils.ComponentUtils;
@@ -18,16 +17,14 @@ import com.pengjun.ka.utils.Constants;
 
 public class ArSearchResultActivity extends FragmentActivity {
 
-	TextView tvTopTitle;
-	ImageButton ibChart;
+	private TextView tvTopTitle;
+	private ImageButton ibChart;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		// getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-		// WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		setContentView(R.layout.ar_search_result);
 
 		tvTopTitle = (TextView) findViewById(R.id.tvTopTitle);
@@ -37,7 +34,7 @@ public class ArSearchResultActivity extends FragmentActivity {
 			public void onClick(View v) {
 
 				if (!ArSearchResultFragment.newInstance(null).hasSearchResult()) {
-					ComponentUtils.createAlertDialog(ArSearchResultActivity.this, "没有查询数据，不能生成图表").show();
+					ComponentUtils.createInfoDialog(ArSearchResultActivity.this, "没有查询数据，不能生成图表").show();
 					return;
 				}
 				Intent intent = new Intent();
@@ -77,7 +74,6 @@ public class ArSearchResultActivity extends FragmentActivity {
 	@Override
 	protected void onDestroy() {
 
-		ArFragment.newInstance().recycle();
 		super.onDestroy();
 	}
 

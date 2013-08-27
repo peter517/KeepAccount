@@ -19,12 +19,12 @@ import com.pengjun.ka.R;
 
 public class ResourceUtils {
 
-	public static int[] colors = new int[] { Color.BLUE, Color.GREEN, Color.MAGENTA, Color.CYAN, Color.BLACK,
-			Color.DKGRAY, Color.GRAY, Color.LTGRAY, Color.RED, Color.WHITE };
+	public static int[] colors = new int[] { Color.BLUE, Color.MAGENTA, Color.DKGRAY, Color.CYAN,
+			Color.GREEN, Color.GRAY, Color.RED, Color.WHITE, Color.LTGRAY };
 	// res
 	public static final String RES_IMAGE_PREFIX = "type";
 
-	public static Map<String, Integer> resName2Id = new HashMap<String, Integer>();
+	public static Map<String, Integer> imgResName2ResId = new HashMap<String, Integer>();
 
 	static {
 		Field[] fields = R.drawable.class.getDeclaredFields();
@@ -32,7 +32,7 @@ public class ResourceUtils {
 			// get all image from res which name start with type
 			if (field.getName().startsWith(RES_IMAGE_PREFIX)) {
 				try {
-					resName2Id.put(field.getName(), field.getInt(R.drawable.class));
+					imgResName2ResId.put(field.getName(), field.getInt(R.drawable.class));
 				} catch (IllegalArgumentException e) {
 					e.printStackTrace();
 				} catch (IllegalAccessException e) {
@@ -42,8 +42,8 @@ public class ResourceUtils {
 		}
 	}
 
-	public static int getImgResIdByName(String imgResName) {
-		return resName2Id.get(imgResName);
+	public static int getImgResIdByResName(String imgResName) {
+		return imgResName2ResId.get(imgResName);
 	}
 
 	public static boolean CheckNetwork(Context context, boolean isNotify) {
@@ -67,7 +67,8 @@ public class ResourceUtils {
 		return false;
 	}
 
-	public static boolean checkStorageSpace(Context context) {
+	public static boolean checkStorageSpace() {
+
 		StatFs stat = new StatFs(Environment.getDataDirectory().getAbsolutePath());
 		long blockSize = stat.getBlockSize();
 		long availableBlocks = stat.getAvailableBlocks();
@@ -105,4 +106,21 @@ public class ResourceUtils {
 		}
 		return false;
 	}
+
+	public static long getSDCardIdleSpace() {
+		if (!hasExternalStorage())
+			return 0;
+
+		return getPathSpace(getSDCardpath());
+	}
+
+	public static long getPathSpace(String path) {
+		StatFs statFs = new StatFs(path);
+		return statFs.getBlockSize() * (long) statFs.getAvailableBlocks();
+	}
+
+	public static String getSDCardpath() {
+		return Environment.getExternalStorageDirectory().getPath();
+	}
+
 }

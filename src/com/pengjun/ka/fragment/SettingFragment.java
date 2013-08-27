@@ -21,11 +21,6 @@ public class SettingFragment extends Fragment {
 	RelativeLayout rlBackup;
 	Button btExit;
 
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-	}
-
 	public static SettingFragment instance = null;
 
 	public static SettingFragment newInstance() {
@@ -46,6 +41,7 @@ public class SettingFragment extends Fragment {
 			@Override
 			public void onClick(View v) {
 
+				// could not use xml to control background change
 				rlManageType.setBackgroundResource(R.drawable.text_focused);
 				rlBackup.setBackgroundResource(R.drawable.text_normal);
 
@@ -63,7 +59,7 @@ public class SettingFragment extends Fragment {
 			public void onClick(View v) {
 
 				if (ResourceUtils.hasExternalStorage() == false) {
-					ComponentUtils.createAlertDialog(getActivity(), "请插入内存卡！").show();
+					ComponentUtils.createInfoDialog(getActivity(), "请插入内存卡！").show();
 					return;
 				}
 

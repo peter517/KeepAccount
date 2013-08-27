@@ -6,7 +6,6 @@ import com.j256.ormlite.android.AndroidConnectionSource;
 import com.pengjun.ka.db.DbHelper;
 
 public final class KaApplication extends Application {
-	private final static String TAG = KaApplication.class.getSimpleName();
 
 	private static KaApplication instance = null;
 
@@ -35,7 +34,4 @@ public final class KaApplication extends Application {
 		super.onTerminate();
 	}
 
-	/*
-	 * public Handler getMessageHandler() { return mHandler; }
-	 */
 }
