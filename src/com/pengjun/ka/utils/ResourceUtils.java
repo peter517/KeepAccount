@@ -32,6 +32,9 @@ public class ResourceUtils {
 
 	private static Map<String, Integer> imgResName2ResId = new HashMap<String, Integer>();
 
+	// use SharedPreferences to check first install
+	public final static String SP_FIRST_START = "firstStart";
+
 	static {
 		Field[] fields = R.drawable.class.getDeclaredFields();
 		for (Field field : fields) {
@@ -89,6 +92,14 @@ public class ResourceUtils {
 			e.printStackTrace();
 			return null;
 		}
+	}
+
+	public static String getSharedPreferencesString(Context context, String key) {
+		return context.getSharedPreferences(SP_FIRST_START, 0).getString(key, StringUtils.STRING_NULL_VALUE);
+	}
+
+	public static void putSharedPreferencesString(Context context, String key, String value) {
+		context.getSharedPreferences(SP_FIRST_START, 0).edit().putString(key, value).commit();
 	}
 
 	public static boolean isServiceRunning(Context context, String className) {
@@ -187,6 +198,16 @@ public class ResourceUtils {
 
 	public static String getSDCardpath() {
 		return Environment.getExternalStorageDirectory().getPath();
+	}
+
+	public static int dip2px(Context context, float dipValue) {
+		final float scale = context.getResources().getDisplayMetrics().density;
+		return (int) (dipValue * scale + 0.5f);
+	}
+
+	public static int px2dip(Context context, float pxValue) {
+		final float scale = context.getResources().getDisplayMetrics().density;
+		return (int) (pxValue / scale + 0.5f);
 	}
 
 }

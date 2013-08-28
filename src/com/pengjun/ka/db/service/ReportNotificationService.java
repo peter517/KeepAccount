@@ -8,6 +8,7 @@ import java.util.Map;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 
 import com.pengjun.ka.R;
 import com.pengjun.ka.android.activity.ReportActivity;
@@ -16,20 +17,22 @@ import com.pengjun.ka.db.model.AccountRecord;
 import com.pengjun.ka.db.model.ArSearchCondition;
 import com.pengjun.ka.db.model.ReportData;
 import com.pengjun.ka.utils.ComponentUtils;
+import com.pengjun.ka.utils.Constants;
 import com.pengjun.ka.utils.NumberUtils;
 import com.pengjun.ka.utils.TimeUtils;
 
 public class ReportNotificationService {
+
 	public static List<AccountRecord> arList = new ArrayList<AccountRecord>();
-	private static String notificationTitle = "KeepAccount";
-	private static String notificationCotent = "月 报表";
 
 	public static void startReportNotification(Context context) {
 
-		// the frist day of month to create the last month report
 		ArSearchCondition arSC = new ArSearchCondition();
 
-		arSC.setStartDate(TimeUtils.getLastMonthOfToDayStr());
+		// the frist day of month to create the last month report
+
+		String lastMonthOfTodayStr = TimeUtils.getLastMonthOfTodayStr();
+		arSC.setStartDate(lastMonthOfTodayStr);
 		arSC.setEndDate(TimeUtils.getLastDayStr());
 		arList = ArDao.queryAr(arSC, 0, -1);
 
@@ -37,15 +40,20 @@ public class ReportNotificationService {
 			return;
 		}
 
-		notificationCotent = TimeUtils.getLastMonthStr() + notificationCotent;
-
+		String curMonthYear = TimeUtils.String2DateStrArr(lastMonthOfTodayStr)[0] + "年"
+				+ TimeUtils.String2DateStrArr(lastMonthOfTodayStr)[1];
 		Intent intent = new Intent(context, ReportActivity.class);
+		ComponentUtils.putIntentStringData(intent, new Bundle(), Constants.INTENT_CURRENT_MONTH_YEAR,
+				curMonthYear);
+
 		PendingIntent pendingIntent = PendingIntent.getActivity(context, R.string.app_name, intent,
 				PendingIntent.FLAG_UPDATE_CURRENT);
-		ComponentUtils.createNotification(context, notificationTitle, notificationCotent, pendingIntent);
+		ComponentUtils.createNotification(context, context.getResources().getString(R.string.app_name),
+				TimeUtils.getLastMonthStr() + context.getResources().getString(R.string.monthReport),
+				pendingIntent);
 	}
 
-	public static ReportData computeMagicBoxData(List<AccountRecord> arList) {
+	public static ReportData computeReportData(List<AccountRecord> arList) {
 
 		double totalCost = 0;
 

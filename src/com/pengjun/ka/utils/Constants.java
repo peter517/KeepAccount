@@ -28,16 +28,15 @@ public class Constants {
 	public final static float DB_SEARCH_FLOAT_NOT_FOUND = -1.0f;
 	public final static List DB_SEARCH_LIST_NOT_FOUND = null;
 
-	// use SharedPreferences to check first install
-	public final static String SP_TAG_INSTALL = "intall_tag";
-	public final static String SP_KEY_FIRST_START_APP = "frist_start_app";
-	public final static String SP_VALUE_FIRST_START_APP = "frist_start_app";
-
 	// activity intent callback tag
 	public static final int CB_ADD_AR = 01;
 	public static final int CB_ADD_AR_TYPE = 02;
 	public static final int CB_ADD_AR_TYPE_NAME = 03;
 	public static final int CB_AR_CHART = 4;
+
+	// use SharedPreferences to check first install
+	public final static String SP_KEY_FIRST_START_APP = "frist_start_app";
+	public final static String SP_VALUE_FIRST_START_APP = "frist_start_app";
 
 	// activity intent translate data tag
 	public static final String INTENT_AR_BEAN = "ar_bean";
@@ -47,6 +46,7 @@ public class Constants {
 	public static final String INTENT_AR_SEARCH_CONDITION = "ar_search_condition";
 	public static final String INTENT_AR_LIST = "ar_list";
 	public static final String INTENT_AR_CHART_TYPE = "ar_chart_type";
+	public static final String INTENT_CURRENT_MONTH_YEAR = "current_month_year";
 
 	// backup file path
 	public static final String BACK_UP_ROOT = "/sdcard/ka";

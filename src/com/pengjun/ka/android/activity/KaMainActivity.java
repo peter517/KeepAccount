@@ -1,7 +1,6 @@
 package com.pengjun.ka.android.activity;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -17,10 +16,7 @@ import com.pengjun.ka.android.fragment.ArSearchFragment;
 import com.pengjun.ka.android.fragment.FragmentDirector;
 import com.pengjun.ka.android.fragment.MagicBoxFragment;
 import com.pengjun.ka.android.fragment.SettingFragment;
-import com.pengjun.ka.android.service.ReportService;
-import com.pengjun.ka.db.dao.ArTypeDao;
 import com.pengjun.ka.utils.Constants;
-import com.pengjun.ka.utils.ResourceUtils;
 
 public class KaMainActivity extends FragmentActivity {
 
@@ -47,11 +43,6 @@ public class KaMainActivity extends FragmentActivity {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.keep_account);
 
-		if (ResourceUtils.isServiceRunning(this, ReportService.class.getName()) == false) {
-			Intent newIntent = new Intent(this, ReportService.class);
-			this.startService(newIntent);
-		}
-		ResourceUtils.isServiceRunning(this, ReportService.class.getName());
 		// top bar
 		createTopBar();
 
@@ -60,14 +51,6 @@ public class KaMainActivity extends FragmentActivity {
 
 		// bottom bar
 		createBottomBar();
-
-		// if first start of the app
-		SharedPreferences firstInstall = getSharedPreferences(Constants.SP_TAG_INSTALL, 0);
-		if (firstInstall.getString(Constants.SP_KEY_FIRST_START_APP, "").equals("")) {
-			firstInstall.edit()
-					.putString(Constants.SP_KEY_FIRST_START_APP, Constants.SP_VALUE_FIRST_START_APP).commit();
-			ArTypeDao.initTable();
-		}
 
 	}
 

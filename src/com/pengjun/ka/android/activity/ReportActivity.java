@@ -20,6 +20,8 @@ import com.pengjun.ka.chart.ChartFactory;
 import com.pengjun.ka.db.model.AccountRecord;
 import com.pengjun.ka.db.model.ReportData;
 import com.pengjun.ka.db.service.ReportNotificationService;
+import com.pengjun.ka.utils.ComponentUtils;
+import com.pengjun.ka.utils.Constants;
 import com.pengjun.ka.utils.Constants.ChartType;
 import com.pengjun.ka.utils.NumberUtils;
 import com.pengjun.ka.utils.ResourceUtils;
@@ -31,6 +33,8 @@ public class ReportActivity extends Activity {
 	private ScrollView svMagicData;
 
 	private ReportData reportData;
+
+	private TextView tvTopTitle;
 
 	private TextView tvTotalCountNum;
 	private TextView tvTotalCost;
@@ -52,7 +56,13 @@ public class ReportActivity extends Activity {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.report);
 
+		// pass value directly in order to avoid arList is too large
 		arList = ReportNotificationService.arList;
+
+		tvTopTitle = (TextView) findViewById(R.id.tvTopTitle);
+		String curMonthYear = (String) ComponentUtils.getIntentData(getIntent(),
+				Constants.INTENT_CURRENT_MONTH_YEAR);
+		tvTopTitle.setText(curMonthYear + tvTopTitle.getText().toString());
 
 		llTypeRatioChart = (LinearLayout) findViewById(R.id.llTypeRatioChart);
 
@@ -94,7 +104,7 @@ public class ReportActivity extends Activity {
 			typeRadioChart = ChartFactory.createChart(ChartType.Pie);
 			typeRadioChart.compute(arList);
 
-			reportData = ReportNotificationService.computeMagicBoxData(arList);
+			reportData = ReportNotificationService.computeReportData(arList);
 			return null;
 		}
 

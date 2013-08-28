@@ -13,11 +13,13 @@ public class TimeUtils {
 	public static final String DATE_FORMT = "yyyy-MM-dd";
 	public static final String YERA_MONTH_FORMT = "yyyy-MM";
 	public static final String YERA_FORMT = "yyyy";
+	public static final String HOUR_FORMT = "HH";
 	public static final String TIME_SEPARATOR = "-";
 
 	private static DateFormat dateFormat = new SimpleDateFormat(DATE_FORMT);
 	private static DateFormat yearMonthFormat = new SimpleDateFormat(YERA_MONTH_FORMT);
 	private static DateFormat yearFormat = new SimpleDateFormat(YERA_FORMT);
+	private static DateFormat hourFormat = new SimpleDateFormat(HOUR_FORMT);
 
 	private final static Calendar calendar = Calendar.getInstance();
 
@@ -38,14 +40,23 @@ public class TimeUtils {
 		return null;
 	}
 
-	public static String getLastMonthOfToDayStr() {
+	public static String getCurHour() {
+		return hourFormat.format(calendar.getTime());
+	}
+
+	public static String getLastMonthOfTodayStr() {
 		calendar.add(Calendar.MONTH, -1);
-		return dateFormat.format(calendar.getTime());
+		String str = dateFormat.format(calendar.getTime());
+		calendar.add(Calendar.MONTH, 1);
+		return str;
 	}
 
 	public static String getLastDayStr() {
+
 		calendar.add(Calendar.DAY_OF_MONTH, -1);
-		return dateFormat.format(calendar.getTime());
+		String str = dateFormat.format(calendar.getTime());
+		calendar.add(Calendar.DAY_OF_MONTH, 1);
+		return str;
 	}
 
 	public static Date getCurDate() {
@@ -54,7 +65,9 @@ public class TimeUtils {
 
 	public static String getLastMonthStr() {
 		calendar.add(Calendar.MONTH, -1);
-		return yearMonthFormat.format(calendar.getTime());
+		String str = yearMonthFormat.format(calendar.getTime());
+		calendar.add(Calendar.MONTH, 1);
+		return str;
 	}
 
 	public static Date string2YearMonthDate(String dateStr) {
@@ -87,6 +100,10 @@ public class TimeUtils {
 		String curTimeStr = String.format(TIME_STRING_FORMT, year, mouth + 1, day, hour, minute, second);
 
 		return curTimeStr;
+	}
+
+	public static String getCurMonthYearStr() {
+		return yearMonthFormat.format(calendar.getTime());
 	}
 
 	public static String getCurDateStr() {

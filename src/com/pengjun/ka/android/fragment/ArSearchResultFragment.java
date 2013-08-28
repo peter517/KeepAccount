@@ -237,8 +237,7 @@ public class ArSearchResultFragment extends Fragment {
 		protected List<AccountRecord> doInBackground(Boolean... params) {
 
 			isSetListViewToTop = params[0];
-			List<AccountRecord> tempArList = ArDao.queryAr(arSC, 0,
-					Math.max(LIMIT_ROW_TOTAL, arList.size()));
+			List<AccountRecord> tempArList = ArDao.queryAr(arSC, 0, Math.max(LIMIT_ROW_TOTAL, arList.size()));
 			if (tempArList != null) {
 				arList = tempArList;
 			}

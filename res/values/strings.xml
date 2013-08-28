@@ -54,7 +54,7 @@
     <string name="exit">退出</string>
     
     <!-- Report -->
-    <string name="monthReport">月报表</string>
+    <string name="monthReport">月　报表</string>
     <string name="everDayCostTrends">每天消费趋势</string>
     <string name="maxCostDay">消费最多的一天</string>
 

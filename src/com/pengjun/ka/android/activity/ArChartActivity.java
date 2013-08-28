@@ -28,6 +28,7 @@ import com.pengjun.ka.utils.ComponentUtils;
 import com.pengjun.ka.utils.Constants;
 import com.pengjun.ka.utils.Constants.ChartType;
 import com.pengjun.ka.utils.ImageUtils;
+import com.pengjun.ka.utils.ResourceUtils;
 
 public class ArChartActivity extends Activity {
 
@@ -155,8 +156,8 @@ public class ArChartActivity extends Activity {
 						R.layout.ar_chart_gallery_item, null);
 
 				holder.ivChart = (ImageView) convertView.findViewById(R.id.ivChart);
-				holder.ivChart.setLayoutParams(new GalleryFlow.LayoutParams(ComponentUtils.dip2px(
-						ArChartActivity.this, 128), ComponentUtils.dip2px(ArChartActivity.this, 128)));
+				holder.ivChart.setLayoutParams(new GalleryFlow.LayoutParams(ResourceUtils.dip2px(
+						ArChartActivity.this, 128), ResourceUtils.dip2px(ArChartActivity.this, 128)));
 				convertView.setTag(holder);
 			} else {
 				holder = (AccountHolder) convertView.getTag();

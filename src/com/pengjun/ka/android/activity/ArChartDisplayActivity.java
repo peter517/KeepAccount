@@ -31,7 +31,7 @@ public class ArChartDisplayActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 
-		// arList maybe too large to transfers by Intent
+		// pass value directly in order to avoid arList is too large
 		arList = ArChartActivity.arList;
 
 		chartType = (ChartType) getIntent().getExtras().getSerializable(Constants.INTENT_AR_CHART_TYPE);

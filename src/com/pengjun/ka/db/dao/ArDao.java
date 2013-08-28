@@ -181,7 +181,7 @@ public class ArDao {
 				where.le(AccountRecord.COL_CREATE_DATE, arSC.getEndDate());
 			}
 
-			if (limtRows != -1) {
+			if (limtRows >= 0) {
 				queryBuilder.offset(offset).limit(limtRows);
 				queryBuilder.orderBy(AccountRecord.COL_UPDATE_TIME, false);
 			}

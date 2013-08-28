@@ -7,6 +7,8 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.widget.DatePicker;
 
@@ -33,16 +35,6 @@ public class ComponentUtils {
 				.format(TimeUtils.DATE_STRING_FORMT, dp.getYear(), dp.getMonth() + 1, dp.getDayOfMonth());
 	}
 
-	public static int dip2px(Context context, float dipValue) {
-		final float scale = context.getResources().getDisplayMetrics().density;
-		return (int) (dipValue * scale + 0.5f);
-	}
-
-	public static int px2dip(Context context, float pxValue) {
-		final float scale = context.getResources().getDisplayMetrics().density;
-		return (int) (pxValue / scale + 0.5f);
-	}
-
 	public static LayoutInflater getLayoutInflater(Context context) {
 		if (inflater == null) {
 			inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -53,7 +45,7 @@ public class ComponentUtils {
 	public static void createNotification(Context context, String notificationTitle,
 			String notificationCotent, PendingIntent pendingIntent) {
 
-		Notification notification = new Notification(R.drawable.report, notificationTitle,
+		Notification notification = new Notification(R.drawable.ic_launcher, notificationTitle,
 				System.currentTimeMillis());
 
 		notification.flags |= Notification.FLAG_NO_CLEAR;
@@ -66,6 +58,15 @@ public class ComponentUtils {
 		NotificationManager notificationManager = (NotificationManager) context
 				.getSystemService(Context.NOTIFICATION_SERVICE);
 		notificationManager.notify(R.string.app_name, notification);
+	}
+
+	public static void putIntentStringData(Intent intent, Bundle bundle, String key, String value) {
+		bundle.putSerializable(key, value);
+		intent.putExtras(bundle);
+	}
+
+	public static Object getIntentData(Intent intent, String key) {
+		return intent.getSerializableExtra(key);
 	}
 
 }
