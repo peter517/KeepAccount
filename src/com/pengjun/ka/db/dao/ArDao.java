@@ -1,6 +1,7 @@
 package com.pengjun.ka.db.dao;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.j256.ormlite.android.AndroidConnectionSource;
@@ -13,6 +14,7 @@ import com.j256.ormlite.table.TableUtils;
 import com.pengjun.ka.android.activity.KaApplication;
 import com.pengjun.ka.db.model.AccountRecord;
 import com.pengjun.ka.db.model.ArSearchCondition;
+import com.pengjun.ka.test.DataCreater;
 import com.pengjun.ka.utils.Constants;
 
 public class ArDao {
@@ -31,9 +33,9 @@ public class ArDao {
 
 	public static void insert(AccountRecord ar) {
 		try {
-			// for (int i = 0; i < 5000; i++)
-			// dao.create(DataCreater.getRandomAr());
-			dao.create(ar);
+			for (int i = 0; i < 500; i++)
+				dao.create(DataCreater.getRandomAr());
+			// dao.create(ar);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -136,6 +138,26 @@ public class ArDao {
 			queryBuilder.offset(offset).limit(limtRows);
 			queryBuilder.orderBy(AccountRecord.COL_UPDATE_TIME, false);
 			return dao.query(queryBuilder.prepare());
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return Constants.DB_SEARCH_LIST_NOT_FOUND;
+	}
+
+	public static List<String> queryAllComments() {
+		try {
+
+			QueryBuilder<AccountRecord, Integer> queryBuilder = dao.queryBuilder();
+			Where<AccountRecord, Integer> where = queryBuilder.where();
+			where.ne(AccountRecord.COL_COMMENT, "");
+			List<AccountRecord> arList = dao.query(queryBuilder.prepare());
+
+			List<String> typeNameList = new ArrayList<String>();
+			for (AccountRecord ar : arList) {
+				typeNameList.add(ar.getComment());
+			}
+
+			return typeNameList;
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

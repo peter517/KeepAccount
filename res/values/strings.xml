@@ -46,6 +46,7 @@
     <string name="maxCostMounth">消费最多的月份</string>
     <string name="maxCostInterval">每月消费最多的时间段</string>
     <string name="maxCost">最大的一笔消费</string>
+    <string name="costKeyWord">消费关键字</string>
 
     <!-- System Settings -->
     <string name="backUp">数据备份</string>

@@ -38,6 +38,7 @@ public class MagicBoxActivity extends Activity {
 	private TextView tvAvgCostMonth;
 	private TextView tvMaxCostMonth;
 	private TextView tvMaxCostInterval;
+	private TextView tvCostKeyWord;
 
 	private TextView tvAccount;
 	private ImageView ivType;
@@ -59,6 +60,7 @@ public class MagicBoxActivity extends Activity {
 		tvAvgCostMonth = (TextView) findViewById(R.id.tvAvgCostMonth);
 		tvMaxCostMonth = (TextView) findViewById(R.id.tvMaxCostMonth);
 		tvMaxCostInterval = (TextView) findViewById(R.id.tvMaxCostInterval);
+		tvCostKeyWord = (TextView) findViewById(R.id.tvCostKeyWord);
 
 		tvAccount = (TextView) findViewById(R.id.tvCost);
 		ivType = (ImageView) findViewById(R.id.ivType);
@@ -110,6 +112,11 @@ public class MagicBoxActivity extends Activity {
 			tvAvgCostMonth.setText(String.valueOf(magicBoxData.getAvgCostMonth()));
 			tvMaxCostMonth.setText(magicBoxData.getMaxCostMonth());
 			tvMaxCostInterval.setText(magicBoxData.getMaxCostInterval());
+			if (magicBoxData.getCostKeyWord() != null) {
+				tvCostKeyWord.setText(magicBoxData.getCostKeyWord());
+			} else {
+				tvCostKeyWord.setText("无");
+			}
 
 			AccountRecord ar = magicBoxData.getMaxCost();
 			tvAccount.setText(String.valueOf(ar.getAccount()));

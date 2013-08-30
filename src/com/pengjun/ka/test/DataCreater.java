@@ -13,6 +13,7 @@ public class DataCreater {
 		ar.setTypeName(InitArType.values()[TimeUtils.getRandomInt(5)].getTypeName());
 		ar.setCreateDate(TimeUtils.getRandomDateStr());
 		ar.setUpdateTime(TimeUtils.getRandomTimeStr());
+		ar.setComment("");
 		return ar;
 	}
 }

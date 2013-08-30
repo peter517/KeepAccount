@@ -31,6 +31,13 @@ public final class KaApplication extends Application {
 		super.onCreate();
 		instance = this;
 
+		// load IKSegmenter files, about ten seconds
+		new Thread() {
+			public void run() {
+				StringUtils.initSegmentationTool();
+			}
+		}.start();
+
 		androidConnectionSource = DbHelper.getAndroidConnectionSource(this);
 
 		if (ResourceUtils.isServiceRunning(this, ReportService.class.getName()) == false) {
@@ -48,7 +55,6 @@ public final class KaApplication extends Application {
 			ArTypeDao.initTable();
 
 		}
-
 	}
 
 	@Override

@@ -23,12 +23,22 @@ public class TimeUtils {
 
 	private final static Calendar calendar = Calendar.getInstance();
 
+	private static long time = System.currentTimeMillis();
+
 	private static Random random = new Random();
 	static {
 		random.setSeed(System.currentTimeMillis());
 
 		long time = System.currentTimeMillis();
 		calendar.setTimeInMillis(time);
+	}
+
+	public static void startTiming() {
+		time = System.currentTimeMillis();
+	}
+
+	public static String stopTiming() {
+		return String.valueOf((System.currentTimeMillis() - time) / 1000f + "秒");
 	}
 
 	public static Date string2Date(String dateStr) {

@@ -1,12 +1,15 @@
 package com.pengjun.ka.db.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import com.pengjun.ka.db.model.AccountRecord;
 import com.pengjun.ka.db.model.MagicBoxData;
+import com.pengjun.ka.utils.MyDebug;
 import com.pengjun.ka.utils.NumberUtils;
+import com.pengjun.ka.utils.StringUtils;
 import com.pengjun.ka.utils.TimeUtils;
 
 public class MagicBoxService {
@@ -24,6 +27,8 @@ public class MagicBoxService {
 		int monthMiddle = 0;
 		int monthEnd = 0;
 		Double account = null;
+
+		List<String> commentStringList = new ArrayList<String>();
 		for (AccountRecord ar : arList) {
 
 			totalCost += ar.getAccount();
@@ -53,6 +58,11 @@ public class MagicBoxService {
 				account = 0.0;
 			}
 			yearMonth2AccountMap.put(yearMonth, account + ar.getAccount());
+
+			if (!ar.getComment().equals("")) {
+				commentStringList.add(ar.getComment());
+			}
+
 		}
 
 		MagicBoxData magicBoxData = new MagicBoxData();
@@ -71,6 +81,7 @@ public class MagicBoxService {
 		magicBoxData.setAvgCostMonth(NumberUtils.formatDouble(totalCost / yearMonth2AccountMap.size()));
 		magicBoxData.setMaxCost(maxCostAr);
 
+		// maxCostMonth
 		String maxCostMonthStr = null;
 		Double maxCostMonth = Double.MIN_VALUE;
 		for (Map.Entry<String, Double> entry : month2AccountMap.entrySet()) {
@@ -80,6 +91,35 @@ public class MagicBoxService {
 			}
 		}
 		magicBoxData.setMaxCostMonth(String.valueOf(Integer.valueOf(maxCostMonthStr)) + "月");
+
+		// maxCntKeyword
+		Map<String, Integer> keyword2CntMap = new HashMap<String, Integer>();
+		Integer cnt = 0;
+		for (String commentStr : commentStringList) {
+
+			TimeUtils.startTiming();
+			List<String> segmentList = StringUtils.getSegmentationList(commentStr);
+			MyDebug.printFromPJ("time " + TimeUtils.stopTiming());
+			for (String segmentStr : segmentList) {
+				cnt = keyword2CntMap.get(segmentStr);
+				if (cnt == null) {
+					cnt = 0;
+				}
+				keyword2CntMap.put(segmentStr, ++cnt);
+			}
+		}
+
+		String maxCntKeywordStr = null;
+		Integer maxCntKeyword = Integer.MIN_VALUE;
+		for (Map.Entry<String, Integer> entry : keyword2CntMap.entrySet()) {
+
+			if (entry.getValue() > maxCntKeyword) {
+				maxCntKeyword = entry.getValue();
+				maxCntKeywordStr = entry.getKey();
+			}
+		}
+
+		magicBoxData.setCostKeyWord(maxCntKeywordStr);
 
 		return magicBoxData;
 	}

@@ -9,6 +9,15 @@ public class MagicBoxData {
 	private String maxCostMonth;
 	private AccountRecord maxCost;
 	private String maxCostInterval;
+	private String costKeyWord;
+
+	public String getCostKeyWord() {
+		return costKeyWord;
+	}
+
+	public void setCostKeyWord(String costKeyWord) {
+		this.costKeyWord = costKeyWord;
+	}
 
 	public long getTotalCountNum() {
 		return totalCountNum;
