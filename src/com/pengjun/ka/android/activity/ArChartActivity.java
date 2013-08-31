@@ -25,8 +25,8 @@ import com.pengjun.ka.android.fragment.ArSearchResultFragment;
 import com.pengjun.ka.db.dao.ArDao;
 import com.pengjun.ka.db.model.AccountRecord;
 import com.pengjun.ka.utils.ComponentUtils;
-import com.pengjun.ka.utils.Constants;
-import com.pengjun.ka.utils.Constants.ChartType;
+import com.pengjun.ka.utils.KaConstants;
+import com.pengjun.ka.utils.KaConstants.ChartType;
 import com.pengjun.ka.utils.ImageUtils;
 import com.pengjun.ka.utils.ResourceUtils;
 
@@ -72,19 +72,19 @@ public class ArChartActivity extends Activity {
 				Bundle bundle = new Bundle();
 				switch (position) {
 				case 0:
-					bundle.putSerializable(Constants.INTENT_AR_CHART_TYPE, ChartType.Bar);
+					bundle.putSerializable(KaConstants.INTENT_AR_CHART_TYPE, ChartType.Bar);
 					break;
 				case 1:
-					bundle.putSerializable(Constants.INTENT_AR_CHART_TYPE, ChartType.Pie);
+					bundle.putSerializable(KaConstants.INTENT_AR_CHART_TYPE, ChartType.Pie);
 					break;
 				case 2:
-					bundle.putSerializable(Constants.INTENT_AR_CHART_TYPE, ChartType.LineDay);
+					bundle.putSerializable(KaConstants.INTENT_AR_CHART_TYPE, ChartType.LineDay);
 					break;
 				case 3:
-					bundle.putSerializable(Constants.INTENT_AR_CHART_TYPE, ChartType.LineMonth);
+					bundle.putSerializable(KaConstants.INTENT_AR_CHART_TYPE, ChartType.LineMonth);
 					break;
 				case 4:
-					bundle.putSerializable(Constants.INTENT_AR_CHART_TYPE, ChartType.LineYear);
+					bundle.putSerializable(KaConstants.INTENT_AR_CHART_TYPE, ChartType.LineYear);
 					break;
 				}
 				intent.putExtras(bundle);

@@ -23,7 +23,7 @@ import com.pengjun.ka.android.activity.ArSearchResultActivity;
 import com.pengjun.ka.db.dao.ArTypeDao;
 import com.pengjun.ka.db.model.ArSearchCondition;
 import com.pengjun.ka.utils.ComponentUtils;
-import com.pengjun.ka.utils.Constants;
+import com.pengjun.ka.utils.KaConstants;
 import com.pengjun.ka.utils.TimeUtils;
 
 public class ArSearchFragment extends Fragment {
@@ -198,9 +198,9 @@ public class ArSearchFragment extends Fragment {
 				}
 
 				Bundle bundle = new Bundle();
-				bundle.putSerializable(Constants.INTENT_AR_SEARCH_CONDITION, arSC);
+				bundle.putSerializable(KaConstants.INTENT_AR_SEARCH_CONDITION, arSC);
 				intent.putExtras(bundle);
-				startActivityForResult(intent, Constants.CB_ADD_AR);
+				startActivityForResult(intent, KaConstants.CB_ADD_AR);
 				getActivity().overridePendingTransition(R.anim.left_in, R.anim.left_out);
 			}
 		});

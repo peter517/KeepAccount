@@ -29,7 +29,7 @@ import com.pengjun.ka.R;
 import com.pengjun.ka.db.dao.ArTypeDao;
 import com.pengjun.ka.db.model.ArType;
 import com.pengjun.ka.utils.ComponentUtils;
-import com.pengjun.ka.utils.Constants;
+import com.pengjun.ka.utils.KaConstants;
 import com.pengjun.ka.utils.MyDebug;
 import com.pengjun.ka.utils.ResourceUtils;
 
@@ -72,7 +72,7 @@ public class ManageArTypeActivity extends Activity {
 
 				Intent intent = new Intent();
 				intent.setClass(ManageArTypeActivity.this, AddArTypeActivity.class);
-				startActivityForResult(intent, Constants.CB_ADD_AR_TYPE);
+				startActivityForResult(intent, KaConstants.CB_ADD_AR_TYPE);
 				overridePendingTransition(R.anim.left_in, R.anim.left_out);
 			}
 		});
@@ -92,9 +92,9 @@ public class ManageArTypeActivity extends Activity {
 
 				ArType arType = arTypeList.get(position);
 				Bundle bundle = new Bundle();
-				bundle.putSerializable(Constants.INTENT_AR_TYPE_BEAN, arType);
+				bundle.putSerializable(KaConstants.INTENT_AR_TYPE_BEAN, arType);
 				intent.putExtras(bundle);
-				startActivityForResult(intent, Constants.CB_ADD_AR_TYPE);
+				startActivityForResult(intent, KaConstants.CB_ADD_AR_TYPE);
 				overridePendingTransition(R.anim.left_in, R.anim.left_out);
 
 			}
@@ -161,7 +161,7 @@ public class ManageArTypeActivity extends Activity {
 
 		Intent intent = new Intent();
 		Bundle bundle = new Bundle();
-		bundle.putStringArrayList(Constants.INTENT_AR_TYPE_NAME_LIST_BEAN, arTypeNameList);
+		bundle.putStringArrayList(KaConstants.INTENT_AR_TYPE_NAME_LIST_BEAN, arTypeNameList);
 		intent.putExtras(bundle);
 
 		setResult(RESULT_OK, intent);
@@ -201,7 +201,7 @@ public class ManageArTypeActivity extends Activity {
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		if (requestCode == Constants.CB_ADD_AR_TYPE) {
+		if (requestCode == KaConstants.CB_ADD_AR_TYPE) {
 			if (resultCode == RESULT_OK) {
 				updateArTypeListSync();
 			}

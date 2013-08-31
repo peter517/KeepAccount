@@ -2,7 +2,7 @@ package com.pengjun.ka.utils;
 
 import java.util.List;
 
-public class Constants {
+public class KaConstants {
 
 	public static int TOAST_EXSIT_TIME = 2000;
 
@@ -46,7 +46,7 @@ public class Constants {
 	public static final String INTENT_AR_SEARCH_CONDITION = "ar_search_condition";
 	public static final String INTENT_AR_LIST = "ar_list";
 	public static final String INTENT_AR_CHART_TYPE = "ar_chart_type";
-	public static final String INTENT_CURRENT_MONTH_YEAR = "current_month_year";
+	public static final String INTENT_TOP_TITLE = "current_month_year";
 
 	// backup file path
 	public static final String BACK_UP_ROOT = "/sdcard/ka";

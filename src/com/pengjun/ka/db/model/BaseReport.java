@@ -1,20 +1,24 @@
 package com.pengjun.ka.db.model;
 
-public class ReportData {
+public class BaseReport {
 
 	private long totalCountNum;
 	private double totalCost;
 	private double avgCost;
+
 	private String maxCostDay;
+	private double avgCostPerDay;
 	private AccountRecord maxCost;
+	private String costKeyWord;
+
 	private String maxCostInterval;
 
-	public String getMaxCostInterval() {
-		return maxCostInterval;
+	public String getCostKeyWord() {
+		return costKeyWord;
 	}
 
-	public void setMaxCostInterval(String maxCostInterval) {
-		this.maxCostInterval = maxCostInterval;
+	public void setCostKeyWord(String costKeyWord) {
+		this.costKeyWord = costKeyWord;
 	}
 
 	public long getTotalCountNum() {
@@ -49,12 +53,28 @@ public class ReportData {
 		this.maxCostDay = maxCostDay;
 	}
 
+	public double getAvgCostPerDay() {
+		return avgCostPerDay;
+	}
+
+	public void setAvgCostPerDay(double avgCostPerDay) {
+		this.avgCostPerDay = avgCostPerDay;
+	}
+
 	public AccountRecord getMaxCost() {
 		return maxCost;
 	}
 
 	public void setMaxCost(AccountRecord maxCost) {
 		this.maxCost = maxCost;
+	}
+
+	public String getMaxCostInterval() {
+		return maxCostInterval;
+	}
+
+	public void setMaxCostInterval(String maxCostInterval) {
+		this.maxCostInterval = maxCostInterval;
 	}
 
 }

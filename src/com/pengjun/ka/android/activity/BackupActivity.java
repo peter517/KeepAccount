@@ -26,7 +26,7 @@ import com.pengjun.ka.R;
 import com.pengjun.ka.android.fragment.ArFragment;
 import com.pengjun.ka.db.service.BackupService;
 import com.pengjun.ka.utils.ComponentUtils;
-import com.pengjun.ka.utils.Constants;
+import com.pengjun.ka.utils.KaConstants;
 import com.pengjun.ka.utils.FileUtils;
 import com.pengjun.ka.utils.TimeUtils;
 
@@ -50,8 +50,8 @@ public class BackupActivity extends Activity {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.backup);
 
-		FileUtils.createDir(Constants.BACK_UP_ROOT);
-		backupDateStrList = FileUtils.getFileNameList(new File(Constants.BACK_UP_ROOT));
+		FileUtils.createDir(KaConstants.BACK_UP_ROOT);
+		backupDateStrList = FileUtils.getFileNameList(new File(KaConstants.BACK_UP_ROOT));
 
 		ibAddBackup = (ImageButton) findViewById(R.id.ibAddBackup);
 		ibAddBackup.setOnClickListener(new View.OnClickListener() {
@@ -149,7 +149,7 @@ public class BackupActivity extends Activity {
 
 						BackupService.deleteBackupFromDateStr(backupDateStrList.get(longClickPos));
 						BackupActivity.this.backupDateStrList = FileUtils.getFileNameList(new File(
-								Constants.BACK_UP_ROOT));
+								KaConstants.BACK_UP_ROOT));
 						backupAdapter.notifyDataSetChanged();
 					}
 				});
@@ -200,7 +200,7 @@ public class BackupActivity extends Activity {
 		protected void onPostExecute(Void v) {
 
 			BackupActivity.this.backupDateStrList = FileUtils
-					.getFileNameList(new File(Constants.BACK_UP_ROOT));
+					.getFileNameList(new File(KaConstants.BACK_UP_ROOT));
 			backupAdapter.notifyDataSetChanged();
 			hideProgress();
 

@@ -20,7 +20,7 @@ import com.pengjun.ka.db.dao.ArDao;
 import com.pengjun.ka.db.dao.ArTypeDao;
 import com.pengjun.ka.db.model.AccountRecord;
 import com.pengjun.ka.utils.ComponentUtils;
-import com.pengjun.ka.utils.Constants;
+import com.pengjun.ka.utils.KaConstants;
 import com.pengjun.ka.utils.NumberUtils;
 import com.pengjun.ka.utils.TimeUtils;
 
@@ -58,7 +58,7 @@ public class AddArActivity extends Activity {
 		dpCreateDate = (DatePicker) findViewById(R.id.dpCreateDate);
 		etComment = (EditText) findViewById(R.id.etComment);
 
-		ar = (AccountRecord) getIntent().getSerializableExtra(Constants.INTENT_AR_BEAN);
+		ar = (AccountRecord) getIntent().getSerializableExtra(KaConstants.INTENT_AR_BEAN);
 		if (ar != null) {
 			putArToView(ar);
 		}
@@ -69,12 +69,12 @@ public class AddArActivity extends Activity {
 			public void onClick(View v) {
 				Intent intent = new Intent();
 				intent.setClass(AddArActivity.this, ManageArTypeActivity.class);
-				startActivityForResult(intent, Constants.CB_ADD_AR_TYPE_NAME);
+				startActivityForResult(intent, KaConstants.CB_ADD_AR_TYPE_NAME);
 				overridePendingTransition(R.anim.left_in, R.anim.left_out);
 			}
 		});
 
-		if ((Boolean) getIntent().getSerializableExtra(Constants.INTENT_DISABLE_AR_TYPE_MANAGE) != null) {
+		if ((Boolean) getIntent().getSerializableExtra(KaConstants.INTENT_DISABLE_AR_TYPE_MANAGE) != null) {
 			btManageArType.setVisibility(View.GONE);
 		}
 
@@ -128,10 +128,10 @@ public class AddArActivity extends Activity {
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		if (requestCode == Constants.CB_ADD_AR_TYPE_NAME) {
+		if (requestCode == KaConstants.CB_ADD_AR_TYPE_NAME) {
 			if (resultCode == RESULT_OK) {
 				ArrayList<String> arTypeNameList = data.getExtras().getStringArrayList(
-						Constants.INTENT_AR_TYPE_NAME_LIST_BEAN);
+						KaConstants.INTENT_AR_TYPE_NAME_LIST_BEAN);
 				this.arTypeNameList = arTypeNameList;
 				updataSpTypeAdapter();
 				arTypeNameAdapter.notifyDataSetChanged();

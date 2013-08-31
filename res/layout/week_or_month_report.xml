@@ -16,8 +16,7 @@
             style="@style/TopTitleTextStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="@string/magicBox" />
+            android:layout_centerInParent="true" />
     </RelativeLayout>
 
     <ScrollView
@@ -44,9 +43,10 @@
                 android:layout_marginTop="10dp"
                 android:background="@drawable/text_selector_xml"
                 android:orientation="vertical" />
+            
 
             <RelativeLayout
-                android:id="@+id/rlBaseReport1"
+                android:id="@+id/rlTotalCost"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/llTypeRatioChart"
@@ -55,48 +55,20 @@
                 android:layout_marginTop="10dp"
                 android:background="@drawable/text_selector_xml"
                 android:orientation="vertical" >
-
                 <include layout="@layout/base_report1" />
             </RelativeLayout>
 
-            <RelativeLayout
-                android:id="@+id/rlBaseReport2"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/rlBaseReport1"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/text_selector_xml"
-                android:orientation="vertical" >
-                <include layout="@layout/base_report2" />
-            </RelativeLayout>
-
-            <RelativeLayout
+           <RelativeLayout
                 android:id="@+id/rlMounthCost"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/rlBaseReport2"
+                android:layout_below="@+id/rlTotalCost"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/text_selector_xml"
                 android:orientation="vertical" >
-
-                <TextView
-                    android:id="@+id/tvAvgCostMonthStr"
-                    style="@style/MagicTextStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/costAvgMounth" />
-
-                <TextView
-                    android:id="@+id/tvAvgCostMonth"
-                    style="@style/MagicRusultTextStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/tvAvgCostMonthStr"
-                    android:layout_centerInParent="true" />
+              <include layout="@layout/base_report2" />
             </RelativeLayout>
         </RelativeLayout>
     </ScrollView>

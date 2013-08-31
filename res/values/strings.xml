@@ -39,14 +39,9 @@
 
     <!-- Magic Box -->
     <string name="startMagicBox">开启魔方</string>
-    <string name="totalCountNum">总消费记录数</string>
-    <string name="totalCost">总消费</string>
-    <string name="avgCost">平均单笔消费</string>
     <string name="costAvgMounth">每月平均消费</string>
     <string name="maxCostMounth">消费最多的月份</string>
-    <string name="maxCostInterval">每月消费最多的时间段</string>
-    <string name="maxCost">最大的一笔消费</string>
-    <string name="costKeyWord">消费关键字</string>
+  
 
     <!-- System Settings -->
     <string name="backUp">数据备份</string>
@@ -54,9 +49,15 @@
     <string name="manageBackUpData">管理备份数据</string>
     <string name="exit">退出</string>
     
-    <!-- Report -->
-    <string name="monthReport">月　报表</string>
-    <string name="everDayCostTrends">每天消费趋势</string>
+    <!-- Base Report -->
+    <string name="totalCountNum">总消费记录数</string>
+    <string name="totalCost">总消费</string>
+    <string name="avgCost">平均单笔消费</string>
+    <string name="avgCostPerDayStr">平均每天消费</string>
     <string name="maxCostDay">消费最多的一天</string>
+    <string name="maxCostInterval">消费最多的时间段</string>
+    <string name="maxCost">最大的一笔消费</string>
+    <string name="costKeyWord">消费关键字</string>
+    
 
 </resources>

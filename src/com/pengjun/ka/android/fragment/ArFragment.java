@@ -30,7 +30,7 @@ import com.pengjun.ka.android.activity.AddArActivity;
 import com.pengjun.ka.db.dao.ArDao;
 import com.pengjun.ka.db.model.AccountRecord;
 import com.pengjun.ka.utils.ComponentUtils;
-import com.pengjun.ka.utils.Constants;
+import com.pengjun.ka.utils.KaConstants;
 import com.pengjun.ka.utils.MyDebug;
 import com.pengjun.ka.utils.ResourceUtils;
 
@@ -110,9 +110,9 @@ public class ArFragment extends Fragment {
 
 				AccountRecord ar = arList.get(position);
 				Bundle bundle = new Bundle();
-				bundle.putSerializable(Constants.INTENT_AR_BEAN, ar);
+				bundle.putSerializable(KaConstants.INTENT_AR_BEAN, ar);
 				intent.putExtras(bundle);
-				getActivity().startActivityForResult(intent, Constants.CB_ADD_AR);
+				getActivity().startActivityForResult(intent, KaConstants.CB_ADD_AR);
 				getActivity().overridePendingTransition(R.anim.left_in, R.anim.left_out);
 
 			}
@@ -242,7 +242,7 @@ public class ArFragment extends Fragment {
 			}
 
 			if (tempArList == null || tempArList.size() == 0) {
-				Toast.makeText(ArFragment.this.getActivity(), "没有数据，请记账", Constants.TOAST_EXSIT_TIME).show();
+				Toast.makeText(ArFragment.this.getActivity(), "没有数据，请记账", KaConstants.TOAST_EXSIT_TIME).show();
 				return;
 			}
 
@@ -274,7 +274,7 @@ public class ArFragment extends Fragment {
 		protected void onPostExecute(List<AccountRecord> tempArList) {
 
 			if (tempArList == null || tempArList.size() == 0) {
-				Toast.makeText(ArFragment.this.getActivity(), "没有新数据", Constants.TOAST_EXSIT_TIME).show();
+				Toast.makeText(ArFragment.this.getActivity(), "没有新数据", KaConstants.TOAST_EXSIT_TIME).show();
 			} else {
 				btLoadMore.setVisibility(View.VISIBLE);
 			}

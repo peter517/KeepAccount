@@ -1,10 +1,9 @@
-package com.pengjun.ka.android.activity;
+package com.pengjun.ka.android.activity.report;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Activity;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
@@ -15,24 +14,20 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.pengjun.ka.R;
+import com.pengjun.ka.android.service.ReportNotificationService;
 import com.pengjun.ka.chart.BaseChart;
 import com.pengjun.ka.chart.ChartFactory;
 import com.pengjun.ka.db.model.AccountRecord;
-import com.pengjun.ka.db.model.ReportData;
-import com.pengjun.ka.db.service.ReportNotificationService;
-import com.pengjun.ka.utils.ComponentUtils;
-import com.pengjun.ka.utils.Constants;
-import com.pengjun.ka.utils.Constants.ChartType;
+import com.pengjun.ka.db.model.BaseReport;
+import com.pengjun.ka.utils.KaConstants.ChartType;
 import com.pengjun.ka.utils.NumberUtils;
 import com.pengjun.ka.utils.ResourceUtils;
 
-public class ReportActivity extends Activity {
+public class BaseReportActivity extends Activity {
 
-	private LinearLayout llTypeRatioChart;
+	protected LinearLayout llTypeRatioChart;
 	private ProgressBar pbLoad;
 	private ScrollView svMagicData;
-
-	private ReportData reportData;
 
 	private TextView tvTopTitle;
 
@@ -41,36 +36,42 @@ public class ReportActivity extends Activity {
 	private TextView tvAvgCost;
 	private TextView tvMaxCostDay;
 	private TextView tvMaxCostInterval;
+	private TextView tvAvgCostPerDay;
+	private TextView tvCostKeyWord;
 
 	private TextView tvAccount;
 	private ImageView ivType;
 	private TextView tvType;
 	private TextView tvDate;
 
-	private List<AccountRecord> arList = new ArrayList<AccountRecord>();
+	protected List<AccountRecord> arList = new ArrayList<AccountRecord>();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		setContentView(R.layout.report);
 
+	}
+
+	protected void initLayout(int layoutId, String topTitle) {
+
+		setContentView(layoutId);
 		// pass value directly in order to avoid arList is too large
 		arList = ReportNotificationService.arList;
 
 		tvTopTitle = (TextView) findViewById(R.id.tvTopTitle);
-		String curMonthYear = (String) ComponentUtils.getIntentData(getIntent(),
-				Constants.INTENT_CURRENT_MONTH_YEAR);
-		tvTopTitle.setText(curMonthYear + tvTopTitle.getText().toString());
+
+		tvTopTitle.setText(topTitle);
 
 		llTypeRatioChart = (LinearLayout) findViewById(R.id.llTypeRatioChart);
 
 		tvTotalCountNum = (TextView) findViewById(R.id.tvTotalCountNum);
 		tvTotalCost = (TextView) findViewById(R.id.tvTotalCost);
 		tvAvgCost = (TextView) findViewById(R.id.tvAvgCost);
+		tvAvgCostPerDay = (TextView) findViewById(R.id.tvAvgCostPerDay);
 		tvMaxCostDay = (TextView) findViewById(R.id.tvMaxCostDay);
 		tvMaxCostInterval = (TextView) findViewById(R.id.tvMaxCostInterval);
+		tvCostKeyWord = (TextView) findViewById(R.id.tvCostKeyWord);
 
 		tvAccount = (TextView) findViewById(R.id.tvCost);
 		ivType = (ImageView) findViewById(R.id.ivType);
@@ -80,55 +81,48 @@ public class ReportActivity extends Activity {
 		pbLoad = (ProgressBar) findViewById(R.id.pbLoad);
 		svMagicData = (ScrollView) findViewById(R.id.svMagicData);
 
-		showProgress();
-		new LoadArChartTask().execute();
 	}
 
-	private void showProgress() {
+	protected void showProgress() {
 		pbLoad.setVisibility(View.VISIBLE);
 		svMagicData.setVisibility(View.GONE);
 	}
 
-	private void hideProgress() {
+	protected void hideProgress() {
 		pbLoad.setVisibility(View.GONE);
 		svMagicData.setVisibility(View.VISIBLE);
 	}
 
-	class LoadArChartTask extends AsyncTask<Void, Void, Void> {
+	protected BaseChart createBaseChart(List<AccountRecord> arList) {
 
-		BaseChart typeRadioChart;
+		BaseChart typeRadioChart = ChartFactory.createChart(ChartType.Pie);
+		typeRadioChart.compute(arList);
+		typeRadioChart.setZoomEnabled(false);
 
-		@Override
-		protected Void doInBackground(Void... params) {
-
-			typeRadioChart = ChartFactory.createChart(ChartType.Pie);
-			typeRadioChart.compute(arList);
-
-			reportData = ReportNotificationService.computeReportData(arList);
-			return null;
-		}
-
-		@Override
-		protected void onPostExecute(Void v) {
-
-			typeRadioChart.setZoomEnabled(false);
-
-			llTypeRatioChart.addView(typeRadioChart.getView(ReportActivity.this));
-
-			tvTotalCountNum.setText(String.valueOf(reportData.getTotalCountNum()));
-			tvTotalCost.setText(NumberUtils.double2String(reportData.getTotalCost()));
-			tvAvgCost.setText(String.valueOf(reportData.getAvgCost()));
-			tvMaxCostDay.setText(reportData.getMaxCostDay());
-			tvMaxCostInterval.setText(reportData.getMaxCostInterval());
-
-			AccountRecord ar = reportData.getMaxCost();
-			tvAccount.setText(String.valueOf(ar.getAccount()));
-			ivType.setImageResource(ResourceUtils.getImgResIdByResName(ar.getImgResName()));
-			tvType.setText(ar.getTypeName());
-			tvDate.setText(ar.getCreateDate());
-
-			hideProgress();
-			super.onPostExecute(v);
-		}
+		return typeRadioChart;
 	}
+
+	protected void fillBaseReport(BaseReport baseReport, BaseChart typeRadioChart) {
+
+		llTypeRatioChart.addView(typeRadioChart.getView(this));
+
+		tvTotalCountNum.setText(String.valueOf(baseReport.getTotalCountNum()));
+		tvTotalCost.setText(NumberUtils.double2String(baseReport.getTotalCost()));
+		tvAvgCost.setText(String.valueOf(baseReport.getAvgCost()));
+		tvAvgCostPerDay.setText(String.valueOf(baseReport.getAvgCostPerDay()));
+		tvMaxCostDay.setText(baseReport.getMaxCostDay());
+		tvMaxCostInterval.setText(baseReport.getMaxCostInterval());
+		if (baseReport.getCostKeyWord() != null) {
+			tvCostKeyWord.setText(baseReport.getCostKeyWord());
+		} else {
+			tvCostKeyWord.setText("无");
+		}
+
+		AccountRecord ar = baseReport.getMaxCost();
+		tvAccount.setText(String.valueOf(ar.getAccount()));
+		ivType.setImageResource(ResourceUtils.getImgResIdByResName(ar.getImgResName()));
+		tvType.setText(ar.getTypeName());
+		tvDate.setText(ar.getCreateDate());
+	}
+
 }

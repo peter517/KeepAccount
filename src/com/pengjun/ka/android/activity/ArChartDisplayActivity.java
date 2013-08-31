@@ -15,8 +15,8 @@ import com.pengjun.ka.R;
 import com.pengjun.ka.chart.BaseChart;
 import com.pengjun.ka.chart.ChartFactory;
 import com.pengjun.ka.db.model.AccountRecord;
-import com.pengjun.ka.utils.Constants;
-import com.pengjun.ka.utils.Constants.ChartType;
+import com.pengjun.ka.utils.KaConstants;
+import com.pengjun.ka.utils.KaConstants.ChartType;
 
 public class ArChartDisplayActivity extends Activity {
 
@@ -34,7 +34,7 @@ public class ArChartDisplayActivity extends Activity {
 		// pass value directly in order to avoid arList is too large
 		arList = ArChartActivity.arList;
 
-		chartType = (ChartType) getIntent().getExtras().getSerializable(Constants.INTENT_AR_CHART_TYPE);
+		chartType = (ChartType) getIntent().getExtras().getSerializable(KaConstants.INTENT_AR_CHART_TYPE);
 
 		setContentView(R.layout.ar_chart_display);
 

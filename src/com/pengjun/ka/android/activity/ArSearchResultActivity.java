@@ -13,7 +13,7 @@ import com.pengjun.ka.android.fragment.ArSearchResultFragment;
 import com.pengjun.ka.android.fragment.FragmentDirector;
 import com.pengjun.ka.db.model.ArSearchCondition;
 import com.pengjun.ka.utils.ComponentUtils;
-import com.pengjun.ka.utils.Constants;
+import com.pengjun.ka.utils.KaConstants;
 
 public class ArSearchResultActivity extends FragmentActivity {
 
@@ -45,7 +45,7 @@ public class ArSearchResultActivity extends FragmentActivity {
 		});
 
 		ArSearchCondition arSC = (ArSearchCondition) getIntent().getExtras().getSerializable(
-				Constants.INTENT_AR_SEARCH_CONDITION);
+				KaConstants.INTENT_AR_SEARCH_CONDITION);
 
 		// main content
 		FragmentDirector.replaceFragment(this, R.id.mainConent, ArSearchResultFragment.newInstance(arSC));
@@ -54,7 +54,7 @@ public class ArSearchResultActivity extends FragmentActivity {
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		if (requestCode == Constants.CB_ADD_AR) {
+		if (requestCode == KaConstants.CB_ADD_AR) {
 			if (resultCode == RESULT_OK) {
 				ArSearchResultFragment.newInstance(null).updateArListViewSync();
 			}

@@ -16,7 +16,7 @@ import com.pengjun.ka.android.fragment.ArSearchFragment;
 import com.pengjun.ka.android.fragment.FragmentDirector;
 import com.pengjun.ka.android.fragment.MagicBoxFragment;
 import com.pengjun.ka.android.fragment.SettingFragment;
-import com.pengjun.ka.utils.Constants;
+import com.pengjun.ka.utils.KaConstants;
 
 public class KaMainActivity extends FragmentActivity {
 
@@ -62,7 +62,7 @@ public class KaMainActivity extends FragmentActivity {
 			public void onClick(View v) {
 				Intent intent = new Intent();
 				intent.setClass(KaMainActivity.this, AddArActivity.class);
-				startActivityForResult(intent, Constants.CB_ADD_AR);
+				startActivityForResult(intent, KaConstants.CB_ADD_AR);
 				overridePendingTransition(R.anim.left_in, R.anim.left_out);
 
 			}
@@ -182,7 +182,7 @@ public class KaMainActivity extends FragmentActivity {
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		if (requestCode == Constants.CB_ADD_AR) {
+		if (requestCode == KaConstants.CB_ADD_AR) {
 			if (resultCode == RESULT_OK) {
 				ArFragment.newInstance().updateArListViewSync();
 			}

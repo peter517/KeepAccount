@@ -21,7 +21,7 @@ import com.pengjun.ka.R;
 import com.pengjun.ka.db.dao.ArTypeDao;
 import com.pengjun.ka.db.model.ArType;
 import com.pengjun.ka.utils.ComponentUtils;
-import com.pengjun.ka.utils.Constants;
+import com.pengjun.ka.utils.KaConstants;
 import com.pengjun.ka.utils.ResourceUtils;
 import com.pengjun.ka.utils.TimeUtils;
 
@@ -125,7 +125,7 @@ public class AddArTypeActivity extends Activity {
 			}
 		});
 
-		arType = (ArType) getIntent().getSerializableExtra(Constants.INTENT_AR_TYPE_BEAN);
+		arType = (ArType) getIntent().getSerializableExtra(KaConstants.INTENT_AR_TYPE_BEAN);
 		if (arType != null) {
 			etArTypeName.setText(arType.getTypeName());
 		}

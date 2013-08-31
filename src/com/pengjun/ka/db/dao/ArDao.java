@@ -14,8 +14,7 @@ import com.j256.ormlite.table.TableUtils;
 import com.pengjun.ka.android.activity.KaApplication;
 import com.pengjun.ka.db.model.AccountRecord;
 import com.pengjun.ka.db.model.ArSearchCondition;
-import com.pengjun.ka.test.DataCreater;
-import com.pengjun.ka.utils.Constants;
+import com.pengjun.ka.utils.KaConstants;
 
 public class ArDao {
 
@@ -33,9 +32,9 @@ public class ArDao {
 
 	public static void insert(AccountRecord ar) {
 		try {
-			for (int i = 0; i < 500; i++)
-				dao.create(DataCreater.getRandomAr());
-			// dao.create(ar);
+			// for (int i = 0; i < 500; i++)
+			// dao.create(DataCreater.getRandomAr());
+			dao.create(ar);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -91,7 +90,7 @@ public class ArDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return Constants.DB_SEARCH_LIST_NOT_FOUND;
+		return KaConstants.DB_SEARCH_LIST_NOT_FOUND;
 	}
 
 	public static List<AccountRecord> queryAll() {
@@ -101,7 +100,7 @@ public class ArDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return Constants.DB_SEARCH_LIST_NOT_FOUND;
+		return KaConstants.DB_SEARCH_LIST_NOT_FOUND;
 	}
 
 	public static void deleteAll(List<AccountRecord> arList) {
@@ -128,7 +127,7 @@ public class ArDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return Constants.DB_SEARCH_INT_NOT_FOUND;
+		return KaConstants.DB_SEARCH_INT_NOT_FOUND;
 	}
 
 	public static List<AccountRecord> queryLimitRows(int offset, int limtRows) {
@@ -141,7 +140,7 @@ public class ArDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return Constants.DB_SEARCH_LIST_NOT_FOUND;
+		return KaConstants.DB_SEARCH_LIST_NOT_FOUND;
 	}
 
 	public static List<String> queryAllComments() {
@@ -161,7 +160,7 @@ public class ArDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return Constants.DB_SEARCH_LIST_NOT_FOUND;
+		return KaConstants.DB_SEARCH_LIST_NOT_FOUND;
 	}
 
 	public static List<AccountRecord> queryAr(ArSearchCondition arSC, int offset, int limtRows) {
@@ -212,6 +211,6 @@ public class ArDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return Constants.DB_SEARCH_LIST_NOT_FOUND;
+		return KaConstants.DB_SEARCH_LIST_NOT_FOUND;
 	}
 }

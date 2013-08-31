@@ -12,8 +12,8 @@ import com.j256.ormlite.table.TableUtils;
 import com.pengjun.ka.android.activity.KaApplication;
 import com.pengjun.ka.db.model.AccountRecord;
 import com.pengjun.ka.db.model.ArType;
-import com.pengjun.ka.utils.Constants;
-import com.pengjun.ka.utils.Constants.InitArType;
+import com.pengjun.ka.utils.KaConstants;
+import com.pengjun.ka.utils.KaConstants.InitArType;
 import com.pengjun.ka.utils.TimeUtils;
 
 public class ArTypeDao {
@@ -56,7 +56,7 @@ public class ArTypeDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return Constants.DB_SEARCH_LIST_NOT_FOUND;
+		return KaConstants.DB_SEARCH_LIST_NOT_FOUND;
 	}
 
 	public static List<String> queryAllArTypeName() {
@@ -72,7 +72,7 @@ public class ArTypeDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return Constants.DB_SEARCH_LIST_NOT_FOUND;
+		return KaConstants.DB_SEARCH_LIST_NOT_FOUND;
 	}
 
 	public static String getArTpyeNameById(int id) {
@@ -82,7 +82,7 @@ public class ArTypeDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return Constants.DB_SEARCH_STRING_NOT_FOUND;
+		return KaConstants.DB_SEARCH_STRING_NOT_FOUND;
 	}
 
 	public static String getImgResNameById(int id) {
@@ -92,7 +92,7 @@ public class ArTypeDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return Constants.DB_SEARCH_STRING_NOT_FOUND;
+		return KaConstants.DB_SEARCH_STRING_NOT_FOUND;
 	}
 
 	public static int getIdByArTpye(String arTpye) {
@@ -104,7 +104,7 @@ public class ArTypeDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return Constants.DB_SEARCH_INT_NOT_FOUND;
+		return KaConstants.DB_SEARCH_INT_NOT_FOUND;
 	}
 
 	public static boolean ifArTypeExist(String arTpye) {

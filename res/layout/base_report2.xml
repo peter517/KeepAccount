@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/tvAvgCostPerDayStr"
+        style="@style/MagicTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="@string/avgCostPerDayStr" />
+
+    <TextView
+        android:id="@+id/tvAvgCostPerDay"
+        style="@style/MagicRusultTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvAvgCostPerDayStr"
+        android:layout_centerInParent="true" />
+
+    <TextView
+        android:id="@+id/tvMaxCostDayStr"
+        style="@style/MagicTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvAvgCostPerDay"
+        android:layout_marginTop="10dp"
+        android:text="@string/maxCostDay" />
+
+    <TextView
+        android:id="@+id/tvMaxCostDay"
+        style="@style/MagicRusultTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvMaxCostDayStr"
+        android:layout_centerInParent="true" />
+
+    <TextView
+        android:id="@+id/tvMaxCostIntervalStr"
+        style="@style/MagicTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvMaxCostDay"
+        android:layout_marginTop="10dp"
+        android:text="@string/maxCostInterval" />
+
+    <TextView
+        android:id="@+id/tvMaxCostInterval"
+        style="@style/MagicRusultTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvMaxCostIntervalStr"
+        android:layout_centerInParent="true" />
+
+    <TextView
+        android:id="@+id/tvMaxCostStr"
+        style="@style/MagicTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvMaxCostInterval"
+        android:layout_marginTop="10dp"
+        android:text="@string/maxCost" />
+
+    <LinearLayout
+        android:id="@+id/llMaxCost"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvMaxCostStr" >
+
+        <include layout="@layout/ar_listview_item" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tvCostKeyWordStr"
+        style="@style/MagicTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/llMaxCost"
+        android:layout_marginTop="10dp"
+        android:text="@string/costKeyWord" />
+
+    <TextView
+        android:id="@+id/tvCostKeyWord"
+        style="@style/MagicRusultTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvCostKeyWordStr"
+        android:layout_centerInParent="true" />
+
+</RelativeLayout>

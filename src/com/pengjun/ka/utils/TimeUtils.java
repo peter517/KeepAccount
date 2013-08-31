@@ -29,8 +29,6 @@ public class TimeUtils {
 	static {
 		random.setSeed(System.currentTimeMillis());
 
-		long time = System.currentTimeMillis();
-		calendar.setTimeInMillis(time);
 	}
 
 	public static void startTiming() {
@@ -51,18 +49,33 @@ public class TimeUtils {
 	}
 
 	public static String getCurHour() {
+		calendar.setTimeInMillis(System.currentTimeMillis());
 		return hourFormat.format(calendar.getTime());
 	}
 
+	public static int getDayOfWeek(long currentTimeMillis) {
+		calendar.setTimeInMillis(currentTimeMillis);
+		return calendar.get(Calendar.DAY_OF_WEEK);
+	}
+
 	public static String getLastMonthOfTodayStr() {
+		calendar.setTimeInMillis(System.currentTimeMillis());
 		calendar.add(Calendar.MONTH, -1);
 		String str = dateFormat.format(calendar.getTime());
 		calendar.add(Calendar.MONTH, 1);
 		return str;
 	}
 
-	public static String getLastDayStr() {
+	public static String getLastWeekOfTodayStr() {
+		calendar.setTimeInMillis(System.currentTimeMillis());
+		calendar.add(Calendar.WEEK_OF_YEAR, -1);
+		String str = dateFormat.format(calendar.getTime());
+		calendar.add(Calendar.WEEK_OF_YEAR, 1);
+		return str;
+	}
 
+	public static String getLastDayStr() {
+		calendar.setTimeInMillis(System.currentTimeMillis());
 		calendar.add(Calendar.DAY_OF_MONTH, -1);
 		String str = dateFormat.format(calendar.getTime());
 		calendar.add(Calendar.DAY_OF_MONTH, 1);
@@ -70,10 +83,12 @@ public class TimeUtils {
 	}
 
 	public static Date getCurDate() {
+		calendar.setTimeInMillis(System.currentTimeMillis());
 		return calendar.getTime();
 	}
 
 	public static String getLastMonthStr() {
+		calendar.setTimeInMillis(System.currentTimeMillis());
 		calendar.add(Calendar.MONTH, -1);
 		String str = yearMonthFormat.format(calendar.getTime());
 		calendar.add(Calendar.MONTH, 1);
@@ -100,6 +115,7 @@ public class TimeUtils {
 
 	public static String getCurTimeStr() {
 
+		calendar.setTimeInMillis(System.currentTimeMillis());
 		int year = calendar.get(Calendar.YEAR);
 		int mouth = calendar.get(Calendar.MONTH);
 		int day = calendar.get(Calendar.DAY_OF_MONTH);
@@ -113,11 +129,13 @@ public class TimeUtils {
 	}
 
 	public static String getCurMonthYearStr() {
+		calendar.setTimeInMillis(System.currentTimeMillis());
 		return yearMonthFormat.format(calendar.getTime());
 	}
 
 	public static String getCurDateStr() {
 
+		calendar.setTimeInMillis(System.currentTimeMillis());
 		int year = calendar.get(Calendar.YEAR);
 		int mouth = calendar.get(Calendar.MONTH);
 		int day = calendar.get(Calendar.DAY_OF_MONTH);
@@ -128,14 +146,22 @@ public class TimeUtils {
 	}
 
 	public static String getCurYearStr() {
+		calendar.setTimeInMillis(System.currentTimeMillis());
 		return String.valueOf(calendar.get(Calendar.YEAR));
 	}
 
+	public static String getCurWeekYearStr() {
+		calendar.setTimeInMillis(System.currentTimeMillis());
+		return String.valueOf(calendar.get(Calendar.YEAR) + " " + calendar.get(Calendar.WEEK_OF_YEAR));
+	}
+
 	public static String getCurMonthStr() {
+		calendar.setTimeInMillis(System.currentTimeMillis());
 		return String.valueOf(calendar.get(Calendar.MONTH) + 1);
 	}
 
 	public static String getCurDayStr() {
+		calendar.setTimeInMillis(System.currentTimeMillis());
 		return String.valueOf(calendar.get(Calendar.DAY_OF_MONTH));
 	}
 
@@ -164,14 +190,19 @@ public class TimeUtils {
 		return date;
 	}
 
-	public static String String2YearMonthDateStr(String dateStr) {
+	public static String String2MonthYearStr(String dateStr) {
 		String[] date = String2DateStrArr(dateStr);
 		return date[0] + "-" + date[1];
 	}
 
-	public static String String2YearDateStr(String dateStr) {
+	public static String String2YearStr(String dateStr) {
 		String[] date = String2DateStrArr(dateStr);
 		return date[0];
+	}
+
+	public static String String2DayMonthStr(String dateStr) {
+		String[] date = String2DateStrArr(dateStr);
+		return date[1] + "-" + date[2];
 	}
 
 }

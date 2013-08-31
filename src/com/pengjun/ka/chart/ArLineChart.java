@@ -14,7 +14,7 @@ import android.content.Context;
 import android.view.View;
 
 import com.pengjun.ka.db.model.AccountRecord;
-import com.pengjun.ka.utils.Constants.ChartType;
+import com.pengjun.ka.utils.KaConstants.ChartType;
 import com.pengjun.ka.utils.NumberUtils;
 import com.pengjun.ka.utils.TimeUtils;
 
@@ -67,7 +67,7 @@ public class ArLineChart extends BaseChart {
 		case LineMonth:
 			for (AccountRecord ar : arList) {
 
-				Date yearMonth = TimeUtils.string2YearMonthDate(TimeUtils.String2YearMonthDateStr(ar
+				Date yearMonth = TimeUtils.string2YearMonthDate(TimeUtils.String2MonthYearStr(ar
 						.getCreateDate()));
 				account = map.get(yearMonth);
 				if (account == null) {
@@ -80,7 +80,7 @@ public class ArLineChart extends BaseChart {
 		case LineYear:
 			for (AccountRecord ar : arList) {
 
-				Date year = TimeUtils.string2YearDate(TimeUtils.String2YearDateStr(ar.getCreateDate()));
+				Date year = TimeUtils.string2YearDate(TimeUtils.String2YearStr(ar.getCreateDate()));
 				account = map.get(year);
 				if (account == null) {
 					account = 0.0;

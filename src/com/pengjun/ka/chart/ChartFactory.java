@@ -1,6 +1,6 @@
 package com.pengjun.ka.chart;
 
-import com.pengjun.ka.utils.Constants.ChartType;
+import com.pengjun.ka.utils.KaConstants.ChartType;
 
 public class ChartFactory {
 

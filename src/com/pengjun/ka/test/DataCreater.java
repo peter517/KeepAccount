@@ -1,7 +1,7 @@
 package com.pengjun.ka.test;
 
 import com.pengjun.ka.db.model.AccountRecord;
-import com.pengjun.ka.utils.Constants.InitArType;
+import com.pengjun.ka.utils.KaConstants.InitArType;
 import com.pengjun.ka.utils.NumberUtils;
 import com.pengjun.ka.utils.TimeUtils;
 

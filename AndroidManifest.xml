@@ -40,10 +40,16 @@
             android:name="org.achartengine.GraphicalActivity"
             android:screenOrientation="landscape" />
         <activity
-            android:name="com.pengjun.ka.android.activity.MagicBoxActivity"
+            android:name="com.pengjun.ka.android.activity.report.MagicBoxActivity"
+            android:screenOrientation="portrait" />
+         <activity
+            android:name="com.pengjun.ka.android.activity.report.BaseReportActivityctivity"
+            android:screenOrientation="portrait" />
+          <activity
+            android:name="com.pengjun.ka.android.activity.report.WeekReportActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.pengjun.ka.android.activity.ReportActivity"
+            android:name="com.pengjun.ka.android.activity.report.MonthReportActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name="com.pengjun.ka.android.activity.BackupActivity"
@@ -70,7 +76,7 @@
             </intent-filter>
         </receiver>
         
-        <service android:name="com.pengjun.ka.android.service.ReportService" />  
+        <service android:name="com.pengjun.ka.android.service.ReportNotificationService" />  
     </application>
 
 </manifest>

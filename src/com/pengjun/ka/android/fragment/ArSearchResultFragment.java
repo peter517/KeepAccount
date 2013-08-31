@@ -32,7 +32,7 @@ import com.pengjun.ka.db.dao.ArDao;
 import com.pengjun.ka.db.model.AccountRecord;
 import com.pengjun.ka.db.model.ArSearchCondition;
 import com.pengjun.ka.utils.ComponentUtils;
-import com.pengjun.ka.utils.Constants;
+import com.pengjun.ka.utils.KaConstants;
 import com.pengjun.ka.utils.MyDebug;
 import com.pengjun.ka.utils.ResourceUtils;
 
@@ -125,10 +125,10 @@ public class ArSearchResultFragment extends Fragment {
 
 				AccountRecord ar = arList.get(position);
 				Bundle bundle = new Bundle();
-				bundle.putSerializable(Constants.INTENT_AR_BEAN, ar);
-				bundle.putSerializable(Constants.INTENT_DISABLE_AR_TYPE_MANAGE, true);
+				bundle.putSerializable(KaConstants.INTENT_AR_BEAN, ar);
+				bundle.putSerializable(KaConstants.INTENT_DISABLE_AR_TYPE_MANAGE, true);
 				intent.putExtras(bundle);
-				getActivity().startActivityForResult(intent, Constants.CB_ADD_AR);
+				getActivity().startActivityForResult(intent, KaConstants.CB_ADD_AR);
 				getActivity().overridePendingTransition(R.anim.left_in, R.anim.left_out);
 
 			}
@@ -293,7 +293,7 @@ public class ArSearchResultFragment extends Fragment {
 			hideProgress();
 
 			if (tempArList == null || tempArList.size() == 0) {
-				Toast.makeText(ArSearchResultFragment.this.getActivity(), "没有新数据", Constants.TOAST_EXSIT_TIME)
+				Toast.makeText(ArSearchResultFragment.this.getActivity(), "没有新数据", KaConstants.TOAST_EXSIT_TIME)
 						.show();
 			}
 
