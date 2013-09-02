@@ -49,6 +49,7 @@ public class ReportNotificationService extends Service {
 	}
 
 	public static List<AccountRecord> arList = new ArrayList<AccountRecord>();
+
 	private TimerTask task = new TimerTask() {
 		public void run() {
 
@@ -101,9 +102,8 @@ public class ReportNotificationService extends Service {
 				lastMonthYearStr + " 月报表");
 		PendingIntent pendingIntent = PendingIntent.getActivity(context, Report.Month.getValue(), intent,
 				PendingIntent.FLAG_UPDATE_CURRENT);
-
 		ComponentUtils.createNotification(context, context.getResources().getString(R.string.app_name),
-				lastMonthYearStr + " 月报表", pendingIntent);
+				lastMonthYearStr + " 月报表", pendingIntent, Report.Month.getValue());
 	}
 
 	public static void startWeekReportNotification(Context context) {
@@ -132,7 +132,8 @@ public class ReportNotificationService extends Service {
 				PendingIntent.FLAG_UPDATE_CURRENT);
 
 		ComponentUtils.createNotification(context, context.getResources().getString(R.string.app_name),
-				lastWeekFirstDayStr + "至" + lastWeekLastDayStr + " 周报表", pendingIntent);
+				lastWeekFirstDayStr + "至" + lastWeekLastDayStr + " 周报表", pendingIntent,
+				Report.Week.getValue());
 	}
 
 	@Override

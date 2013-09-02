@@ -43,7 +43,7 @@ public class ComponentUtils {
 	}
 
 	public static void createNotification(Context context, String notificationTitle,
-			String notificationCotent, PendingIntent pendingIntent) {
+			String notificationCotent, PendingIntent pendingIntent, int notifyId) {
 
 		Notification notification = new Notification(R.drawable.ic_launcher, notificationTitle,
 				System.currentTimeMillis());
@@ -57,7 +57,8 @@ public class ComponentUtils {
 
 		NotificationManager notificationManager = (NotificationManager) context
 				.getSystemService(Context.NOTIFICATION_SERVICE);
-		notificationManager.notify(R.string.app_name, notification);
+
+		notificationManager.notify(notifyId, notification);
 	}
 
 	public static void putIntentStringData(Intent intent, Bundle bundle, String key, String value) {

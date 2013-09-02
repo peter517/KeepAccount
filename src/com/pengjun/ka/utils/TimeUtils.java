@@ -28,7 +28,7 @@ public class TimeUtils {
 	private static Random random = new Random();
 	static {
 		random.setSeed(System.currentTimeMillis());
-
+		calendar.setFirstDayOfWeek(Calendar.MONDAY);
 	}
 
 	public static void startTiming() {

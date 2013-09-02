@@ -20,7 +20,7 @@ public class WeekReportService extends BaseReportService {
 
 			int day = TimeUtils.getDayOfWeek(TimeUtils.string2Date(ar.getCreateDate()).getTime());
 			// Sunday is 1, Monday is 2
-			if (day >= 2 && day <= 5) {
+			if (day >= 2 && day <= 6) {
 				workDay++;
 			} else if (day == 1 || day == 7) {
 				weekend++;
