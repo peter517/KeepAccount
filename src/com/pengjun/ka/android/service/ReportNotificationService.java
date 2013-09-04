@@ -21,7 +21,6 @@ import com.pengjun.ka.db.model.AccountRecord;
 import com.pengjun.ka.db.model.ArSearchCondition;
 import com.pengjun.ka.utils.ComponentUtils;
 import com.pengjun.ka.utils.KaConstants;
-import com.pengjun.ka.utils.MyDebug;
 import com.pengjun.ka.utils.ResourceUtils;
 import com.pengjun.ka.utils.StringUtils;
 import com.pengjun.ka.utils.TimeUtils;
@@ -66,12 +65,15 @@ public class ReportNotificationService extends Service {
 					&& curHour.compareTo(LIGHT_TEN_COLOCK) <= 0;
 
 			if (isProperTimeToPushReport) {
+				// mark the week or month report has sent
 				if (!isCurMonthReportExist) {
+					ResourceUtils.serviceLogger.info("report " + curMonthYearStr);
 					startMonthReportNotification(ReportNotificationService.this);
 					ResourceUtils.putSharedPreferencesString(ReportNotificationService.this, curMonthYearStr,
 							curMonthYearStr);
 				}
 				if (!isCurWeekReportExist) {
+					ResourceUtils.serviceLogger.info("report " + curWeekYearStr);
 					startWeekReportNotification(ReportNotificationService.this);
 					ResourceUtils.putSharedPreferencesString(ReportNotificationService.this, curWeekYearStr,
 							curWeekYearStr);
@@ -83,7 +85,7 @@ public class ReportNotificationService extends Service {
 
 	public static void startMonthReportNotification(Context context) {
 
-		// the frist day of month to create the last month report
+		// the first day of month to create the last month report
 		String lastMonthOfTodayStr = TimeUtils.getLastMonthOfTodayStr();
 
 		ArSearchCondition arSC = new ArSearchCondition();
@@ -108,7 +110,7 @@ public class ReportNotificationService extends Service {
 
 	public static void startWeekReportNotification(Context context) {
 
-		// the frist day of week to create the last week report
+		// the first day of week to create the last week report
 		String lastWeekOfTodayStr = TimeUtils.getLastWeekOfTodayStr();
 		String lastDayStr = TimeUtils.getLastDayStr();
 
@@ -145,24 +147,23 @@ public class ReportNotificationService extends Service {
 	public void onCreate() {
 		super.onCreate();
 		timer.schedule(task, TimeUtils.getCurDate(), HOUR_PERIOD);
-		MyDebug.printFromPJ("ReportService onCreate");
+		ResourceUtils.serviceLogger.info("ReportService onCreatereport");
 	}
 
 	@Override
 	public void onStart(Intent intent, int startId) {
 		super.onStart(intent, startId);
-		MyDebug.printFromPJ("ReportService onStart");
+		ResourceUtils.serviceLogger.info("ReportService onStart");
 	}
 
 	@Override
 	public void onDestroy() {
-		MyDebug.printFromPJ("ReportService onDestroy");
+		ResourceUtils.serviceLogger.info("ReportService onDestroy");
 		super.onDestroy();
 	}
 
 	@Override
 	public boolean onUnbind(Intent intent) {
-		MyDebug.printFromPJ("ReportService onUnbind");
 		return super.onUnbind(intent);
 	}
 

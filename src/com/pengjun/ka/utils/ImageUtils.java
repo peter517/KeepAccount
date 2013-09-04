@@ -83,14 +83,14 @@ public class ImageUtils {
 		return dstBmp;
 	}
 
-	public static Bitmap combineImageForeFirst(Bitmap backgoundBmp, Bitmap foregoundBmp, Rect bRect,
+	public static Bitmap combineImageForeFirst(Bitmap backgoundBmp, Bitmap foregoundBmp, Rect dstRect,
 			Rect fRect) {
 
 		Bitmap combineImage = Bitmap.createBitmap(backgoundBmp.getWidth(), backgoundBmp.getHeight(),
 				Config.ARGB_8888);
 
 		Canvas canvas = new Canvas(combineImage);
-		canvas.drawBitmap(foregoundBmp, fRect, bRect, null);
+		canvas.drawBitmap(foregoundBmp, fRect, dstRect, null);
 		canvas.drawBitmap(backgoundBmp, 0, 0, null);
 
 		return combineImage;

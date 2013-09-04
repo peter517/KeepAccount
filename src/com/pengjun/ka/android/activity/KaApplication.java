@@ -31,6 +31,8 @@ public final class KaApplication extends Application {
 		super.onCreate();
 		instance = this;
 
+		ResourceUtils.initLogger(true, true);
+
 		// load IKSegmenter files, about ten seconds
 		new Thread() {
 			public void run() {
@@ -52,6 +54,7 @@ public final class KaApplication extends Application {
 			ResourceUtils.putSharedPreferencesString(this, KaConstants.SP_KEY_FIRST_START_APP,
 					KaConstants.SP_VALUE_FIRST_START_APP);
 
+			// mark the week and month report has sent at first start app
 			String curMonthYear = TimeUtils.getCurMonthYearStr();
 			ResourceUtils.putSharedPreferencesString(this, curMonthYear, curMonthYear);
 

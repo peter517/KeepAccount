@@ -1,5 +1,6 @@
 package com.pengjun.ka.utils;
 
+import java.io.File;
 import java.util.List;
 
 public class KaConstants {
@@ -49,7 +50,9 @@ public class KaConstants {
 	public static final String INTENT_TOP_TITLE = "current_month_year";
 
 	// backup file path
-	public static final String BACK_UP_ROOT = "/sdcard/ka";
+	public static final String KA_ROOT = "/sdcard/ka";
+	public static final String BACK_UP_ROOT = KA_ROOT + File.separator + "backup";
+	public static final String LOG_ROOT = KA_ROOT + File.separator + "log";
 	public static final String BACK_AR_FILE_NAME = "ar.dat";
 	public static final String BACK_AR_TYPE_FILE_NAME = "arType.dat";
 

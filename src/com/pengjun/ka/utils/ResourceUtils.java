@@ -1,5 +1,6 @@
 package com.pengjun.ka.utils;
 
+import java.io.File;
 import java.io.InputStream;
 import java.lang.reflect.Field;
 import java.net.InetAddress;
@@ -11,6 +12,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
+
 import android.app.ActivityManager;
 import android.content.Context;
 import android.graphics.Color;
@@ -20,6 +24,8 @@ import android.os.Environment;
 import android.os.StatFs;
 
 import com.pengjun.ka.R;
+
+import de.mindpipe.android.logging.log4j.LogConfigurator;
 
 public class ResourceUtils {
 
@@ -34,6 +40,25 @@ public class ResourceUtils {
 
 	// use SharedPreferences to check first install
 	public final static String SP_FIRST_START = "firstStart";
+
+	public static final Logger dbLogger = Logger.getLogger("db");
+	public static final Logger serviceLogger = Logger.getLogger("service");
+
+	public static void initLogger(boolean useLogCatAppender, boolean useFileAppender) {
+		LogConfigurator logConfigurator = new LogConfigurator();
+		logConfigurator.setFileName(KaConstants.LOG_ROOT + File.separator + "ka.log");
+		logConfigurator.setRootLevel(Level.DEBUG);
+		logConfigurator.setLevel("org.apache", Level.ERROR);
+		logConfigurator.setFilePattern("%d %-5p [%c{2}]-[%L] %m%n");
+		logConfigurator.setMaxFileSize(1024 * 1024 * 5);
+		logConfigurator.setImmediateFlush(true);
+
+		logConfigurator.setUseLogCatAppender(useLogCatAppender);
+		logConfigurator.setUseFileAppender(useFileAppender);
+		logConfigurator.configure();
+		Logger logger = Logger.getLogger("ka");
+		logger.info("ka logger created");
+	}
 
 	static {
 		Field[] fields = R.drawable.class.getDeclaredFields();

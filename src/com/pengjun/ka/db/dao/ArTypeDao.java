@@ -10,7 +10,6 @@ import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.stmt.QueryBuilder;
 import com.j256.ormlite.table.TableUtils;
 import com.pengjun.ka.android.activity.KaApplication;
-import com.pengjun.ka.db.model.AccountRecord;
 import com.pengjun.ka.db.model.ArType;
 import com.pengjun.ka.utils.KaConstants;
 import com.pengjun.ka.utils.KaConstants.InitArType;
@@ -51,7 +50,7 @@ public class ArTypeDao {
 	public static List<ArType> queryAllByUpdate() {
 		try {
 			QueryBuilder<ArType, Integer> queryBuilder = dao.queryBuilder();
-			queryBuilder.orderBy(AccountRecord.COL_UPDATE_TIME, false);
+			queryBuilder.orderBy(ArType.COL_UPDATE_TIME, false);
 			return queryBuilder.query();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -171,6 +170,7 @@ public class ArTypeDao {
 		}
 
 		for (int i = arTypeList.size() - 1; i >= 0; i--) {
+			arTypeList.get(i).setId(-1);
 			insert(arTypeList.get(i));
 		}
 	}
