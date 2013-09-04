@@ -43,6 +43,7 @@ public class ResourceUtils {
 
 	public static final Logger dbLogger = Logger.getLogger("db");
 	public static final Logger serviceLogger = Logger.getLogger("service");
+	public static final Logger kaLogger = Logger.getLogger("ka");
 
 	public static void initLogger(boolean useLogCatAppender, boolean useFileAppender) {
 		LogConfigurator logConfigurator = new LogConfigurator();
@@ -57,7 +58,7 @@ public class ResourceUtils {
 		logConfigurator.setUseFileAppender(useFileAppender);
 		logConfigurator.configure();
 		Logger logger = Logger.getLogger("ka");
-		logger.info("ka logger created");
+		logger.info("ka logger start");
 	}
 
 	static {

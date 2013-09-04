@@ -17,6 +17,7 @@ import com.pengjun.ka.android.fragment.FragmentDirector;
 import com.pengjun.ka.android.fragment.MagicBoxFragment;
 import com.pengjun.ka.android.fragment.SettingFragment;
 import com.pengjun.ka.utils.KaConstants;
+import com.pengjun.ka.utils.ResourceUtils;
 
 public class KaMainActivity extends FragmentActivity {
 
@@ -203,6 +204,8 @@ public class KaMainActivity extends FragmentActivity {
 	protected void onDestroy() {
 		// strange thing: reEnter app after close the app, instance still exist
 		ArFragment.newInstance().refresh();
+
+		ResourceUtils.kaLogger.info("ka exit");
 		super.onDestroy();
 	}
 

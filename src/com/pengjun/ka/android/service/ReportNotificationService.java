@@ -147,7 +147,7 @@ public class ReportNotificationService extends Service {
 	public void onCreate() {
 		super.onCreate();
 		timer.schedule(task, TimeUtils.getCurDate(), HOUR_PERIOD);
-		ResourceUtils.serviceLogger.info("ReportService onCreatereport");
+		ResourceUtils.serviceLogger.info("ReportService onCreate");
 	}
 
 	@Override

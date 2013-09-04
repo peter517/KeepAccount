@@ -32,6 +32,7 @@ public final class KaApplication extends Application {
 		instance = this;
 
 		ResourceUtils.initLogger(true, true);
+		ResourceUtils.kaLogger.info("ka start");
 
 		// load IKSegmenter files, about ten seconds
 		new Thread() {
