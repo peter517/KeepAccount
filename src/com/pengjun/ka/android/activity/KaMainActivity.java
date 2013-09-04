@@ -44,6 +44,8 @@ public class KaMainActivity extends FragmentActivity {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.keep_account);
 
+		ResourceUtils.initLogger(true, true);
+
 		// top bar
 		createTopBar();
 

@@ -67,13 +67,11 @@ public class ReportNotificationService extends Service {
 			if (isProperTimeToPushReport) {
 				// mark the week or month report has sent
 				if (!isCurMonthReportExist) {
-					ResourceUtils.serviceLogger.info("report " + curMonthYearStr);
 					startMonthReportNotification(ReportNotificationService.this);
 					ResourceUtils.putSharedPreferencesString(ReportNotificationService.this, curMonthYearStr,
 							curMonthYearStr);
 				}
 				if (!isCurWeekReportExist) {
-					ResourceUtils.serviceLogger.info("report " + curWeekYearStr);
 					startWeekReportNotification(ReportNotificationService.this);
 					ResourceUtils.putSharedPreferencesString(ReportNotificationService.this, curWeekYearStr,
 							curWeekYearStr);
@@ -147,18 +145,15 @@ public class ReportNotificationService extends Service {
 	public void onCreate() {
 		super.onCreate();
 		timer.schedule(task, TimeUtils.getCurDate(), HOUR_PERIOD);
-		ResourceUtils.serviceLogger.info("ReportService onCreate");
 	}
 
 	@Override
 	public void onStart(Intent intent, int startId) {
 		super.onStart(intent, startId);
-		ResourceUtils.serviceLogger.info("ReportService onStart");
 	}
 
 	@Override
 	public void onDestroy() {
-		ResourceUtils.serviceLogger.info("ReportService onDestroy");
 		super.onDestroy();
 	}
 
