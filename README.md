@@ -14,7 +14,7 @@ Features
 - **Magic box** would tell you the condition of your consumption  
 - **Backup** the whole data **locality** on the basis of the date
 
-Featured implementations
+Featured Implementations
 --------
 - **Ormlite** for object relational mapping
 - **Achartengine** for android chart creation 
