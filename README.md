@@ -2,7 +2,7 @@
 
 ![Logo](http://files.softicons.com/download/business-icons/financial-accounting-icons-by-artistsvalley/png/128x128/Hot/Abacus.png "Logo")
 
-an android accounting app that can make you failing in love with recording after you have cost
+an android accounting app that can make you failing in love with recording after you have consumption
 
 Features
 --------
