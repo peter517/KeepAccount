@@ -13,3 +13,11 @@ Features
 - Send notifications about **weekly**, **monthly**, **annual** report
 - **Magic box** would tell you the condition of your consumption  
 - **Backup** the whole data **locality** on the basis of the date
+
+Featured implementations
+--------
+- **Ormlite** for object relational mapping
+- **Achartengine** for android chart creation 
+- **IKAnalyzer** for word segmentation
+- **Netty** for rapid and maintainable network communication
+- **Protocol Buffers** for encoding and decodeing structured data
