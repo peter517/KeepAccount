@@ -9,6 +9,7 @@ import org.jboss.netty.channel.ChannelFuture;
 import org.jboss.netty.channel.socket.nio.NioClientSocketChannelFactory;
 
 import com.pengjun.ka.test.DataCreater;
+import com.pengjun.ka.utils.LoggerUtils;
 
 public class KaClient {
 
@@ -33,6 +34,8 @@ public class KaClient {
 				Executors.newCachedThreadPool()));
 		bootstrap.setPipelineFactory(new KaClientPipelineFactory());
 
+		LoggerUtils.clientLogger.info("client connect: " + "remote_ip " + REMOTE_IP + "remote report "
+				+ REMOTE_PORT);
 		ChannelFuture connectFuture = bootstrap.connect(new InetSocketAddress(REMOTE_IP, REMOTE_PORT));
 		channel = connectFuture.awaitUninterruptibly().getChannel();
 		handler = channel.getPipeline().get(KaClientHandler.class);

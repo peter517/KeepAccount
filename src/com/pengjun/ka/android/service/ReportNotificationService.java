@@ -34,17 +34,8 @@ public class ReportNotificationService extends Service {
 	private final String LIGHT_TEN_COLOCK = "22";
 
 	private enum Report {
-		Week(0), Month(1), Year(2);
+		Week, Month, Year;
 
-		private int value = 0;
-
-		private Report(int value) { // 必须是private的，否则编译错误
-			this.value = value;
-		}
-
-		public int getValue() {
-			return value;
-		}
 	}
 
 	public static List<AccountRecord> arList = new ArrayList<AccountRecord>();
@@ -100,10 +91,10 @@ public class ReportNotificationService extends Service {
 		Intent intent = new Intent(context, MonthReportActivity.class);
 		ComponentUtils.putIntentStringData(intent, new Bundle(), KaConstants.INTENT_TOP_TITLE,
 				lastMonthYearStr + " 月报表");
-		PendingIntent pendingIntent = PendingIntent.getActivity(context, Report.Month.getValue(), intent,
+		PendingIntent pendingIntent = PendingIntent.getActivity(context, Report.Month.ordinal(), intent,
 				PendingIntent.FLAG_UPDATE_CURRENT);
 		ComponentUtils.createNotification(context, context.getResources().getString(R.string.app_name),
-				lastMonthYearStr + " 月报表", pendingIntent, Report.Month.getValue());
+				lastMonthYearStr + " 月报表", pendingIntent, Report.Month.ordinal());
 	}
 
 	public static void startWeekReportNotification(Context context) {
@@ -128,12 +119,13 @@ public class ReportNotificationService extends Service {
 		Intent intent = new Intent(context, WeekReportActivity.class);
 		ComponentUtils.putIntentStringData(intent, new Bundle(), KaConstants.INTENT_TOP_TITLE,
 				lastWeekFirstDayStr + "至" + lastWeekLastDayStr + " 周报表");
-		PendingIntent pendingIntent = PendingIntent.getActivity(context, Report.Week.getValue(), intent,
+		PendingIntent pendingIntent = PendingIntent.getActivity(context, Report.Week.ordinal(), intent,
 				PendingIntent.FLAG_UPDATE_CURRENT);
 
-		ComponentUtils.createNotification(context, context.getResources().getString(R.string.app_name),
-				lastWeekFirstDayStr + "至" + lastWeekLastDayStr + " 周报表", pendingIntent,
-				Report.Week.getValue());
+		ComponentUtils
+				.createNotification(context, context.getResources().getString(R.string.app_name),
+						lastWeekFirstDayStr + "至" + lastWeekLastDayStr + " 周报表", pendingIntent,
+						Report.Week.ordinal());
 	}
 
 	@Override

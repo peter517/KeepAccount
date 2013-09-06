@@ -7,7 +7,9 @@ import com.j256.ormlite.android.AndroidConnectionSource;
 import com.pengjun.ka.android.service.ReportNotificationService;
 import com.pengjun.ka.db.DbHelper;
 import com.pengjun.ka.db.dao.ArTypeDao;
+import com.pengjun.ka.db.service.BaseReportService;
 import com.pengjun.ka.utils.KaConstants;
+import com.pengjun.ka.utils.LoggerUtils;
 import com.pengjun.ka.utils.ResourceUtils;
 import com.pengjun.ka.utils.StringUtils;
 import com.pengjun.ka.utils.TimeUtils;
@@ -31,12 +33,12 @@ public final class KaApplication extends Application {
 		super.onCreate();
 		instance = this;
 
-		ResourceUtils.kaLogger.info("ka start");
+		LoggerUtils.kaLogger.info("ka start");
 
 		// load IKSegmenter files, about ten seconds
 		new Thread() {
 			public void run() {
-				StringUtils.initSegmentationTool();
+				BaseReportService.initSegmentationTool();
 			}
 		}.start();
 

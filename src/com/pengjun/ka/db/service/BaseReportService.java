@@ -1,15 +1,19 @@
 package com.pengjun.ka.db.service;
 
+import java.io.IOException;
+import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.wltea.analyzer.core.IKSegmenter;
+import org.wltea.analyzer.core.Lexeme;
+
 import com.pengjun.ka.db.model.AccountRecord;
 import com.pengjun.ka.db.model.BaseReport;
 import com.pengjun.ka.utils.MyDebug;
 import com.pengjun.ka.utils.NumberUtils;
-import com.pengjun.ka.utils.StringUtils;
 import com.pengjun.ka.utils.TimeUtils;
 
 public class BaseReportService {
@@ -20,7 +24,7 @@ public class BaseReportService {
 		for (String commentStr : commentStringList) {
 
 			TimeUtils.startTiming();
-			List<String> segmentList = StringUtils.getSegmentationList(commentStr);
+			List<String> segmentList = getSegmentationList(commentStr);
 			MyDebug.printFromPJ("time " + TimeUtils.stopTiming());
 			for (String segmentStr : segmentList) {
 				cnt = keyword2CntMap.get(segmentStr);
@@ -107,5 +111,26 @@ public class BaseReportService {
 		}
 		baseReport.setMaxCostDay(maxCostDayStr);
 
+	}
+
+	public static void initSegmentationTool() {
+		getSegmentationList("");
+	}
+
+	public static List<String> getSegmentationList(String sentence) {
+
+		List<String> sgmList = new ArrayList<String>();
+
+		// max word-length segmentation
+		IKSegmenter ik = new IKSegmenter(new StringReader(sentence), true);
+		Lexeme lexeme = null;
+		try {
+			while ((lexeme = ik.next()) != null) {
+				sgmList.add(lexeme.getLexemeText());
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return sgmList;
 	}
 }

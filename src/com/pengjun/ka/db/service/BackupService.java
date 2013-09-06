@@ -9,7 +9,7 @@ import com.pengjun.ka.db.model.AccountRecord;
 import com.pengjun.ka.db.model.ArType;
 import com.pengjun.ka.utils.FileUtils;
 import com.pengjun.ka.utils.KaConstants;
-import com.pengjun.ka.utils.ResourceUtils;
+import com.pengjun.ka.utils.LoggerUtils;
 
 public class BackupService {
 
@@ -17,13 +17,13 @@ public class BackupService {
 		List<AccountRecord> arList = ArDao.queryAllByUpdate();
 		List<ArType> arTypeList = ArTypeDao.queryAllByUpdate();
 		saveBackupAll(dateStr, arList, arTypeList);
-		ResourceUtils.dbLogger.info("saveBackupAll " + dateStr);
+		LoggerUtils.dbLogger.info("saveBackupAll " + dateStr);
 	}
 
 	public static void deleteBackupFromDateStr(String dateStr) {
 		String backupPath = KaConstants.BACK_UP_ROOT + File.separator + dateStr;
 		FileUtils.deleteFile(new File(backupPath));
-		ResourceUtils.dbLogger.info("deleteBackup " + dateStr);
+		LoggerUtils.dbLogger.info("deleteBackup " + dateStr);
 	}
 
 	public static void restoreByDateStr(String dateStr) {
@@ -37,7 +37,7 @@ public class BackupService {
 		List<ArType> arTypeList = FileUtils.<ArType> readListFromFile(arTypeFilePath);
 
 		restoreAll(dateStr, arList, arTypeList);
-		ResourceUtils.dbLogger.info("restoreAll " + dateStr);
+		LoggerUtils.dbLogger.info("restoreAll " + dateStr);
 
 	}
 

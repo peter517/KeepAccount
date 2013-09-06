@@ -3,8 +3,6 @@ package com.pengjun.ka.net;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import org.jboss.netty.channel.Channel;
 import org.jboss.netty.channel.ChannelEvent;
@@ -17,12 +15,12 @@ import org.jboss.netty.channel.SimpleChannelUpstreamHandler;
 import com.pengjun.ka.db.model.AccountRecord;
 import com.pengjun.ka.net.exception.ErrorCode;
 import com.pengjun.ka.net.protobuf.KaProtocol.ArProtocol;
+import com.pengjun.ka.utils.LoggerUtils;
 import com.pengjun.ka.utils.MyDebug;
 import com.pengjun.ka.utils.ResourceUtils;
 
 public class KaClientHandler extends SimpleChannelUpstreamHandler {
 
-	private static final Logger logger = Logger.getLogger(KaClientHandler.class.getName());
 	private volatile Channel channel;
 	private final BlockingQueue<ArProtocol> arBq = new LinkedBlockingQueue<ArProtocol>();
 
@@ -50,7 +48,7 @@ public class KaClientHandler extends SimpleChannelUpstreamHandler {
 		}
 
 		if (revAr == null) {
-			MyDebug.printFromPJ("ErrorCode = " + ErrorCode.NetError);
+			LoggerUtils.clientLogger.error("ErrorCode = " + ErrorCode.NetError);
 			return null;
 		}
 		MyDebug.printFromPJ("revAr.getAccount()" + revAr.getAccount());
@@ -70,7 +68,7 @@ public class KaClientHandler extends SimpleChannelUpstreamHandler {
 	@Override
 	public void handleUpstream(ChannelHandlerContext ctx, ChannelEvent e) throws Exception {
 		if (e instanceof ChannelStateEvent) {
-			logger.info(e.toString());
+			LoggerUtils.clientLogger.info(e.toString());
 		}
 		super.handleUpstream(ctx, e);
 	}
@@ -89,7 +87,7 @@ public class KaClientHandler extends SimpleChannelUpstreamHandler {
 
 	@Override
 	public void exceptionCaught(ChannelHandlerContext ctx, ExceptionEvent e) {
-		logger.log(Level.WARNING, "Unexpected exception from downstream.", e.getCause());
+		LoggerUtils.clientLogger.warn("Unexpected exception from downstream.", e.getCause());
 		e.getChannel().close();
 	}
 }

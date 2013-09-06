@@ -59,23 +59,6 @@ public class KaConstants {
 	// chart type
 	public enum ChartType {
 		Pie, LineDay, LineMonth, LineYear, Bar;
-
-		public static String[] names() {
-			String[] names = new String[ChartType.values().length];
-			int i = 0;
-			for (ChartType mode : ChartType.values())
-				names[i++] = mode.name();
-			return names;
-		}
-
-		public static ChartType getTypeFromString(String typeStr) {
-			for (ChartType type : ChartType.values()) {
-				if (type.name().equals(typeStr))
-					return type;
-			}
-			return null;
-		}
-
 	}
 
 }
