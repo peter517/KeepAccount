@@ -2,17 +2,17 @@
 
 ![Logo](http://files.softicons.com/download/business-icons/financial-accounting-icons-by-artistsvalley/png/128x128/Hot/Abacus.png "Logo")
 
-an android accounting app that can make you failing in love with recording after you have consumption
+an android accounting app that can make accounts kept convenience after consumptions
 
 Features
 --------
-- Provide the operation of **add**, **update**, **delete** the record of account
+- Provide the operation of **adding**, **updating**, **deleting** the record of account
 - **Manage categories** of your account
-- Search the record of account according to the conditions of **money range**, **date range**, **type**
+- Search the record of account according to **money range**, **date range**, **type**
 - Create the **pie chart**, **bar chart**, **line chart** based on search data 
 - Send notifications about **weekly**, **monthly**, **annual** report
-- **Magic box** would tell you the condition of your consumption  
-- **Backup** the whole data **locality** on the basis of the date
+- **Magic box** would help track your spending
+- **Backup** the whole data **on the phone** by days
 
 Featured Implementations
 --------
@@ -20,4 +20,4 @@ Featured Implementations
 - **Achartengine** for android chart creation 
 - **IKAnalyzer** for word segmentation
 - **Netty** for rapid and maintainable network communication
-- **Protocol Buffers** for encoding and decodeing structured data
+- **Protocol Buffers** for encoding and decoding structured data
