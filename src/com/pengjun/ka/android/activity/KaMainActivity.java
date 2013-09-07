@@ -18,6 +18,7 @@ import com.pengjun.ka.android.fragment.MagicBoxFragment;
 import com.pengjun.ka.android.fragment.SettingFragment;
 import com.pengjun.ka.utils.KaConstants;
 import com.pengjun.ka.utils.LoggerUtils;
+import com.pengjun.ka.utils.ResourceUtils;
 
 public class KaMainActivity extends FragmentActivity {
 
@@ -44,7 +45,9 @@ public class KaMainActivity extends FragmentActivity {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.keep_account);
 
-		LoggerUtils.initLogger(true, true);
+		if (ResourceUtils.hasExternalStorage()) {
+			LoggerUtils.initLogger(true, true);
+		}
 
 		// top bar
 		createTopBar();

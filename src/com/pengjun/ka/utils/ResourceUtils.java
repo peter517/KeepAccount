@@ -25,6 +25,8 @@ public class ResourceUtils {
 
 	public static final String IS_DEBUG = "debug";
 
+	public static final int SINGLE_APP_MEMORY_LIMIT_32 = 32;
+
 	public static int[] COLOR_ARR = new int[] { Color.BLUE, Color.MAGENTA, Color.DKGRAY, Color.CYAN,
 			Color.GREEN, Color.GRAY, Color.RED, Color.WHITE, Color.LTGRAY };
 	// res
@@ -64,7 +66,6 @@ public class ResourceUtils {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
 	}
 
 	public static boolean getBoolean(String key, boolean defaultValue) {
@@ -123,7 +124,7 @@ public class ResourceUtils {
 		return isRunning;
 	}
 
-	public static boolean CheckNetwork(Context context, boolean isNotify) {
+	public static boolean checkNetwork(Context context, boolean isNotify) {
 		ConnectivityManager connectivityManager = (ConnectivityManager) context
 				.getSystemService(Context.CONNECTIVITY_SERVICE);
 		NetworkInfo activeNetInfo = connectivityManager.getActiveNetworkInfo();
@@ -182,6 +183,12 @@ public class ResourceUtils {
 			return true;
 		}
 		return false;
+	}
+
+	public static int getSingleAppMemeryLimit(Context context) {
+		ActivityManager activityManager = (ActivityManager) context
+				.getSystemService(Context.ACTIVITY_SERVICE);
+		return activityManager.getMemoryClass();
 	}
 
 	public static long getSDCardIdleSpace() {

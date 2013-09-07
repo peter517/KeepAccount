@@ -4,7 +4,7 @@ import java.text.DecimalFormat;
 
 public class NumberUtils {
 
-	// Keep a decimal places
+	// Keep one digit decimal places
 	private static DecimalFormat df = new DecimalFormat("#.0");
 
 	public static float formatFloat(Float f) {

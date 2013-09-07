@@ -11,7 +11,7 @@ import com.pengjun.ka.utils.ResourceUtils;
 public class LoadingActivity extends Activity {
 
 	private static final int GOTO_MAIN = 0;
-	private static final int COVER_EXIST_TIME = 3000;
+	private static final int COVER_EXIST_TIME = 2000;
 
 	Handler handler = new Handler() {
 		@Override
