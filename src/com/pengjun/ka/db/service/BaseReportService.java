@@ -1,34 +1,25 @@
 package com.pengjun.ka.db.service;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
 import com.pengjun.ka.db.model.AccountRecord;
 import com.pengjun.ka.db.model.BaseReport;
+import com.pengjun.ka.utils.CollectionUtils;
 import com.pengjun.ka.utils.IKAnalyzerUtils;
-import com.pengjun.ka.utils.MyDebug;
 import com.pengjun.ka.utils.NumberUtils;
 import com.pengjun.ka.utils.TimeUtils;
 
 public class BaseReportService {
 
 	public static String computeMaxCntKeywordStr(List<String> commentStringList) {
-		Map<String, Integer> keyword2CntMap = new HashMap<String, Integer>();
-		Integer cnt = 0;
-		for (String commentStr : commentStringList) {
 
-			TimeUtils.startTiming();
+		CollectionUtils.CountIntegerMap keyword2CntMap = new CollectionUtils.CountIntegerMap();
+		for (String commentStr : commentStringList) {
 			List<String> segmentList = IKAnalyzerUtils.getSegmentationList(commentStr);
-			MyDebug.printFromPJ("time " + TimeUtils.stopTiming());
 			for (String segmentStr : segmentList) {
-				cnt = keyword2CntMap.get(segmentStr);
-				if (cnt == null) {
-					cnt = 0;
-				}
-				keyword2CntMap.put(segmentStr, ++cnt);
+				keyword2CntMap.count(segmentStr, 1);
 			}
 		}
 
@@ -65,12 +56,15 @@ public class BaseReportService {
 		double totalCost = 0;
 		List<String> commentStringList = new ArrayList<String>();
 		Double account = null;
-		Map<String, Double> day2AccountMap = new HashMap<String, Double>();
-		Map<String, Double> date2AccountMap = new HashMap<String, Double>();
+		CollectionUtils.CountDoubleMap day2AccountMap = new CollectionUtils.CountDoubleMap();
+		CollectionUtils.CountDoubleMap date2AccountMap = new CollectionUtils.CountDoubleMap();
+
 		for (AccountRecord ar : arList) {
 
-			totalCost += ar.getAccount();
-			if (ar.getAccount() > maxCostAr.getAccount()) {
+			account = (double) ar.getAccount();
+			totalCost += account;
+
+			if (account > maxCostAr.getAccount()) {
 				maxCostAr = ar;
 			}
 
@@ -79,15 +73,8 @@ public class BaseReportService {
 			}
 
 			String month = TimeUtils.String2DateStrArr(ar.getCreateDate())[2];
-			account = day2AccountMap.get(month);
-			if (account == null) {
-				account = 0.0;
-			}
-			day2AccountMap.put(month, account + ar.getAccount());
-
-			if (date2AccountMap.get(ar.getCreateDate()) == null) {
-				date2AccountMap.put(ar.getCreateDate(), 0.0);
-			}
+			day2AccountMap.count(month, account);
+			date2AccountMap.count(ar.getCreateDate(), 0.0);
 
 		}
 

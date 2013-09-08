@@ -1,11 +1,10 @@
 package com.pengjun.ka.db.service;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import com.pengjun.ka.db.model.AccountRecord;
 import com.pengjun.ka.db.model.MagicBoxData;
+import com.pengjun.ka.utils.CollectionUtils;
 import com.pengjun.ka.utils.NumberUtils;
 import com.pengjun.ka.utils.TimeUtils;
 
@@ -16,28 +15,21 @@ public class MagicBoxService extends BaseReportService {
 		MagicBoxData magicBoxData = new MagicBoxData();
 		creatBaseReport(magicBoxData, arList);
 
-		Map<String, Double> yearMonth2AccountMap = new HashMap<String, Double>();
-		Map<String, Double> month2AccountMap = new HashMap<String, Double>();
+		CollectionUtils.CountDoubleMap yearMonth2AccountMap = new CollectionUtils.CountDoubleMap();
+		CollectionUtils.CountDoubleMap month2AccountMap = new CollectionUtils.CountDoubleMap();
 
 		Double account = null;
 		double totalCost = 0;
 		for (AccountRecord ar : arList) {
 
-			totalCost += ar.getAccount();
+			account = (double) ar.getAccount();
+			totalCost += account;
 
 			String month = TimeUtils.String2DateStrArr(ar.getCreateDate())[1];
-			account = month2AccountMap.get(month);
-			if (account == null) {
-				account = 0.0;
-			}
-			month2AccountMap.put(month, account + ar.getAccount());
+			month2AccountMap.count(month, account);
 
 			String yearMonth = TimeUtils.String2MonthYearStr(ar.getCreateDate());
-			account = yearMonth2AccountMap.get(yearMonth);
-			if (account == null) {
-				account = 0.0;
-			}
-			yearMonth2AccountMap.put(yearMonth, account + ar.getAccount());
+			yearMonth2AccountMap.count(yearMonth, account);
 
 		}
 
