@@ -16,7 +16,8 @@ public class KaClientPipelineFactory implements ChannelPipelineFactory {
 	public ChannelPipeline getPipeline() throws Exception {
 		ChannelPipeline p = pipeline();
 		p.addLast("frameDecoder", new ProtobufVarint32FrameDecoder());
-		p.addLast("protobufDecoder", new ProtobufDecoder(KaProtocol.ArProtocol.getDefaultInstance()));
+
+		p.addLast("KaDecoder", new ProtobufDecoder(KaProtocol.KaMsg.getDefaultInstance()));
 
 		p.addLast("frameEncoder", new ProtobufVarint32LengthFieldPrepender());
 		p.addLast("protobufEncoder", new ProtobufEncoder());

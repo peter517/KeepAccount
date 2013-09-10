@@ -1,6 +1,5 @@
 package com.pengjun.ka.chart;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -13,6 +12,7 @@ import android.content.Context;
 import android.view.View;
 
 import com.pengjun.ka.db.model.AccountRecord;
+import com.pengjun.ka.utils.CollectionUtils;
 import com.pengjun.ka.utils.NumberUtils;
 import com.pengjun.ka.utils.ResourceUtils;
 
@@ -26,7 +26,7 @@ public class ArPieChart extends BaseChart {
 
 	private DefaultRenderer renderer;
 	private CategorySeries series;
-	private Map<String, Double> name2CostMap;
+	private CollectionUtils.CountDoubleMap name2CostMap;
 	private GraphicalView graphicalView;
 	private double costTotal = 0;
 	private boolean isShowPercent = false;
@@ -44,13 +44,9 @@ public class ArPieChart extends BaseChart {
 	public void compute(List<AccountRecord> arList) {
 
 		// compute type distribute
-		name2CostMap = new HashMap<String, Double>();
-		Double account = null;
+		name2CostMap = new CollectionUtils.CountDoubleMap();
 		for (AccountRecord ar : arList) {
-			if (account == null) {
-				account = 0.0;
-			}
-			name2CostMap.put(ar.getTypeName(), account + ar.getAccount());
+			name2CostMap.count(ar.getTypeName(), (double) ar.getAccount());
 		}
 
 		int[] colorArr = new int[name2CostMap.size()];

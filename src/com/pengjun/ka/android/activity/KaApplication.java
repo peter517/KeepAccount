@@ -5,7 +5,7 @@ import android.content.Intent;
 
 import com.j256.ormlite.android.AndroidConnectionSource;
 import com.pengjun.ka.android.service.ReportNotificationService;
-import com.pengjun.ka.db.DbHelper;
+import com.pengjun.ka.db.AndroidDbHelper;
 import com.pengjun.ka.db.dao.ArTypeDao;
 import com.pengjun.ka.utils.IKAnalyzerUtils;
 import com.pengjun.ka.utils.KaConstants;
@@ -42,7 +42,7 @@ public final class KaApplication extends Application {
 			}
 		}.start();
 
-		androidConnectionSource = DbHelper.getAndroidConnectionSource(this);
+		androidConnectionSource = AndroidDbHelper.getAndroidConnectionSource(this);
 
 		if (ResourceUtils.isServiceRunning(this, ReportNotificationService.class.getName()) == false) {
 			Intent newIntent = new Intent(this, ReportNotificationService.class);

@@ -12,57 +12,69 @@ import org.jboss.netty.channel.ExceptionEvent;
 import org.jboss.netty.channel.MessageEvent;
 import org.jboss.netty.channel.SimpleChannelUpstreamHandler;
 
-import com.pengjun.ka.db.model.AccountRecord;
 import com.pengjun.ka.net.exception.ErrorCode;
-import com.pengjun.ka.net.protobuf.KaProtocol.ArProtocol;
+import com.pengjun.ka.net.protobuf.KaProtocol.KaMsg;
+import com.pengjun.ka.net.protobuf.KaProtocol.MsgType;
 import com.pengjun.ka.utils.LoggerUtils;
 import com.pengjun.ka.utils.MyDebug;
-import com.pengjun.ka.utils.ResourceUtils;
 
 public class KaClientHandler extends SimpleChannelUpstreamHandler {
 
 	private volatile Channel channel;
-	private final BlockingQueue<ArProtocol> arBq = new LinkedBlockingQueue<ArProtocol>();
+	private final BlockingQueue<KaMsg> kaMsgBq = new LinkedBlockingQueue<KaMsg>();
 
-	public ArProtocol sendArList(AccountRecord sendAr) {
+	public KaMsg sendMsg(KaMsg kaMsg) {
 
-		ArProtocol.Builder builder = ArProtocol.newBuilder();
+		KaMsg.Builder builder = KaMsg.newBuilder();
 
-		builder.setAccount(2);
-		builder.setCreateDate(ResourceUtils.getLocalIpAddress());
-		builder.setId(1);
-		builder.setTypeId(1);
-		builder.setUpdateTime(sendAr.getUpdateTime());
+		// ArProtocol.Builder arBuilder = ArProtocol.newBuilder();
+		//
+		// arBuilder.setAccount(2);
+		// arBuilder.setCreateDate(ResourceUtils.getLocalIpAddress());
+		// arBuilder.setId(1);
+		// arBuilder.setTypeId(1);
+		// arBuilder.setUpdateTime("");
+		//
+		// ArTypeProtocol.Builder arTypeBuilder = ArTypeProtocol.newBuilder();
+		// arTypeBuilder.setCreateDate(ResourceUtils.getLocalIpAddress());
+		// arTypeBuilder.setId(1);
+		// arTypeBuilder.setTypeName("test");
+		// arTypeBuilder.setUpdateTime("");
+		// arTypeBuilder.setImgResName("");
+
+		builder.setMsgType(MsgType.LOGIN);
+		// builder.addArProtocol(arBuilder);
+		// builder.addArTypeProtocol(arTypeBuilder);
 
 		channel.write(builder.build());
 
-		ArProtocol revAr;
+		KaMsg revKaMsg;
 		boolean interrupted = false;
 		for (;;) {
 			try {
-				revAr = arBq.poll(3000, TimeUnit.MILLISECONDS);
+				revKaMsg = kaMsgBq.poll(3000, TimeUnit.MILLISECONDS);
 				break;
 			} catch (InterruptedException e) {
 				interrupted = true;
 			}
 		}
 
-		if (revAr == null) {
+		if (revKaMsg == null) {
 			LoggerUtils.clientLogger.error("ErrorCode = " + ErrorCode.NetError);
 			return null;
 		}
-		MyDebug.printFromPJ("revAr.getAccount()" + revAr.getAccount());
+		MyDebug.printFromPJ("revArType.getImgResName()" + revKaMsg.getMsgType());
 		if (interrupted) {
 			Thread.currentThread().interrupt();
 		}
 
-		return revAr;
+		return revKaMsg;
 
 	}
 
 	@Override
 	public void channelConnected(ChannelHandlerContext ctx, ChannelStateEvent e) {
-		MyDebug.printFromPJ("connect sucessed!");
+		LoggerUtils.clientLogger.debug("connect sucessed!");
 	}
 
 	@Override
@@ -81,7 +93,7 @@ public class KaClientHandler extends SimpleChannelUpstreamHandler {
 
 	@Override
 	public void messageReceived(ChannelHandlerContext ctx, final MessageEvent e) {
-		boolean offered = arBq.offer((ArProtocol) e.getMessage());
+		boolean offered = kaMsgBq.offer((KaMsg) e.getMessage());
 		assert offered;
 	}
 

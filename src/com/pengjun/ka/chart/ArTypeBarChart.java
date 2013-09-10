@@ -1,6 +1,5 @@
 package com.pengjun.ka.chart;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -15,6 +14,7 @@ import android.graphics.Color;
 import android.view.View;
 
 import com.pengjun.ka.db.model.AccountRecord;
+import com.pengjun.ka.utils.CollectionUtils;
 import com.pengjun.ka.utils.NumberUtils;
 
 /**
@@ -43,14 +43,9 @@ public class ArTypeBarChart extends BaseChart {
 		title = "各类型花费总额";
 
 		// compute each date account
-		Map<String, Double> map = new HashMap<String, Double>();
-		Double account = null;
+		CollectionUtils.CountDoubleMap map = new CollectionUtils.CountDoubleMap();
 		for (AccountRecord ar : arList) {
-			account = map.get(ar.getTypeName());
-			if (account == null) {
-				account = 0.0;
-			}
-			map.put(ar.getTypeName(), account + ar.getAccount());
+			map.count(ar.getTypeName(), (double) ar.getAccount());
 		}
 
 		renderer = createXYChartRenderer("种类", "金额");

@@ -1,9 +1,21 @@
-package com.pengjun.ka.protobuf;
-option java_package = "com.pengjun.ka.protobuf";
+package com.pengjun.ka.net.protobuf;
+option java_package = "com.pengjun.ka.net.protobuf";
 option java_outer_classname = "KaProtocol";
 
+enum MsgType {
+  REGISTER = 1;  
+  LOGIN = 2;
+  BACKUP = 3;
+  RESTORE = 4;   
+} 
+
+enum MsgRply {
+  SUCCESS = 1;  
+  FAILED = 2;   
+} 
+
 message ArProtocol {
-  required int32 id = 1;
+  optional  int32 id = 1;
   required float account = 2;      
   required int32 typeId = 3;
   required string createDate = 4;
@@ -11,10 +23,19 @@ message ArProtocol {
   required string updateTime = 6;
 }
 
-message ArTpyeProtocol {
-  required int32 id = 1;
+message ArTypeProtocol {
+  optional int32 id = 1;
   required string typeName = 2;
   required string imgResName = 3;
   required string createDate = 4;
   required string updateTime = 5;
 }
+
+
+
+message KaMsg {  
+  required MsgType msgType = 1;
+  optional MsgRply MsgRply = 2;
+  repeated ArProtocol arProtocol = 3;  
+  repeated ArTypeProtocol arTypeProtocol = 4; 
+} 

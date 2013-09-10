@@ -1,6 +1,5 @@
 package com.pengjun.ka.chart;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -16,6 +15,7 @@ import android.graphics.Color;
 import android.view.View;
 
 import com.pengjun.ka.db.model.AccountRecord;
+import com.pengjun.ka.utils.CollectionUtils;
 
 /**
  * number of each cost interval
@@ -35,12 +35,8 @@ public class ArBarChart extends BaseChart {
 	public void compute(List<AccountRecord> arList) {
 
 		// compute each date account
-		Map<String, Integer> map = new HashMap<String, Integer>();
 
-		for (int i = 0; i < MONEY_RANGE_ARR.length; i++) {
-			map.put(MONEY_RANGE_ARR[i], 0);
-		}
-		Integer count = null;
+		CollectionUtils.CountIntegerMap map = new CollectionUtils.CountIntegerMap();
 		String range = null;
 		for (AccountRecord ar : arList) {
 			if (ar.getAccount() <= 100) {
@@ -54,8 +50,7 @@ public class ArBarChart extends BaseChart {
 			} else if (ar.getAccount() > 2000) {
 				range = MONEY_RANGE_ARR[4];
 			}
-			count = map.get(range);
-			map.put(range, ++count);
+			map.count(range, 1);
 		}
 
 		renderer = createXYChartRenderer("金额区间", "数量");
