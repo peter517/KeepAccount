@@ -31,11 +31,15 @@ message ArTypeProtocol {
   required string updateTime = 5;
 }
 
-
+message UserInfo{
+  required string userName = 1;
+  required string password = 2;
+}
 
 message KaMsg {  
   required MsgType msgType = 1;
   optional MsgRply MsgRply = 2;
   repeated ArProtocol arProtocol = 3;  
   repeated ArTypeProtocol arTypeProtocol = 4; 
+  optional UserInfo userInfo = 5;
 } 

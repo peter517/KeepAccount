@@ -45,11 +45,11 @@ public class ReportNotificationService extends Service {
 
 			String curMonthYearStr = TimeUtils.getCurMonthYearStr();
 			boolean isCurMonthReportExist = !ResourceUtils.getSharedPreferencesString(
-					ReportNotificationService.this, curMonthYearStr).equals(StringUtils.STRING_NULL_VALUE);
+					ReportNotificationService.this, curMonthYearStr).equals(StringUtils.NULL_STRING);
 
 			String curWeekYearStr = TimeUtils.getCurWeekYearStr();
 			boolean isCurWeekReportExist = !ResourceUtils.getSharedPreferencesString(
-					ReportNotificationService.this, curWeekYearStr).equals(StringUtils.STRING_NULL_VALUE);
+					ReportNotificationService.this, curWeekYearStr).equals(StringUtils.NULL_STRING);
 
 			String curHour = TimeUtils.getCurHour();
 			boolean isProperTimeToPushReport = curHour.compareTo(MORNING_TEN_COLOCK) >= 0
@@ -94,7 +94,7 @@ public class ReportNotificationService extends Service {
 		PendingIntent pendingIntent = PendingIntent.getActivity(context, Report.Month.ordinal(), intent,
 				PendingIntent.FLAG_UPDATE_CURRENT);
 		ComponentUtils.createNotification(context, context.getResources().getString(R.string.app_name),
-				lastMonthYearStr + " 月报表", pendingIntent, Report.Month.ordinal());
+				lastMonthYearStr + " 月报表", pendingIntent, Report.Month.ordinal(), R.drawable.ic_launcher);
 	}
 
 	public static void startWeekReportNotification(Context context) {
@@ -122,10 +122,9 @@ public class ReportNotificationService extends Service {
 		PendingIntent pendingIntent = PendingIntent.getActivity(context, Report.Week.ordinal(), intent,
 				PendingIntent.FLAG_UPDATE_CURRENT);
 
-		ComponentUtils
-				.createNotification(context, context.getResources().getString(R.string.app_name),
-						lastWeekFirstDayStr + "至" + lastWeekLastDayStr + " 周报表", pendingIntent,
-						Report.Week.ordinal());
+		ComponentUtils.createNotification(context, context.getResources().getString(R.string.app_name),
+				lastWeekFirstDayStr + "至" + lastWeekLastDayStr + " 周报表", pendingIntent,
+				Report.Week.ordinal(), R.drawable.ic_launcher);
 	}
 
 	@Override

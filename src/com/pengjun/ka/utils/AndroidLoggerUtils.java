@@ -7,7 +7,7 @@ import org.apache.log4j.Logger;
 
 import de.mindpipe.android.logging.log4j.LogConfigurator;
 
-public class LoggerUtils {
+public class AndroidLoggerUtils {
 
 	public static final Logger dbLogger = Logger.getLogger("db");
 	public static final Logger serviceLogger = Logger.getLogger("service");

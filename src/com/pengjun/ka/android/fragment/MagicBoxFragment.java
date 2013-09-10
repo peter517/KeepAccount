@@ -21,6 +21,7 @@ public class MagicBoxFragment extends Fragment {
 	public static MagicBoxFragment newInstance() {
 		if (instance == null) {
 			instance = new MagicBoxFragment();
+
 			return instance;
 		}
 		return instance;
@@ -31,12 +32,16 @@ public class MagicBoxFragment extends Fragment {
 		View view = inflater.inflate(R.layout.magic_box, null);
 		btOpenMagicBox = (Button) view.findViewById(R.id.btOpenMagicBox);
 		btOpenMagicBox.setOnClickListener(new View.OnClickListener() {
+			boolean isConnet = false;
 
 			@Override
 			public void onClick(View v) {
 
-				KaClient.getInstance().connect();
+				if (!isConnet) {
+					KaClient.getInstance().connect();
+				}
 				KaClient.getInstance().sendData();
+				isConnet = true;
 				//
 				// ReportNotificationService.startMonthReportNotification(getActivity());
 				// ReportNotificationService.startWeekReportNotification(getActivity());

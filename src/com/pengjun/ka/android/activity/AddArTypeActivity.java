@@ -22,7 +22,6 @@ import com.pengjun.ka.db.dao.ArTypeDao;
 import com.pengjun.ka.db.model.ArType;
 import com.pengjun.ka.utils.ComponentUtils;
 import com.pengjun.ka.utils.KaConstants;
-import com.pengjun.ka.utils.ResourceUtils;
 import com.pengjun.ka.utils.TimeUtils;
 
 public class AddArTypeActivity extends Activity {
@@ -65,16 +64,20 @@ public class AddArTypeActivity extends Activity {
 			public void onClick(View v) {
 
 				if (etArTypeName.getText().toString().equals("")) {
-					ComponentUtils.createInfoDialog(AddArTypeActivity.this, "请输入新建类名称").show();
+					ComponentUtils.createInfoDialog(AddArTypeActivity.this, "请输入新建类名称",
+							R.drawable.title_warning).show();
 					return;
 				}
 				if (selectPos == GRIDVIEW_UNSELECTED) {
-					ComponentUtils.createInfoDialog(AddArTypeActivity.this, "请选择图片").show();
+					ComponentUtils
+							.createInfoDialog(AddArTypeActivity.this, "请选择图片", R.drawable.title_warning)
+							.show();
 					return;
 				}
 
 				if (ArTypeDao.isTypeNameExsit(etArTypeName.getText().toString())) {
-					ComponentUtils.createInfoDialog(AddArTypeActivity.this, "类名称已存在，请重新输入").show();
+					ComponentUtils.createInfoDialog(AddArTypeActivity.this, "类名称已存在，请重新输入",
+							R.drawable.title_warning).show();
 					return;
 				}
 
@@ -139,7 +142,7 @@ public class AddArTypeActivity extends Activity {
 			// get all image from res which name start with type
 			Field[] fields = R.drawable.class.getDeclaredFields();
 			for (Field field : fields) {
-				if (field.getName().startsWith(ResourceUtils.RES_IMAGE_PREFIX)) {
+				if (field.getName().startsWith(KaConstants.RES_IMAGE_PREFIX)) {
 					resNameList.add(field.getName());
 				}
 			}
@@ -175,7 +178,7 @@ public class AddArTypeActivity extends Activity {
 				holder = (ArTypeHolder) convertView.getTag();
 			}
 
-			holder.ivArType.setImageResource(ResourceUtils.getImgResIdByResName(resNameList.get(position)));
+			holder.ivArType.setImageResource(KaConstants.getImgResIdByResName(resNameList.get(position)));
 			return convertView;
 
 		}

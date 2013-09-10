@@ -34,7 +34,8 @@ public class ArSearchResultActivity extends FragmentActivity {
 			public void onClick(View v) {
 
 				if (!ArSearchResultFragment.newInstance(null).hasSearchResult()) {
-					ComponentUtils.createInfoDialog(ArSearchResultActivity.this, "没有查询数据，不能生成图表").show();
+					ComponentUtils.createInfoDialog(ArSearchResultActivity.this, "没有查询数据，不能生成图表",
+							R.drawable.title_warning).show();
 					return;
 				}
 				Intent intent = new Intent();

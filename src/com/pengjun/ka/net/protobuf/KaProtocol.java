@@ -1664,6 +1664,491 @@ public final class KaProtocol {
     // @@protoc_insertion_point(class_scope:com.pengjun.ka.net.protobuf.ArTypeProtocol)
   }
   
+  public interface UserInfoOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
+    
+    // required string userName = 1;
+    boolean hasUserName();
+    String getUserName();
+    
+    // required string password = 2;
+    boolean hasPassword();
+    String getPassword();
+  }
+  public static final class UserInfo extends
+      com.google.protobuf.GeneratedMessage
+      implements UserInfoOrBuilder {
+    // Use UserInfo.newBuilder() to construct.
+    private UserInfo(Builder builder) {
+      super(builder);
+    }
+    private UserInfo(boolean noInit) {}
+    
+    private static final UserInfo defaultInstance;
+    public static UserInfo getDefaultInstance() {
+      return defaultInstance;
+    }
+    
+    public UserInfo getDefaultInstanceForType() {
+      return defaultInstance;
+    }
+    
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return com.pengjun.ka.net.protobuf.KaProtocol.internal_static_com_pengjun_ka_net_protobuf_UserInfo_descriptor;
+    }
+    
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return com.pengjun.ka.net.protobuf.KaProtocol.internal_static_com_pengjun_ka_net_protobuf_UserInfo_fieldAccessorTable;
+    }
+    
+    private int bitField0_;
+    // required string userName = 1;
+    public static final int USERNAME_FIELD_NUMBER = 1;
+    private java.lang.Object userName_;
+    public boolean hasUserName() {
+      return ((bitField0_ & 0x00000001) == 0x00000001);
+    }
+    public String getUserName() {
+      java.lang.Object ref = userName_;
+      if (ref instanceof String) {
+        return (String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        String s = bs.toStringUtf8();
+        if (com.google.protobuf.Internal.isValidUtf8(bs)) {
+          userName_ = s;
+        }
+        return s;
+      }
+    }
+    private com.google.protobuf.ByteString getUserNameBytes() {
+      java.lang.Object ref = userName_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8((String) ref);
+        userName_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+    
+    // required string password = 2;
+    public static final int PASSWORD_FIELD_NUMBER = 2;
+    private java.lang.Object password_;
+    public boolean hasPassword() {
+      return ((bitField0_ & 0x00000002) == 0x00000002);
+    }
+    public String getPassword() {
+      java.lang.Object ref = password_;
+      if (ref instanceof String) {
+        return (String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        String s = bs.toStringUtf8();
+        if (com.google.protobuf.Internal.isValidUtf8(bs)) {
+          password_ = s;
+        }
+        return s;
+      }
+    }
+    private com.google.protobuf.ByteString getPasswordBytes() {
+      java.lang.Object ref = password_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8((String) ref);
+        password_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+    
+    private void initFields() {
+      userName_ = "";
+      password_ = "";
+    }
+    private byte memoizedIsInitialized = -1;
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized != -1) return isInitialized == 1;
+      
+      if (!hasUserName()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      if (!hasPassword()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      memoizedIsInitialized = 1;
+      return true;
+    }
+    
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      getSerializedSize();
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+        output.writeBytes(1, getUserNameBytes());
+      }
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
+        output.writeBytes(2, getPasswordBytes());
+      }
+      getUnknownFields().writeTo(output);
+    }
+    
+    private int memoizedSerializedSize = -1;
+    public int getSerializedSize() {
+      int size = memoizedSerializedSize;
+      if (size != -1) return size;
+    
+      size = 0;
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(1, getUserNameBytes());
+      }
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(2, getPasswordBytes());
+      }
+      size += getUnknownFields().getSerializedSize();
+      memoizedSerializedSize = size;
+      return size;
+    }
+    
+    private static final long serialVersionUID = 0L;
+    @java.lang.Override
+    protected java.lang.Object writeReplace()
+        throws java.io.ObjectStreamException {
+      return super.writeReplace();
+    }
+    
+    public static com.pengjun.ka.net.protobuf.KaProtocol.UserInfo parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data).buildParsed();
+    }
+    public static com.pengjun.ka.net.protobuf.KaProtocol.UserInfo parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data, extensionRegistry)
+               .buildParsed();
+    }
+    public static com.pengjun.ka.net.protobuf.KaProtocol.UserInfo parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data).buildParsed();
+    }
+    public static com.pengjun.ka.net.protobuf.KaProtocol.UserInfo parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data, extensionRegistry)
+               .buildParsed();
+    }
+    public static com.pengjun.ka.net.protobuf.KaProtocol.UserInfo parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input).buildParsed();
+    }
+    public static com.pengjun.ka.net.protobuf.KaProtocol.UserInfo parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input, extensionRegistry)
+               .buildParsed();
+    }
+    public static com.pengjun.ka.net.protobuf.KaProtocol.UserInfo parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      Builder builder = newBuilder();
+      if (builder.mergeDelimitedFrom(input)) {
+        return builder.buildParsed();
+      } else {
+        return null;
+      }
+    }
+    public static com.pengjun.ka.net.protobuf.KaProtocol.UserInfo parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      Builder builder = newBuilder();
+      if (builder.mergeDelimitedFrom(input, extensionRegistry)) {
+        return builder.buildParsed();
+      } else {
+        return null;
+      }
+    }
+    public static com.pengjun.ka.net.protobuf.KaProtocol.UserInfo parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input).buildParsed();
+    }
+    public static com.pengjun.ka.net.protobuf.KaProtocol.UserInfo parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input, extensionRegistry)
+               .buildParsed();
+    }
+    
+    public static Builder newBuilder() { return Builder.create(); }
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder(com.pengjun.ka.net.protobuf.KaProtocol.UserInfo prototype) {
+      return newBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() { return newBuilder(this); }
+    
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements com.pengjun.ka.net.protobuf.KaProtocol.UserInfoOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return com.pengjun.ka.net.protobuf.KaProtocol.internal_static_com_pengjun_ka_net_protobuf_UserInfo_descriptor;
+      }
+      
+      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return com.pengjun.ka.net.protobuf.KaProtocol.internal_static_com_pengjun_ka_net_protobuf_UserInfo_fieldAccessorTable;
+      }
+      
+      // Construct using com.pengjun.ka.net.protobuf.KaProtocol.UserInfo.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+      
+      private Builder(BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
+        }
+      }
+      private static Builder create() {
+        return new Builder();
+      }
+      
+      public Builder clear() {
+        super.clear();
+        userName_ = "";
+        bitField0_ = (bitField0_ & ~0x00000001);
+        password_ = "";
+        bitField0_ = (bitField0_ & ~0x00000002);
+        return this;
+      }
+      
+      public Builder clone() {
+        return create().mergeFrom(buildPartial());
+      }
+      
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return com.pengjun.ka.net.protobuf.KaProtocol.UserInfo.getDescriptor();
+      }
+      
+      public com.pengjun.ka.net.protobuf.KaProtocol.UserInfo getDefaultInstanceForType() {
+        return com.pengjun.ka.net.protobuf.KaProtocol.UserInfo.getDefaultInstance();
+      }
+      
+      public com.pengjun.ka.net.protobuf.KaProtocol.UserInfo build() {
+        com.pengjun.ka.net.protobuf.KaProtocol.UserInfo result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+      
+      private com.pengjun.ka.net.protobuf.KaProtocol.UserInfo buildParsed()
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        com.pengjun.ka.net.protobuf.KaProtocol.UserInfo result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(
+            result).asInvalidProtocolBufferException();
+        }
+        return result;
+      }
+      
+      public com.pengjun.ka.net.protobuf.KaProtocol.UserInfo buildPartial() {
+        com.pengjun.ka.net.protobuf.KaProtocol.UserInfo result = new com.pengjun.ka.net.protobuf.KaProtocol.UserInfo(this);
+        int from_bitField0_ = bitField0_;
+        int to_bitField0_ = 0;
+        if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
+          to_bitField0_ |= 0x00000001;
+        }
+        result.userName_ = userName_;
+        if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
+          to_bitField0_ |= 0x00000002;
+        }
+        result.password_ = password_;
+        result.bitField0_ = to_bitField0_;
+        onBuilt();
+        return result;
+      }
+      
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof com.pengjun.ka.net.protobuf.KaProtocol.UserInfo) {
+          return mergeFrom((com.pengjun.ka.net.protobuf.KaProtocol.UserInfo)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+      
+      public Builder mergeFrom(com.pengjun.ka.net.protobuf.KaProtocol.UserInfo other) {
+        if (other == com.pengjun.ka.net.protobuf.KaProtocol.UserInfo.getDefaultInstance()) return this;
+        if (other.hasUserName()) {
+          setUserName(other.getUserName());
+        }
+        if (other.hasPassword()) {
+          setPassword(other.getPassword());
+        }
+        this.mergeUnknownFields(other.getUnknownFields());
+        return this;
+      }
+      
+      public final boolean isInitialized() {
+        if (!hasUserName()) {
+          
+          return false;
+        }
+        if (!hasPassword()) {
+          
+          return false;
+        }
+        return true;
+      }
+      
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder(
+            this.getUnknownFields());
+        while (true) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              this.setUnknownFields(unknownFields.build());
+              onChanged();
+              return this;
+            default: {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
+                this.setUnknownFields(unknownFields.build());
+                onChanged();
+                return this;
+              }
+              break;
+            }
+            case 10: {
+              bitField0_ |= 0x00000001;
+              userName_ = input.readBytes();
+              break;
+            }
+            case 18: {
+              bitField0_ |= 0x00000002;
+              password_ = input.readBytes();
+              break;
+            }
+          }
+        }
+      }
+      
+      private int bitField0_;
+      
+      // required string userName = 1;
+      private java.lang.Object userName_ = "";
+      public boolean hasUserName() {
+        return ((bitField0_ & 0x00000001) == 0x00000001);
+      }
+      public String getUserName() {
+        java.lang.Object ref = userName_;
+        if (!(ref instanceof String)) {
+          String s = ((com.google.protobuf.ByteString) ref).toStringUtf8();
+          userName_ = s;
+          return s;
+        } else {
+          return (String) ref;
+        }
+      }
+      public Builder setUserName(String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000001;
+        userName_ = value;
+        onChanged();
+        return this;
+      }
+      public Builder clearUserName() {
+        bitField0_ = (bitField0_ & ~0x00000001);
+        userName_ = getDefaultInstance().getUserName();
+        onChanged();
+        return this;
+      }
+      void setUserName(com.google.protobuf.ByteString value) {
+        bitField0_ |= 0x00000001;
+        userName_ = value;
+        onChanged();
+      }
+      
+      // required string password = 2;
+      private java.lang.Object password_ = "";
+      public boolean hasPassword() {
+        return ((bitField0_ & 0x00000002) == 0x00000002);
+      }
+      public String getPassword() {
+        java.lang.Object ref = password_;
+        if (!(ref instanceof String)) {
+          String s = ((com.google.protobuf.ByteString) ref).toStringUtf8();
+          password_ = s;
+          return s;
+        } else {
+          return (String) ref;
+        }
+      }
+      public Builder setPassword(String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000002;
+        password_ = value;
+        onChanged();
+        return this;
+      }
+      public Builder clearPassword() {
+        bitField0_ = (bitField0_ & ~0x00000002);
+        password_ = getDefaultInstance().getPassword();
+        onChanged();
+        return this;
+      }
+      void setPassword(com.google.protobuf.ByteString value) {
+        bitField0_ |= 0x00000002;
+        password_ = value;
+        onChanged();
+      }
+      
+      // @@protoc_insertion_point(builder_scope:com.pengjun.ka.net.protobuf.UserInfo)
+    }
+    
+    static {
+      defaultInstance = new UserInfo(true);
+      defaultInstance.initFields();
+    }
+    
+    // @@protoc_insertion_point(class_scope:com.pengjun.ka.net.protobuf.UserInfo)
+  }
+  
   public interface KaMsgOrBuilder
       extends com.google.protobuf.MessageOrBuilder {
     
@@ -1694,6 +2179,11 @@ public final class KaProtocol {
         getArTypeProtocolOrBuilderList();
     com.pengjun.ka.net.protobuf.KaProtocol.ArTypeProtocolOrBuilder getArTypeProtocolOrBuilder(
         int index);
+    
+    // optional .com.pengjun.ka.net.protobuf.UserInfo userInfo = 5;
+    boolean hasUserInfo();
+    com.pengjun.ka.net.protobuf.KaProtocol.UserInfo getUserInfo();
+    com.pengjun.ka.net.protobuf.KaProtocol.UserInfoOrBuilder getUserInfoOrBuilder();
   }
   public static final class KaMsg extends
       com.google.protobuf.GeneratedMessage
@@ -1786,11 +2276,25 @@ public final class KaProtocol {
       return arTypeProtocol_.get(index);
     }
     
+    // optional .com.pengjun.ka.net.protobuf.UserInfo userInfo = 5;
+    public static final int USERINFO_FIELD_NUMBER = 5;
+    private com.pengjun.ka.net.protobuf.KaProtocol.UserInfo userInfo_;
+    public boolean hasUserInfo() {
+      return ((bitField0_ & 0x00000004) == 0x00000004);
+    }
+    public com.pengjun.ka.net.protobuf.KaProtocol.UserInfo getUserInfo() {
+      return userInfo_;
+    }
+    public com.pengjun.ka.net.protobuf.KaProtocol.UserInfoOrBuilder getUserInfoOrBuilder() {
+      return userInfo_;
+    }
+    
     private void initFields() {
       msgType_ = com.pengjun.ka.net.protobuf.KaProtocol.MsgType.REGISTER;
       msgRply_ = com.pengjun.ka.net.protobuf.KaProtocol.MsgRply.SUCCESS;
       arProtocol_ = java.util.Collections.emptyList();
       arTypeProtocol_ = java.util.Collections.emptyList();
+      userInfo_ = com.pengjun.ka.net.protobuf.KaProtocol.UserInfo.getDefaultInstance();
     }
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
@@ -1813,6 +2317,12 @@ public final class KaProtocol {
           return false;
         }
       }
+      if (hasUserInfo()) {
+        if (!getUserInfo().isInitialized()) {
+          memoizedIsInitialized = 0;
+          return false;
+        }
+      }
       memoizedIsInitialized = 1;
       return true;
     }
@@ -1831,6 +2341,9 @@ public final class KaProtocol {
       }
       for (int i = 0; i < arTypeProtocol_.size(); i++) {
         output.writeMessage(4, arTypeProtocol_.get(i));
+      }
+      if (((bitField0_ & 0x00000004) == 0x00000004)) {
+        output.writeMessage(5, userInfo_);
       }
       getUnknownFields().writeTo(output);
     }
@@ -1856,6 +2369,10 @@ public final class KaProtocol {
       for (int i = 0; i < arTypeProtocol_.size(); i++) {
         size += com.google.protobuf.CodedOutputStream
           .computeMessageSize(4, arTypeProtocol_.get(i));
+      }
+      if (((bitField0_ & 0x00000004) == 0x00000004)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(5, userInfo_);
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
@@ -1975,6 +2492,7 @@ public final class KaProtocol {
         if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
           getArProtocolFieldBuilder();
           getArTypeProtocolFieldBuilder();
+          getUserInfoFieldBuilder();
         }
       }
       private static Builder create() {
@@ -1999,6 +2517,12 @@ public final class KaProtocol {
         } else {
           arTypeProtocolBuilder_.clear();
         }
+        if (userInfoBuilder_ == null) {
+          userInfo_ = com.pengjun.ka.net.protobuf.KaProtocol.UserInfo.getDefaultInstance();
+        } else {
+          userInfoBuilder_.clear();
+        }
+        bitField0_ = (bitField0_ & ~0x00000010);
         return this;
       }
       
@@ -2062,6 +2586,14 @@ public final class KaProtocol {
           result.arTypeProtocol_ = arTypeProtocol_;
         } else {
           result.arTypeProtocol_ = arTypeProtocolBuilder_.build();
+        }
+        if (((from_bitField0_ & 0x00000010) == 0x00000010)) {
+          to_bitField0_ |= 0x00000004;
+        }
+        if (userInfoBuilder_ == null) {
+          result.userInfo_ = userInfo_;
+        } else {
+          result.userInfo_ = userInfoBuilder_.build();
         }
         result.bitField0_ = to_bitField0_;
         onBuilt();
@@ -2137,6 +2669,9 @@ public final class KaProtocol {
             }
           }
         }
+        if (other.hasUserInfo()) {
+          mergeUserInfo(other.getUserInfo());
+        }
         this.mergeUnknownFields(other.getUnknownFields());
         return this;
       }
@@ -2154,6 +2689,12 @@ public final class KaProtocol {
         }
         for (int i = 0; i < getArTypeProtocolCount(); i++) {
           if (!getArTypeProtocol(i).isInitialized()) {
+            
+            return false;
+          }
+        }
+        if (hasUserInfo()) {
+          if (!getUserInfo().isInitialized()) {
             
             return false;
           }
@@ -2216,6 +2757,15 @@ public final class KaProtocol {
               com.pengjun.ka.net.protobuf.KaProtocol.ArTypeProtocol.Builder subBuilder = com.pengjun.ka.net.protobuf.KaProtocol.ArTypeProtocol.newBuilder();
               input.readMessage(subBuilder, extensionRegistry);
               addArTypeProtocol(subBuilder.buildPartial());
+              break;
+            }
+            case 42: {
+              com.pengjun.ka.net.protobuf.KaProtocol.UserInfo.Builder subBuilder = com.pengjun.ka.net.protobuf.KaProtocol.UserInfo.newBuilder();
+              if (hasUserInfo()) {
+                subBuilder.mergeFrom(getUserInfo());
+              }
+              input.readMessage(subBuilder, extensionRegistry);
+              setUserInfo(subBuilder.buildPartial());
               break;
             }
           }
@@ -2644,6 +3194,96 @@ public final class KaProtocol {
         return arTypeProtocolBuilder_;
       }
       
+      // optional .com.pengjun.ka.net.protobuf.UserInfo userInfo = 5;
+      private com.pengjun.ka.net.protobuf.KaProtocol.UserInfo userInfo_ = com.pengjun.ka.net.protobuf.KaProtocol.UserInfo.getDefaultInstance();
+      private com.google.protobuf.SingleFieldBuilder<
+          com.pengjun.ka.net.protobuf.KaProtocol.UserInfo, com.pengjun.ka.net.protobuf.KaProtocol.UserInfo.Builder, com.pengjun.ka.net.protobuf.KaProtocol.UserInfoOrBuilder> userInfoBuilder_;
+      public boolean hasUserInfo() {
+        return ((bitField0_ & 0x00000010) == 0x00000010);
+      }
+      public com.pengjun.ka.net.protobuf.KaProtocol.UserInfo getUserInfo() {
+        if (userInfoBuilder_ == null) {
+          return userInfo_;
+        } else {
+          return userInfoBuilder_.getMessage();
+        }
+      }
+      public Builder setUserInfo(com.pengjun.ka.net.protobuf.KaProtocol.UserInfo value) {
+        if (userInfoBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          userInfo_ = value;
+          onChanged();
+        } else {
+          userInfoBuilder_.setMessage(value);
+        }
+        bitField0_ |= 0x00000010;
+        return this;
+      }
+      public Builder setUserInfo(
+          com.pengjun.ka.net.protobuf.KaProtocol.UserInfo.Builder builderForValue) {
+        if (userInfoBuilder_ == null) {
+          userInfo_ = builderForValue.build();
+          onChanged();
+        } else {
+          userInfoBuilder_.setMessage(builderForValue.build());
+        }
+        bitField0_ |= 0x00000010;
+        return this;
+      }
+      public Builder mergeUserInfo(com.pengjun.ka.net.protobuf.KaProtocol.UserInfo value) {
+        if (userInfoBuilder_ == null) {
+          if (((bitField0_ & 0x00000010) == 0x00000010) &&
+              userInfo_ != com.pengjun.ka.net.protobuf.KaProtocol.UserInfo.getDefaultInstance()) {
+            userInfo_ =
+              com.pengjun.ka.net.protobuf.KaProtocol.UserInfo.newBuilder(userInfo_).mergeFrom(value).buildPartial();
+          } else {
+            userInfo_ = value;
+          }
+          onChanged();
+        } else {
+          userInfoBuilder_.mergeFrom(value);
+        }
+        bitField0_ |= 0x00000010;
+        return this;
+      }
+      public Builder clearUserInfo() {
+        if (userInfoBuilder_ == null) {
+          userInfo_ = com.pengjun.ka.net.protobuf.KaProtocol.UserInfo.getDefaultInstance();
+          onChanged();
+        } else {
+          userInfoBuilder_.clear();
+        }
+        bitField0_ = (bitField0_ & ~0x00000010);
+        return this;
+      }
+      public com.pengjun.ka.net.protobuf.KaProtocol.UserInfo.Builder getUserInfoBuilder() {
+        bitField0_ |= 0x00000010;
+        onChanged();
+        return getUserInfoFieldBuilder().getBuilder();
+      }
+      public com.pengjun.ka.net.protobuf.KaProtocol.UserInfoOrBuilder getUserInfoOrBuilder() {
+        if (userInfoBuilder_ != null) {
+          return userInfoBuilder_.getMessageOrBuilder();
+        } else {
+          return userInfo_;
+        }
+      }
+      private com.google.protobuf.SingleFieldBuilder<
+          com.pengjun.ka.net.protobuf.KaProtocol.UserInfo, com.pengjun.ka.net.protobuf.KaProtocol.UserInfo.Builder, com.pengjun.ka.net.protobuf.KaProtocol.UserInfoOrBuilder> 
+          getUserInfoFieldBuilder() {
+        if (userInfoBuilder_ == null) {
+          userInfoBuilder_ = new com.google.protobuf.SingleFieldBuilder<
+              com.pengjun.ka.net.protobuf.KaProtocol.UserInfo, com.pengjun.ka.net.protobuf.KaProtocol.UserInfo.Builder, com.pengjun.ka.net.protobuf.KaProtocol.UserInfoOrBuilder>(
+                  userInfo_,
+                  getParentForChildren(),
+                  isClean());
+          userInfo_ = null;
+        }
+        return userInfoBuilder_;
+      }
+      
       // @@protoc_insertion_point(builder_scope:com.pengjun.ka.net.protobuf.KaMsg)
     }
     
@@ -2666,6 +3306,11 @@ public final class KaProtocol {
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_com_pengjun_ka_net_protobuf_ArTypeProtocol_fieldAccessorTable;
   private static com.google.protobuf.Descriptors.Descriptor
+    internal_static_com_pengjun_ka_net_protobuf_UserInfo_descriptor;
+  private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
+      internal_static_com_pengjun_ka_net_protobuf_UserInfo_fieldAccessorTable;
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_com_pengjun_ka_net_protobuf_KaMsg_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
@@ -2686,17 +3331,19 @@ public final class KaProtocol {
       "omment\030\005 \001(\t\022\022\n\nupdateTime\030\006 \002(\t\"j\n\016ArTy" +
       "peProtocol\022\n\n\002id\030\001 \001(\005\022\020\n\010typeName\030\002 \002(\t" +
       "\022\022\n\nimgResName\030\003 \002(\t\022\022\n\ncreateDate\030\004 \002(\t" +
-      "\022\022\n\nupdateTime\030\005 \002(\t\"\367\001\n\005KaMsg\0225\n\007msgTyp" +
-      "e\030\001 \002(\0162$.com.pengjun.ka.net.protobuf.Ms" +
-      "gType\0225\n\007MsgRply\030\002 \001(\0162$.com.pengjun.ka.",
-      "net.protobuf.MsgRply\022;\n\narProtocol\030\003 \003(\013" +
-      "2\'.com.pengjun.ka.net.protobuf.ArProtoco" +
-      "l\022C\n\016arTypeProtocol\030\004 \003(\0132+.com.pengjun." +
-      "ka.net.protobuf.ArTypeProtocol*;\n\007MsgTyp" +
-      "e\022\014\n\010REGISTER\020\001\022\t\n\005LOGIN\020\002\022\n\n\006BACKUP\020\003\022\013" +
-      "\n\007RESTORE\020\004*\"\n\007MsgRply\022\013\n\007SUCCESS\020\001\022\n\n\006F" +
-      "AILED\020\002B)\n\033com.pengjun.ka.net.protobufB\n" +
-      "KaProtocol"
+      "\022\022\n\nupdateTime\030\005 \002(\t\".\n\010UserInfo\022\020\n\010user" +
+      "Name\030\001 \002(\t\022\020\n\010password\030\002 \002(\t\"\260\002\n\005KaMsg\0225" +
+      "\n\007msgType\030\001 \002(\0162$.com.pengjun.ka.net.pro",
+      "tobuf.MsgType\0225\n\007MsgRply\030\002 \001(\0162$.com.pen" +
+      "gjun.ka.net.protobuf.MsgRply\022;\n\narProtoc" +
+      "ol\030\003 \003(\0132\'.com.pengjun.ka.net.protobuf.A" +
+      "rProtocol\022C\n\016arTypeProtocol\030\004 \003(\0132+.com." +
+      "pengjun.ka.net.protobuf.ArTypeProtocol\0227" +
+      "\n\010userInfo\030\005 \001(\0132%.com.pengjun.ka.net.pr" +
+      "otobuf.UserInfo*;\n\007MsgType\022\014\n\010REGISTER\020\001" +
+      "\022\t\n\005LOGIN\020\002\022\n\n\006BACKUP\020\003\022\013\n\007RESTORE\020\004*\"\n\007" +
+      "MsgRply\022\013\n\007SUCCESS\020\001\022\n\n\006FAILED\020\002B)\n\033com." +
+      "pengjun.ka.net.protobufB\nKaProtocol"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
       new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
@@ -2719,12 +3366,20 @@ public final class KaProtocol {
               new java.lang.String[] { "Id", "TypeName", "ImgResName", "CreateDate", "UpdateTime", },
               com.pengjun.ka.net.protobuf.KaProtocol.ArTypeProtocol.class,
               com.pengjun.ka.net.protobuf.KaProtocol.ArTypeProtocol.Builder.class);
-          internal_static_com_pengjun_ka_net_protobuf_KaMsg_descriptor =
+          internal_static_com_pengjun_ka_net_protobuf_UserInfo_descriptor =
             getDescriptor().getMessageTypes().get(2);
+          internal_static_com_pengjun_ka_net_protobuf_UserInfo_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_com_pengjun_ka_net_protobuf_UserInfo_descriptor,
+              new java.lang.String[] { "UserName", "Password", },
+              com.pengjun.ka.net.protobuf.KaProtocol.UserInfo.class,
+              com.pengjun.ka.net.protobuf.KaProtocol.UserInfo.Builder.class);
+          internal_static_com_pengjun_ka_net_protobuf_KaMsg_descriptor =
+            getDescriptor().getMessageTypes().get(3);
           internal_static_com_pengjun_ka_net_protobuf_KaMsg_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_com_pengjun_ka_net_protobuf_KaMsg_descriptor,
-              new java.lang.String[] { "MsgType", "MsgRply", "ArProtocol", "ArTypeProtocol", },
+              new java.lang.String[] { "MsgType", "MsgRply", "ArProtocol", "ArTypeProtocol", "UserInfo", },
               com.pengjun.ka.net.protobuf.KaProtocol.KaMsg.class,
               com.pengjun.ka.net.protobuf.KaProtocol.KaMsg.Builder.class);
           return null;

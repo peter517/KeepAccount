@@ -17,7 +17,7 @@ import com.pengjun.ka.android.fragment.FragmentDirector;
 import com.pengjun.ka.android.fragment.MagicBoxFragment;
 import com.pengjun.ka.android.fragment.SettingFragment;
 import com.pengjun.ka.utils.KaConstants;
-import com.pengjun.ka.utils.LoggerUtils;
+import com.pengjun.ka.utils.AndroidLoggerUtils;
 import com.pengjun.ka.utils.ResourceUtils;
 
 public class KaMainActivity extends FragmentActivity {
@@ -46,7 +46,7 @@ public class KaMainActivity extends FragmentActivity {
 		setContentView(R.layout.keep_account);
 
 		if (ResourceUtils.hasExternalStorage()) {
-			LoggerUtils.initLogger(true, true);
+			AndroidLoggerUtils.initLogger(true, true);
 		}
 
 		// top bar
@@ -210,7 +210,7 @@ public class KaMainActivity extends FragmentActivity {
 		// strange thing: reEnter app after close the app, instance still exist
 		ArFragment.newInstance().refresh();
 
-		LoggerUtils.kaLogger.info("ka exit");
+		AndroidLoggerUtils.kaLogger.info("ka exit");
 		super.onDestroy();
 	}
 

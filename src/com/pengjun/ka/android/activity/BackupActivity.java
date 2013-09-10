@@ -26,8 +26,8 @@ import com.pengjun.ka.R;
 import com.pengjun.ka.android.fragment.ArFragment;
 import com.pengjun.ka.db.service.BackupService;
 import com.pengjun.ka.utils.ComponentUtils;
-import com.pengjun.ka.utils.KaConstants;
 import com.pengjun.ka.utils.FileUtils;
+import com.pengjun.ka.utils.KaConstants;
 import com.pengjun.ka.utils.TimeUtils;
 
 public class BackupActivity extends Activity {
@@ -106,7 +106,8 @@ public class BackupActivity extends Activity {
 			public void onClick(View v) {
 
 				if (selectPos == GRIDVIEW_UNSELECTED) {
-					ComponentUtils.createInfoDialog(BackupActivity.this, "请选择还原日期").show();
+					ComponentUtils.createInfoDialog(BackupActivity.this, "请选择还原日期", R.drawable.title_warning)
+							.show();
 					return;
 				}
 
@@ -199,8 +200,8 @@ public class BackupActivity extends Activity {
 		@Override
 		protected void onPostExecute(Void v) {
 
-			BackupActivity.this.backupDateStrList = FileUtils
-					.getFileNameList(new File(KaConstants.BACK_UP_ROOT));
+			BackupActivity.this.backupDateStrList = FileUtils.getFileNameList(new File(
+					KaConstants.BACK_UP_ROOT));
 			backupAdapter.notifyDataSetChanged();
 			hideProgress();
 
@@ -221,7 +222,7 @@ public class BackupActivity extends Activity {
 		protected void onPostExecute(Void v) {
 
 			ComponentUtils.createInfoDialog(BackupActivity.this,
-					"数据已还原至日期：" + backupDateStrList.get(selectPos)).show();
+					"数据已还原至日期：" + backupDateStrList.get(selectPos), R.drawable.title_warning).show();
 
 			selectPos = GRIDVIEW_UNSELECTED;
 			// refresh ArFragment data

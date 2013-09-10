@@ -175,12 +175,14 @@ public class ArSearchFragment extends Fragment {
 				}
 
 				if (!isAccountLegal) {
-					ComponentUtils.createInfoDialog(getActivity(), "金额应该右边大于或等于左边").show();
+					ComponentUtils.createInfoDialog(getActivity(), "金额应该右边大于或等于左边", R.drawable.title_warning)
+							.show();
 					return;
 				}
 
 				if (!isDateLegal) {
-					ComponentUtils.createInfoDialog(getActivity(), "日期应该右边大于或等于左边").show();
+					ComponentUtils.createInfoDialog(getActivity(), "日期应该右边大于或等于左边", R.drawable.title_warning)
+							.show();
 					return;
 				}
 

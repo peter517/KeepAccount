@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import com.pengjun.ka.android.activity.KaApplication;
 import com.pengjun.ka.db.model.AccountRecord;
 import com.pengjun.ka.db.model.BaseReport;
 import com.pengjun.ka.utils.CollectionUtils;
@@ -17,7 +18,8 @@ public class BaseReportService {
 
 		CollectionUtils.CountIntegerMap keyword2CntMap = new CollectionUtils.CountIntegerMap();
 		for (String commentStr : commentStringList) {
-			List<String> segmentList = IKAnalyzerUtils.getSegmentationList(commentStr);
+			List<String> segmentList = IKAnalyzerUtils.getSegmentationList(KaApplication.instance(),
+					commentStr);
 			for (String segmentStr : segmentList) {
 				keyword2CntMap.count(segmentStr, 1);
 			}

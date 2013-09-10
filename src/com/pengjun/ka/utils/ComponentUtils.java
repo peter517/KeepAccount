@@ -12,15 +12,13 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.widget.DatePicker;
 
-import com.pengjun.ka.R;
-
 public class ComponentUtils {
 
 	public static LayoutInflater inflater = null;
 
-	public static Dialog createInfoDialog(Context context, String info) {
+	public static Dialog createInfoDialog(Context context, String info, int iconResId) {
 		AlertDialog.Builder builder = new AlertDialog.Builder(context);
-		builder.setIcon(R.drawable.title_warning);
+		builder.setIcon(iconResId);
 		builder.setTitle("信息");
 		builder.setMessage(info);
 		builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
@@ -43,10 +41,9 @@ public class ComponentUtils {
 	}
 
 	public static void createNotification(Context context, String notificationTitle,
-			String notificationCotent, PendingIntent pendingIntent, int notifyId) {
+			String notificationCotent, PendingIntent pendingIntent, int notifyId, int imgResId) {
 
-		Notification notification = new Notification(R.drawable.ic_launcher, notificationTitle,
-				System.currentTimeMillis());
+		Notification notification = new Notification(imgResId, notificationTitle, System.currentTimeMillis());
 
 		notification.flags |= Notification.FLAG_NO_CLEAR;
 		notification.flags = Notification.FLAG_AUTO_CANCEL;

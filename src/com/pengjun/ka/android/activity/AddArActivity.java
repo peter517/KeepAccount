@@ -88,12 +88,14 @@ public class AddArActivity extends Activity {
 					Float account = Float.valueOf(etAccount.getText().toString());
 					if (account.isInfinite() || account.isNaN()) {
 						etAccount.setText("");
-						ComponentUtils.createInfoDialog(AddArActivity.this, "输入金额无效").show();
+						ComponentUtils.createInfoDialog(AddArActivity.this, "输入金额无效",
+								R.drawable.title_warning).show();
 						return;
 					}
 					if (account > MAX_COUNT_PER_AR) {
 						etAccount.setText("");
-						ComponentUtils.createInfoDialog(AddArActivity.this, "单笔记账金额不能超过1千万").show();
+						ComponentUtils.createInfoDialog(AddArActivity.this, "单笔记账金额不能超过1千万",
+								R.drawable.title_warning).show();
 						return;
 					}
 
@@ -110,7 +112,8 @@ public class AddArActivity extends Activity {
 					setResult(RESULT_OK, null);
 					finish();
 				} else {
-					ComponentUtils.createInfoDialog(AddArActivity.this, "请输入金额").show();
+					ComponentUtils.createInfoDialog(AddArActivity.this, "请输入金额", R.drawable.title_warning)
+							.show();
 				}
 			}
 

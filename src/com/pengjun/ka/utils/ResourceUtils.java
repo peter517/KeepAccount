@@ -1,14 +1,11 @@
 package com.pengjun.ka.utils;
 
 import java.io.InputStream;
-import java.lang.reflect.Field;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
 import java.util.Enumeration;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Properties;
 
 import android.app.ActivityManager;
@@ -19,8 +16,6 @@ import android.net.NetworkInfo;
 import android.os.Environment;
 import android.os.StatFs;
 
-import com.pengjun.ka.R;
-
 public class ResourceUtils {
 
 	public static final String IS_DEBUG = "debug";
@@ -29,33 +24,9 @@ public class ResourceUtils {
 
 	public static int[] COLOR_ARR = new int[] { Color.BLUE, Color.MAGENTA, Color.DKGRAY, Color.CYAN,
 			Color.GREEN, Color.GRAY, Color.RED, Color.WHITE, Color.LTGRAY };
-	// res
-	public static final String RES_IMAGE_PREFIX = "type";
-
-	private static Map<String, Integer> imgResName2ResId = new HashMap<String, Integer>();
 
 	// use SharedPreferences to check first install
 	public final static String SP_FIRST_START = "firstStart";
-
-	static {
-		Field[] fields = R.drawable.class.getDeclaredFields();
-		for (Field field : fields) {
-			// get all image from res which name start with type
-			if (field.getName().startsWith(RES_IMAGE_PREFIX)) {
-				try {
-					imgResName2ResId.put(field.getName(), field.getInt(R.drawable.class));
-				} catch (IllegalArgumentException e) {
-					e.printStackTrace();
-				} catch (IllegalAccessException e) {
-					e.printStackTrace();
-				}
-			}
-		}
-	}
-
-	public static int getImgResIdByResName(String imgResName) {
-		return imgResName2ResId.get(imgResName);
-	}
 
 	private static Properties props = new Properties();
 
@@ -96,7 +67,7 @@ public class ResourceUtils {
 	}
 
 	public static String getSharedPreferencesString(Context context, String key) {
-		return context.getSharedPreferences(SP_FIRST_START, 0).getString(key, StringUtils.STRING_NULL_VALUE);
+		return context.getSharedPreferences(SP_FIRST_START, 0).getString(key, StringUtils.NULL_STRING);
 	}
 
 	public static void putSharedPreferencesString(Context context, String key, String value) {

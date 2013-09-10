@@ -59,7 +59,8 @@ public class SettingFragment extends Fragment {
 			public void onClick(View v) {
 
 				if (ResourceUtils.hasExternalStorage() == false) {
-					ComponentUtils.createInfoDialog(getActivity(), "请插入内存卡！").show();
+					ComponentUtils.createInfoDialog(getActivity(), "请插入内存卡！", R.drawable.title_warning)
+							.show();
 					return;
 				}
 

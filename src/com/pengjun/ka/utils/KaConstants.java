@@ -1,7 +1,12 @@
 package com.pengjun.ka.utils;
 
 import java.io.File;
+import java.lang.reflect.Field;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import com.pengjun.ka.R;
 
 public class KaConstants {
 
@@ -59,6 +64,30 @@ public class KaConstants {
 	// chart type
 	public enum ChartType {
 		Pie, LineDay, LineMonth, LineYear, Bar;
+	}
+
+	// type image res
+	public static final String RES_IMAGE_PREFIX = "type";
+	private static Map<String, Integer> imgResName2ResId = new HashMap<String, Integer>();
+
+	static {
+		Field[] fields = R.drawable.class.getDeclaredFields();
+		for (Field field : fields) {
+			// get all image from res which name start with type
+			if (field.getName().startsWith(RES_IMAGE_PREFIX)) {
+				try {
+					imgResName2ResId.put(field.getName(), field.getInt(R.drawable.class));
+				} catch (IllegalArgumentException e) {
+					e.printStackTrace();
+				} catch (IllegalAccessException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+
+	public static int getImgResIdByResName(String imgResName) {
+		return imgResName2ResId.get(imgResName);
 	}
 
 }

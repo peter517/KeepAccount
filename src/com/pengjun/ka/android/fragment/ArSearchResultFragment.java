@@ -34,7 +34,6 @@ import com.pengjun.ka.db.model.ArSearchCondition;
 import com.pengjun.ka.utils.ComponentUtils;
 import com.pengjun.ka.utils.KaConstants;
 import com.pengjun.ka.utils.MyDebug;
-import com.pengjun.ka.utils.ResourceUtils;
 
 public class ArSearchResultFragment extends Fragment {
 
@@ -337,7 +336,7 @@ public class ArSearchResultFragment extends Fragment {
 			// fill content
 			AccountRecord ar = arList.get(position);
 			holder.account.setText(String.valueOf(ar.getAccount()));
-			holder.ivType.setImageResource(ResourceUtils.getImgResIdByResName(ar.getImgResName()));
+			holder.ivType.setImageResource(KaConstants.getImgResIdByResName(ar.getImgResName()));
 			holder.tvType.setText(ar.getTypeName());
 			holder.date.setText(ar.getCreateDate());
 

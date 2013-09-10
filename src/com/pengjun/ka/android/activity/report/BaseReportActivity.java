@@ -19,9 +19,9 @@ import com.pengjun.ka.chart.BaseChart;
 import com.pengjun.ka.chart.ChartFactory;
 import com.pengjun.ka.db.model.AccountRecord;
 import com.pengjun.ka.db.model.BaseReport;
+import com.pengjun.ka.utils.KaConstants;
 import com.pengjun.ka.utils.KaConstants.ChartType;
 import com.pengjun.ka.utils.NumberUtils;
-import com.pengjun.ka.utils.ResourceUtils;
 
 public class BaseReportActivity extends Activity {
 
@@ -120,7 +120,7 @@ public class BaseReportActivity extends Activity {
 
 		AccountRecord ar = baseReport.getMaxCost();
 		tvAccount.setText(String.valueOf(ar.getAccount()));
-		ivType.setImageResource(ResourceUtils.getImgResIdByResName(ar.getImgResName()));
+		ivType.setImageResource(KaConstants.getImgResIdByResName(ar.getImgResName()));
 		tvType.setText(ar.getTypeName());
 		tvDate.setText(ar.getCreateDate());
 	}

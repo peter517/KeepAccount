@@ -31,7 +31,6 @@ import com.pengjun.ka.db.model.ArType;
 import com.pengjun.ka.utils.ComponentUtils;
 import com.pengjun.ka.utils.KaConstants;
 import com.pengjun.ka.utils.MyDebug;
-import com.pengjun.ka.utils.ResourceUtils;
 
 public class ManageArTypeActivity extends Activity {
 
@@ -108,7 +107,8 @@ public class ManageArTypeActivity extends Activity {
 			public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
 
 				if (arTypeList.size() == 1) {
-					ComponentUtils.createInfoDialog(ManageArTypeActivity.this, "至少要有一个分类").show();
+					ComponentUtils.createInfoDialog(ManageArTypeActivity.this, "至少要有一个分类",
+							R.drawable.title_warning).show();
 					return false;
 				}
 
@@ -273,7 +273,7 @@ public class ManageArTypeActivity extends Activity {
 			}
 
 			ArType arType = arTypeList.get(position);
-			holder.ivType.setImageResource(ResourceUtils.getImgResIdByResName(arType.getImgResName()));
+			holder.ivType.setImageResource(KaConstants.getImgResIdByResName(arType.getImgResName()));
 			holder.tvType.setText(arType.getTypeName());
 			holder.createDate.setText(arType.getCreateDate());
 

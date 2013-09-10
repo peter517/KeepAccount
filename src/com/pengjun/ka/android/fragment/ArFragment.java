@@ -32,7 +32,6 @@ import com.pengjun.ka.db.model.AccountRecord;
 import com.pengjun.ka.utils.ComponentUtils;
 import com.pengjun.ka.utils.KaConstants;
 import com.pengjun.ka.utils.MyDebug;
-import com.pengjun.ka.utils.ResourceUtils;
 
 public class ArFragment extends Fragment {
 
@@ -321,7 +320,7 @@ public class ArFragment extends Fragment {
 			// fill content
 			AccountRecord ar = arList.get(position);
 			holder.tvAccount.setText(String.valueOf(ar.getAccount()));
-			holder.ivType.setImageResource(ResourceUtils.getImgResIdByResName(ar.getImgResName()));
+			holder.ivType.setImageResource(KaConstants.getImgResIdByResName(ar.getImgResName()));
 			holder.tvType.setText(ar.getTypeName());
 			holder.tvDate.setText(ar.getCreateDate());
 
