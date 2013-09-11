@@ -31,9 +31,9 @@ import com.pengjun.ka.android.activity.ArChartActivity;
 import com.pengjun.ka.db.dao.ArDao;
 import com.pengjun.ka.db.model.AccountRecord;
 import com.pengjun.ka.db.model.ArSearchCondition;
-import com.pengjun.ka.utils.ComponentUtils;
 import com.pengjun.ka.utils.KaConstants;
-import com.pengjun.ka.utils.MyDebug;
+import com.pengjun.utils.ComponentUtils;
+import com.pengjun.utils.MyDebug;
 
 public class ArSearchResultFragment extends Fragment {
 
@@ -148,7 +148,7 @@ public class ArSearchResultFragment extends Fragment {
 				builder.setPositiveButton("删除", new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int whichButton) {
 						AccountRecord ar = arList.get(selectPos);
-						ArDao.delete(ar);
+						ArDao.getSingleInstance().delete(ar);
 						ArChartActivity.resetArList();
 						updateArListViewAsync(false);
 					}
@@ -200,7 +200,7 @@ public class ArSearchResultFragment extends Fragment {
 
 	public void updateArListViewSync() {
 
-		arList = ArDao.queryLimitRows(0, Math.max(LIMIT_ROW_TOTAL, arList.size()));
+		arList = ArDao.getSingleInstance().queryLimitRows(0, Math.max(LIMIT_ROW_TOTAL, arList.size()));
 
 		if (arList.size() < LIMIT_ROW_TOTAL) {
 			btLoadMore.setVisibility(View.GONE);
@@ -236,7 +236,8 @@ public class ArSearchResultFragment extends Fragment {
 		protected List<AccountRecord> doInBackground(Boolean... params) {
 
 			isSetListViewToTop = params[0];
-			List<AccountRecord> tempArList = ArDao.queryAr(arSC, 0, Math.max(LIMIT_ROW_TOTAL, arList.size()));
+			List<AccountRecord> tempArList = ArDao.getSingleInstance().queryAr(arSC, 0,
+					Math.max(LIMIT_ROW_TOTAL, arList.size()));
 			if (tempArList != null) {
 				arList = tempArList;
 			}
@@ -276,7 +277,7 @@ public class ArSearchResultFragment extends Fragment {
 
 			List<AccountRecord> tempArList = null;
 
-			tempArList = ArDao.queryAr(arSC, offset, LIMIT_ROW_TOTAL);
+			tempArList = ArDao.getSingleInstance().queryAr(arSC, offset, LIMIT_ROW_TOTAL);
 			if (tempArList != null) {
 				arList.addAll(tempArList);
 			} else {
@@ -292,8 +293,8 @@ public class ArSearchResultFragment extends Fragment {
 			hideProgress();
 
 			if (tempArList == null || tempArList.size() == 0) {
-				Toast.makeText(ArSearchResultFragment.this.getActivity(), "没有新数据", KaConstants.TOAST_EXSIT_TIME)
-						.show();
+				Toast.makeText(ArSearchResultFragment.this.getActivity(), "没有新数据",
+						KaConstants.TOAST_EXSIT_TIME).show();
 			}
 
 			arAdapter.notifyDataSetChanged();

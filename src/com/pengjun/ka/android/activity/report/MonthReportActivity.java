@@ -4,11 +4,11 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 
 import com.pengjun.ka.R;
-import com.pengjun.ka.chart.BaseChart;
+import com.pengjun.ka.chart.KaBaseChart;
 import com.pengjun.ka.db.model.WeekOrMonthReport;
 import com.pengjun.ka.db.service.MonthReportService;
-import com.pengjun.ka.utils.ComponentUtils;
 import com.pengjun.ka.utils.KaConstants;
+import com.pengjun.utils.ComponentUtils;
 
 public class MonthReportActivity extends BaseReportActivity {
 
@@ -23,7 +23,7 @@ public class MonthReportActivity extends BaseReportActivity {
 
 	class LoadArChartTask extends AsyncTask<Void, Void, Void> {
 
-		BaseChart typeRadioChart;
+		KaBaseChart typeRadioChart;
 		WeekOrMonthReport reportData;
 
 		@Override

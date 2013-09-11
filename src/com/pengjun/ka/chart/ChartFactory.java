@@ -4,7 +4,7 @@ import com.pengjun.ka.utils.KaConstants.ChartType;
 
 public class ChartFactory {
 
-	public static BaseChart createChart(ChartType chartType) {
+	public static KaBaseChart createChart(ChartType chartType) {
 
 		switch (chartType) {
 		case Bar:

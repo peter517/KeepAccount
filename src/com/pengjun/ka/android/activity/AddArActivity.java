@@ -19,10 +19,10 @@ import com.pengjun.ka.R;
 import com.pengjun.ka.db.dao.ArDao;
 import com.pengjun.ka.db.dao.ArTypeDao;
 import com.pengjun.ka.db.model.AccountRecord;
-import com.pengjun.ka.utils.ComponentUtils;
 import com.pengjun.ka.utils.KaConstants;
-import com.pengjun.ka.utils.NumberUtils;
-import com.pengjun.ka.utils.TimeUtils;
+import com.pengjun.utils.ComponentUtils;
+import com.pengjun.utils.NumberUtils;
+import com.pengjun.utils.TimeUtils;
 
 public class AddArActivity extends Activity {
 
@@ -48,7 +48,7 @@ public class AddArActivity extends Activity {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.add_ar);
 
-		arTypeNameList = ArTypeDao.queryAllArTypeName();
+		arTypeNameList = ArTypeDao.getSingleInstance().queryAllArTypeName();
 
 		etAccount = (EditText) findViewById(R.id.etAccount);
 
@@ -103,10 +103,10 @@ public class AddArActivity extends Activity {
 					if (ar == null) {
 						ar = new AccountRecord();
 						getArFromView(ar);
-						ArDao.insert(ar);
+						ArDao.getSingleInstance().insert(ar);
 					} else {
 						getArFromView(ar);
-						ArDao.update(ar);
+						ArDao.getSingleInstance().update(ar);
 					}
 
 					setResult(RESULT_OK, null);

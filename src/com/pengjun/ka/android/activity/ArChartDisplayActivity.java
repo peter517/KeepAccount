@@ -12,7 +12,7 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 
 import com.pengjun.ka.R;
-import com.pengjun.ka.chart.BaseChart;
+import com.pengjun.ka.chart.KaBaseChart;
 import com.pengjun.ka.chart.ChartFactory;
 import com.pengjun.ka.db.model.AccountRecord;
 import com.pengjun.ka.utils.KaConstants;
@@ -57,7 +57,7 @@ public class ArChartDisplayActivity extends Activity {
 
 	class LoadArChartTask extends AsyncTask<Void, Void, Void> {
 
-		BaseChart baseChart;
+		KaBaseChart baseChart;
 
 		@Override
 		protected Void doInBackground(Void... params) {

@@ -77,18 +77,18 @@ public class AccountRecord implements Serializable {
 		// even typeName is deleted, the typeId could not reused
 		String typeName = id2TypeMap.get(typeId);
 		if (typeName == null) {
-			typeName = ArTypeDao.getArTpyeNameById(typeId);
+			typeName = ArTypeDao.getSingleInstance().getArTpyeNameById(typeId);
 			id2TypeMap.put(typeId, typeName);
 		}
 		return typeName;
 	}
 
 	public void setTypeName(String arTpye) {
-		typeId = ArTypeDao.getIdByArTpye(arTpye);
+		typeId = ArTypeDao.getSingleInstance().getIdByArTpye(arTpye);
 	}
 
 	public String getImgResName() {
-		return ArTypeDao.getImgResNameById(typeId);
+		return ArTypeDao.getSingleInstance().getImgResNameById(typeId);
 	}
 
 	public String getCreateDate() {

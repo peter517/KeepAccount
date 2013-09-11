@@ -24,11 +24,11 @@ import com.pengjun.ka.android.component.GalleryFlow;
 import com.pengjun.ka.android.fragment.ArSearchResultFragment;
 import com.pengjun.ka.db.dao.ArDao;
 import com.pengjun.ka.db.model.AccountRecord;
-import com.pengjun.ka.utils.ComponentUtils;
 import com.pengjun.ka.utils.KaConstants;
 import com.pengjun.ka.utils.KaConstants.ChartType;
-import com.pengjun.ka.utils.ImageUtils;
-import com.pengjun.ka.utils.ResourceUtils;
+import com.pengjun.utils.ComponentUtils;
+import com.pengjun.utils.ImageUtils;
+import com.pengjun.utils.ResourceUtils;
 
 public class ArChartActivity extends Activity {
 
@@ -123,7 +123,7 @@ public class ArChartActivity extends Activity {
 		protected Void doInBackground(Void... params) {
 			// the data in ArSearchResult is searched by offset and limit
 			// so need to research
-			arList = ArDao.queryAr(ArSearchResultFragment.getArSearchCondition(), 0, -1);
+			arList = ArDao.getSingleInstance().queryAr(ArSearchResultFragment.getArSearchCondition(), 0, -1);
 			return null;
 		}
 

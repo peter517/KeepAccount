@@ -12,8 +12,8 @@ import android.widget.RelativeLayout;
 import com.pengjun.ka.R;
 import com.pengjun.ka.android.activity.BackupActivity;
 import com.pengjun.ka.android.activity.ManageArTypeActivity;
-import com.pengjun.ka.utils.ComponentUtils;
-import com.pengjun.ka.utils.ResourceUtils;
+import com.pengjun.utils.ComponentUtils;
+import com.pengjun.utils.ResourceUtils;
 
 public class SettingFragment extends Fragment {
 

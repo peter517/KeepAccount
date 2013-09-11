@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">  
-<properties>  
-	<comment>IK Analyzer 扩展配置</comment>
-	<!-- document must UTF-8 and first line is invalid-->
-	<entry key="ext_dict">ext_chinese_word.dic;</entry> 
-	<entry key="ext_stopwords">chinese_stopword.dic;english_stopword.dic;ext_chinese_stopword.dic</entry> 
-</properties>

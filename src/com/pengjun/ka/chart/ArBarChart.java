@@ -15,7 +15,7 @@ import android.graphics.Color;
 import android.view.View;
 
 import com.pengjun.ka.db.model.AccountRecord;
-import com.pengjun.ka.utils.CollectionUtils;
+import com.pengjun.utils.CollectionUtils;
 
 /**
  * number of each cost interval
@@ -23,7 +23,7 @@ import com.pengjun.ka.utils.CollectionUtils;
  * @author pengjun
  * 
  */
-public class ArBarChart extends BaseChart {
+public class ArBarChart extends KaBaseChart {
 
 	private String[] MONEY_RANGE_ARR = { "100以下", "101-500", "501-1000", "1001-2000", "2000以上" };
 	private String title = "各区间花费数";

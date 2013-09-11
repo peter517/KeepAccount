@@ -4,9 +4,9 @@ import java.util.List;
 
 import com.pengjun.ka.db.model.AccountRecord;
 import com.pengjun.ka.db.model.MagicBoxData;
-import com.pengjun.ka.utils.CollectionUtils;
-import com.pengjun.ka.utils.NumberUtils;
-import com.pengjun.ka.utils.TimeUtils;
+import com.pengjun.utils.CollectionUtils;
+import com.pengjun.utils.NumberUtils;
+import com.pengjun.utils.TimeUtils;
 
 public class MagicBoxService extends BaseReportService {
 

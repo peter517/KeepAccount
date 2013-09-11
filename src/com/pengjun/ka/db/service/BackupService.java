@@ -7,23 +7,22 @@ import com.pengjun.ka.db.dao.ArDao;
 import com.pengjun.ka.db.dao.ArTypeDao;
 import com.pengjun.ka.db.model.AccountRecord;
 import com.pengjun.ka.db.model.ArType;
-import com.pengjun.ka.utils.FileUtils;
 import com.pengjun.ka.utils.KaConstants;
-import com.pengjun.ka.utils.AndroidLoggerUtils;
+import com.pengjun.utils.FileUtils;
 
 public class BackupService {
 
 	public static void saveBackupByDateStr(String dateStr) {
-		List<AccountRecord> arList = ArDao.queryAllByUpdate();
-		List<ArType> arTypeList = ArTypeDao.queryAllByUpdate();
+		List<AccountRecord> arList = ArDao.getSingleInstance().queryAllByUpdate();
+		List<ArType> arTypeList = ArTypeDao.getSingleInstance().queryAllByUpdate();
 		saveBackupAll(dateStr, arList, arTypeList);
-		AndroidLoggerUtils.dbLogger.info("saveBackupAll " + dateStr);
+		KaConstants.dbLogger.info("saveBackupAll " + dateStr);
 	}
 
 	public static void deleteBackupFromDateStr(String dateStr) {
 		String backupPath = KaConstants.BACK_UP_ROOT + File.separator + dateStr;
 		FileUtils.deleteFile(new File(backupPath));
-		AndroidLoggerUtils.dbLogger.info("deleteBackup " + dateStr);
+		KaConstants.dbLogger.info("deleteBackup " + dateStr);
 	}
 
 	public static void restoreByDateStr(String dateStr) {
@@ -37,13 +36,13 @@ public class BackupService {
 		List<ArType> arTypeList = FileUtils.<ArType> readListFromFile(arTypeFilePath);
 
 		restoreAll(dateStr, arList, arTypeList);
-		AndroidLoggerUtils.dbLogger.info("restoreAll " + dateStr);
+		KaConstants.dbLogger.info("restoreAll " + dateStr);
 
 	}
 
 	private static void restoreAll(String curTimeStr, List<AccountRecord> arList, List<ArType> arTypeList) {
-		ArDao.reCreateTable(arList);
-		ArTypeDao.reCreateTable(arTypeList);
+		ArDao.getSingleInstance().reCreateTable(arList);
+		ArTypeDao.getSingleInstance().reCreateTable(arTypeList);
 	}
 
 	private static void saveBackupAll(String curTimeStr, List<AccountRecord> arList, List<ArType> arTypeList) {

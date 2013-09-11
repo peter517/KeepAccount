@@ -15,13 +15,13 @@ import android.widget.TextView;
 
 import com.pengjun.ka.R;
 import com.pengjun.ka.android.service.ReportNotificationService;
-import com.pengjun.ka.chart.BaseChart;
+import com.pengjun.ka.chart.KaBaseChart;
 import com.pengjun.ka.chart.ChartFactory;
 import com.pengjun.ka.db.model.AccountRecord;
 import com.pengjun.ka.db.model.BaseReport;
 import com.pengjun.ka.utils.KaConstants;
 import com.pengjun.ka.utils.KaConstants.ChartType;
-import com.pengjun.ka.utils.NumberUtils;
+import com.pengjun.utils.NumberUtils;
 
 public class BaseReportActivity extends Activity {
 
@@ -93,16 +93,16 @@ public class BaseReportActivity extends Activity {
 		svMagicData.setVisibility(View.VISIBLE);
 	}
 
-	protected BaseChart createBaseChart(List<AccountRecord> arList) {
+	protected KaBaseChart createBaseChart(List<AccountRecord> arList) {
 
-		BaseChart typeRadioChart = ChartFactory.createChart(ChartType.Pie);
+		KaBaseChart typeRadioChart = ChartFactory.createChart(ChartType.Pie);
 		typeRadioChart.compute(arList);
 		typeRadioChart.setZoomEnabled(false);
 
 		return typeRadioChart;
 	}
 
-	protected void fillBaseReport(BaseReport baseReport, BaseChart typeRadioChart) {
+	protected void fillBaseReport(BaseReport baseReport, KaBaseChart typeRadioChart) {
 
 		llTypeRatioChart.addView(typeRadioChart.getView(this));
 

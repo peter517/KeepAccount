@@ -25,10 +25,10 @@ import android.widget.TextView;
 import com.pengjun.ka.R;
 import com.pengjun.ka.android.fragment.ArFragment;
 import com.pengjun.ka.db.service.BackupService;
-import com.pengjun.ka.utils.ComponentUtils;
-import com.pengjun.ka.utils.FileUtils;
 import com.pengjun.ka.utils.KaConstants;
-import com.pengjun.ka.utils.TimeUtils;
+import com.pengjun.utils.ComponentUtils;
+import com.pengjun.utils.FileUtils;
+import com.pengjun.utils.TimeUtils;
 
 public class BackupActivity extends Activity {
 

@@ -15,8 +15,8 @@ import android.view.View;
 
 import com.pengjun.ka.db.model.AccountRecord;
 import com.pengjun.ka.utils.KaConstants.ChartType;
-import com.pengjun.ka.utils.NumberUtils;
-import com.pengjun.ka.utils.TimeUtils;
+import com.pengjun.utils.NumberUtils;
+import com.pengjun.utils.TimeUtils;
 
 /**
  * time-line of money
@@ -24,7 +24,7 @@ import com.pengjun.ka.utils.TimeUtils;
  * @author pengjun
  * 
  */
-public class ArLineChart extends BaseChart {
+public class ArLineChart extends KaBaseChart {
 
 	private static final int DISPALY_CHART_VALUE_POINT_MAX_NUM = 15;
 	private ChartType chartType;

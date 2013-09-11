@@ -5,32 +5,30 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.j256.ormlite.android.AndroidConnectionSource;
-import com.j256.ormlite.dao.Dao;
-import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.stmt.QueryBuilder;
 import com.j256.ormlite.table.TableUtils;
+import com.pengjun.db.BaseDao;
 import com.pengjun.ka.android.activity.KaApplication;
 import com.pengjun.ka.db.model.ArType;
-import com.pengjun.ka.utils.KaConstants;
 import com.pengjun.ka.utils.KaConstants.InitArType;
-import com.pengjun.ka.utils.TimeUtils;
+import com.pengjun.utils.TimeUtils;
 
-public class ArTypeDao {
+public class ArTypeDao extends BaseDao<ArType> {
 
-	private static AndroidConnectionSource cs = KaApplication.getAndroidConnectionSource();
-
-	private static Dao<ArType, Integer> dao = null;
-
-	static {
-		try {
-			dao = DaoManager.createDao(cs, ArType.class);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-
+	private ArTypeDao(AndroidConnectionSource cs, Class<ArType> modelClass) {
+		super(cs, modelClass);
 	}
 
-	public static void initTable() {
+	private static ArTypeDao arTypeDao = null;
+
+	public static ArTypeDao getSingleInstance() {
+		if (arTypeDao == null) {
+			arTypeDao = new ArTypeDao(KaApplication.getAndroidConnectionSource(), ArType.class);
+		}
+		return arTypeDao;
+	}
+
+	public void initTable() {
 
 		for (int i = 0; i < InitArType.values().length; i++) {
 			ArType arType = new ArType();
@@ -47,7 +45,7 @@ public class ArTypeDao {
 
 	}
 
-	public static List<ArType> queryAllByUpdate() {
+	public List<ArType> queryAllByUpdate() {
 		try {
 			QueryBuilder<ArType, Integer> queryBuilder = dao.queryBuilder();
 			queryBuilder.orderBy(ArType.COL_UPDATE_TIME, false);
@@ -55,10 +53,10 @@ public class ArTypeDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return KaConstants.DB_SEARCH_LIST_NOT_FOUND;
+		return BaseDao.DB_SEARCH_LIST_NOT_FOUND;
 	}
 
-	public static List<String> queryAllArTypeName() {
+	public List<String> queryAllArTypeName() {
 		try {
 			List<ArType> arTypeList = dao.queryForAll();
 			List<String> typeNameList = new ArrayList<String>();
@@ -71,30 +69,30 @@ public class ArTypeDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return KaConstants.DB_SEARCH_LIST_NOT_FOUND;
+		return BaseDao.DB_SEARCH_LIST_NOT_FOUND;
 	}
 
-	public static String getArTpyeNameById(int id) {
+	public String getArTpyeNameById(int id) {
 		try {
 			ArType arType = dao.queryForId(id);
 			return arType.getTypeName();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return KaConstants.DB_SEARCH_STRING_NOT_FOUND;
+		return BaseDao.DB_SEARCH_STRING_NOT_FOUND;
 	}
 
-	public static String getImgResNameById(int id) {
+	public String getImgResNameById(int id) {
 		try {
 			ArType arType = dao.queryForId(id);
 			return arType.getImgResName();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return KaConstants.DB_SEARCH_STRING_NOT_FOUND;
+		return BaseDao.DB_SEARCH_STRING_NOT_FOUND;
 	}
 
-	public static int getIdByArTpye(String arTpye) {
+	public int getIdByArTpye(String arTpye) {
 		try {
 			List<ArType> arTypeList = dao.queryForEq(ArType.COL_TYPE_NAME, arTpye);
 			if (arTypeList.size() == 1) {
@@ -103,10 +101,10 @@ public class ArTypeDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return KaConstants.DB_SEARCH_INT_NOT_FOUND;
+		return BaseDao.DB_SEARCH_INT_NOT_FOUND;
 	}
 
-	public static boolean ifArTypeExist(String arTpye) {
+	public boolean ifArTypeExist(String arTpye) {
 		try {
 			List<ArType> arTypeList = dao.queryForEq(ArType.COL_TYPE_NAME, arTpye);
 			if (arTypeList.size() == 1) {
@@ -118,15 +116,7 @@ public class ArTypeDao {
 		return false;
 	}
 
-	public static void insert(ArType arType) {
-		try {
-			dao.create(arType);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
-
-	public static boolean isTypeNameExsit(String typeName) {
+	public boolean isTypeNameExsit(String typeName) {
 		List<ArType> arTypeList = queryArTypeByTypeName(typeName);
 		if (arTypeList == null || arTypeList.size() == 0) {
 			return false;
@@ -134,7 +124,7 @@ public class ArTypeDao {
 		return true;
 	}
 
-	public static List<ArType> queryArTypeByTypeName(String typeName) {
+	public List<ArType> queryArTypeByTypeName(String typeName) {
 		try {
 			return dao.queryForEq(ArType.COL_TYPE_NAME, typeName);
 		} catch (SQLException e) {
@@ -143,24 +133,7 @@ public class ArTypeDao {
 		return null;
 	}
 
-	public static void update(ArType arType) {
-		try {
-			dao.update(arType);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
-
-	public static void delete(ArType arType) {
-		try {
-			dao.delete(arType);
-			ArDao.deleteByTypeId(arType.getId());
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
-
-	public static void reCreateTable(List<ArType> arTypeList) {
+	public void reCreateTable(List<ArType> arTypeList) {
 
 		try {
 			TableUtils.dropTable(cs, ArType.class, false);

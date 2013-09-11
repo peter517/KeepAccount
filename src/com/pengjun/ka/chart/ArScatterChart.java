@@ -12,9 +12,9 @@ import android.graphics.Color;
 import android.view.View;
 
 import com.pengjun.ka.db.model.AccountRecord;
-import com.pengjun.ka.utils.TimeUtils;
+import com.pengjun.utils.TimeUtils;
 
-public class ArScatterChart extends BaseChart {
+public class ArScatterChart extends KaBaseChart {
 
 	private String titles;
 	private XYMultipleSeriesRenderer renderer;

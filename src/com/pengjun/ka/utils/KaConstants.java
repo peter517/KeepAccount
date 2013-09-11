@@ -3,8 +3,9 @@ package com.pengjun.ka.utils;
 import java.io.File;
 import java.lang.reflect.Field;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+
+import org.apache.log4j.Logger;
 
 import com.pengjun.ka.R;
 
@@ -27,12 +28,6 @@ public class KaConstants {
 			return typename;
 		}
 	}
-
-	// DB search error
-	public final static int DB_SEARCH_INT_NOT_FOUND = -1;
-	public final static String DB_SEARCH_STRING_NOT_FOUND = null;
-	public final static float DB_SEARCH_FLOAT_NOT_FOUND = -1.0f;
-	public final static List DB_SEARCH_LIST_NOT_FOUND = null;
 
 	// activity intent callback tag
 	public static final int CB_ADD_AR = 01;
@@ -89,5 +84,11 @@ public class KaConstants {
 	public static int getImgResIdByResName(String imgResName) {
 		return imgResName2ResId.get(imgResName);
 	}
+
+	// log
+	public static final Logger dbLogger = Logger.getLogger("db");
+	public static final Logger serviceLogger = Logger.getLogger("service");
+	public static final Logger kaLogger = Logger.getLogger("ka");
+	public static final Logger clientLogger = Logger.getLogger("clientLogger");
 
 }

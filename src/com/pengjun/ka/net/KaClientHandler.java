@@ -15,8 +15,8 @@ import org.jboss.netty.channel.SimpleChannelUpstreamHandler;
 import com.pengjun.ka.net.exception.ErrorCode;
 import com.pengjun.ka.net.protobuf.KaProtocol.KaMsg;
 import com.pengjun.ka.net.protobuf.KaProtocol.MsgType;
-import com.pengjun.ka.utils.AndroidLoggerUtils;
-import com.pengjun.ka.utils.MyDebug;
+import com.pengjun.ka.utils.KaConstants;
+import com.pengjun.utils.MyDebug;
 
 public class KaClientHandler extends SimpleChannelUpstreamHandler {
 
@@ -60,7 +60,7 @@ public class KaClientHandler extends SimpleChannelUpstreamHandler {
 		}
 
 		if (revKaMsg == null) {
-			AndroidLoggerUtils.clientLogger.error("ErrorCode = " + ErrorCode.NetError);
+			KaConstants.clientLogger.error("ErrorCode = " + ErrorCode.NetError);
 			return null;
 		}
 		MyDebug.printFromPJ("revArType.getImgResName()" + revKaMsg.getMsgType());
@@ -74,13 +74,13 @@ public class KaClientHandler extends SimpleChannelUpstreamHandler {
 
 	@Override
 	public void channelConnected(ChannelHandlerContext ctx, ChannelStateEvent e) {
-		AndroidLoggerUtils.clientLogger.debug("connect sucessed!");
+		KaConstants.clientLogger.debug("connect sucessed!");
 	}
 
 	@Override
 	public void handleUpstream(ChannelHandlerContext ctx, ChannelEvent e) throws Exception {
 		if (e instanceof ChannelStateEvent) {
-			AndroidLoggerUtils.clientLogger.info(e.toString());
+			KaConstants.clientLogger.info(e.toString());
 		}
 		super.handleUpstream(ctx, e);
 	}
@@ -99,7 +99,7 @@ public class KaClientHandler extends SimpleChannelUpstreamHandler {
 
 	@Override
 	public void exceptionCaught(ChannelHandlerContext ctx, ExceptionEvent e) {
-		AndroidLoggerUtils.clientLogger.error("Unexpected exception from downstream.", e.getCause());
+		KaConstants.clientLogger.error("Unexpected exception from downstream.", e.getCause());
 		e.getChannel().close();
 	}
 }

@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.pengjun.ka.db.model.AccountRecord;
 import com.pengjun.ka.db.model.WeekOrMonthReport;
-import com.pengjun.ka.utils.TimeUtils;
+import com.pengjun.utils.TimeUtils;
 
 public class MonthReportService extends BaseReportService {
 

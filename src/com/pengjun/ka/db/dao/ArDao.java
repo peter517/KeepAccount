@@ -5,50 +5,31 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.j256.ormlite.android.AndroidConnectionSource;
-import com.j256.ormlite.dao.Dao;
-import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.stmt.DeleteBuilder;
 import com.j256.ormlite.stmt.QueryBuilder;
 import com.j256.ormlite.stmt.Where;
 import com.j256.ormlite.table.TableUtils;
+import com.pengjun.db.BaseDao;
 import com.pengjun.ka.android.activity.KaApplication;
 import com.pengjun.ka.db.model.AccountRecord;
 import com.pengjun.ka.db.model.ArSearchCondition;
-import com.pengjun.ka.utils.KaConstants;
 
-public class ArDao {
+public class ArDao extends BaseDao<AccountRecord> {
 
-	private static AndroidConnectionSource cs = KaApplication.getAndroidConnectionSource();
-
-	private static Dao<AccountRecord, Integer> dao = null;
-
-	static {
-		try {
-			dao = DaoManager.createDao(cs, AccountRecord.class);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+	private ArDao(AndroidConnectionSource cs, Class<AccountRecord> modelClass) {
+		super(cs, modelClass);
 	}
 
-	public static void insert(AccountRecord ar) {
-		try {
-			// for (int i = 0; i < 500; i++)
-			// dao.create(DataCreater.getRandomAr());
-			dao.create(ar);
-		} catch (SQLException e) {
-			e.printStackTrace();
+	private static ArDao arDao = null;
+
+	public static ArDao getSingleInstance() {
+		if (arDao == null) {
+			arDao = new ArDao(KaApplication.getAndroidConnectionSource(), AccountRecord.class);
 		}
+		return arDao;
 	}
 
-	public static void update(AccountRecord ar) {
-		try {
-			dao.update(ar);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
-
-	public static boolean ifExist(AccountRecord ar) {
+	public boolean ifExist(AccountRecord ar) {
 		try {
 			if (((List<AccountRecord>) dao.queryForId(ar.getId())).size() == 0) {
 				return false;
@@ -59,15 +40,7 @@ public class ArDao {
 		return true;
 	}
 
-	public static void delete(AccountRecord ar) {
-		try {
-			dao.delete(ar);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
-
-	public static void reCreateTable(List<AccountRecord> arList) {
+	public void reCreateTable(List<AccountRecord> arList) {
 
 		try {
 			TableUtils.dropTable(cs, AccountRecord.class, false);
@@ -82,7 +55,7 @@ public class ArDao {
 		}
 	}
 
-	public static List<AccountRecord> queryAllByUpdate() {
+	public List<AccountRecord> queryAllByUpdate() {
 		try {
 			QueryBuilder<AccountRecord, Integer> queryBuilder = dao.queryBuilder();
 			queryBuilder.orderBy(AccountRecord.COL_UPDATE_TIME, false);
@@ -90,20 +63,10 @@ public class ArDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return KaConstants.DB_SEARCH_LIST_NOT_FOUND;
+		return BaseDao.DB_SEARCH_LIST_NOT_FOUND;
 	}
 
-	public static List<AccountRecord> queryAll() {
-		try {
-			QueryBuilder<AccountRecord, Integer> queryBuilder = dao.queryBuilder();
-			return queryBuilder.query();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return KaConstants.DB_SEARCH_LIST_NOT_FOUND;
-	}
-
-	public static void deleteAll(List<AccountRecord> arList) {
+	public void deleteAll(List<AccountRecord> arList) {
 		try {
 			dao.delete(arList);
 		} catch (SQLException e) {
@@ -111,7 +74,7 @@ public class ArDao {
 		}
 	}
 
-	public static void deleteByTypeId(Integer typeId) {
+	public void deleteByTypeId(Integer typeId) {
 		try {
 			DeleteBuilder db = dao.deleteBuilder();
 			db.where().eq(AccountRecord.COL_TYPE_ID, typeId);
@@ -121,16 +84,16 @@ public class ArDao {
 		}
 	}
 
-	public static int queryArSumByTypeId(int id) {
+	public int queryArSumByTypeId(int id) {
 		try {
 			return dao.queryForEq(AccountRecord.COL_TYPE_ID, id).size();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return KaConstants.DB_SEARCH_INT_NOT_FOUND;
+		return BaseDao.DB_SEARCH_INT_NOT_FOUND;
 	}
 
-	public static List<AccountRecord> queryLimitRows(int offset, int limtRows) {
+	public List<AccountRecord> queryLimitRows(int offset, int limtRows) {
 		try {
 			QueryBuilder<AccountRecord, Integer> queryBuilder = dao.queryBuilder();
 
@@ -140,10 +103,10 @@ public class ArDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return KaConstants.DB_SEARCH_LIST_NOT_FOUND;
+		return BaseDao.DB_SEARCH_LIST_NOT_FOUND;
 	}
 
-	public static List<String> queryAllComments() {
+	public List<String> queryAllComments() {
 		try {
 
 			QueryBuilder<AccountRecord, Integer> queryBuilder = dao.queryBuilder();
@@ -160,10 +123,10 @@ public class ArDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return KaConstants.DB_SEARCH_LIST_NOT_FOUND;
+		return BaseDao.DB_SEARCH_LIST_NOT_FOUND;
 	}
 
-	public static List<AccountRecord> queryAr(ArSearchCondition arSC, int offset, int limtRows) {
+	public List<AccountRecord> queryAr(ArSearchCondition arSC, int offset, int limtRows) {
 
 		if (arSC == null) {
 			return null;
@@ -189,7 +152,8 @@ public class ArDao {
 			// type
 			if (arSC.getType() != null && !arSC.getType().equals("")) {
 				where.and();
-				where.eq(AccountRecord.COL_TYPE_ID, ArTypeDao.getIdByArTpye(arSC.getType()));
+				where.eq(AccountRecord.COL_TYPE_ID,
+						ArTypeDao.getSingleInstance().getIdByArTpye(arSC.getType()));
 			}
 
 			// date
@@ -211,6 +175,6 @@ public class ArDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return KaConstants.DB_SEARCH_LIST_NOT_FOUND;
+		return BaseDao.DB_SEARCH_LIST_NOT_FOUND;
 	}
 }

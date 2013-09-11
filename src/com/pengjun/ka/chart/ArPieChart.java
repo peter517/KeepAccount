@@ -12,9 +12,9 @@ import android.content.Context;
 import android.view.View;
 
 import com.pengjun.ka.db.model.AccountRecord;
-import com.pengjun.ka.utils.CollectionUtils;
-import com.pengjun.ka.utils.NumberUtils;
-import com.pengjun.ka.utils.ResourceUtils;
+import com.pengjun.utils.CollectionUtils;
+import com.pengjun.utils.NumberUtils;
+import com.pengjun.utils.ResourceUtils;
 
 /**
  * ratio of each type cost
@@ -22,7 +22,7 @@ import com.pengjun.ka.utils.ResourceUtils;
  * @author pengjun
  * 
  */
-public class ArPieChart extends BaseChart {
+public class ArPieChart extends KaBaseChart {
 
 	private DefaultRenderer renderer;
 	private CategorySeries series;

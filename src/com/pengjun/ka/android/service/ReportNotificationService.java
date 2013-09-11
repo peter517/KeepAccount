@@ -19,11 +19,11 @@ import com.pengjun.ka.android.activity.report.WeekReportActivity;
 import com.pengjun.ka.db.dao.ArDao;
 import com.pengjun.ka.db.model.AccountRecord;
 import com.pengjun.ka.db.model.ArSearchCondition;
-import com.pengjun.ka.utils.ComponentUtils;
 import com.pengjun.ka.utils.KaConstants;
-import com.pengjun.ka.utils.ResourceUtils;
-import com.pengjun.ka.utils.StringUtils;
-import com.pengjun.ka.utils.TimeUtils;
+import com.pengjun.utils.ComponentUtils;
+import com.pengjun.utils.ResourceUtils;
+import com.pengjun.utils.StringUtils;
+import com.pengjun.utils.TimeUtils;
 
 public class ReportNotificationService extends Service {
 	private ReportServiceBinder binder = new ReportServiceBinder();
@@ -81,7 +81,7 @@ public class ReportNotificationService extends Service {
 		arSC.setStartDate(lastMonthOfTodayStr);
 		arSC.setEndDate(TimeUtils.getLastDayStr());
 
-		arList = ArDao.queryAr(arSC, 0, -1);
+		arList = ArDao.getSingleInstance().queryAr(arSC, 0, -1);
 
 		if (arList.size() == 0) {
 			return;
@@ -107,7 +107,7 @@ public class ReportNotificationService extends Service {
 		arSC.setStartDate(lastWeekOfTodayStr);
 		arSC.setEndDate(lastDayStr);
 
-		arList = ArDao.queryAr(arSC, 0, -1);
+		arList = ArDao.getSingleInstance().queryAr(arSC, 0, -1);
 
 		if (arList.size() == 0) {
 			return;

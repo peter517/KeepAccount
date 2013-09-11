@@ -14,8 +14,8 @@ import android.graphics.Color;
 import android.view.View;
 
 import com.pengjun.ka.db.model.AccountRecord;
-import com.pengjun.ka.utils.CollectionUtils;
-import com.pengjun.ka.utils.NumberUtils;
+import com.pengjun.utils.CollectionUtils;
+import com.pengjun.utils.NumberUtils;
 
 /**
  * count of each type cost
@@ -23,7 +23,7 @@ import com.pengjun.ka.utils.NumberUtils;
  * @author pengjun
  * 
  */
-public class ArTypeBarChart extends BaseChart {
+public class ArTypeBarChart extends KaBaseChart {
 
 	private String title;
 	private XYMultipleSeriesRenderer renderer;

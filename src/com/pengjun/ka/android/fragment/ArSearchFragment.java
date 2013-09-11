@@ -22,9 +22,9 @@ import com.pengjun.ka.R;
 import com.pengjun.ka.android.activity.ArSearchResultActivity;
 import com.pengjun.ka.db.dao.ArTypeDao;
 import com.pengjun.ka.db.model.ArSearchCondition;
-import com.pengjun.ka.utils.ComponentUtils;
 import com.pengjun.ka.utils.KaConstants;
-import com.pengjun.ka.utils.TimeUtils;
+import com.pengjun.utils.ComponentUtils;
+import com.pengjun.utils.TimeUtils;
 
 public class ArSearchFragment extends Fragment {
 
@@ -71,7 +71,7 @@ public class ArSearchFragment extends Fragment {
 
 		List<String> arTypeNameList = new ArrayList<String>();
 		arTypeNameList.add(ALL_AR_TYPE);
-		arTypeNameList.addAll(ArTypeDao.queryAllArTypeName());
+		arTypeNameList.addAll(ArTypeDao.getSingleInstance().queryAllArTypeName());
 
 		spArTypeName = (Spinner) view.findViewById(R.id.spArTypeName);
 		ArrayAdapter<String> arTypeNameAdapter = new ArrayAdapter<String>(getActivity(),

@@ -7,12 +7,11 @@ import com.j256.ormlite.android.AndroidConnectionSource;
 import com.pengjun.ka.android.service.ReportNotificationService;
 import com.pengjun.ka.db.AndroidDbHelper;
 import com.pengjun.ka.db.dao.ArTypeDao;
-import com.pengjun.ka.utils.AndroidLoggerUtils;
-import com.pengjun.ka.utils.IKAnalyzerUtils;
 import com.pengjun.ka.utils.KaConstants;
-import com.pengjun.ka.utils.ResourceUtils;
-import com.pengjun.ka.utils.StringUtils;
-import com.pengjun.ka.utils.TimeUtils;
+import com.pengjun.utils.IKAnalyzerUtils;
+import com.pengjun.utils.ResourceUtils;
+import com.pengjun.utils.StringUtils;
+import com.pengjun.utils.TimeUtils;
 
 public final class KaApplication extends Application {
 
@@ -33,7 +32,7 @@ public final class KaApplication extends Application {
 		super.onCreate();
 		instance = this;
 
-		AndroidLoggerUtils.kaLogger.info("ka start");
+		KaConstants.kaLogger.info("ka start");
 
 		// load IKSegmenter files, about ten seconds
 		new Thread() {
@@ -42,7 +41,7 @@ public final class KaApplication extends Application {
 			}
 		}.start();
 
-		androidConnectionSource = AndroidDbHelper.getAndroidConnectionSource(this);
+		androidConnectionSource = AndroidDbHelper.getSingleInstance(instance).getAndroidConnectionSource();
 
 		if (ResourceUtils.isServiceRunning(this, ReportNotificationService.class.getName()) == false) {
 			Intent newIntent = new Intent(this, ReportNotificationService.class);
@@ -63,7 +62,7 @@ public final class KaApplication extends Application {
 			String curWeekYear = TimeUtils.getCurWeekYearStr();
 			ResourceUtils.putSharedPreferencesString(this, curWeekYear, curWeekYear);
 
-			ArTypeDao.initTable();
+			ArTypeDao.getSingleInstance().initTable();
 
 		}
 	}

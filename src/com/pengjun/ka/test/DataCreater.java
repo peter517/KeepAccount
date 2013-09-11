@@ -3,8 +3,8 @@ package com.pengjun.ka.test;
 import com.pengjun.ka.db.model.AccountRecord;
 import com.pengjun.ka.db.model.ArType;
 import com.pengjun.ka.utils.KaConstants.InitArType;
-import com.pengjun.ka.utils.NumberUtils;
-import com.pengjun.ka.utils.TimeUtils;
+import com.pengjun.utils.NumberUtils;
+import com.pengjun.utils.TimeUtils;
 
 public class DataCreater {
 

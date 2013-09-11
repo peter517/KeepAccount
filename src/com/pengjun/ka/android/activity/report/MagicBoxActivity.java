@@ -7,7 +7,7 @@ import android.os.Bundle;
 import android.widget.TextView;
 
 import com.pengjun.ka.R;
-import com.pengjun.ka.chart.BaseChart;
+import com.pengjun.ka.chart.KaBaseChart;
 import com.pengjun.ka.db.dao.ArDao;
 import com.pengjun.ka.db.model.AccountRecord;
 import com.pengjun.ka.db.model.MagicBoxData;
@@ -30,13 +30,13 @@ public class MagicBoxActivity extends BaseReportActivity {
 
 	class LoadArChartTask extends AsyncTask<Void, Void, Void> {
 
-		BaseChart typeRadioChart;
+		KaBaseChart typeRadioChart;
 		MagicBoxData magicBoxData;
 
 		@Override
 		protected Void doInBackground(Void... params) {
 
-			List<AccountRecord> arList = ArDao.queryAll();
+			List<AccountRecord> arList = ArDao.getSingleInstance().queryAll();
 			typeRadioChart = createBaseChart(arList);
 			magicBoxData = MagicBoxService.computeMagicBoxData(arList);
 			return null;

@@ -20,9 +20,9 @@ import android.widget.ImageView;
 import com.pengjun.ka.R;
 import com.pengjun.ka.db.dao.ArTypeDao;
 import com.pengjun.ka.db.model.ArType;
-import com.pengjun.ka.utils.ComponentUtils;
 import com.pengjun.ka.utils.KaConstants;
-import com.pengjun.ka.utils.TimeUtils;
+import com.pengjun.utils.ComponentUtils;
+import com.pengjun.utils.TimeUtils;
 
 public class AddArTypeActivity extends Activity {
 
@@ -75,7 +75,7 @@ public class AddArTypeActivity extends Activity {
 					return;
 				}
 
-				if (ArTypeDao.isTypeNameExsit(etArTypeName.getText().toString())) {
+				if (ArTypeDao.getSingleInstance().isTypeNameExsit(etArTypeName.getText().toString())) {
 					ComponentUtils.createInfoDialog(AddArTypeActivity.this, "类名称已存在，请重新输入",
 							R.drawable.title_warning).show();
 					return;
@@ -88,12 +88,12 @@ public class AddArTypeActivity extends Activity {
 					arType.setImgResName(resNameList.get(selectPos));
 					arType.setCreateDate(TimeUtils.getCurDateStr());
 					arType.setUpdateTime(TimeUtils.getCurTimeStr());
-					ArTypeDao.insert(arType);
+					ArTypeDao.getSingleInstance().insert(arType);
 				} else {
 					arType.setTypeName(etArTypeName.getText().toString());
 					arType.setImgResName(resNameList.get(selectPos));
 					arType.setUpdateTime(TimeUtils.getCurTimeStr());
-					ArTypeDao.update(arType);
+					ArTypeDao.getSingleInstance().update(arType);
 				}
 
 				setResult(RESULT_OK, null);

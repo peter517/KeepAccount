@@ -29,9 +29,9 @@ import com.pengjun.ka.R;
 import com.pengjun.ka.android.activity.AddArActivity;
 import com.pengjun.ka.db.dao.ArDao;
 import com.pengjun.ka.db.model.AccountRecord;
-import com.pengjun.ka.utils.ComponentUtils;
 import com.pengjun.ka.utils.KaConstants;
-import com.pengjun.ka.utils.MyDebug;
+import com.pengjun.utils.ComponentUtils;
+import com.pengjun.utils.MyDebug;
 
 public class ArFragment extends Fragment {
 
@@ -132,7 +132,7 @@ public class ArFragment extends Fragment {
 				builder.setPositiveButton("删除", new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int whichButton) {
 						AccountRecord ar = arList.get(selectPos);
-						ArDao.delete(ar);
+						ArDao.getSingleInstance().delete(ar);
 						updateArListViewAsync(false);
 					}
 				});
@@ -183,7 +183,7 @@ public class ArFragment extends Fragment {
 
 	public void updateArListViewSync() {
 
-		arList = ArDao.queryLimitRows(0, Math.max(LIMIT_ROW_TOTAL, arList.size()));
+		arList = ArDao.getSingleInstance().queryLimitRows(0, Math.max(LIMIT_ROW_TOTAL, arList.size()));
 
 		if (arList.size() < LIMIT_ROW_TOTAL) {
 			btLoadMore.setVisibility(View.GONE);
@@ -220,7 +220,8 @@ public class ArFragment extends Fragment {
 			isSetListViewToTop = params[0];
 			List<AccountRecord> tempArList = null;
 
-			tempArList = ArDao.queryLimitRows(0, Math.max(LIMIT_ROW_TOTAL, arList.size()));
+			tempArList = ArDao.getSingleInstance()
+					.queryLimitRows(0, Math.max(LIMIT_ROW_TOTAL, arList.size()));
 			if (tempArList != null) {
 				arList = tempArList;
 			}
@@ -241,7 +242,8 @@ public class ArFragment extends Fragment {
 			}
 
 			if (tempArList == null || tempArList.size() == 0) {
-				Toast.makeText(ArFragment.this.getActivity(), "没有数据，请记账", KaConstants.TOAST_EXSIT_TIME).show();
+				Toast.makeText(ArFragment.this.getActivity(), "没有数据，请记账", KaConstants.TOAST_EXSIT_TIME)
+						.show();
 				return;
 			}
 
@@ -261,7 +263,7 @@ public class ArFragment extends Fragment {
 
 			List<AccountRecord> tempArList = null;
 
-			tempArList = ArDao.queryLimitRows(offset, LIMIT_ROW_TOTAL);
+			tempArList = ArDao.getSingleInstance().queryLimitRows(offset, LIMIT_ROW_TOTAL);
 			if (tempArList != null) {
 				arList.addAll(tempArList);
 			}
