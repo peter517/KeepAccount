@@ -2,7 +2,7 @@
 
 ![Logo](http://files.softicons.com/download/business-icons/financial-accounting-icons-by-artistsvalley/png/128x128/Hot/Abacus.png "Logo")
 
-an android accounting app that can make accounts kept convenience after consumptions
+an android accounting app that can make accounts kept convenience after consumptions.
 
 Features
 --------
@@ -21,3 +21,9 @@ Featured Implementations
 - **IKAnalyzer** for word segmentation
 - **Netty** for rapid and maintainable network communication
 - **Protocol Buffers** for encoding and decoding structured data
+
+## Building
+
+The build requires [Maven](http://maven.apache.org/download.html)
+v3.0.3+ and the [Android SDK](http://developer.android.com/sdk/index.html)
+to be installed in your development environment. In addition you'll need to download the project [PUtils](https://github.com/peter517/PUtils) as a dependent project.
