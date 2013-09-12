@@ -12,11 +12,11 @@ import org.jboss.netty.channel.ExceptionEvent;
 import org.jboss.netty.channel.MessageEvent;
 import org.jboss.netty.channel.SimpleChannelUpstreamHandler;
 
+import com.pengjun.android.utils.MyDebug;
 import com.pengjun.ka.net.exception.ErrorCode;
 import com.pengjun.ka.net.protobuf.KaProtocol.KaMsg;
 import com.pengjun.ka.net.protobuf.KaProtocol.MsgType;
 import com.pengjun.ka.utils.KaConstants;
-import com.pengjun.utils.MyDebug;
 
 public class KaClientHandler extends SimpleChannelUpstreamHandler {
 

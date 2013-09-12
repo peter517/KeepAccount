@@ -11,7 +11,7 @@
 	<classpathentry kind="lib" path="libs/IKAnalyzer2012_u6.jar"/>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="gen"/>
-	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/PUtils"/>
 	<classpathentry kind="lib" path="libs/achartengine-1.0.0.jar"/>
+	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/PUtils"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>

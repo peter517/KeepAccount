@@ -19,16 +19,16 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.pengjun.android.component.GalleryFlow;
+import com.pengjun.android.utils.AdImageUtils;
+import com.pengjun.android.utils.ComponentUtils;
+import com.pengjun.android.utils.AdResourceUtils;
 import com.pengjun.ka.R;
-import com.pengjun.ka.android.component.GalleryFlow;
 import com.pengjun.ka.android.fragment.ArSearchResultFragment;
 import com.pengjun.ka.db.dao.ArDao;
 import com.pengjun.ka.db.model.AccountRecord;
 import com.pengjun.ka.utils.KaConstants;
 import com.pengjun.ka.utils.KaConstants.ChartType;
-import com.pengjun.utils.ComponentUtils;
-import com.pengjun.utils.ImageUtils;
-import com.pengjun.utils.ResourceUtils;
 
 public class ArChartActivity extends Activity {
 
@@ -52,7 +52,7 @@ public class ArChartActivity extends Activity {
 
 		if (chartBmpList != null) {
 			for (int i = 0; i < chartResIdArr.length; i++) {
-				chartBmpList.add(ImageUtils.createReflectedImage(
+				chartBmpList.add(AdImageUtils.createReflectedImage(
 						BitmapFactory.decodeResource(getResources(), chartResIdArr[i]), 0.5f));
 			}
 		}
@@ -156,8 +156,8 @@ public class ArChartActivity extends Activity {
 						R.layout.ar_chart_gallery_item, null);
 
 				holder.ivChart = (ImageView) convertView.findViewById(R.id.ivChart);
-				holder.ivChart.setLayoutParams(new GalleryFlow.LayoutParams(ResourceUtils.dip2px(
-						ArChartActivity.this, 128), ResourceUtils.dip2px(ArChartActivity.this, 128)));
+				holder.ivChart.setLayoutParams(new GalleryFlow.LayoutParams(AdResourceUtils.dip2px(
+						ArChartActivity.this, 128), AdResourceUtils.dip2px(ArChartActivity.this, 128)));
 				convertView.setTag(holder);
 			} else {
 				holder = (AccountHolder) convertView.getTag();

@@ -2,7 +2,7 @@ package com.pengjun.ka.db;
 
 import android.content.Context;
 
-import com.pengjun.db.BaseAndroidDbHelper;
+import com.pengjun.android.db.BaseAndroidDbHelper;
 import com.pengjun.ka.db.model.AccountRecord;
 import com.pengjun.ka.db.model.ArType;
 
@@ -14,7 +14,7 @@ public class AndroidDbHelper extends BaseAndroidDbHelper {
 
 	private static AndroidDbHelper androidDbHelper = null;
 
-	public AndroidDbHelper(Context context) {
+	private AndroidDbHelper(Context context) {
 		super(context, DBNAME, DATACLASSES);
 	}
 
@@ -24,4 +24,5 @@ public class AndroidDbHelper extends BaseAndroidDbHelper {
 		}
 		return androidDbHelper;
 	}
+
 }

@@ -4,12 +4,12 @@ import android.app.Application;
 import android.content.Intent;
 
 import com.j256.ormlite.android.AndroidConnectionSource;
+import com.pengjun.android.utils.AdResourceUtils;
 import com.pengjun.ka.android.service.ReportNotificationService;
 import com.pengjun.ka.db.AndroidDbHelper;
 import com.pengjun.ka.db.dao.ArTypeDao;
 import com.pengjun.ka.utils.KaConstants;
 import com.pengjun.utils.IKAnalyzerUtils;
-import com.pengjun.utils.ResourceUtils;
 import com.pengjun.utils.StringUtils;
 import com.pengjun.utils.TimeUtils;
 
@@ -43,24 +43,24 @@ public final class KaApplication extends Application {
 
 		androidConnectionSource = AndroidDbHelper.getSingleInstance(instance).getAndroidConnectionSource();
 
-		if (ResourceUtils.isServiceRunning(this, ReportNotificationService.class.getName()) == false) {
+		if (AdResourceUtils.isServiceRunning(this, ReportNotificationService.class.getName()) == false) {
 			Intent newIntent = new Intent(this, ReportNotificationService.class);
 			this.startService(newIntent);
 		}
 
 		// if first start of the app
-		if (ResourceUtils.getSharedPreferencesString(this, KaConstants.SP_KEY_FIRST_START_APP).equals(
+		if (AdResourceUtils.getSharedPreferencesString(this, KaConstants.SP_KEY_FIRST_START_APP).equals(
 				StringUtils.NULL_STRING)) {
 
-			ResourceUtils.putSharedPreferencesString(this, KaConstants.SP_KEY_FIRST_START_APP,
+			AdResourceUtils.putSharedPreferencesString(this, KaConstants.SP_KEY_FIRST_START_APP,
 					KaConstants.SP_VALUE_FIRST_START_APP);
 
 			// mark the week and month report has sent at first start app
 			String curMonthYear = TimeUtils.getCurMonthYearStr();
-			ResourceUtils.putSharedPreferencesString(this, curMonthYear, curMonthYear);
+			AdResourceUtils.putSharedPreferencesString(this, curMonthYear, curMonthYear);
 
 			String curWeekYear = TimeUtils.getCurWeekYearStr();
-			ResourceUtils.putSharedPreferencesString(this, curWeekYear, curWeekYear);
+			AdResourceUtils.putSharedPreferencesString(this, curWeekYear, curWeekYear);
 
 			ArTypeDao.getSingleInstance().initTable();
 

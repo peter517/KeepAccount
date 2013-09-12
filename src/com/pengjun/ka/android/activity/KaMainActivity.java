@@ -12,6 +12,8 @@ import android.view.Window;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.pengjun.android.utils.AdLoggerUtils;
+import com.pengjun.android.utils.AdResourceUtils;
 import com.pengjun.ka.R;
 import com.pengjun.ka.android.fragment.ArFragment;
 import com.pengjun.ka.android.fragment.ArSearchFragment;
@@ -19,8 +21,6 @@ import com.pengjun.ka.android.fragment.FragmentDirector;
 import com.pengjun.ka.android.fragment.MagicBoxFragment;
 import com.pengjun.ka.android.fragment.SettingFragment;
 import com.pengjun.ka.utils.KaConstants;
-import com.pengjun.utils.AndroidLoggerUtils;
-import com.pengjun.utils.ResourceUtils;
 
 public class KaMainActivity extends FragmentActivity {
 
@@ -47,9 +47,9 @@ public class KaMainActivity extends FragmentActivity {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.keep_account);
 
-		if (ResourceUtils.hasExternalStorage()) {
+		if (AdResourceUtils.hasExternalStorage()) {
 			String logPath = KaConstants.LOG_ROOT + File.separator + "ka.log";
-			AndroidLoggerUtils.initLogger(logPath, true, true);
+			AdLoggerUtils.initLogger(logPath, true, true);
 		}
 
 		// top bar

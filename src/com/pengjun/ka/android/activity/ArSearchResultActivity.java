@@ -8,12 +8,12 @@ import android.view.Window;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.pengjun.android.utils.ComponentUtils;
 import com.pengjun.ka.R;
 import com.pengjun.ka.android.fragment.ArSearchResultFragment;
 import com.pengjun.ka.android.fragment.FragmentDirector;
 import com.pengjun.ka.db.model.ArSearchCondition;
 import com.pengjun.ka.utils.KaConstants;
-import com.pengjun.utils.ComponentUtils;
 
 public class ArSearchResultActivity extends FragmentActivity {
 

@@ -11,10 +11,10 @@ import org.achartengine.renderer.DefaultRenderer;
 import android.content.Context;
 import android.view.View;
 
+import com.pengjun.android.utils.AdResourceUtils;
 import com.pengjun.ka.db.model.AccountRecord;
 import com.pengjun.utils.CollectionUtils;
 import com.pengjun.utils.NumberUtils;
-import com.pengjun.utils.ResourceUtils;
 
 /**
  * ratio of each type cost
@@ -52,7 +52,7 @@ public class ArPieChart extends KaBaseChart {
 		int[] colorArr = new int[name2CostMap.size()];
 		int k = 0;
 		for (Map.Entry<String, Double> entry : name2CostMap.entrySet()) {
-			colorArr[k] = ResourceUtils.COLOR_ARR[k % ResourceUtils.COLOR_ARR.length];
+			colorArr[k] = AdResourceUtils.COLOR_ARR[k % AdResourceUtils.COLOR_ARR.length];
 			costTotal += entry.getValue();
 			k++;
 		}

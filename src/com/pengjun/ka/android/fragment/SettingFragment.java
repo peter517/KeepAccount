@@ -9,11 +9,11 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 
+import com.pengjun.android.utils.ComponentUtils;
+import com.pengjun.android.utils.AdResourceUtils;
 import com.pengjun.ka.R;
 import com.pengjun.ka.android.activity.BackupActivity;
 import com.pengjun.ka.android.activity.ManageArTypeActivity;
-import com.pengjun.utils.ComponentUtils;
-import com.pengjun.utils.ResourceUtils;
 
 public class SettingFragment extends Fragment {
 
@@ -58,7 +58,7 @@ public class SettingFragment extends Fragment {
 			@Override
 			public void onClick(View v) {
 
-				if (ResourceUtils.hasExternalStorage() == false) {
+				if (AdResourceUtils.hasExternalStorage() == false) {
 					ComponentUtils.createInfoDialog(getActivity(), "请插入内存卡！", R.drawable.title_warning)
 							.show();
 					return;

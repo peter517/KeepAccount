@@ -17,11 +17,11 @@ import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
+import com.pengjun.android.utils.ComponentUtils;
 import com.pengjun.ka.R;
 import com.pengjun.ka.db.dao.ArTypeDao;
 import com.pengjun.ka.db.model.ArType;
 import com.pengjun.ka.utils.KaConstants;
-import com.pengjun.utils.ComponentUtils;
 import com.pengjun.utils.TimeUtils;
 
 public class AddArTypeActivity extends Activity {

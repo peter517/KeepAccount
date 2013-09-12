@@ -13,6 +13,8 @@ import android.os.Binder;
 import android.os.Bundle;
 import android.os.IBinder;
 
+import com.pengjun.android.utils.ComponentUtils;
+import com.pengjun.android.utils.AdResourceUtils;
 import com.pengjun.ka.R;
 import com.pengjun.ka.android.activity.report.MonthReportActivity;
 import com.pengjun.ka.android.activity.report.WeekReportActivity;
@@ -20,8 +22,6 @@ import com.pengjun.ka.db.dao.ArDao;
 import com.pengjun.ka.db.model.AccountRecord;
 import com.pengjun.ka.db.model.ArSearchCondition;
 import com.pengjun.ka.utils.KaConstants;
-import com.pengjun.utils.ComponentUtils;
-import com.pengjun.utils.ResourceUtils;
 import com.pengjun.utils.StringUtils;
 import com.pengjun.utils.TimeUtils;
 
@@ -44,11 +44,11 @@ public class ReportNotificationService extends Service {
 		public void run() {
 
 			String curMonthYearStr = TimeUtils.getCurMonthYearStr();
-			boolean isCurMonthReportExist = !ResourceUtils.getSharedPreferencesString(
+			boolean isCurMonthReportExist = !AdResourceUtils.getSharedPreferencesString(
 					ReportNotificationService.this, curMonthYearStr).equals(StringUtils.NULL_STRING);
 
 			String curWeekYearStr = TimeUtils.getCurWeekYearStr();
-			boolean isCurWeekReportExist = !ResourceUtils.getSharedPreferencesString(
+			boolean isCurWeekReportExist = !AdResourceUtils.getSharedPreferencesString(
 					ReportNotificationService.this, curWeekYearStr).equals(StringUtils.NULL_STRING);
 
 			String curHour = TimeUtils.getCurHour();
@@ -59,12 +59,12 @@ public class ReportNotificationService extends Service {
 				// mark the week or month report has sent
 				if (!isCurMonthReportExist) {
 					startMonthReportNotification(ReportNotificationService.this);
-					ResourceUtils.putSharedPreferencesString(ReportNotificationService.this, curMonthYearStr,
+					AdResourceUtils.putSharedPreferencesString(ReportNotificationService.this, curMonthYearStr,
 							curMonthYearStr);
 				}
 				if (!isCurWeekReportExist) {
 					startWeekReportNotification(ReportNotificationService.this);
-					ResourceUtils.putSharedPreferencesString(ReportNotificationService.this, curWeekYearStr,
+					AdResourceUtils.putSharedPreferencesString(ReportNotificationService.this, curWeekYearStr,
 							curWeekYearStr);
 				}
 			}

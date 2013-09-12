@@ -5,7 +5,7 @@ import java.util.List;
 import android.content.Context;
 import android.view.View;
 
-import com.pengjun.achart.BaseChart;
+import com.pengjun.android.chart.BaseChart;
 import com.pengjun.ka.db.model.AccountRecord;
 
 public abstract class KaBaseChart extends BaseChart {

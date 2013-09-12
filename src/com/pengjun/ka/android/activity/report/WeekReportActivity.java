@@ -3,12 +3,12 @@ package com.pengjun.ka.android.activity.report;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
+import com.pengjun.android.utils.ComponentUtils;
 import com.pengjun.ka.R;
 import com.pengjun.ka.chart.KaBaseChart;
 import com.pengjun.ka.db.model.WeekOrMonthReport;
 import com.pengjun.ka.db.service.WeekReportService;
 import com.pengjun.ka.utils.KaConstants;
-import com.pengjun.utils.ComponentUtils;
 
 public class WeekReportActivity extends BaseReportActivity {
 
