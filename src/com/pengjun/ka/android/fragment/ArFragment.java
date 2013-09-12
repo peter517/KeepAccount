@@ -10,7 +10,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +24,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.pengjun.android.component.BaseFragment;
 import com.pengjun.android.utils.ComponentUtils;
 import com.pengjun.android.utils.MyDebug;
 import com.pengjun.ka.R;
@@ -33,7 +33,7 @@ import com.pengjun.ka.db.dao.ArDao;
 import com.pengjun.ka.db.model.AccountRecord;
 import com.pengjun.ka.utils.KaConstants;
 
-public class ArFragment extends Fragment {
+public class ArFragment extends BaseFragment {
 
 	private ListView lvAr;
 	private ProgressBar pbLoad;
@@ -75,7 +75,8 @@ public class ArFragment extends Fragment {
 		return arList.size() >= 10;
 	}
 
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+	@Override
+	protected View createView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
 		View view = inflater.inflate(R.layout.ar_listview, null);
 
@@ -336,4 +337,5 @@ public class ArFragment extends Fragment {
 			public TextView tvDate;
 		}
 	}
+
 }

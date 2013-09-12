@@ -6,15 +6,15 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import android.app.PendingIntent;
-import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Binder;
 import android.os.Bundle;
 import android.os.IBinder;
 
-import com.pengjun.android.utils.ComponentUtils;
+import com.pengjun.android.component.BaseService;
 import com.pengjun.android.utils.AdResourceUtils;
+import com.pengjun.android.utils.ComponentUtils;
 import com.pengjun.ka.R;
 import com.pengjun.ka.android.activity.report.MonthReportActivity;
 import com.pengjun.ka.android.activity.report.WeekReportActivity;
@@ -25,7 +25,7 @@ import com.pengjun.ka.utils.KaConstants;
 import com.pengjun.utils.StringUtils;
 import com.pengjun.utils.TimeUtils;
 
-public class ReportNotificationService extends Service {
+public class ReportNotificationService extends BaseService {
 	private ReportServiceBinder binder = new ReportServiceBinder();
 
 	private static final long HOUR_PERIOD = 60 * 60 * 1000;
@@ -59,13 +59,13 @@ public class ReportNotificationService extends Service {
 				// mark the week or month report has sent
 				if (!isCurMonthReportExist) {
 					startMonthReportNotification(ReportNotificationService.this);
-					AdResourceUtils.putSharedPreferencesString(ReportNotificationService.this, curMonthYearStr,
-							curMonthYearStr);
+					AdResourceUtils.putSharedPreferencesString(ReportNotificationService.this,
+							curMonthYearStr, curMonthYearStr);
 				}
 				if (!isCurWeekReportExist) {
 					startWeekReportNotification(ReportNotificationService.this);
-					AdResourceUtils.putSharedPreferencesString(ReportNotificationService.this, curWeekYearStr,
-							curWeekYearStr);
+					AdResourceUtils.putSharedPreferencesString(ReportNotificationService.this,
+							curWeekYearStr, curWeekYearStr);
 				}
 			}
 
@@ -135,7 +135,7 @@ public class ReportNotificationService extends Service {
 	@Override
 	public void onCreate() {
 		super.onCreate();
-		timer.schedule(task, TimeUtils.getCurDate(), HOUR_PERIOD);
+
 	}
 
 	@Override
@@ -157,6 +157,28 @@ public class ReportNotificationService extends Service {
 		public ReportNotificationService getService() {
 			return ReportNotificationService.this;
 		}
+	}
+
+	@Override
+	protected void create() {
+		timer.schedule(task, TimeUtils.getCurDate(), HOUR_PERIOD);
+	}
+
+	@Override
+	protected void destory() {
+	}
+
+	@Override
+	protected void start() {
+	}
+
+	@Override
+	protected void unBind() {
+	}
+
+	@Override
+	protected IBinder bind(Intent intent) {
+		return binder;
 	}
 
 }

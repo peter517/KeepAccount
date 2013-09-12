@@ -13,5 +13,7 @@
 	<classpathentry kind="src" path="gen"/>
 	<classpathentry kind="lib" path="libs/achartengine-1.0.0.jar"/>
 	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/PUtils"/>
+	<classpathentry kind="lib" path="libs/android-logging-log4j-1.0.3.jar"/>
+	<classpathentry kind="lib" path="libs/log4j-1.2.16.jar"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>

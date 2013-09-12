@@ -3,7 +3,6 @@ package com.pengjun.ka.android.activity;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -15,6 +14,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
 
+import com.pengjun.android.component.BaseActivity;
 import com.pengjun.android.utils.ComponentUtils;
 import com.pengjun.ka.R;
 import com.pengjun.ka.db.dao.ArDao;
@@ -24,7 +24,7 @@ import com.pengjun.ka.utils.KaConstants;
 import com.pengjun.utils.NumberUtils;
 import com.pengjun.utils.TimeUtils;
 
-public class AddArActivity extends Activity {
+public class AddArActivity extends BaseActivity {
 
 	private static final int MAX_COUNT_PER_AR = 10000000;
 	private EditText etAccount = null;
@@ -42,8 +42,7 @@ public class AddArActivity extends Activity {
 	private ArrayAdapter<String> arTypeNameAdapter;
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
+	protected void create(Bundle savedInstanceState) {
 
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.add_ar);
@@ -130,6 +129,11 @@ public class AddArActivity extends Activity {
 	}
 
 	@Override
+	protected void destory() {
+
+	}
+
+	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (requestCode == KaConstants.CB_ADD_AR_TYPE_NAME) {
 			if (resultCode == RESULT_OK) {
@@ -168,4 +172,5 @@ public class AddArActivity extends Activity {
 		ar.setComment(etComment.getText().toString());
 		ar.setUpdateTime(TimeUtils.getCurTimeStr());
 	}
+
 }

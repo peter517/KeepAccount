@@ -1,45 +1,29 @@
 package com.pengjun.ka.net;
 
-import java.net.InetSocketAddress;
-import java.util.concurrent.Executors;
+import com.pengjun.net.BaseNettyClient;
 
-import org.jboss.netty.bootstrap.ClientBootstrap;
-import org.jboss.netty.channel.Channel;
-import org.jboss.netty.channel.ChannelFuture;
-import org.jboss.netty.channel.socket.nio.NioClientSocketChannelFactory;
+public class KaClient extends BaseNettyClient {
 
-import com.pengjun.ka.utils.KaConstants;
+	private KaClient(String serverIp, int port) {
+		super(serverIp, port);
+	}
 
-public class KaClient {
-
-	private final String REMOTE_IP = "10.9.9.13";
-	private final int REMOTE_PORT = 8000;
-	private Channel channel = null;
-	private ClientBootstrap bootstrap = null;
+	private final static String REMOTE_IP = "10.69.17.76";
+	// private final static String REMOTE_IP = "192.168.1.101";
+	private final static int REMOTE_PORT = 8000;
 	private KaClientHandler handler = null;
 
 	private static KaClient kaClient;
 
 	public static KaClient getInstance() {
 		if (kaClient == null) {
-			kaClient = new KaClient();
+			kaClient = new KaClient(REMOTE_IP, REMOTE_PORT);
 		}
 		return kaClient;
 	}
 
 	public void connect() {
-
-		bootstrap = new ClientBootstrap(new NioClientSocketChannelFactory(Executors.newCachedThreadPool(),
-				Executors.newCachedThreadPool()));
-		bootstrap.setPipelineFactory(new KaClientPipelineFactory());
-
-		KaConstants.clientLogger.info("client connect: " + "remote_ip " + REMOTE_IP
-				+ " remote report " + REMOTE_PORT);
-
-		ChannelFuture connectFuture = bootstrap.connect(new InetSocketAddress(REMOTE_IP, REMOTE_PORT));
-		channel = connectFuture.awaitUninterruptibly().getChannel();
-		handler = channel.getPipeline().get(KaClientHandler.class);
-
+		handler = (KaClientHandler) super.connect(new KaClientPipelineFactory(), KaClientHandler.class);
 	}
 
 	public void sendData() {
@@ -49,12 +33,7 @@ public class KaClient {
 	}
 
 	public void disConnect() {
-		if (channel != null) {
-			channel.close().awaitUninterruptibly();
-		}
-		if (bootstrap != null) {
-			bootstrap.releaseExternalResources();
-		}
+		super.disConnect();
 	}
 
 }

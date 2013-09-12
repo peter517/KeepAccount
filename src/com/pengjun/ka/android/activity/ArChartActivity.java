@@ -19,10 +19,10 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.pengjun.android.component.GalleryFlow;
+import com.pengjun.android.component.AngleGalleryFlow;
 import com.pengjun.android.utils.AdImageUtils;
-import com.pengjun.android.utils.ComponentUtils;
 import com.pengjun.android.utils.AdResourceUtils;
+import com.pengjun.android.utils.ComponentUtils;
 import com.pengjun.ka.R;
 import com.pengjun.ka.android.fragment.ArSearchResultFragment;
 import com.pengjun.ka.db.dao.ArDao;
@@ -32,7 +32,7 @@ import com.pengjun.ka.utils.KaConstants.ChartType;
 
 public class ArChartActivity extends Activity {
 
-	private GalleryFlow gfChart;
+	private AngleGalleryFlow gfChart;
 	private ProgressBar pbLoad;
 	private TextView tvTilte;
 
@@ -57,7 +57,7 @@ public class ArChartActivity extends Activity {
 			}
 		}
 
-		gfChart = (GalleryFlow) findViewById(R.id.gfChart);
+		gfChart = (AngleGalleryFlow) findViewById(R.id.gfChart);
 		pbLoad = (ProgressBar) findViewById(R.id.pbLoad);
 		tvTilte = (TextView) findViewById(R.id.tvTilte);
 
@@ -156,7 +156,7 @@ public class ArChartActivity extends Activity {
 						R.layout.ar_chart_gallery_item, null);
 
 				holder.ivChart = (ImageView) convertView.findViewById(R.id.ivChart);
-				holder.ivChart.setLayoutParams(new GalleryFlow.LayoutParams(AdResourceUtils.dip2px(
+				holder.ivChart.setLayoutParams(new AngleGalleryFlow.LayoutParams(AdResourceUtils.dip2px(
 						ArChartActivity.this, 128), AdResourceUtils.dip2px(ArChartActivity.this, 128)));
 				convertView.setTag(holder);
 			} else {
