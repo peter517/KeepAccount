@@ -23,7 +23,7 @@ public class KaClient extends BaseNettyClient {
 	}
 
 	public void connect() {
-		handler = (KaClientHandler) super.connect(new KaClientPipelineFactory(), KaClientHandler.class);
+		handler = super.connect(new KaClientPipelineFactory()).getPipeline().get(KaClientHandler.class);
 	}
 
 	public void sendData() {
