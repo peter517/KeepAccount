@@ -2184,6 +2184,10 @@ public final class KaProtocol {
     boolean hasUserInfo();
     com.pengjun.ka.net.protobuf.KaProtocol.UserInfo getUserInfo();
     com.pengjun.ka.net.protobuf.KaProtocol.UserInfoOrBuilder getUserInfoOrBuilder();
+    
+    // optional string info = 6;
+    boolean hasInfo();
+    String getInfo();
   }
   public static final class KaMsg extends
       com.google.protobuf.GeneratedMessage
@@ -2289,12 +2293,45 @@ public final class KaProtocol {
       return userInfo_;
     }
     
+    // optional string info = 6;
+    public static final int INFO_FIELD_NUMBER = 6;
+    private java.lang.Object info_;
+    public boolean hasInfo() {
+      return ((bitField0_ & 0x00000008) == 0x00000008);
+    }
+    public String getInfo() {
+      java.lang.Object ref = info_;
+      if (ref instanceof String) {
+        return (String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        String s = bs.toStringUtf8();
+        if (com.google.protobuf.Internal.isValidUtf8(bs)) {
+          info_ = s;
+        }
+        return s;
+      }
+    }
+    private com.google.protobuf.ByteString getInfoBytes() {
+      java.lang.Object ref = info_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8((String) ref);
+        info_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+    
     private void initFields() {
       msgType_ = com.pengjun.ka.net.protobuf.KaProtocol.MsgType.REGISTER;
       msgRply_ = com.pengjun.ka.net.protobuf.KaProtocol.MsgRply.SUCCESS;
       arProtocol_ = java.util.Collections.emptyList();
       arTypeProtocol_ = java.util.Collections.emptyList();
       userInfo_ = com.pengjun.ka.net.protobuf.KaProtocol.UserInfo.getDefaultInstance();
+      info_ = "";
     }
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
@@ -2345,6 +2382,9 @@ public final class KaProtocol {
       if (((bitField0_ & 0x00000004) == 0x00000004)) {
         output.writeMessage(5, userInfo_);
       }
+      if (((bitField0_ & 0x00000008) == 0x00000008)) {
+        output.writeBytes(6, getInfoBytes());
+      }
       getUnknownFields().writeTo(output);
     }
     
@@ -2373,6 +2413,10 @@ public final class KaProtocol {
       if (((bitField0_ & 0x00000004) == 0x00000004)) {
         size += com.google.protobuf.CodedOutputStream
           .computeMessageSize(5, userInfo_);
+      }
+      if (((bitField0_ & 0x00000008) == 0x00000008)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(6, getInfoBytes());
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
@@ -2523,6 +2567,8 @@ public final class KaProtocol {
           userInfoBuilder_.clear();
         }
         bitField0_ = (bitField0_ & ~0x00000010);
+        info_ = "";
+        bitField0_ = (bitField0_ & ~0x00000020);
         return this;
       }
       
@@ -2595,6 +2641,10 @@ public final class KaProtocol {
         } else {
           result.userInfo_ = userInfoBuilder_.build();
         }
+        if (((from_bitField0_ & 0x00000020) == 0x00000020)) {
+          to_bitField0_ |= 0x00000008;
+        }
+        result.info_ = info_;
         result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
@@ -2671,6 +2721,9 @@ public final class KaProtocol {
         }
         if (other.hasUserInfo()) {
           mergeUserInfo(other.getUserInfo());
+        }
+        if (other.hasInfo()) {
+          setInfo(other.getInfo());
         }
         this.mergeUnknownFields(other.getUnknownFields());
         return this;
@@ -2766,6 +2819,11 @@ public final class KaProtocol {
               }
               input.readMessage(subBuilder, extensionRegistry);
               setUserInfo(subBuilder.buildPartial());
+              break;
+            }
+            case 50: {
+              bitField0_ |= 0x00000020;
+              info_ = input.readBytes();
               break;
             }
           }
@@ -3284,6 +3342,42 @@ public final class KaProtocol {
         return userInfoBuilder_;
       }
       
+      // optional string info = 6;
+      private java.lang.Object info_ = "";
+      public boolean hasInfo() {
+        return ((bitField0_ & 0x00000020) == 0x00000020);
+      }
+      public String getInfo() {
+        java.lang.Object ref = info_;
+        if (!(ref instanceof String)) {
+          String s = ((com.google.protobuf.ByteString) ref).toStringUtf8();
+          info_ = s;
+          return s;
+        } else {
+          return (String) ref;
+        }
+      }
+      public Builder setInfo(String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000020;
+        info_ = value;
+        onChanged();
+        return this;
+      }
+      public Builder clearInfo() {
+        bitField0_ = (bitField0_ & ~0x00000020);
+        info_ = getDefaultInstance().getInfo();
+        onChanged();
+        return this;
+      }
+      void setInfo(com.google.protobuf.ByteString value) {
+        bitField0_ |= 0x00000020;
+        info_ = value;
+        onChanged();
+      }
+      
       // @@protoc_insertion_point(builder_scope:com.pengjun.ka.net.protobuf.KaMsg)
     }
     
@@ -3332,7 +3426,7 @@ public final class KaProtocol {
       "peProtocol\022\n\n\002id\030\001 \001(\005\022\020\n\010typeName\030\002 \002(\t" +
       "\022\022\n\nimgResName\030\003 \002(\t\022\022\n\ncreateDate\030\004 \002(\t" +
       "\022\022\n\nupdateTime\030\005 \002(\t\".\n\010UserInfo\022\020\n\010user" +
-      "Name\030\001 \002(\t\022\020\n\010password\030\002 \002(\t\"\260\002\n\005KaMsg\0225" +
+      "Name\030\001 \002(\t\022\020\n\010password\030\002 \002(\t\"\276\002\n\005KaMsg\0225" +
       "\n\007msgType\030\001 \002(\0162$.com.pengjun.ka.net.pro",
       "tobuf.MsgType\0225\n\007MsgRply\030\002 \001(\0162$.com.pen" +
       "gjun.ka.net.protobuf.MsgRply\022;\n\narProtoc" +
@@ -3340,10 +3434,11 @@ public final class KaProtocol {
       "rProtocol\022C\n\016arTypeProtocol\030\004 \003(\0132+.com." +
       "pengjun.ka.net.protobuf.ArTypeProtocol\0227" +
       "\n\010userInfo\030\005 \001(\0132%.com.pengjun.ka.net.pr" +
-      "otobuf.UserInfo*;\n\007MsgType\022\014\n\010REGISTER\020\001" +
-      "\022\t\n\005LOGIN\020\002\022\n\n\006BACKUP\020\003\022\013\n\007RESTORE\020\004*\"\n\007" +
-      "MsgRply\022\013\n\007SUCCESS\020\001\022\n\n\006FAILED\020\002B)\n\033com." +
-      "pengjun.ka.net.protobufB\nKaProtocol"
+      "otobuf.UserInfo\022\014\n\004info\030\006 \001(\t*;\n\007MsgType" +
+      "\022\014\n\010REGISTER\020\001\022\t\n\005LOGIN\020\002\022\n\n\006BACKUP\020\003\022\013\n" +
+      "\007RESTORE\020\004*\"\n\007MsgRply\022\013\n\007SUCCESS\020\001\022\n\n\006FA" +
+      "ILED\020\002B)\n\033com.pengjun.ka.net.protobufB\nK",
+      "aProtocol"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
       new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
@@ -3379,7 +3474,7 @@ public final class KaProtocol {
           internal_static_com_pengjun_ka_net_protobuf_KaMsg_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_com_pengjun_ka_net_protobuf_KaMsg_descriptor,
-              new java.lang.String[] { "MsgType", "MsgRply", "ArProtocol", "ArTypeProtocol", "UserInfo", },
+              new java.lang.String[] { "MsgType", "MsgRply", "ArProtocol", "ArTypeProtocol", "UserInfo", "Info", },
               com.pengjun.ka.net.protobuf.KaProtocol.KaMsg.class,
               com.pengjun.ka.net.protobuf.KaProtocol.KaMsg.Builder.class);
           return null;

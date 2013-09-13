@@ -12,10 +12,13 @@ import org.jboss.netty.channel.ExceptionEvent;
 import org.jboss.netty.channel.MessageEvent;
 import org.jboss.netty.channel.SimpleChannelUpstreamHandler;
 
-import com.pengjun.android.utils.MyDebug;
+import com.pengjun.android.utils.AdResourceUtils;
 import com.pengjun.ka.net.exception.ErrorCode;
+import com.pengjun.ka.net.protobuf.KaProtocol.ArProtocol;
+import com.pengjun.ka.net.protobuf.KaProtocol.ArTypeProtocol;
 import com.pengjun.ka.net.protobuf.KaProtocol.KaMsg;
 import com.pengjun.ka.net.protobuf.KaProtocol.MsgType;
+import com.pengjun.ka.net.protobuf.KaProtocol.UserInfo;
 import com.pengjun.ka.utils.KaConstants;
 
 public class KaClientHandler extends SimpleChannelUpstreamHandler {
@@ -27,24 +30,29 @@ public class KaClientHandler extends SimpleChannelUpstreamHandler {
 
 		KaMsg.Builder builder = KaMsg.newBuilder();
 
-		// ArProtocol.Builder arBuilder = ArProtocol.newBuilder();
-		//
-		// arBuilder.setAccount(2);
-		// arBuilder.setCreateDate(ResourceUtils.getLocalIpAddress());
-		// arBuilder.setId(1);
-		// arBuilder.setTypeId(1);
-		// arBuilder.setUpdateTime("");
-		//
-		// ArTypeProtocol.Builder arTypeBuilder = ArTypeProtocol.newBuilder();
-		// arTypeBuilder.setCreateDate(ResourceUtils.getLocalIpAddress());
-		// arTypeBuilder.setId(1);
-		// arTypeBuilder.setTypeName("test");
-		// arTypeBuilder.setUpdateTime("");
-		// arTypeBuilder.setImgResName("");
+		ArProtocol.Builder arBuilder = ArProtocol.newBuilder();
 
-		builder.setMsgType(MsgType.LOGIN);
-		// builder.addArProtocol(arBuilder);
-		// builder.addArTypeProtocol(arTypeBuilder);
+		arBuilder.setAccount(2);
+		arBuilder.setCreateDate(AdResourceUtils.getLocalIpAddress());
+		arBuilder.setId(1);
+		arBuilder.setTypeId(1);
+		arBuilder.setUpdateTime("");
+
+		ArTypeProtocol.Builder arTypeBuilder = ArTypeProtocol.newBuilder();
+		arTypeBuilder.setCreateDate(AdResourceUtils.getLocalIpAddress());
+		arTypeBuilder.setId(1);
+		arTypeBuilder.setTypeName("test");
+		arTypeBuilder.setUpdateTime("");
+		arTypeBuilder.setImgResName("");
+
+		builder.addArProtocol(arBuilder);
+		builder.addArTypeProtocol(arTypeBuilder);
+		builder.setMsgType(MsgType.BACKUP);
+
+		UserInfo.Builder userInfoBuilder = UserInfo.newBuilder();
+		userInfoBuilder.setUserName("pj");
+		userInfoBuilder.setPassword("123");
+		builder.setUserInfo(userInfoBuilder);
 
 		channel.write(builder.build());
 
@@ -63,7 +71,6 @@ public class KaClientHandler extends SimpleChannelUpstreamHandler {
 			KaConstants.clientLogger.error("ErrorCode = " + ErrorCode.NetError);
 			return null;
 		}
-		MyDebug.printFromPJ("revArType.getImgResName()" + revKaMsg.getMsgType());
 		if (interrupted) {
 			Thread.currentThread().interrupt();
 		}

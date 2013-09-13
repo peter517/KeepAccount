@@ -8,7 +8,7 @@ public class KaClient extends BaseNettyClient {
 		super(serverIp, port);
 	}
 
-	private final static String REMOTE_IP = "10.69.17.76";
+	private final static String REMOTE_IP = "10.69.17.167";
 	// private final static String REMOTE_IP = "192.168.1.101";
 	private final static int REMOTE_PORT = 8000;
 	private KaClientHandler handler = null;

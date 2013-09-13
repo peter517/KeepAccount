@@ -5,9 +5,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 
-import com.pengjun.android.utils.AdResourceUtils;
 import com.pengjun.ka.R;
-import com.pengjun.utils.PropertiesUtils;
+import com.pengjun.ka.utils.KaConstants;
 
 public class LoadingActivity extends Activity {
 
@@ -26,7 +25,7 @@ public class LoadingActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		if (PropertiesUtils.getBoolean(AdResourceUtils.IS_DEBUG, false)) {
+		if (KaConstants.isDebug) {
 			handler.sendEmptyMessageDelayed(GOTO_MAIN, 0);
 		} else {
 			handler.sendEmptyMessageDelayed(GOTO_MAIN, COVER_EXIST_TIME);

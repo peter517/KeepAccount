@@ -50,8 +50,8 @@ public class BackupActivity extends Activity {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.backup);
 
-		FileUtils.createDir(KaConstants.BACK_UP_ROOT);
-		backupDateStrList = FileUtils.getFileNameList(new File(KaConstants.BACK_UP_ROOT));
+		FileUtils.createDirIfNotExist(KaConstants.BACKUP_ROOT);
+		backupDateStrList = FileUtils.getFileNameList(new File(KaConstants.BACKUP_ROOT));
 
 		ibAddBackup = (ImageButton) findViewById(R.id.ibAddBackup);
 		ibAddBackup.setOnClickListener(new View.OnClickListener() {
@@ -150,7 +150,7 @@ public class BackupActivity extends Activity {
 
 						BackupService.deleteBackupFromDateStr(backupDateStrList.get(longClickPos));
 						BackupActivity.this.backupDateStrList = FileUtils.getFileNameList(new File(
-								KaConstants.BACK_UP_ROOT));
+								KaConstants.BACKUP_ROOT));
 						backupAdapter.notifyDataSetChanged();
 					}
 				});
@@ -201,7 +201,7 @@ public class BackupActivity extends Activity {
 		protected void onPostExecute(Void v) {
 
 			BackupActivity.this.backupDateStrList = FileUtils.getFileNameList(new File(
-					KaConstants.BACK_UP_ROOT));
+					KaConstants.BACKUP_ROOT));
 			backupAdapter.notifyDataSetChanged();
 			hideProgress();
 

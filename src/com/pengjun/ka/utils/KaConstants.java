@@ -11,6 +11,7 @@ import com.pengjun.ka.R;
 
 public class KaConstants {
 
+	public static boolean isDebug = true;
 	public static int TOAST_EXSIT_TIME = 2000;
 
 	// init Ar Type
@@ -51,10 +52,9 @@ public class KaConstants {
 
 	// backup file path
 	public static final String KA_ROOT = "/sdcard/ka";
-	public static final String BACK_UP_ROOT = KA_ROOT + File.separator + "backup";
+	public static final String BACKUP_ROOT = KA_ROOT + File.separator + "backup";
 	public static final String LOG_ROOT = KA_ROOT + File.separator + "log";
-	public static final String BACK_AR_FILE_NAME = "ar.dat";
-	public static final String BACK_AR_TYPE_FILE_NAME = "arType.dat";
+	public static final String BACKUP_FILE_POSTFIX = ".bk";
 
 	// chart type
 	public enum ChartType {

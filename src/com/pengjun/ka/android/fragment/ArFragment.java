@@ -26,7 +26,7 @@ import android.widget.Toast;
 
 import com.pengjun.android.component.BaseFragment;
 import com.pengjun.android.utils.ComponentUtils;
-import com.pengjun.android.utils.MyDebug;
+import com.pengjun.android.utils.DebugUtils;
 import com.pengjun.ka.R;
 import com.pengjun.ka.android.activity.AddArActivity;
 import com.pengjun.ka.db.dao.ArDao;
@@ -59,7 +59,7 @@ public class ArFragment extends BaseFragment {
 				lvAr.setSelectionFromTop(0, 0);
 				break;
 			default:
-				MyDebug.printFromPJ("undefined msg:" + msg.what);
+				DebugUtils.printFromPJ("undefined msg:" + msg.what);
 			}
 		}
 	};

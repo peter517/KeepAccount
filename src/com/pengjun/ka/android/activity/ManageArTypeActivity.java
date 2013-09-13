@@ -26,7 +26,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.pengjun.android.utils.ComponentUtils;
-import com.pengjun.android.utils.MyDebug;
+import com.pengjun.android.utils.DebugUtils;
 import com.pengjun.ka.R;
 import com.pengjun.ka.db.dao.ArTypeDao;
 import com.pengjun.ka.db.model.ArType;
@@ -52,7 +52,7 @@ public class ManageArTypeActivity extends Activity {
 				lvArType.setSelectionFromTop(0, 0);
 				break;
 			default:
-				MyDebug.printFromPJ("undefined msg:" + msg.what);
+				DebugUtils.printFromPJ("undefined msg:" + msg.what);
 			}
 		}
 	};

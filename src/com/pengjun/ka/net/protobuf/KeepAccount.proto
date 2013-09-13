@@ -42,4 +42,5 @@ message KaMsg {
   repeated ArProtocol arProtocol = 3;  
   repeated ArTypeProtocol arTypeProtocol = 4; 
   optional UserInfo userInfo = 5;
+  optional string info = 6;
 } 

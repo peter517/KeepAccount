@@ -20,20 +20,17 @@ public class BackupService {
 	}
 
 	public static void deleteBackupFromDateStr(String dateStr) {
-		String backupPath = KaConstants.BACK_UP_ROOT + File.separator + dateStr;
+		String backupPath = KaConstants.BACKUP_ROOT + File.separator + dateStr;
 		FileUtils.deleteFile(new File(backupPath));
 		KaConstants.dbLogger.info("deleteBackup " + dateStr);
 	}
 
 	public static void restoreByDateStr(String dateStr) {
 
-		String arFilePath = KaConstants.BACK_UP_ROOT + File.separator + dateStr + File.separator
-				+ KaConstants.BACK_AR_FILE_NAME;
-		String arTypeFilePath = KaConstants.BACK_UP_ROOT + File.separator + dateStr + File.separator
-				+ KaConstants.BACK_AR_TYPE_FILE_NAME;
-
-		List<AccountRecord> arList = FileUtils.<AccountRecord> readListFromFile(arFilePath);
-		List<ArType> arTypeList = FileUtils.<ArType> readListFromFile(arTypeFilePath);
+		List<AccountRecord> arList = FileUtils.<AccountRecord> readListFromFile(getBackupPathByDateStr(
+				dateStr, AccountRecord.class.getSimpleName()));
+		List<ArType> arTypeList = FileUtils.<ArType> readListFromFile(getBackupPathByDateStr(dateStr,
+				ArType.class.getSimpleName()));
 
 		restoreAll(dateStr, arList, arTypeList);
 		KaConstants.dbLogger.info("restoreAll " + dateStr);
@@ -47,15 +44,18 @@ public class BackupService {
 
 	private static void saveBackupAll(String curTimeStr, List<AccountRecord> arList, List<ArType> arTypeList) {
 
-		String backDir = KaConstants.BACK_UP_ROOT + File.separator + curTimeStr;
-		FileUtils.createDir(backDir);
+		FileUtils.createDirIfNotExist(KaConstants.BACKUP_ROOT + File.separator + curTimeStr);
 
-		String arFilePath = backDir + File.separator + KaConstants.BACK_AR_FILE_NAME;
-		String arTypeFilePath = backDir + File.separator + KaConstants.BACK_AR_TYPE_FILE_NAME;
+		FileUtils.<AccountRecord> writeListToFile(arList,
+				getBackupPathByDateStr(curTimeStr, AccountRecord.class.getSimpleName()));
+		FileUtils.<ArType> writeListToFile(arTypeList,
+				getBackupPathByDateStr(curTimeStr, ArType.class.getSimpleName()));
 
-		FileUtils.<AccountRecord> writeListToFile(arList, arFilePath);
-		FileUtils.<ArType> writeListToFile(arTypeList, arTypeFilePath);
+	}
 
+	private static String getBackupPathByDateStr(String dataStr, String className) {
+		return KaConstants.BACKUP_ROOT + File.separator + dataStr + File.separator + className
+				+ KaConstants.BACKUP_FILE_POSTFIX;
 	}
 
 }
