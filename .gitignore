@@ -2,6 +2,9 @@
 ## Eclipse
 #################
 
+#my
+PUtils-*.jar
+
 gen/
 *.pydevproject
 .project
