@@ -24,6 +24,5 @@ Featured Implementations
 
 ## Building
 
-The build requires [Maven](http://maven.apache.org/download.html)
-v3.0.3+ and the [Android SDK](http://developer.android.com/sdk/index.html)
-to be installed in your development environment. In addition you'll need to download the project [PUtils](https://github.com/peter517/PUtils) as a dependent project.
+The build requires the [Android SDK](http://developer.android.com/sdk/index.html)
+to be installed in your development environment. In addition you'll need to download the [PUtils](https://github.com/peter517/PUtils) as a dependent [Maven](http://maven.apache.org/download.html) project.
