@@ -84,7 +84,8 @@ public class BaseReportService {
 		baseReport.setTotalCost(NumberUtils.formatDouble(totalCost));
 		baseReport.setAvgCost(NumberUtils.formatDouble(totalCost / arList.size()));
 		baseReport.setMaxCost(maxCostAr);
-		baseReport.setCostKeyWord(computeMaxCntKeywordStr(commentStringList));
+		// need too many memory , stop it
+		// baseReport.setCostKeyWord(computeMaxCntKeywordStr(commentStringList));
 		baseReport.setAvgCostPerDay(NumberUtils.formatDouble(totalCost / date2AccountMap.size()));
 
 		String maxCostDayStr = null;

@@ -9,7 +9,6 @@ import com.pengjun.ka.android.service.ReportNotificationService;
 import com.pengjun.ka.db.AndroidDbHelper;
 import com.pengjun.ka.db.dao.ArTypeDao;
 import com.pengjun.ka.utils.KaConstants;
-import com.pengjun.utils.IKAnalyzerUtils;
 import com.pengjun.utils.StringUtils;
 import com.pengjun.utils.TimeUtils;
 
@@ -34,12 +33,13 @@ public final class KaApplication extends Application {
 
 		KaConstants.kaLogger.info("ka start");
 
+		// need too many memory, stop first
 		// load IKSegmenter files, about ten seconds
-		new Thread() {
-			public void run() {
-				IKAnalyzerUtils.initSegmentationTool(instance);
-			}
-		}.start();
+		// new Thread() {
+		// public void run() {
+		// IKAnalyzerUtils.initSegmentationTool(instance);
+		// }
+		// }.start();
 
 		androidConnectionSource = AndroidDbHelper.getSingleInstance(instance).getAndroidConnectionSource();
 

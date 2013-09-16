@@ -4,53 +4,53 @@
     android:layout_height="fill_parent"
     android:orientation="vertical" >
 
-     <TextView
-                    android:id="@+id/tvTotalCountNumStr"
-                    style="@style/MagicTextStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/totalCountNum" />
+    <TextView
+        android:id="@+id/tvTotalCountNumStr"
+        style="@style/MagicTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/totalCountNum" />
 
-                <TextView
-                    android:id="@+id/tvTotalCountNum"
-                    style="@style/MagicRusultTextStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/tvTotalCountNumStr"
-                    android:layout_centerInParent="true" />
+    <TextView
+        android:id="@+id/tvTotalCountNum"
+        style="@style/MagicRusultTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvTotalCountNumStr"
+        android:layout_centerInParent="true" />
 
-                <TextView
-                    android:id="@+id/tvTotalCostStr"
-                    style="@style/MagicTextStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/tvTotalCountNum"
-                    android:layout_marginTop="10dp"
-                    android:text="@string/totalCost" />
+    <TextView
+        android:id="@+id/tvTotalCostStr"
+        style="@style/MagicTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvTotalCountNum"
+        android:layout_marginTop="10dp"
+        android:text="@string/totalCost" />
 
-                <TextView
-                    android:id="@+id/tvTotalCost"
-                    style="@style/MagicRusultTextStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/tvTotalCostStr"
-                    android:layout_centerInParent="true" />
+    <TextView
+        android:id="@+id/tvTotalCost"
+        style="@style/MagicRusultTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvTotalCostStr"
+        android:layout_centerInParent="true" />
 
-                <TextView
-                    android:id="@+id/tvavgCostStr"
-                    style="@style/MagicTextStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/tvTotalCost"
-                    android:layout_marginTop="10dp"
-                    android:text="@string/avgCost" />
+    <TextView
+        android:id="@+id/tvavgCostStr"
+        style="@style/MagicTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvTotalCost"
+        android:layout_marginTop="10dp"
+        android:text="@string/avgCost" />
 
-                <TextView
-                    android:id="@+id/tvAvgCost"
-                    style="@style/MagicRusultTextStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/tvavgCostStr"
-                    android:layout_centerInParent="true" />
+    <TextView
+        android:id="@+id/tvAvgCost"
+        style="@style/MagicRusultTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvavgCostStr"
+        android:layout_centerInParent="true" />
 
 </RelativeLayout>

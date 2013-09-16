@@ -35,7 +35,6 @@ public class ReportNotificationService extends BaseService {
 
 	private enum Report {
 		Week, Month, Year;
-
 	}
 
 	public static List<AccountRecord> arList = new ArrayList<AccountRecord>();
