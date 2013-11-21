@@ -7,7 +7,7 @@ import java.util.List;
 import com.j256.ormlite.android.AndroidConnectionSource;
 import com.j256.ormlite.stmt.QueryBuilder;
 import com.j256.ormlite.table.TableUtils;
-import com.pengjun.db.BaseDao;
+import com.pengjun.db.orm.BaseDao;
 import com.pengjun.ka.android.activity.KaApplication;
 import com.pengjun.ka.db.model.ArType;
 import com.pengjun.ka.utils.KaConstants.InitArType;
@@ -23,7 +23,8 @@ public class ArTypeDao extends BaseDao<ArType> {
 
 	public static ArTypeDao getSingleInstance() {
 		if (arTypeDao == null) {
-			arTypeDao = new ArTypeDao(KaApplication.getAndroidConnectionSource(), ArType.class);
+			arTypeDao = new ArTypeDao(
+					KaApplication.getAndroidConnectionSource(), ArType.class);
 		}
 		return arTypeDao;
 	}
@@ -94,7 +95,8 @@ public class ArTypeDao extends BaseDao<ArType> {
 
 	public int getIdByArTpye(String arTpye) {
 		try {
-			List<ArType> arTypeList = dao.queryForEq(ArType.COL_TYPE_NAME, arTpye);
+			List<ArType> arTypeList = dao.queryForEq(ArType.COL_TYPE_NAME,
+					arTpye);
 			if (arTypeList.size() == 1) {
 				return arTypeList.get(0).getId();
 			}
@@ -106,7 +108,8 @@ public class ArTypeDao extends BaseDao<ArType> {
 
 	public boolean ifArTypeExist(String arTpye) {
 		try {
-			List<ArType> arTypeList = dao.queryForEq(ArType.COL_TYPE_NAME, arTpye);
+			List<ArType> arTypeList = dao.queryForEq(ArType.COL_TYPE_NAME,
+					arTpye);
 			if (arTypeList.size() == 1) {
 				return true;
 			}

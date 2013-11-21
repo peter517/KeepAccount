@@ -9,7 +9,7 @@ import com.j256.ormlite.stmt.DeleteBuilder;
 import com.j256.ormlite.stmt.QueryBuilder;
 import com.j256.ormlite.stmt.Where;
 import com.j256.ormlite.table.TableUtils;
-import com.pengjun.db.BaseDao;
+import com.pengjun.db.orm.BaseDao;
 import com.pengjun.ka.android.activity.KaApplication;
 import com.pengjun.ka.db.model.AccountRecord;
 import com.pengjun.ka.db.model.ArSearchCondition;
@@ -24,7 +24,8 @@ public class ArDao extends BaseDao<AccountRecord> {
 
 	public static ArDao getSingleInstance() {
 		if (arDao == null) {
-			arDao = new ArDao(KaApplication.getAndroidConnectionSource(), AccountRecord.class);
+			arDao = new ArDao(KaApplication.getAndroidConnectionSource(),
+					AccountRecord.class);
 		}
 		return arDao;
 	}
@@ -57,7 +58,8 @@ public class ArDao extends BaseDao<AccountRecord> {
 
 	public List<AccountRecord> queryAllByUpdate() {
 		try {
-			QueryBuilder<AccountRecord, Integer> queryBuilder = dao.queryBuilder();
+			QueryBuilder<AccountRecord, Integer> queryBuilder = dao
+					.queryBuilder();
 			queryBuilder.orderBy(AccountRecord.COL_UPDATE_TIME, false);
 			return queryBuilder.query();
 		} catch (SQLException e) {
@@ -95,7 +97,8 @@ public class ArDao extends BaseDao<AccountRecord> {
 
 	public List<AccountRecord> queryLimitRows(int offset, int limtRows) {
 		try {
-			QueryBuilder<AccountRecord, Integer> queryBuilder = dao.queryBuilder();
+			QueryBuilder<AccountRecord, Integer> queryBuilder = dao
+					.queryBuilder();
 
 			queryBuilder.offset(offset).limit(limtRows);
 			queryBuilder.orderBy(AccountRecord.COL_UPDATE_TIME, false);
@@ -109,7 +112,8 @@ public class ArDao extends BaseDao<AccountRecord> {
 	public List<String> queryAllComments() {
 		try {
 
-			QueryBuilder<AccountRecord, Integer> queryBuilder = dao.queryBuilder();
+			QueryBuilder<AccountRecord, Integer> queryBuilder = dao
+					.queryBuilder();
 			Where<AccountRecord, Integer> where = queryBuilder.where();
 			where.ne(AccountRecord.COL_COMMENT, "");
 			List<AccountRecord> arList = dao.query(queryBuilder.prepare());
@@ -126,34 +130,40 @@ public class ArDao extends BaseDao<AccountRecord> {
 		return BaseDao.DB_SEARCH_LIST_NOT_FOUND;
 	}
 
-	public List<AccountRecord> queryAr(ArSearchCondition arSC, int offset, int limtRows) {
+	public List<AccountRecord> queryAr(ArSearchCondition arSC, int offset,
+			int limtRows) {
 
 		if (arSC == null) {
 			return null;
 		}
 
 		try {
-			QueryBuilder<AccountRecord, Integer> queryBuilder = dao.queryBuilder();
+			QueryBuilder<AccountRecord, Integer> queryBuilder = dao
+					.queryBuilder();
 
 			Where<AccountRecord, Integer> where = queryBuilder.where();
 			where.isNotNull(AccountRecord.COL_ACOUNT);
 
 			// account
-			if (arSC.getStartAccount() != null && !arSC.getStartAccount().equals("")) {
+			if (arSC.getStartAccount() != null
+					&& !arSC.getStartAccount().equals("")) {
 				where.and();
-				where.ge(AccountRecord.COL_ACOUNT, Float.valueOf(arSC.getStartAccount()));
+				where.ge(AccountRecord.COL_ACOUNT,
+						Float.valueOf(arSC.getStartAccount()));
 
 			}
-			if (arSC.getEndAccount() != null && !arSC.getEndAccount().equals("")) {
+			if (arSC.getEndAccount() != null
+					&& !arSC.getEndAccount().equals("")) {
 				where.and();
-				where.le(AccountRecord.COL_ACOUNT, Float.valueOf(arSC.getEndAccount()));
+				where.le(AccountRecord.COL_ACOUNT,
+						Float.valueOf(arSC.getEndAccount()));
 			}
 
 			// type
 			if (arSC.getType() != null && !arSC.getType().equals("")) {
 				where.and();
-				where.eq(AccountRecord.COL_TYPE_ID,
-						ArTypeDao.getSingleInstance().getIdByArTpye(arSC.getType()));
+				where.eq(AccountRecord.COL_TYPE_ID, ArTypeDao
+						.getSingleInstance().getIdByArTpye(arSC.getType()));
 			}
 
 			// date
