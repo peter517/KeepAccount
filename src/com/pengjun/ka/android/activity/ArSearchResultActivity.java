@@ -8,10 +8,10 @@ import android.view.Window;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.pengjun.android.component.FragmentDirector;
 import com.pengjun.android.utils.ComponentUtils;
 import com.pengjun.ka.R;
 import com.pengjun.ka.android.fragment.ArSearchResultFragment;
-import com.pengjun.ka.android.fragment.FragmentDirector;
 import com.pengjun.ka.db.model.ArSearchCondition;
 import com.pengjun.ka.utils.KaConstants;
 
@@ -34,22 +34,25 @@ public class ArSearchResultActivity extends FragmentActivity {
 			public void onClick(View v) {
 
 				if (!ArSearchResultFragment.newInstance(null).hasSearchResult()) {
-					ComponentUtils.createInfoDialog(ArSearchResultActivity.this, "没有查询数据，不能生成图表",
+					ComponentUtils.createInfoDialog(
+							ArSearchResultActivity.this, "没有查询数据，不能生成图表",
 							R.drawable.title_warning).show();
 					return;
 				}
 				Intent intent = new Intent();
-				intent.setClass(ArSearchResultActivity.this, ArChartActivity.class);
+				intent.setClass(ArSearchResultActivity.this,
+						ArChartActivity.class);
 
 				startActivity(intent);
 			}
 		});
 
-		ArSearchCondition arSC = (ArSearchCondition) getIntent().getExtras().getSerializable(
-				KaConstants.INTENT_AR_SEARCH_CONDITION);
+		ArSearchCondition arSC = (ArSearchCondition) getIntent().getExtras()
+				.getSerializable(KaConstants.INTENT_AR_SEARCH_CONDITION);
 
 		// main content
-		FragmentDirector.replaceFragment(this, R.id.mainConent, ArSearchResultFragment.newInstance(arSC));
+		FragmentDirector.replaceFragment(this, R.id.mainConent,
+				ArSearchResultFragment.newInstance(arSC));
 
 	}
 

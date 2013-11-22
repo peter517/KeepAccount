@@ -12,12 +12,12 @@ import android.view.Window;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.pengjun.android.component.FragmentDirector;
 import com.pengjun.android.utils.AdLoggerUtils;
 import com.pengjun.android.utils.AdResourceUtils;
 import com.pengjun.ka.R;
 import com.pengjun.ka.android.fragment.ArFragment;
 import com.pengjun.ka.android.fragment.ArSearchFragment;
-import com.pengjun.ka.android.fragment.FragmentDirector;
 import com.pengjun.ka.android.fragment.MagicBoxFragment;
 import com.pengjun.ka.android.fragment.SettingFragment;
 import com.pengjun.ka.utils.KaConstants;
@@ -56,7 +56,8 @@ public class KaMainActivity extends FragmentActivity {
 		createTopBar();
 
 		// main content
-		FragmentDirector.replaceFragment(this, R.id.mainConent, ArFragment.newInstance());
+		FragmentDirector.replaceFragment(this, R.id.mainConent,
+				ArFragment.newInstance());
 
 		// bottom bar
 		createBottomBar();
@@ -132,7 +133,8 @@ public class KaMainActivity extends FragmentActivity {
 			tvTopTitle.setText(R.string.systemSetting);
 			break;
 		}
-		FragmentDirector.replaceFragment(KaMainActivity.this, R.id.mainConent, fragment);
+		FragmentDirector.replaceFragment(KaMainActivity.this, R.id.mainConent,
+				fragment);
 
 	}
 
