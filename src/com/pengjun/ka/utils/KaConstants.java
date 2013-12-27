@@ -16,8 +16,9 @@ public class KaConstants {
 
 	// init Ar Type
 	public enum InitArType {
-		type_eat("餐饮"), type_play("文化娱乐"), type_dress("服饰美容"), type_car("交通"), type_house("住宿"), type_money(
-				"人情来往"), type_shopping("生活用品"), type_other("其他");
+		type_eat("餐饮"), type_play("文化娱乐"), type_dress("服饰美容"), type_car("交通"), type_house(
+				"住宿"), type_money("人情来往"), type_shopping("生活用品"), type_other(
+				"其他");
 
 		String typename;
 
@@ -52,8 +53,8 @@ public class KaConstants {
 
 	// backup file path
 	public static final String KA_ROOT = "/sdcard/ka";
-	public static final String BACKUP_ROOT = KA_ROOT + File.separator + "backup";
-	public static final String LOG_ROOT = KA_ROOT + File.separator + "log";
+	public static final String BACKUP_ROOT = KA_ROOT + File.separator
+			+ "backup";
 	public static final String BACKUP_FILE_POSTFIX = ".bk";
 
 	// chart type
@@ -71,7 +72,8 @@ public class KaConstants {
 			// get all image from res which name start with type
 			if (field.getName().startsWith(RES_IMAGE_PREFIX)) {
 				try {
-					imgResName2ResId.put(field.getName(), field.getInt(R.drawable.class));
+					imgResName2ResId.put(field.getName(),
+							field.getInt(R.drawable.class));
 				} catch (IllegalArgumentException e) {
 					e.printStackTrace();
 				} catch (IllegalAccessException e) {

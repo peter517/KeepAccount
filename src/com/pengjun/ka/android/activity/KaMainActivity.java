@@ -1,7 +1,5 @@
 package com.pengjun.ka.android.activity;
 
-import java.io.File;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -48,8 +46,7 @@ public class KaMainActivity extends FragmentActivity {
 		setContentView(R.layout.keep_account);
 
 		if (AdResourceUtils.hasExternalStorage()) {
-			String logPath = KaConstants.LOG_ROOT + File.separator + "ka.log";
-			AdLoggerUtils.initLogger(logPath, true, true);
+			AdLoggerUtils.initLogger(true, true);
 		}
 
 		// top bar

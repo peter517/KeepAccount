@@ -25,8 +25,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.pengjun.android.utils.AdLoggerUtils;
 import com.pengjun.android.utils.ComponentUtils;
-import com.pengjun.android.utils.DebugUtils;
 import com.pengjun.ka.R;
 import com.pengjun.ka.android.activity.AddArActivity;
 import com.pengjun.ka.android.activity.ArChartActivity;
@@ -64,7 +64,7 @@ public class ArSearchResultFragment extends Fragment {
 				lvAr.setSelectionFromTop(0, 0);
 				break;
 			default:
-				DebugUtils.printFromPJ("undefined msg:" + msg.what);
+				AdLoggerUtils.printFromTag("pj", "undefined msg:" + msg.what);
 			}
 		}
 	};
@@ -89,7 +89,8 @@ public class ArSearchResultFragment extends Fragment {
 		return instance;
 	}
 
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
 
 		// AccountRecordService.deleteAll(AccountRecordService.queryAll());
 		View view = inflater.inflate(R.layout.ar_listview, null);
@@ -116,7 +117,8 @@ public class ArSearchResultFragment extends Fragment {
 		lvAr.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
-			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
 
 				// view account record
 				Intent intent = new Intent();
@@ -125,10 +127,13 @@ public class ArSearchResultFragment extends Fragment {
 				AccountRecord ar = arList.get(position);
 				Bundle bundle = new Bundle();
 				bundle.putSerializable(KaConstants.INTENT_AR_BEAN, ar);
-				bundle.putSerializable(KaConstants.INTENT_DISABLE_AR_TYPE_MANAGE, true);
+				bundle.putSerializable(
+						KaConstants.INTENT_DISABLE_AR_TYPE_MANAGE, true);
 				intent.putExtras(bundle);
-				getActivity().startActivityForResult(intent, KaConstants.CB_ADD_AR);
-				getActivity().overridePendingTransition(R.anim.left_in, R.anim.left_out);
+				getActivity().startActivityForResult(intent,
+						KaConstants.CB_ADD_AR);
+				getActivity().overridePendingTransition(R.anim.left_in,
+						R.anim.left_out);
 
 			}
 		});
@@ -137,36 +142,44 @@ public class ArSearchResultFragment extends Fragment {
 			private int selectPos = 0;
 
 			@Override
-			public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+			public boolean onItemLongClick(AdapterView<?> parent, View view,
+					int position, long id) {
 
 				// delete account record
 				selectPos = position;
-				AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+				AlertDialog.Builder builder = new AlertDialog.Builder(
+						getActivity());
 				builder.setIcon(R.drawable.mark_delete);
 				builder.setTitle("删除记账");
 				builder.setMessage("确定要删除该次记账？");
-				builder.setPositiveButton("删除", new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog, int whichButton) {
-						AccountRecord ar = arList.get(selectPos);
-						ArDao.getSingleInstance().delete(ar);
-						ArChartActivity.resetArList();
-						updateArListViewAsync(false);
-					}
-				});
-				builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog, int whichButton) {
+				builder.setPositiveButton("删除",
+						new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog,
+									int whichButton) {
+								AccountRecord ar = arList.get(selectPos);
+								ArDao.getSingleInstance().delete(ar);
+								ArChartActivity.resetArList();
+								updateArListViewAsync(false);
+							}
+						});
+				builder.setNegativeButton("取消",
+						new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog,
+									int whichButton) {
 
-					}
-				});
+							}
+						});
 				AlertDialog dialog = builder.create();
 				dialog.show();
 
 				// modified dialog button
-				Button btPositive = dialog.getButton(DialogInterface.BUTTON_POSITIVE);
+				Button btPositive = dialog
+						.getButton(DialogInterface.BUTTON_POSITIVE);
 				if (btPositive != null) {
 					btPositive.setBackgroundResource(R.drawable.btn_alert);
 				}
-				Button btNegative = dialog.getButton(DialogInterface.BUTTON_NEGATIVE);
+				Button btNegative = dialog
+						.getButton(DialogInterface.BUTTON_NEGATIVE);
 				if (btNegative != null) {
 					btNegative.setBackgroundResource(R.drawable.btn_pressed);
 				}
@@ -200,7 +213,8 @@ public class ArSearchResultFragment extends Fragment {
 
 	public void updateArListViewSync() {
 
-		arList = ArDao.getSingleInstance().queryLimitRows(0, Math.max(LIMIT_ROW_TOTAL, arList.size()));
+		arList = ArDao.getSingleInstance().queryLimitRows(0,
+				Math.max(LIMIT_ROW_TOTAL, arList.size()));
 
 		if (arList.size() < LIMIT_ROW_TOTAL) {
 			btLoadMore.setVisibility(View.GONE);
@@ -236,8 +250,8 @@ public class ArSearchResultFragment extends Fragment {
 		protected List<AccountRecord> doInBackground(Boolean... params) {
 
 			isSetListViewToTop = params[0];
-			List<AccountRecord> tempArList = ArDao.getSingleInstance().queryAr(arSC, 0,
-					Math.max(LIMIT_ROW_TOTAL, arList.size()));
+			List<AccountRecord> tempArList = ArDao.getSingleInstance().queryAr(
+					arSC, 0, Math.max(LIMIT_ROW_TOTAL, arList.size()));
 			if (tempArList != null) {
 				arList = tempArList;
 			}
@@ -277,7 +291,8 @@ public class ArSearchResultFragment extends Fragment {
 
 			List<AccountRecord> tempArList = null;
 
-			tempArList = ArDao.getSingleInstance().queryAr(arSC, offset, LIMIT_ROW_TOTAL);
+			tempArList = ArDao.getSingleInstance().queryAr(arSC, offset,
+					LIMIT_ROW_TOTAL);
 			if (tempArList != null) {
 				arList.addAll(tempArList);
 			} else {
@@ -293,8 +308,8 @@ public class ArSearchResultFragment extends Fragment {
 			hideProgress();
 
 			if (tempArList == null || tempArList.size() == 0) {
-				Toast.makeText(ArSearchResultFragment.this.getActivity(), "没有新数据",
-						KaConstants.TOAST_EXSIT_TIME).show();
+				Toast.makeText(ArSearchResultFragment.this.getActivity(),
+						"没有新数据", KaConstants.TOAST_EXSIT_TIME).show();
 			}
 
 			arAdapter.notifyDataSetChanged();
@@ -321,13 +336,16 @@ public class ArSearchResultFragment extends Fragment {
 			AccountHolder holder = new AccountHolder();
 			if (convertView == null) {
 
-				convertView = ComponentUtils.getLayoutInflater(getActivity()).inflate(
-						R.layout.ar_listview_item, null);
+				convertView = ComponentUtils.getLayoutInflater(getActivity())
+						.inflate(R.layout.ar_listview_item, null);
 
-				holder.account = (TextView) convertView.findViewById(R.id.tvCost);
-				holder.ivType = (ImageView) convertView.findViewById(R.id.ivType);
+				holder.account = (TextView) convertView
+						.findViewById(R.id.tvCost);
+				holder.ivType = (ImageView) convertView
+						.findViewById(R.id.ivType);
 				holder.date = (TextView) convertView.findViewById(R.id.tvDate);
-				holder.tvType = (TextView) convertView.findViewById(R.id.tvType);
+				holder.tvType = (TextView) convertView
+						.findViewById(R.id.tvType);
 
 				convertView.setTag(holder);
 			} else {
@@ -337,7 +355,8 @@ public class ArSearchResultFragment extends Fragment {
 			// fill content
 			AccountRecord ar = arList.get(position);
 			holder.account.setText(String.valueOf(ar.getAccount()));
-			holder.ivType.setImageResource(KaConstants.getImgResIdByResName(ar.getImgResName()));
+			holder.ivType.setImageResource(KaConstants.getImgResIdByResName(ar
+					.getImgResName()));
 			holder.tvType.setText(ar.getTypeName());
 			holder.date.setText(ar.getCreateDate());
 

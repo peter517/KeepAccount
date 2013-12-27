@@ -25,8 +25,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.pengjun.android.component.BaseFragment;
+import com.pengjun.android.utils.AdLoggerUtils;
 import com.pengjun.android.utils.ComponentUtils;
-import com.pengjun.android.utils.DebugUtils;
 import com.pengjun.ka.R;
 import com.pengjun.ka.android.activity.AddArActivity;
 import com.pengjun.ka.db.dao.ArDao;
@@ -46,8 +46,6 @@ public class ArFragment extends BaseFragment {
 	private ArLvAdapter arAdapter;
 	private List<AccountRecord> arList = new ArrayList<AccountRecord>();
 
-	private static ArFragment instance = null;
-
 	private static final int MSG_LISTVIEW_TO_TOP = 0x01;
 	Handler handler = new Handler() {
 		@Override
@@ -59,10 +57,12 @@ public class ArFragment extends BaseFragment {
 				lvAr.setSelectionFromTop(0, 0);
 				break;
 			default:
-				DebugUtils.printFromPJ("undefined msg:" + msg.what);
+				AdLoggerUtils.printFromTag("pj", "undefined msg:" + msg.what);
 			}
 		}
 	};
+
+	private static ArFragment instance = null;
 
 	public static ArFragment newInstance() {
 		if (instance == null) {
@@ -76,7 +76,8 @@ public class ArFragment extends BaseFragment {
 	}
 
 	@Override
-	protected View createView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+	protected View createView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
 
 		View view = inflater.inflate(R.layout.ar_listview, null);
 
@@ -102,7 +103,8 @@ public class ArFragment extends BaseFragment {
 		lvAr.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
-			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
 
 				// view account record
 				Intent intent = new Intent();
@@ -112,8 +114,10 @@ public class ArFragment extends BaseFragment {
 				Bundle bundle = new Bundle();
 				bundle.putSerializable(KaConstants.INTENT_AR_BEAN, ar);
 				intent.putExtras(bundle);
-				getActivity().startActivityForResult(intent, KaConstants.CB_ADD_AR);
-				getActivity().overridePendingTransition(R.anim.left_in, R.anim.left_out);
+				getActivity().startActivityForResult(intent,
+						KaConstants.CB_ADD_AR);
+				getActivity().overridePendingTransition(R.anim.left_in,
+						R.anim.left_out);
 
 			}
 		});
@@ -122,35 +126,43 @@ public class ArFragment extends BaseFragment {
 			private int selectPos = 0;
 
 			@Override
-			public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+			public boolean onItemLongClick(AdapterView<?> parent, View view,
+					int position, long id) {
 
 				// delete account record
 				selectPos = position;
-				AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+				AlertDialog.Builder builder = new AlertDialog.Builder(
+						getActivity());
 				builder.setIcon(R.drawable.mark_delete);
 				builder.setTitle("删除记账");
 				builder.setMessage("确定要删除该次记账？");
-				builder.setPositiveButton("删除", new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog, int whichButton) {
-						AccountRecord ar = arList.get(selectPos);
-						ArDao.getSingleInstance().delete(ar);
-						updateArListViewAsync(false);
-					}
-				});
-				builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog, int whichButton) {
+				builder.setPositiveButton("删除",
+						new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog,
+									int whichButton) {
+								AccountRecord ar = arList.get(selectPos);
+								ArDao.getSingleInstance().delete(ar);
+								updateArListViewAsync(false);
+							}
+						});
+				builder.setNegativeButton("取消",
+						new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog,
+									int whichButton) {
 
-					}
-				});
+							}
+						});
 				AlertDialog dialog = builder.create();
 				dialog.show();
 
 				// modified dialog button
-				Button btPositive = dialog.getButton(DialogInterface.BUTTON_POSITIVE);
+				Button btPositive = dialog
+						.getButton(DialogInterface.BUTTON_POSITIVE);
 				if (btPositive != null) {
 					btPositive.setBackgroundResource(R.drawable.btn_alert);
 				}
-				Button btNegative = dialog.getButton(DialogInterface.BUTTON_NEGATIVE);
+				Button btNegative = dialog
+						.getButton(DialogInterface.BUTTON_NEGATIVE);
 				if (btNegative != null) {
 					btNegative.setBackgroundResource(R.drawable.btn_pressed);
 				}
@@ -184,7 +196,8 @@ public class ArFragment extends BaseFragment {
 
 	public void updateArListViewSync() {
 
-		arList = ArDao.getSingleInstance().queryLimitRows(0, Math.max(LIMIT_ROW_TOTAL, arList.size()));
+		arList = ArDao.getSingleInstance().queryLimitRows(0,
+				Math.max(LIMIT_ROW_TOTAL, arList.size()));
 
 		if (arList.size() < LIMIT_ROW_TOTAL) {
 			btLoadMore.setVisibility(View.GONE);
@@ -221,8 +234,8 @@ public class ArFragment extends BaseFragment {
 			isSetListViewToTop = params[0];
 			List<AccountRecord> tempArList = null;
 
-			tempArList = ArDao.getSingleInstance()
-					.queryLimitRows(0, Math.max(LIMIT_ROW_TOTAL, arList.size()));
+			tempArList = ArDao.getSingleInstance().queryLimitRows(0,
+					Math.max(LIMIT_ROW_TOTAL, arList.size()));
 			if (tempArList != null) {
 				arList = tempArList;
 			}
@@ -243,8 +256,8 @@ public class ArFragment extends BaseFragment {
 			}
 
 			if (tempArList == null || tempArList.size() == 0) {
-				Toast.makeText(ArFragment.this.getActivity(), "没有数据，请记账", KaConstants.TOAST_EXSIT_TIME)
-						.show();
+				Toast.makeText(ArFragment.this.getActivity(), "没有数据，请记账",
+						KaConstants.TOAST_EXSIT_TIME).show();
 				return;
 			}
 
@@ -264,7 +277,8 @@ public class ArFragment extends BaseFragment {
 
 			List<AccountRecord> tempArList = null;
 
-			tempArList = ArDao.getSingleInstance().queryLimitRows(offset, LIMIT_ROW_TOTAL);
+			tempArList = ArDao.getSingleInstance().queryLimitRows(offset,
+					LIMIT_ROW_TOTAL);
 			if (tempArList != null) {
 				arList.addAll(tempArList);
 			}
@@ -276,7 +290,8 @@ public class ArFragment extends BaseFragment {
 		protected void onPostExecute(List<AccountRecord> tempArList) {
 
 			if (tempArList == null || tempArList.size() == 0) {
-				Toast.makeText(ArFragment.this.getActivity(), "没有新数据", KaConstants.TOAST_EXSIT_TIME).show();
+				Toast.makeText(ArFragment.this.getActivity(), "没有新数据",
+						KaConstants.TOAST_EXSIT_TIME).show();
 			} else {
 				btLoadMore.setVisibility(View.VISIBLE);
 			}
@@ -307,13 +322,17 @@ public class ArFragment extends BaseFragment {
 			AccountHolder holder = new AccountHolder();
 			if (convertView == null) {
 
-				convertView = ComponentUtils.getLayoutInflater(getActivity()).inflate(
-						R.layout.ar_listview_item, null);
+				convertView = ComponentUtils.getLayoutInflater(getActivity())
+						.inflate(R.layout.ar_listview_item, null);
 
-				holder.tvAccount = (TextView) convertView.findViewById(R.id.tvCost);
-				holder.ivType = (ImageView) convertView.findViewById(R.id.ivType);
-				holder.tvDate = (TextView) convertView.findViewById(R.id.tvDate);
-				holder.tvType = (TextView) convertView.findViewById(R.id.tvType);
+				holder.tvAccount = (TextView) convertView
+						.findViewById(R.id.tvCost);
+				holder.ivType = (ImageView) convertView
+						.findViewById(R.id.ivType);
+				holder.tvDate = (TextView) convertView
+						.findViewById(R.id.tvDate);
+				holder.tvType = (TextView) convertView
+						.findViewById(R.id.tvType);
 
 				convertView.setTag(holder);
 			} else {
@@ -323,7 +342,8 @@ public class ArFragment extends BaseFragment {
 			// fill content
 			AccountRecord ar = arList.get(position);
 			holder.tvAccount.setText(String.valueOf(ar.getAccount()));
-			holder.ivType.setImageResource(KaConstants.getImgResIdByResName(ar.getImgResName()));
+			holder.ivType.setImageResource(KaConstants.getImgResIdByResName(ar
+					.getImgResName()));
 			holder.tvType.setText(ar.getTypeName());
 			holder.tvDate.setText(ar.getCreateDate());
 

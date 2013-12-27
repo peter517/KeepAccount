@@ -25,8 +25,8 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.pengjun.android.utils.AdLoggerUtils;
 import com.pengjun.android.utils.ComponentUtils;
-import com.pengjun.android.utils.DebugUtils;
 import com.pengjun.ka.R;
 import com.pengjun.ka.db.dao.ArTypeDao;
 import com.pengjun.ka.db.model.ArType;
@@ -52,7 +52,7 @@ public class ManageArTypeActivity extends Activity {
 				lvArType.setSelectionFromTop(0, 0);
 				break;
 			default:
-				DebugUtils.printFromPJ("undefined msg:" + msg.what);
+				AdLoggerUtils.printFromTag("pj", "undefined msg:" + msg.what);
 			}
 		}
 	};
@@ -70,7 +70,8 @@ public class ManageArTypeActivity extends Activity {
 			public void onClick(View v) {
 
 				Intent intent = new Intent();
-				intent.setClass(ManageArTypeActivity.this, AddArTypeActivity.class);
+				intent.setClass(ManageArTypeActivity.this,
+						AddArTypeActivity.class);
 				startActivityForResult(intent, KaConstants.CB_ADD_AR_TYPE);
 				overridePendingTransition(R.anim.left_in, R.anim.left_out);
 			}
@@ -83,11 +84,13 @@ public class ManageArTypeActivity extends Activity {
 		lvArType.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
-			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
 
 				// view account record
 				Intent intent = new Intent();
-				intent.setClass(ManageArTypeActivity.this, AddArTypeActivity.class);
+				intent.setClass(ManageArTypeActivity.this,
+						AddArTypeActivity.class);
 
 				ArType arType = arTypeList.get(position);
 				Bundle bundle = new Bundle();
@@ -104,40 +107,48 @@ public class ManageArTypeActivity extends Activity {
 			private int selectPos = 0;
 
 			@Override
-			public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+			public boolean onItemLongClick(AdapterView<?> parent, View view,
+					int position, long id) {
 
 				if (arTypeList.size() == 1) {
-					ComponentUtils.createInfoDialog(ManageArTypeActivity.this, "至少要有一个分类",
-							R.drawable.title_warning).show();
+					ComponentUtils.createInfoDialog(ManageArTypeActivity.this,
+							"至少要有一个分类", R.drawable.title_warning).show();
 					return false;
 				}
 
 				selectPos = position;
-				AlertDialog.Builder builder = new AlertDialog.Builder(ManageArTypeActivity.this);
+				AlertDialog.Builder builder = new AlertDialog.Builder(
+						ManageArTypeActivity.this);
 				builder.setIcon(R.drawable.mark_delete);
 				builder.setTitle("删除记账");
 				builder.setMessage("确定要删除该分类？");
-				builder.setPositiveButton("删除", new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog, int whichButton) {
-						ArType ar = arTypeList.get(selectPos);
-						ArTypeDao.getSingleInstance().delete(ar);
-						updateArTypeListAsync(false);
-					}
-				});
-				builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog, int whichButton) {
+				builder.setPositiveButton("删除",
+						new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog,
+									int whichButton) {
+								ArType ar = arTypeList.get(selectPos);
+								ArTypeDao.getSingleInstance().delete(ar);
+								updateArTypeListAsync(false);
+							}
+						});
+				builder.setNegativeButton("取消",
+						new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog,
+									int whichButton) {
 
-					}
-				});
+							}
+						});
 				AlertDialog dialog = builder.create();
 				dialog.show();
 
 				// modified dialog button
-				Button btPositive = dialog.getButton(DialogInterface.BUTTON_POSITIVE);
+				Button btPositive = dialog
+						.getButton(DialogInterface.BUTTON_POSITIVE);
 				if (btPositive != null) {
 					btPositive.setBackgroundResource(R.drawable.btn_alert);
 				}
-				Button btNegative = dialog.getButton(DialogInterface.BUTTON_NEGATIVE);
+				Button btNegative = dialog
+						.getButton(DialogInterface.BUTTON_NEGATIVE);
 				if (btNegative != null) {
 					btNegative.setBackgroundResource(R.drawable.btn_pressed);
 				}
@@ -161,7 +172,8 @@ public class ManageArTypeActivity extends Activity {
 
 		Intent intent = new Intent();
 		Bundle bundle = new Bundle();
-		bundle.putStringArrayList(KaConstants.INTENT_AR_TYPE_NAME_LIST_BEAN, arTypeNameList);
+		bundle.putStringArrayList(KaConstants.INTENT_AR_TYPE_NAME_LIST_BEAN,
+				arTypeNameList);
 		intent.putExtras(bundle);
 
 		setResult(RESULT_OK, intent);
@@ -260,12 +272,16 @@ public class ManageArTypeActivity extends Activity {
 			AccountHolder holder = new AccountHolder();
 			if (convertView == null) {
 
-				convertView = ComponentUtils.getLayoutInflater(ManageArTypeActivity.this).inflate(
+				convertView = ComponentUtils.getLayoutInflater(
+						ManageArTypeActivity.this).inflate(
 						R.layout.ar_type_listview_item, null);
 
-				holder.ivType = (ImageView) convertView.findViewById(R.id.ivType);
-				holder.createDate = (TextView) convertView.findViewById(R.id.tvCreateTime);
-				holder.tvType = (TextView) convertView.findViewById(R.id.tvType);
+				holder.ivType = (ImageView) convertView
+						.findViewById(R.id.ivType);
+				holder.createDate = (TextView) convertView
+						.findViewById(R.id.tvCreateTime);
+				holder.tvType = (TextView) convertView
+						.findViewById(R.id.tvType);
 
 				convertView.setTag(holder);
 			} else {
@@ -273,7 +289,8 @@ public class ManageArTypeActivity extends Activity {
 			}
 
 			ArType arType = arTypeList.get(position);
-			holder.ivType.setImageResource(KaConstants.getImgResIdByResName(arType.getImgResName()));
+			holder.ivType.setImageResource(KaConstants
+					.getImgResIdByResName(arType.getImgResName()));
 			holder.tvType.setText(arType.getTypeName());
 			holder.createDate.setText(arType.getCreateDate());
 
