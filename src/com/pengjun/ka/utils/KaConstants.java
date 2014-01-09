@@ -12,6 +12,7 @@ import com.pengjun.ka.R;
 public class KaConstants {
 
 	public static boolean isDebug = true;
+	public final static String PROJECT_NAME = "ka";
 	public static int TOAST_EXSIT_TIME = 2000;
 
 	// init Ar Type

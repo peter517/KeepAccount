@@ -46,7 +46,7 @@ public class KaMainActivity extends FragmentActivity {
 		setContentView(R.layout.keep_account);
 
 		if (AdResourceUtils.hasExternalStorage()) {
-			AdLoggerUtils.initLogger(true, true);
+			AdLoggerUtils.initLogger(KaConstants.PROJECT_NAME, true, true);
 		}
 
 		// top bar
