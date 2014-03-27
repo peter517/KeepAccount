@@ -41,7 +41,7 @@ public class ArScatterChart extends KaBaseChart {
 		int k = 0;
 		for (AccountRecord ar : arList) {
 			valueArr[k] = ar.getAccount();
-			dayArr[k] = TimeUtils.string2Date(ar.getCreateDate()).getDate();
+			dayArr[k] = TimeUtils.string2yyyyMMddDate(ar.getCreateDate()).getDate();
 			maxValue = Math.max(ar.getAccount(), maxValue);
 			minValue = Math.max(ar.getAccount(), minValue);
 			k++;

@@ -53,7 +53,7 @@ public class ArBarChart extends KaBaseChart {
 			map.count(range, 1);
 		}
 
-		renderer = createXYChartRenderer("金额区间", "数量");
+		renderer = createSingleXYChartRenderer("金额区间", "数量");
 
 		dataset = new XYMultipleSeriesDataset();
 		XYSeries series = new XYSeries(title);

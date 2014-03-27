@@ -48,7 +48,7 @@ public class ArTypeBarChart extends KaBaseChart {
 			map.count(ar.getTypeName(), (double) ar.getAccount());
 		}
 
-		renderer = createXYChartRenderer("种类", "金额");
+		renderer = createSingleXYChartRenderer("种类", "金额");
 
 		dataset = new XYMultipleSeriesDataset();
 		XYSeries series = new XYSeries(title);

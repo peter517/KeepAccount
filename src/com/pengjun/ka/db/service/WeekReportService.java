@@ -18,7 +18,7 @@ public class WeekReportService extends BaseReportService {
 		int weekend = 0;
 		for (AccountRecord ar : arList) {
 
-			int day = TimeUtils.getDayOfWeek(TimeUtils.string2Date(ar.getCreateDate()).getTime());
+			int day = TimeUtils.getDayOfWeek(TimeUtils.string2yyyyMMddDate(ar.getCreateDate()).getTime());
 			// Sunday is 1, Monday is 2
 			if (day >= 2 && day <= 6) {
 				workDay++;

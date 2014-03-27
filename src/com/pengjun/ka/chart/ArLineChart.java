@@ -42,7 +42,6 @@ public class ArLineChart extends KaBaseChart {
 		if (renderer != null) {
 			renderer.setZoomEnabled(isZoomEnabled);
 		}
-
 	}
 
 	@Override
@@ -55,7 +54,7 @@ public class ArLineChart extends KaBaseChart {
 		case LineDay:
 			for (AccountRecord ar : arList) {
 
-				Date date = TimeUtils.string2Date(ar.getCreateDate());
+				Date date = TimeUtils.string2yyyyMMddDate(ar.getCreateDate());
 				account = map.get(date);
 				if (account == null) {
 					account = 0.0;
@@ -67,8 +66,8 @@ public class ArLineChart extends KaBaseChart {
 		case LineMonth:
 			for (AccountRecord ar : arList) {
 
-				Date yearMonth = TimeUtils.string2YearMonthDate(TimeUtils.String2MonthYearStr(ar
-						.getCreateDate()));
+				Date yearMonth = TimeUtils.string2yyyyMMDate(TimeUtils
+						.String2MonthYearStr(ar.getCreateDate()));
 				account = map.get(yearMonth);
 				if (account == null) {
 					account = 0.0;
@@ -80,7 +79,8 @@ public class ArLineChart extends KaBaseChart {
 		case LineYear:
 			for (AccountRecord ar : arList) {
 
-				Date year = TimeUtils.string2YearDate(TimeUtils.String2YearStr(ar.getCreateDate()));
+				Date year = TimeUtils.string2yyyyDate(TimeUtils
+						.String2YearStr(ar.getCreateDate()));
 				account = map.get(year);
 				if (account == null) {
 					account = 0.0;
@@ -109,12 +109,13 @@ public class ArLineChart extends KaBaseChart {
 			}
 			maxValue = Math.max(entry.getValue(), maxValue);
 			minValue = Math.min(entry.getValue(), minValue);
-			series.add(entry.getKey(), NumberUtils.formatDouble(entry.getValue()));
+			series.add(entry.getKey(),
+					NumberUtils.formatDouble(entry.getValue()));
 			pointCnt++;
 		}
 		dataset.addSeries(series);
 
-		renderer = createXYChartRenderer("时间", "金额");
+		renderer = createSingleXYChartRenderer("时间", "金额");
 
 		// fill last invalid data
 
@@ -156,13 +157,16 @@ public class ArLineChart extends KaBaseChart {
 		View view = null;
 		switch (chartType) {
 		case LineDay:
-			view = ChartFactory.getTimeChartView(context, dataset, renderer, TimeUtils.DATE_FORMT);
+			view = ChartFactory.getTimeChartView(context, dataset, renderer,
+					TimeUtils.yyyyMMdd_FORMT);
 			break;
 		case LineMonth:
-			view = ChartFactory.getTimeChartView(context, dataset, renderer, TimeUtils.YERA_MONTH_FORMT);
+			view = ChartFactory.getTimeChartView(context, dataset, renderer,
+					TimeUtils.yyyyMM_FORMT);
 			break;
 		case LineYear:
-			view = ChartFactory.getTimeChartView(context, dataset, renderer, TimeUtils.YERA_FORMT);
+			view = ChartFactory.getTimeChartView(context, dataset, renderer,
+					TimeUtils.yyyy_FORMT);
 			break;
 		}
 
